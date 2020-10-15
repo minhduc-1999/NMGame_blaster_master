@@ -2,7 +2,7 @@
 <map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
  <tileset firstgid="1" source="BlasterMaster_Area2_final.tsx"/>
  <imagelayer id="2" name="Image Layer 1" opacity="0.51">
-  <image source="D:\Học tập\HK5\NM Game\Sprite\Map\level2-side.png" width="2048" height="2048"/>
+  <image source="D:\Learning\3rdYear\Game\Sprites\Map2.png" width="2048" height="2048"/>
  </imagelayer>
  <layer id="1" name="Tile Layer 1" width="128" height="128">
   <data encoding="csv">
