@@ -4,3 +4,6 @@ D:\Học tập\HK5\NM Game\Sprite\Map\level2-side.png
 An
 D:\Learning\3rdYear\Game\Tile\Area2.png
 D:\Learning\3rdYear\Game\Sprites\Map2.png
+Bình
+D:/Học Tập/HK5/SE102.L12_NhapMonPhatTrienGame/Resources/Sprites/Map/Area2/BlasterMaster_Area2.png
+D:/Học Tập/HK5/SE102.L12_NhapMonPhatTrienGame/Resources/Map/Area2/level2-side.png
