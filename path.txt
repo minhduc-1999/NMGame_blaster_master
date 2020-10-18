@@ -1,5 +1,5 @@
 Đức
-D:\Học tập\HK5\NM Game\Sprite\Map\NES - Blaster Master - Area 2.png
+G:\Code\Game\NMGame_blaster_master\BlasterMaster_Area2.png
 D:\Học tập\HK5\NM Game\Sprite\Map\level2-side.png
 An
 D:\Learning\3rdYear\Game\Tile\Area2.png
