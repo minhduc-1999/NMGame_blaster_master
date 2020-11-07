@@ -1,8 +1,8 @@
 #include "ResourceManager.h"
 
-#define WINDOW_CLASS_NAME "SampleWindow"
-#define MAIN_WINDOW_TITLE "02 - Sprite animation"
-#define WINDOW_ICON_PATH "enemy1.ico"
+#define WINDOW_CLASS_NAME "WindowClassName"
+#define WINDOW_TITLE "NES-BlasterMaster"
+#define WINDOW_ICON_PATH "BlasterMaster.ico"
 
 #define SCREEN_WIDTH 529
 #define SCREEN_HEIGHT 366
@@ -57,7 +57,7 @@ ATOM RegisterClass(HINSTANCE hInstance)
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = hInstance;
-	wc.hIcon = NULL;
+	wc.hIcon = (HICON)LoadImage(hInstance, WINDOW_ICON_PATH, IMAGE_ICON, 0, 0, LR_LOADFROMFILE);;
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wc.lpszMenuName = NULL;
@@ -69,14 +69,14 @@ ATOM RegisterClass(HINSTANCE hInstance)
 
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
+
 	RegisterClass(hInstance);
 
 	HWND hWnd =
 		CreateWindow(
 			WINDOW_CLASS_NAME,
-			MAIN_WINDOW_TITLE,
-			WS_OVERLAPPEDWINDOW | WS_MAXIMIZE,
-			//WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
+			WINDOW_TITLE,
+			WS_OVERLAPPEDWINDOW | WS_MAXIMIZE,//WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,
 			ScreenWidth,

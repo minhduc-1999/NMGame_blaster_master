@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{256de614-b5b6-4dfb-bed0-16583745c24f}</ProjectGuid>
-    <RootNamespace>BTTuan1</RootNamespace>
+    <RootNamespace>BlasterMaster(NES)</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -160,7 +160,6 @@
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Orb.h" />
     <ClInclude Include="PlayScence.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scence.h" />
     <ClInclude Include="Sprites.h" />
@@ -196,15 +195,12 @@
     <ClCompile Include="tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="bbox.png" />
     <Image Include="area2-tile.png" />
+    <Image Include="BlasterMaster.ico" />
     <Image Include="enemy.png" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="mapArea2.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="BTTuan1.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

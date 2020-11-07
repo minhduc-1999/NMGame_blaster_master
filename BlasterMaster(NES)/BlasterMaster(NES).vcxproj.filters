@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="FrameWork">
+      <UniqueIdentifier>{5da2349f-a1b9-4758-b7e8-8292bd2f5733}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Camera">
+      <UniqueIdentifier>{f1ea25eb-c415-44e9-a110-7fb0fcfe92ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Sound">
+      <UniqueIdentifier>{96d34e0a-fb0c-43e8-a24f-aa89f5730b67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Animation">
+      <UniqueIdentifier>{caf24671-0573-4091-b5ba-e9831ea1436f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Scene">
+      <UniqueIdentifier>{2b88124f-7d78-4ddf-b96f-a179da210d98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{b8fd9879-7798-4c9a-a760-805c1b5b6f71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Grid">
+      <UniqueIdentifier>{3f25c0b2-efd5-4d4e-96cf-94647704c48f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WinMain">
+      <UniqueIdentifier>{537cb778-8c47-49a8-96f3-9f7e33bc543a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{c53f67eb-a4d5-41dc-9e3d-d78635c055e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Background">
+      <UniqueIdentifier>{f97b3e51-ad1e-493f-bae1-bc3c018270d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\StaticObject">
+      <UniqueIdentifier>{b7ca9b8d-e859-4be8-aefd-7dd7432454f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject">
+      <UniqueIdentifier>{7543ce83-9286-4dd4-bdba-ee84956cf692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\StaticObject\Brick">
+      <UniqueIdentifier>{e3b584db-529d-4060-a9f2-2cdd265b4102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\StaticObject\Gate">
+      <UniqueIdentifier>{0811b715-600c-4fbc-81d8-874f2f014ae4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\StaticObject\Ladder">
+      <UniqueIdentifier>{553034c4-f758-447c-8d84-a9df2a19c78d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\StaticObject\Magma">
+      <UniqueIdentifier>{a1d819dc-0e2f-4596-a7e8-0c2339efab14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Insect">
+      <UniqueIdentifier>{149b18bc-af7e-4c61-aa1a-c17f0de71465}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Jumper2">
+      <UniqueIdentifier>{dc3aa88e-aaaa-4b37-9c0b-d3daa6b2cf3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Orb">
+      <UniqueIdentifier>{ab90233f-ae00-4924-8b0d-35ef64681004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TinyXML">
+      <UniqueIdentifier>{19be9082-6f04-481b-95fc-354f6e0f1054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{b983dcbe-fbbc-484d-8ead-764b270754c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sprites">
+      <UniqueIdentifier>{7f3388ee-650b-44ac-9d43-96c1b79721a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sprites\Enemy">
+      <UniqueIdentifier>{8d85ee26-0951-4beb-bc65-13f3f0f71007}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sprites\Player">
+      <UniqueIdentifier>{09574a41-bd5f-4cf8-9cde-86832da48abd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sprites\Map">
+      <UniqueIdentifier>{8924971d-508b-4fba-aec8-b9754b18b452}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\GameIcon">
+      <UniqueIdentifier>{42cd039f-cef7-485b-b874-7863e518d791}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\MapXML">
+      <UniqueIdentifier>{de631371-04b4-4157-8924-9faba168b26e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sprites\Map\Area2">
+      <UniqueIdentifier>{8d2d1433-e260-45f6-a037-c18d4b068c54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\MapXML\Area2">
+      <UniqueIdentifier>{887b3d5e-2d02-44e3-9fb4-be8e1592521b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="KeyEventHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>FrameWork\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites.h">
+      <Filter>FrameWork\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>FrameWork\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>FrameWork\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScence.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CTestScene.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scence.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticGameObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Object\StaticObject\Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="CGate.h">
+      <Filter>Object\StaticObject\Gate</Filter>
+    </ClInclude>
+    <ClInclude Include="CLadder.h">
+      <Filter>Object\StaticObject\Ladder</Filter>
+    </ClInclude>
+    <ClInclude Include="CMagma.h">
+      <Filter>Object\StaticObject\Magma</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy1.h">
+      <Filter>Object\DynamicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Insect.h">
+      <Filter>Object\DynamicObject\Insect</Filter>
+    </ClInclude>
+    <ClInclude Include="Jumper2.h">
+      <Filter>Object\DynamicObject\Jumper2</Filter>
+    </ClInclude>
+    <ClInclude Include="Orb.h">
+      <Filter>Object\DynamicObject\Orb</Filter>
+    </ClInclude>
+    <ClInclude Include="tinystr.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Camera.cpp">
+      <Filter>FrameWork\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>FrameWork\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>FrameWork\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>FrameWork\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="CTestScene.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScence.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scence.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>WinMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticGameObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Object\StaticObject\Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="CGate.cpp">
+      <Filter>Object\StaticObject\Gate</Filter>
+    </ClCompile>
+    <ClCompile Include="CLadder.cpp">
+      <Filter>Object\StaticObject\Ladder</Filter>
+    </ClCompile>
+    <ClCompile Include="CMagma.cpp">
+      <Filter>Object\StaticObject\Magma</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy1.cpp">
+      <Filter>Object\DynamicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Insect.cpp">
+      <Filter>Object\DynamicObject\Insect</Filter>
+    </ClCompile>
+    <ClCompile Include="Jumper2.cpp">
+      <Filter>Object\DynamicObject\Jumper2</Filter>
+    </ClCompile>
+    <ClCompile Include="Orb.cpp">
+      <Filter>Object\DynamicObject\Orb</Filter>
+    </ClCompile>
+    <ClCompile Include="tinystr.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlerror.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlparser.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="BlasterMaster.ico">
+      <Filter>Resources\GameIcon</Filter>
+    </Image>
+    <Image Include="enemy.png">
+      <Filter>Resources\Sprites\Enemy</Filter>
+    </Image>
+    <Image Include="area2-tile.png">
+      <Filter>Resources\Sprites\Map\Area2</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="mapArea2.xml">
+      <Filter>Resources\MapXML\Area2</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>
