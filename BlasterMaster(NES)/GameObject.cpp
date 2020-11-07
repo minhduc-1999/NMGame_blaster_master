@@ -24,3 +24,15 @@ D3DXVECTOR3 CGameObject::GetSize()
 {
 	return D3DXVECTOR3(width, height, 0);
 }
+
+RECT CGameObject::GetBound()
+{
+	RECT bound;
+
+	bound.left = x - width / 2;
+	bound.right = bound.left + width - 1;
+	bound.top = y - height / 2;
+	bound.bottom = bound.top + height - 1;
+
+	return bound;
+}

@@ -13,6 +13,7 @@ public:
 	D3DXVECTOR3 GetPosition();
 	D3DXVECTOR3 GetSize();
 	virtual void Render() = 0;
+	RECT GetBound();
 };
 typedef CGameObject* LPGAMEOBJECT;
 #endif

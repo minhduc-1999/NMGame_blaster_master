@@ -10,12 +10,6 @@
 #include "CMagma.h"
 #include "CGate.h"
 #include "CLadder.h"
-/*
-#include "Utils.h"
-#include "Goomba.h"
-#include "Koopas.h"
-#include "Brick.h"
-#include "Portal.h"*/
 
 using namespace std;
 
@@ -29,8 +23,8 @@ CTestScene::CTestScene() :
 	CScene()
 {
 	key_handler = new CTestSceneKeyHandler(this);
-	gridHeight = 320.0f;
-	gridWidth = 512.0f;
+	gridHeight = 160.0f;
+	gridWidth = 256.0f;
 	mapX = 0.0f;
 	mapY = 0.0f;
 	mapWidth = 512.0f;
@@ -41,8 +35,9 @@ CTestScene::CTestScene() :
 	for (int i = 0; i < gridRow; i++)
 		for (int j = 0; j < gridCol; j++)
 		{
-			unordered_map<int, LPGRID> temp({ { j, new Grid(i, j)} });
-			grids.emplace(i, temp);
+			LPGRID temp = new Grid(i, j);
+			int index = (i % gridRow) * gridCol + j % gridCol;
+			grids.emplace(index, temp);
 		}
 }
 
@@ -86,14 +81,12 @@ void CTestScene::Render()
 {
 	//Kiem tra xem camera chiem grid nao
 	RECT camPos = CGame::GetInstance()->GetCamBound();
-	RECT grid = GetViewGrid(camPos);
-	for (int i = (int)grid.left; i <= (int)grid.right; i++)
-		for (int j = (int)grid.top; j <= (int)grid.bottom; j++)
-		{
-			if (grids.find(i) != grids.end())
-				if (grids.at(i).find(j) != grids.at(i).end())
-					grids.at(i).at(j)->Render();
-		}
+	D3DXVECTOR2 grid = GetBoundGrid(camPos);
+	for (int i = (int)grid.x; i <= (int)grid.y; i++)
+	{
+		if (grids.find(i) != grids.end())
+			grids.at(i)->Render();
+	}
 	//render main
 	player->Render();
 }
@@ -106,19 +99,17 @@ void CTestScene::Unload()
 
 }
 
-RECT CTestScene::GetViewGrid(RECT camPos)
+D3DXVECTOR2 CTestScene::GetBoundGrid(RECT bound)
 {
-	//	D3DXVECTOR3 start(startRow, startCol,  0);
-	D3DXVECTOR3 start(camPos.top / gridHeight, camPos.left / gridWidth, 0);
-	//	D3DXVECTOR3 end(endRow, endCol,  0);
-	D3DXVECTOR3 end(camPos.bottom / gridHeight, camPos.right / gridWidth, 0);
-	RECT res;
+	//	D3DXVECTOR2 start(startRow, startCol,  0);
+	D3DXVECTOR2 start(bound.top / gridHeight, bound.left / gridWidth);
+	//	D3DXVECTOR2 end(endRow, endCol,  0);
+	D3DXVECTOR2 end(bound.bottom / gridHeight, bound.right / gridWidth);
 
-	res.left = (int)start.x;
-	res.top = (int)start.y;
-	res.right = (int)end.x;
-	res.bottom = (int)end.y;
-	return res;
+	int startGrid = ((int)start.x % gridRow) * gridCol + (int)start.y % gridCol;
+	int endGrid = ((int)end.x % gridRow) * gridCol + (int)end.y % gridCol;
+
+	return D3DXVECTOR2(startGrid, endGrid);
 }
 
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
@@ -183,7 +174,6 @@ void CTestScene::GetMapInfo(string path)
 		}
 	}
 }
-
 
 void CTestScene::Load()
 {
@@ -250,15 +240,14 @@ void CTestScene::Load()
 				break;
 			}
 			if (obj != NULL)
-			{
-				// Tinh chi so hang + cot de xac dinh grid
-				// CT: chi so hang = Y / chieu cao grid
-				// CT: chi so cot  = X / chieu rong grid
-				int indexRow = obj->GetPosition().y / gridHeight;
-				int indexCol = obj->GetPosition().x / gridWidth;
-
-				grids[indexRow][indexCol]->AddObject(obj);
-
+			{			
+				//xac dinh cac grid chua object
+				D3DXVECTOR2 grid = GetBoundGrid(obj->GetBound());
+				for (int m = (int)grid.x; m <= (int)grid.y; m++)
+				{
+					if (grids.find(m) != grids.end())
+						grids.at(m)->AddObject(obj);
+				}
 			}
 		}
 	main->AddAnimation(500);
@@ -279,10 +268,7 @@ void CTestScene::Load()
 	jumper2 = new Jumper2();
 	jumper2->AddAnimation(520);
 	jumper2->SetPosition(100, 350);
-	jumper2->SetState(JUMPER2_STATE_WALKING_LEFT);
-	objects.push_back(insect);
-	objects.push_back(orb);
-	objects.push_back(jumper2);*/
+	jumper2->SetState(JUMPER2_STATE_WALKING_LEFT);*/
 }
 
 

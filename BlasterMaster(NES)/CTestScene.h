@@ -20,9 +20,8 @@ protected:
 	float gridHeight;
 	int gridCol, gridRow;
 	float mapX, mapY, mapWidth, mapHeight;
-	unordered_map<int, unordered_map<int, LPGRID>> grids;
 
-	//vector<LPSTATICOBJECT> staticObject;
+	unordered_map<int, LPGRID> grids;
 	unordered_map<int, unordered_map<int, int>> map;
 
 	void GetMapInfo(string path);
@@ -45,7 +44,8 @@ public:
 	Enemy1* GetPlayer() { return player; }
 	D3DXVECTOR3 GetSceneMapPos() { return D3DXVECTOR3{ mapX, mapY, 0 }; }
 	D3DXVECTOR3 GetSceneMapDimension() { return D3DXVECTOR3{ mapWidth, mapHeight, 0 }; }
-	RECT GetViewGrid(RECT camPos);
+	D3DXVECTOR2 GetBoundGrid(RECT bound);
+
 	//friend class CTestSceneKeyHandler;
 };
 
