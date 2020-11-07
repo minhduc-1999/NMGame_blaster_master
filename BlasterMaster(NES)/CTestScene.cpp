@@ -84,56 +84,11 @@ void CTestScene::Update(DWORD dt)
 
 void CTestScene::Render()
 {
-	//tinh so luong tile cua map ma scene nay co
-	int numTileX = mapWidth / 16;
-	int numTileY = mapHeight / 16;
-
-	//tinh xem tile dau tien co chi so bao nhieu
-	int startTileX = mapX / 16;
-	int startTileY = mapY / 16;
-	//Draw background
-	for (int i = startTileY; i < startTileY + numTileY; i++)
-		for (int j = startTileX; j < startTileX + numTileX; j++)
-		{
-			int t = map[i][j];
-			switch (t)
-			{
-				//static object: tuong tac duoc nhung khong the di chuyen
-			case 46: case 47: case 48: case 49:
-			case 57: case 58: case 59: case 60:
-			case 8:
-			case 107:
-				//brick
-			case 7:
-			case 62:
-			case 63:
-			case 64:
-			case 65:
-			case 66:
-			case 117:
-			case 51:
-				break;
-			default:
-				int x = j * 16 + 8, y = i * 16 + 8;
-				LPSPRITE sprite = CSpriteManager::GetInstance()->Get(20000 + t - 1);
-				if (sprite == NULL)
-					break;
-				sprite->Draw(x, y, -1);
-				break;
-			}
-		}
-
-	/*for (int i = 0; i < staticObject.size(); i++)
-		staticObject[i]->Render();*/
-
-		//Kiem tra xem camera chiem grid nao
+	//Kiem tra xem camera chiem grid nao
 	RECT camPos = CGame::GetInstance()->GetCamBound();
-	//	D3DXVECTOR3 start(startRow, startCol,  0);
-	D3DXVECTOR3 start(camPos.top / gridHeight, camPos.left / gridWidth, 0);
-	//	D3DXVECTOR3 end(endRow, endCol,  0);
-	D3DXVECTOR3 end(camPos.bottom / gridHeight, camPos.right / gridWidth, 0);
-	for (int i = (int)start.x; i <= (int)end.x; i++)
-		for (int j = (int)start.y; j <= (int)end.y; j++)
+	RECT grid = GetViewGrid(camPos);
+	for (int i = (int)grid.left; i <= (int)grid.right; i++)
+		for (int j = (int)grid.top; j <= (int)grid.bottom; j++)
 		{
 			if (grids.find(i) != grids.end())
 				if (grids.at(i).find(j) != grids.at(i).end())
@@ -149,6 +104,21 @@ void CTestScene::Render()
 void CTestScene::Unload()
 {
 
+}
+
+RECT CTestScene::GetViewGrid(RECT camPos)
+{
+	//	D3DXVECTOR3 start(startRow, startCol,  0);
+	D3DXVECTOR3 start(camPos.top / gridHeight, camPos.left / gridWidth, 0);
+	//	D3DXVECTOR3 end(endRow, endCol,  0);
+	D3DXVECTOR3 end(camPos.bottom / gridHeight, camPos.right / gridWidth, 0);
+	RECT res;
+
+	res.left = (int)start.x;
+	res.top = (int)start.y;
+	res.right = (int)end.x;
+	res.bottom = (int)end.y;
+	return res;
 }
 
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
@@ -178,7 +148,6 @@ void CTestSceneKeyHandler::OnKeyUp(int KeyCode)
 {
 
 }
-
 
 void CTestScene::GetMapInfo(string path)
 {
@@ -248,7 +217,6 @@ void CTestScene::Load()
 			{
 				obj = new Brick(float(j * 16 + 8), float(i * 16 + 8));
 				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
-				//staticObject.push_back(obj);
 				break;
 			}
 			//object magma
@@ -256,7 +224,6 @@ void CTestScene::Load()
 			{
 				obj = new CMagma(float(j * 16 + 8), float(i * 16 + 8));
 				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
-				//staticObject.push_back(obj);
 				break;
 			}
 			//object gate
@@ -267,7 +234,6 @@ void CTestScene::Load()
 				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t));
 				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t + 10));
 				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t + 11));
-				//staticObject.push_back(obj);
 				break;
 			}
 			//object ladder
@@ -275,11 +241,12 @@ void CTestScene::Load()
 			{
 				obj = new CLadder(float(j * 16 + 8), float(i * 16 + 8));
 				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
-				//staticObject.push_back(obj);
 				break;
 			}
 			//none object (background)
 			default:
+				obj = new CStaticGameObject(float(j * 16 + 8), float(i * 16 + 8));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
 				break;
 			}
 			if (obj != NULL)
@@ -291,7 +258,6 @@ void CTestScene::Load()
 				int indexCol = obj->GetPosition().x / gridWidth;
 
 				grids[indexRow][indexCol]->AddObject(obj);
-				//staticObject.push_back(obj);
 
 			}
 		}

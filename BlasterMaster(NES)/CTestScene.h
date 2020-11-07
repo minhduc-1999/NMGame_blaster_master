@@ -45,6 +45,7 @@ public:
 	Enemy1* GetPlayer() { return player; }
 	D3DXVECTOR3 GetSceneMapPos() { return D3DXVECTOR3{ mapX, mapY, 0 }; }
 	D3DXVECTOR3 GetSceneMapDimension() { return D3DXVECTOR3{ mapWidth, mapHeight, 0 }; }
+	RECT GetViewGrid(RECT camPos);
 	//friend class CTestSceneKeyHandler;
 };
 
