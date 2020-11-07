@@ -1,12 +1,12 @@
 #include "Enemy1.h"
 
-Enemy1::Enemy1(float x, float y) :CGameObject(x, y)
+Enemy1::Enemy1(float x, float y) :CDynamicGameObject(x, y)
 {
 };
 
 void Enemy1::Update(DWORD dt)
 {
-	CGameObject::Update(dt);
+	CDynamicGameObject::Update(dt);
 }
 
 void Enemy1::Render()
@@ -17,7 +17,7 @@ void Enemy1::Render()
 
 void Enemy1::SetState(int state)
 {
-	CGameObject::SetState(state);
+	CDynamicGameObject::SetState(state);
 	switch (state)
 	{
 	case IDLE:

@@ -57,8 +57,8 @@ void CPlayScene::Update(DWORD dt)
 {
 	player->Update(dt);
 	float cx, cy;
-	cx = player->GetX();
-	cy = player->GetY();
+	cx = player->GetPosition().x;
+	cy = player->GetPosition().y;
 
 	CGame* game = CGame::GetInstance();
 	cx -= game->GetScreenWidth() / 2;
@@ -198,7 +198,7 @@ void CPlayScene::Load()
 			case 51:
 			{
 				Brick* obj = new Brick(float(j * 16 + 8), float(i * 16 + 8));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
 				staticObject.push_back(obj);
 				break;
 			}
@@ -206,7 +206,7 @@ void CPlayScene::Load()
 			case 107:
 			{
 				CMagma* obj = new CMagma(float(j * 16 + 8), float(i * 16 + 8));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
 				staticObject.push_back(obj);
 				break;
 			}
@@ -214,10 +214,10 @@ void CPlayScene::Load()
 			case 46:case 48:
 			{
 				CGate* obj = new CGate(float(j * 16 + 8), float(i * 16 + 8));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t + 10));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t + 11));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t + 10));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t + 11));
 				staticObject.push_back(obj);
 				break;
 			}
@@ -225,7 +225,7 @@ void CPlayScene::Load()
 			case 8:
 			{
 				CLadder* obj = new CLadder(float(j * 16 + 8), float(i * 16 + 8));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
 				staticObject.push_back(obj);
 				break;
 			}

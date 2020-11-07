@@ -2,7 +2,7 @@
 
 void Orb::Update(DWORD dt)
 {
-	CGameObject::Update(dt);
+	CDynamicGameObject::Update(dt);
 	if (vx > 0 && x > 290)
 	{
 		x = 290;
@@ -52,7 +52,7 @@ void Orb::Render()
 
 void Orb::SetState(int state)
 {
-	CGameObject::SetState(state);
+	CDynamicGameObject::SetState(state);
 	switch (state)
 	{
 	case ORB_STATE_TURN_RIGHT:

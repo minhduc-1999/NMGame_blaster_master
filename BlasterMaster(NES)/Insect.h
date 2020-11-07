@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "DynamicGameObject.h"
 
 #define INSECT_FLYING_SPEED		0.1f
 
@@ -10,10 +10,10 @@
 #define INSECT_ANI_FLY_LEFT		0
 
 class Insect :
-    public CGameObject
+    public CDynamicGameObject
 {
 public:
-    Insect() : CGameObject(){}
+    Insect(float x, float y) : CDynamicGameObject(x, y){}
     void SetState(int state);
     void Update(DWORD dt);
     void Render();

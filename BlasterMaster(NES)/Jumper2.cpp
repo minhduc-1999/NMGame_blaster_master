@@ -2,7 +2,7 @@
 
 void Jumper2::Update(DWORD dt)
 {
-		CGameObject::Update(dt);
+	CDynamicGameObject::Update(dt);
 	if (vx > 0 && x > 290)
 	{
 		x = 290;
@@ -32,7 +32,7 @@ void Jumper2::Render()
 
 void Jumper2::SetState(int state)
 {
-	CGameObject::SetState(state);
+	CDynamicGameObject::SetState(state);
 	switch (state)
 	{
 	case JUMPER2_STATE_IDLE:

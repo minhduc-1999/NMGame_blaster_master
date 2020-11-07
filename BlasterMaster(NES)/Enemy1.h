@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.h"
+#include "DynamicGameObject.h"
 
 #define SPEED		0.1
 #define GO_LEFT		100
@@ -10,7 +10,7 @@
 #define IDLE		500
 
 
-class Enemy1 : public CGameObject
+class Enemy1 : public CDynamicGameObject
 {
 public:
 	Enemy1(float x, float y);

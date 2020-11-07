@@ -1,6 +1,6 @@
 #ifndef _ORB_H
 #define _ORB_H
-#include "GameObject.h"
+#include "DynamicGameObject.h"
 
 #define ORB_RUNNING_SPEED		0.05f
 
@@ -14,10 +14,10 @@
 #define ORB_ANI_TURN_RIGHT      1
 
 class Orb :
-    public CGameObject
+    public CDynamicGameObject
 {
 public:
-    Orb() : CGameObject() {}
+    Orb(float x, float y) : CDynamicGameObject(x, y) {}
     void SetState(int state);
     void Update(DWORD dt);
     void Render();

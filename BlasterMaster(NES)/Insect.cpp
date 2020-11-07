@@ -20,7 +20,7 @@ void Insect::Update(DWORD dt)
 	// simple fall down
 
 	//// simple screen edge collision!!!
-	CGameObject::Update(dt);
+	CDynamicGameObject::Update(dt);
 	if (vx > 0 && x > 290)
 	{
 		x = 290;
@@ -51,7 +51,7 @@ void Insect::Render()
 
 void Insect::SetState(int state)
 {
-	CGameObject::SetState(state);
+	CDynamicGameObject::SetState(state);
 	switch (state)
 	{
 	case INSECT_STATE_IDLE:

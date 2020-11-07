@@ -1,9 +1,9 @@
 #pragma once
 #include "StaticGameObject.h"
 class CMagma :
-    public StaticGameObject
+    public CStaticGameObject
 {
 public:
-    CMagma(float x, float y) :StaticGameObject(x, y) {}
+    CMagma(float x, float y) :CStaticGameObject(x, y) {}
 };
 

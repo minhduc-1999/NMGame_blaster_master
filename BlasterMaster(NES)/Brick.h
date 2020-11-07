@@ -1,10 +1,9 @@
 #pragma once
 #include "StaticGameObject.h"
 class Brick :
-	public StaticGameObject
+	public CStaticGameObject
 {
 public:
-	// Brick() :StaticGameObject() {}
-	Brick(float x, float y) :StaticGameObject(x, y) {}
+	Brick(float x, float y) :CStaticGameObject(x, y) {}
 };
 

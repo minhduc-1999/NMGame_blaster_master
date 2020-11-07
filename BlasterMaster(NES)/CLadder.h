@@ -1,9 +1,9 @@
 #pragma once
 #include "StaticGameObject.h"
 class CLadder :
-    public StaticGameObject
+    public CStaticGameObject
 {
 public:
-    CLadder(float x, float y) :StaticGameObject(x, y) {}
+    CLadder(float x, float y) :CStaticGameObject(x, y) {}
 };
 

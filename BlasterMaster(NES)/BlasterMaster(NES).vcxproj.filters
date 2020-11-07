@@ -32,9 +32,6 @@
     <Filter Include="Game">
       <UniqueIdentifier>{c53f67eb-a4d5-41dc-9e3d-d78635c055e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Background">
-      <UniqueIdentifier>{f97b3e51-ad1e-493f-bae1-bc3c018270d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\StaticObject">
       <UniqueIdentifier>{b7ca9b8d-e859-4be8-aefd-7dd7432454f1}</UniqueIdentifier>
     </Filter>
@@ -160,6 +157,9 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="DynamicGameObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -233,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicGameObject.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

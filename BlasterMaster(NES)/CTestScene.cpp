@@ -72,8 +72,8 @@ void CTestScene::Update(DWORD dt)
 {
 	player->Update(dt);
 	float cx, cy;
-	cx = player->GetX();
-	cy = player->GetY();
+	cx = player->GetPosition().x;
+	cy = player->GetPosition().y;
 
 	CGame* game = CGame::GetInstance();
 	cx -= game->GetScreenWidth() / 2;
@@ -247,7 +247,7 @@ void CTestScene::Load()
 			case 51:
 			{
 				obj = new Brick(float(j * 16 + 8), float(i * 16 + 8));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
 				//staticObject.push_back(obj);
 				break;
 			}
@@ -255,7 +255,7 @@ void CTestScene::Load()
 			case 107:
 			{
 				obj = new CMagma(float(j * 16 + 8), float(i * 16 + 8));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
 				//staticObject.push_back(obj);
 				break;
 			}
@@ -263,10 +263,10 @@ void CTestScene::Load()
 			case 46:case 48:
 			{
 				obj = new CGate(float(j * 16 + 8), float(i * 16 + 8));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t + 10));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t + 11));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t + 10));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t + 11));
 				//staticObject.push_back(obj);
 				break;
 			}
@@ -274,7 +274,7 @@ void CTestScene::Load()
 			case 8:
 			{
 				obj = new CLadder(float(j * 16 + 8), float(i * 16 + 8));
-				obj->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
 				//staticObject.push_back(obj);
 				break;
 			}
@@ -287,8 +287,8 @@ void CTestScene::Load()
 				// Tinh chi so hang + cot de xac dinh grid
 				// CT: chi so hang = Y / chieu cao grid
 				// CT: chi so cot  = X / chieu rong grid
-				int indexRow = obj->GetY() / gridHeight;
-				int indexCol = obj->GetX() / gridWidth;
+				int indexRow = obj->GetPosition().y / gridHeight;
+				int indexCol = obj->GetPosition().x / gridWidth;
 
 				grids[indexRow][indexCol]->AddObject(obj);
 				//staticObject.push_back(obj);
