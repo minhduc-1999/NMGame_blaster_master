@@ -163,8 +163,10 @@
     <ClInclude Include="PlayScence.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scence.h" />
+    <ClInclude Include="Skull.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="StaticGameObject.h" />
+    <ClInclude Include="Teleporter.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
@@ -188,8 +190,10 @@
     <ClCompile Include="PlayScence.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scence.cpp" />
+    <ClCompile Include="Skull.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="StaticGameObject.cpp" />
+    <ClCompile Include="Teleporter.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />

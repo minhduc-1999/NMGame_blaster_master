@@ -89,6 +89,12 @@
     <Filter Include="Resources\MapXML\Area2">
       <UniqueIdentifier>{887b3d5e-2d02-44e3-9fb4-be8e1592521b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Skull">
+      <UniqueIdentifier>{85c2dce0-a24b-4d69-950e-27ee3a6610ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Teleporter">
+      <UniqueIdentifier>{fc173de4-a773-498d-8866-bf572300616b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -159,6 +165,12 @@
     </ClInclude>
     <ClInclude Include="DynamicGameObject.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Skull.h">
+      <Filter>Object\DynamicObject\Skull</Filter>
+    </ClInclude>
+    <ClInclude Include="Teleporter.h">
+      <Filter>Object\DynamicObject\Teleporter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="DynamicGameObject.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Skull.cpp">
+      <Filter>Object\DynamicObject\Skull</Filter>
+    </ClCompile>
+    <ClCompile Include="Teleporter.cpp">
+      <Filter>Object\DynamicObject\Teleporter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
