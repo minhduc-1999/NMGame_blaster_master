@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Background.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CGate.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="tinyxml.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CGate.cpp" />

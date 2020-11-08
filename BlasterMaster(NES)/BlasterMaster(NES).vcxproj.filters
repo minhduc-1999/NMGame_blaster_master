@@ -89,6 +89,9 @@
     <Filter Include="Resources\MapXML\Area2">
       <UniqueIdentifier>{887b3d5e-2d02-44e3-9fb4-be8e1592521b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\Background">
+      <UniqueIdentifier>{4ab3f06e-1f48-48b2-bbd5-1a92e36d5f99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -159,6 +162,9 @@
     </ClInclude>
     <ClInclude Include="DynamicGameObject.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>FrameWork\Background</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +242,9 @@
     </ClCompile>
     <ClCompile Include="DynamicGameObject.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>FrameWork\Background</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

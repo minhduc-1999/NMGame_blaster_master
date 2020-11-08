@@ -199,6 +199,7 @@ void CTestScene::Load()
 		{
 			int t = map[i][j];
 			LPSTATICOBJECT obj = NULL;
+			LPBACKGROUND bg = NULL;
 			switch (t)
 			{
 				//object brick
@@ -235,12 +236,13 @@ void CTestScene::Load()
 			}
 			//none object (background)
 			default:
-				obj = new CStaticGameObject(float(j * 16 + 8), float(i * 16 + 8));
-				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
-				break;
+			{
+				bg = new CBackground(float(j * 16 + 8), float(i * 16 + 8));
+				bg->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+			}
 			}
 			if (obj != NULL)
-			{			
+			{
 				//xac dinh cac grid chua object
 				D3DXVECTOR2 grid = GetBoundGrid(obj->GetBound());
 				for (int m = (int)grid.x; m <= (int)grid.y; m++)
@@ -249,6 +251,17 @@ void CTestScene::Load()
 						grids.at(m)->AddObject(obj);
 				}
 			}
+			if (bg != NULL)
+			{
+				//xac dinh cac grid chua object
+				D3DXVECTOR2 grid = GetBoundGrid(bg->GetBound());
+				for (int m = (int)grid.x; m <= (int)grid.y; m++)
+				{
+					if (grids.find(m) != grids.end())
+						grids.at(m)->AddBackgroundTile(bg);
+				}
+			}
+
 		}
 	main->AddAnimation(500);
 	main->SetPosition(100, 100);

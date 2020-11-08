@@ -5,8 +5,11 @@ class CDynamicGameObject :
 {
 protected:
 	float vx, vy;
+	float dx, dy;
 	int nx;
 	int state;
+
+	DWORD dt;
 	vector<LPANIMATION> animations;
 public:
 	CDynamicGameObject(float x, float y);
@@ -14,10 +17,19 @@ public:
 	virtual void SetState(int state);
 	int GetState();
 
-	void SetSpeed(float vx, float vy);
-	D3DXVECTOR3 GetSpeed();
+	
 	virtual void Update(DWORD dt);
 	void AddAnimation(int aniId);
+
+	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
+	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
+	void FilterCollision(
+		vector<LPCOLLISIONEVENT>& coEvents,
+		vector<LPCOLLISIONEVENT>& coEventsResult,
+		float& min_tx,
+		float& min_ty,
+		float& nx,
+		float& ny);
 };
 typedef CDynamicGameObject* LPDYNAMICOBJECT;
 
