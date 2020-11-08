@@ -1,5 +1,6 @@
 #pragma once
 #include "Sprites.h"
+#include "Utils.h"
 
 class CBackground
 {
@@ -13,7 +14,7 @@ public:
 	void SetPosition(float x, float y);
 	void SetSprite(LPSPRITE sp);
 	void Render();
-	RECT GetBound();
+	Rect GetBound();
 };
 typedef CBackground* LPBACKGROUND;
 

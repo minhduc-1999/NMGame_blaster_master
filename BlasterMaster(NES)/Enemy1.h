@@ -1,5 +1,4 @@
 #pragma once
-
 #include "DynamicGameObject.h"
 
 #define SPEED		0.1
@@ -14,7 +13,7 @@ class Enemy1 : public CDynamicGameObject
 {
 public:
 	Enemy1(float x, float y);
-	void Update(DWORD dt);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
 };

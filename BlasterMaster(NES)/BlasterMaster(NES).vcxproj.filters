@@ -166,6 +166,9 @@
     <ClInclude Include="Background.h">
       <Filter>FrameWork\Background</Filter>
     </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -246,6 +249,7 @@
     <ClCompile Include="Background.cpp">
       <Filter>FrameWork\Background</Filter>
     </ClCompile>
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="BlasterMaster.ico">

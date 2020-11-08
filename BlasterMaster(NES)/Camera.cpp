@@ -46,9 +46,9 @@ D3DXVECTOR3 Camera::GetPosition()
     return mPosition;
 }
 
-RECT Camera::GetBound()
+Rect Camera::GetBound()
 {
-    RECT bound; 
+    Rect bound; 
 
     bound.left = mPosition.x;
     bound.right = bound.left + mWidth - 1;

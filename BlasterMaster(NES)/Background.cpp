@@ -30,9 +30,9 @@ void CBackground::Render()
 	sprite->Draw(x, y, -1);
 }
 
-RECT CBackground::GetBound()
+Rect CBackground::GetBound()
 {
-	RECT bound;
+	Rect bound;
 
 	bound.left = x - width / 2;
 	bound.right = bound.left + width - 1;

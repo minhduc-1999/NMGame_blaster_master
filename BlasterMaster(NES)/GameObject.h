@@ -1,6 +1,7 @@
 #ifndef _GAMEOBJECT_H
 #define _GAMEOBJECT_H
 #include "Sprites.h"
+#include "Utils.h"
 
 class CGameObject;
 typedef CGameObject* LPGAMEOBJECT;
@@ -33,7 +34,7 @@ public:
 	void SetSpeed(float vx, float vy);
 	D3DXVECTOR3 GetSpeed();
 	virtual void Render() = 0;
-	RECT GetBound();
+	virtual Rect GetBound();
 };
 #endif
 

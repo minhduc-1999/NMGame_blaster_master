@@ -20,7 +20,11 @@ void Grid::RemoveObject(LPSTATICOBJECT obj)
 void Grid::Update(DWORD dt)
 {
 	
-		
+}
+
+vector<LPSTATICOBJECT>* Grid::GetcoObjectList()
+{
+	return &staticObjs;
 }
 
 void Grid::Render()

@@ -4,6 +4,7 @@
 CDynamicGameObject::CDynamicGameObject(float x, float y) :CGameObject(x, y)
 {
 	nx = 1;
+	SetSize(16, 16);
 }
 
 
@@ -19,7 +20,7 @@ int CDynamicGameObject::GetState()
 
 
 
-void CDynamicGameObject::Update(DWORD dt)
+void CDynamicGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->dt = dt;
 	dx = vx * dt;
@@ -40,7 +41,7 @@ LPCOLLISIONEVENT CDynamicGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 	float ml, mt, mr, mb;		// moving object bbox
 	float t, nx, ny;
 
-	RECT sBound = coO->GetBound();
+	Rect sBound = coO->GetBound();
 	sl = sBound.left;
 	st = sBound.top;
 	sr = sBound.right;
@@ -61,7 +62,7 @@ LPCOLLISIONEVENT CDynamicGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 	float dy = this->dy - sdy;
 
 	//GetBoundingBox(ml, mt, mr, mb);
-	RECT mBound = this->GetBound();
+	Rect mBound = this->GetBound();
 	ml = mBound.left;
 	mt = mBound.top;
 	mr = mBound.right;

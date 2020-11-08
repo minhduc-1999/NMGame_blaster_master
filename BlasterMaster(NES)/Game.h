@@ -6,7 +6,7 @@
 #include <dinput.h>
 #include "Scence.h"
 #include "Camera.h"
-
+#include "Utils.h"
 #define KEYBOARD_BUFFER_SIZE 1024
 #define DIRECTINPUT_VERSION 0x0800
 
@@ -66,7 +66,7 @@ public:
 	void SetCamPos(float x, float y, D3DXVECTOR3 mapPos, D3DXVECTOR3 mapDimen) { camera->SetPosition(x, y, mapPos, mapDimen); }
 	void SetCamPos(float x, float y) { camera->SetPosition(x, y); }
 	D3DXVECTOR3 GetCamPos() { return camera->GetPosition(); }
-	RECT GetCamBound() { return camera->GetBound(); }
+	Rect GetCamBound() { return camera->GetBound(); }
 	int GetScreenWidth() { return screen_width; }
 	int GetScreenHeight() { return screen_height; }
 

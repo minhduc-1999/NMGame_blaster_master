@@ -13,6 +13,7 @@ public:
 	Grid(int rowid, int colid) { rowID = rowid; colID = colid; }
 	void RemoveObject(LPSTATICOBJECT obj);
 	void Update(DWORD dt);
+	vector<LPSTATICOBJECT>* GetcoObjectList();
 	void Render();
 };
 

@@ -18,7 +18,7 @@ public:
 	int GetState();
 
 	
-	virtual void Update(DWORD dt);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void AddAnimation(int aniId);
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
