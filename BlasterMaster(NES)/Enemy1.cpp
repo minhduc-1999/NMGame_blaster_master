@@ -8,6 +8,8 @@ void Enemy1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 
+	vy += 0.05;
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -54,7 +56,7 @@ void Enemy1::SetState(int state)
 	{
 	case IDLE:
 		vx = 0;
-		vy = 0;
+		//vy = 0;
 		break;
 	case GO_LEFT:
 		vx = -SPEED;
