@@ -133,8 +133,8 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 void CTestSceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
-	Enemy1* player = ((CTestScene*)scence)->GetPlayer();
-	if (player->GetState() == -1) return;
+	Player* player = ((CTestScene*)scence)->GetPlayer();
+	/*if (player->GetState() == -1) return;
 	if (game->IsKeyDown(DIK_RIGHT))
 		player->SetState(GO_RIGHT);
 	else if (game->IsKeyDown(DIK_LEFT))
@@ -144,7 +144,7 @@ void CTestSceneKeyHandler::KeyState(BYTE* states)
 	else if (game->IsKeyDown(DIK_DOWN))
 		player->SetState(GO_BOTTOM);
 	else
-		player->SetState(IDLE);
+		player->SetState(IDLE);*/
 
 }
 
@@ -194,8 +194,8 @@ void CTestScene::Load()
 	/*Insect* insect;
 	Orb* orb;
 	Jumper2* jumper2;*/
-	Enemy1* main;
-	main = new Enemy1(256, 256);
+	Player* main;
+	main = new Player(256, 256);
 
 
 	//Load object
@@ -283,7 +283,7 @@ void CTestScene::Load()
 		}
 	main->AddAnimation(500);
 	main->SetPosition(64, 100);
-	main->SetState(IDLE);
+	//main->SetState(IDLE);
 	player = main;
 	/*insect = new Insect();
 	insect->AddAnimation(500);

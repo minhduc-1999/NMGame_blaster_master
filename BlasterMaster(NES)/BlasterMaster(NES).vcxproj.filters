@@ -95,6 +95,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{d09617a2-9564-4d52-a7b0-401d9dc3c311}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Player">
+      <UniqueIdentifier>{a5e068a8-9d96-4f8c-ac78-91f3494cf41d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -171,6 +174,9 @@
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\DynamicObject\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -255,6 +261,9 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\DynamicObject\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="BlasterMaster.ico">
@@ -265,6 +274,12 @@
     </Image>
     <Image Include="area2-tile.png">
       <Filter>Resources\Sprites\Map\Area2</Filter>
+    </Image>
+    <Image Include="Jason.png">
+      <Filter>Resources\Sprites\Player</Filter>
+    </Image>
+    <Image Include="Sophia.png">
+      <Filter>Resources\Sprites\Player</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

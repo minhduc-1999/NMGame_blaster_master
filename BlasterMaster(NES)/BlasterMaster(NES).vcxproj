@@ -161,6 +161,7 @@
     <ClInclude Include="Jumper2.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Orb.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScence.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scence.h" />
@@ -188,6 +189,7 @@
     <ClCompile Include="Jumper2.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Orb.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScence.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scence.cpp" />
@@ -204,6 +206,8 @@
     <Image Include="area2-tile.png" />
     <Image Include="BlasterMaster.ico" />
     <Image Include="enemy.png" />
+    <Image Include="Jason.png" />
+    <Image Include="Sophia.png" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="mapArea2.xml" />

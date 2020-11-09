@@ -3,7 +3,7 @@
 #include "Textures.h"
 #include "Scence.h"
 #include "GameObject.h"
-#include "Enemy1.h"
+#include "Player.h"
 #include "Orb.h"
 #include "Jumper2.h"
 #include "Insect.h"
@@ -14,7 +14,7 @@
 class CTestScene : public CScene
 {
 protected:
-	Enemy1* player;	// A play scene has to have player, right?
+	Player* player;	// A play scene has to have player, right?
 
 	float gridWidth;
 	float gridHeight;
@@ -41,7 +41,7 @@ public:
 	virtual void Render();
 	virtual void Unload();
 
-	Enemy1* GetPlayer() { return player; }
+	Player* GetPlayer() { return player; }
 	D3DXVECTOR3 GetSceneMapPos() { return D3DXVECTOR3{ mapX, mapY, 0 }; }
 	D3DXVECTOR3 GetSceneMapDimension() { return D3DXVECTOR3{ mapWidth, mapHeight, 0 }; }
 	D3DXVECTOR2 GetBoundGrid(Rect bound);
