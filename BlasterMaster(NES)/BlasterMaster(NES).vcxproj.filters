@@ -95,6 +95,9 @@
     <Filter Include="Object\DynamicObject\Teleporter">
       <UniqueIdentifier>{fc173de4-a773-498d-8866-bf572300616b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\Background">
+      <UniqueIdentifier>{4ab3f06e-1f48-48b2-bbd5-1a92e36d5f99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -171,6 +174,12 @@
     </ClInclude>
     <ClInclude Include="Teleporter.h">
       <Filter>Object\DynamicObject\Teleporter</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>FrameWork\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -255,6 +264,10 @@
     <ClCompile Include="Teleporter.cpp">
       <Filter>Object\DynamicObject\Teleporter</Filter>
     </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>FrameWork\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="BlasterMaster.ico">

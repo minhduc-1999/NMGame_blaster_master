@@ -65,7 +65,20 @@ CTestScene::CTestScene() :
 
 void CTestScene::Update(DWORD dt)
 {
-	player->Update(dt);
+	vector<LPGAMEOBJECT> coObjs;
+	Rect camPos = CGame::GetInstance()->GetCamBound();
+	D3DXVECTOR2 grid = GetBoundGrid(camPos);
+	for (int i = (int)grid.x; i <= (int)grid.y; i++)
+	{
+		if (grids.find(i) != grids.end())
+		{
+			vector<LPSTATICOBJECT>* temp = grids.at(i)->GetcoObjectList();
+			coObjs.insert(coObjs.end(), temp->begin(), temp->end());
+		}
+	}
+
+	player->Update(dt, &coObjs);
+
 	float cx, cy;
 	cx = player->GetPosition().x;
 	cy = player->GetPosition().y;
@@ -80,7 +93,7 @@ void CTestScene::Update(DWORD dt)
 void CTestScene::Render()
 {
 	//Kiem tra xem camera chiem grid nao
-	RECT camPos = CGame::GetInstance()->GetCamBound();
+	Rect camPos = CGame::GetInstance()->GetCamBound();
 	D3DXVECTOR2 grid = GetBoundGrid(camPos);
 	for (int i = (int)grid.x; i <= (int)grid.y; i++)
 	{
@@ -99,7 +112,7 @@ void CTestScene::Unload()
 
 }
 
-D3DXVECTOR2 CTestScene::GetBoundGrid(RECT bound)
+D3DXVECTOR2 CTestScene::GetBoundGrid(Rect bound)
 {
 	//	D3DXVECTOR2 start(startRow, startCol,  0);
 	D3DXVECTOR2 start(bound.top / gridHeight, bound.left / gridWidth);
@@ -199,12 +212,15 @@ void CTestScene::Load()
 		{
 			int t = map[i][j];
 			LPSTATICOBJECT obj = NULL;
+			LPBACKGROUND bg = NULL;
 			switch (t)
 			{
 				//object brick
 			case 7:	case 61: case 62:case 63:case 64:case 65:case 66:case 117:
 			case 51:
 			{
+				if (i == 0 && j == 31)
+					i += 0;
 				obj = new Brick(float(j * 16 + 8), float(i * 16 + 8));
 				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
 				break;
@@ -219,13 +235,16 @@ void CTestScene::Load()
 			//object gate
 			case 46:case 48:
 			{
-				obj = new CGate(float(j * 16 + 8), float(i * 16 + 8));
+				obj = new CGate(float(j * 16 + 16), float(i * 16 + 16));
 				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
 				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t));
 				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t + 10));
 				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t + 11));
 				break;
 			}
+			//remain part of gate
+			case 47:case 57:case 58: case 49: case 59: case 60:
+				break;
 			//object ladder
 			case 8:
 			{
@@ -235,12 +254,13 @@ void CTestScene::Load()
 			}
 			//none object (background)
 			default:
-				obj = new CStaticGameObject(float(j * 16 + 8), float(i * 16 + 8));
-				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
-				break;
+			{
+				bg = new CBackground(float(j * 16 + 8), float(i * 16 + 8));
+				bg->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+			}
 			}
 			if (obj != NULL)
-			{			
+			{
 				//xac dinh cac grid chua object
 				D3DXVECTOR2 grid = GetBoundGrid(obj->GetBound());
 				for (int m = (int)grid.x; m <= (int)grid.y; m++)
@@ -249,9 +269,20 @@ void CTestScene::Load()
 						grids.at(m)->AddObject(obj);
 				}
 			}
+			if (bg != NULL)
+			{
+				//xac dinh cac grid chua object
+				D3DXVECTOR2 grid = GetBoundGrid(bg->GetBound());
+				for (int m = (int)grid.x; m <= (int)grid.y; m++)
+				{
+					if (grids.find(m) != grids.end())
+						grids.at(m)->AddBackgroundTile(bg);
+				}
+			}
+
 		}
 	main->AddAnimation(500);
-	main->SetPosition(100, 100);
+	main->SetPosition(64, 100);
 	main->SetState(IDLE);
 	player = main;
 	/*insect = new Insect();

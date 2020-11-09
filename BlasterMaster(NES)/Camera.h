@@ -2,7 +2,7 @@
 
 #include <d3dx9.h>
 #include <d3d9.h>
-
+#include "Utils.h"
 class Camera
 {
 public:
@@ -17,7 +17,7 @@ public:
     int GetHeight();
 
     D3DXVECTOR3 GetPosition();    
-    RECT GetBound();
+    Rect GetBound();
 
     ~Camera();
 

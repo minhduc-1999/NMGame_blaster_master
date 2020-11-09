@@ -55,7 +55,8 @@ CPlayScene::CPlayScene() :
 
 void CPlayScene::Update(DWORD dt)
 {
-	player->Update(dt);
+	player->Update(dt, NULL); // need to pass an collision obj list
+
 	float cx, cy;
 	cx = player->GetPosition().x;
 	cy = player->GetPosition().y;
