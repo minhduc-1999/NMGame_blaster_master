@@ -92,6 +92,9 @@
     <Filter Include="FrameWork\Background">
       <UniqueIdentifier>{4ab3f06e-1f48-48b2-bbd5-1a92e36d5f99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{d09617a2-9564-4d52-a7b0-401d9dc3c311}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -167,7 +170,7 @@
       <Filter>FrameWork\Background</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -249,7 +252,9 @@
     <ClCompile Include="Background.cpp">
       <Filter>FrameWork\Background</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Utils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="BlasterMaster.ico">

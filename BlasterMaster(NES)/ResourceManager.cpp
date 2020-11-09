@@ -8,7 +8,7 @@ ResourceManager::ResourceManager()
 
 void ResourceManager::LoadResource()
 {
-	textures->Add(ID_TEX_ENEMY, "enemy.png", D3DCOLOR_XRGB(176, 224, 248));
+	textures->Add(ID_TEX_ENEMY, "enemy.png", D3DCOLOR_XRGB(0,0,255));
 	textures->Add(ID_TEX_BOX, "bbox.png", D3DCOLOR_XRGB(176, 224, 248));
 	textures->Add(ID_TEX_TILE, "area2-tile.png", D3DCOLOR_XRGB(156, 219, 239));
 	//textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(156, 219, 239));
