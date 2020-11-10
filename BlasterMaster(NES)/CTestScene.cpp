@@ -325,6 +325,7 @@ void CTestScene::Load()
 	main->AddAnimation(103);
 	main->AddAnimation(104);
 	main->SetPosition(64, 100);
+	main->SetSize(24, 18);
 	main->SetState(SOPHIA_STATE_RUN_RIGHT);
 	player = main;
 	/*insect = new Insect();

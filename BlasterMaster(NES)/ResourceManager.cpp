@@ -71,14 +71,14 @@ void ResourceManager::LoadResource()
 	LPANIMATION ani;
 
 	//add anim SOPHIA RUN
-	ani = new CAnimation(100);
+	ani = new CAnimation(25);
 	ani->Add(10001);
 	ani->Add(10002);
 	ani->Add(10003);
 	ani->Add(10004);
 	animations->Add(100, ani);
 
-	ani = new CAnimation(100);
+	ani = new CAnimation(25);
 	ani->Add(10101);
 	ani->Add(10102);
 	ani->Add(10103);

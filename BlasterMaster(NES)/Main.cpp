@@ -4,8 +4,8 @@
 #define WINDOW_TITLE "NES-BlasterMaster"
 #define WINDOW_ICON_PATH "BlasterMaster.ico"
 
-#define SCREEN_WIDTH 527
-#define SCREEN_HEIGHT 358
+#define SCREEN_WIDTH 350
+#define SCREEN_HEIGHT 300
 
 #define MAX_FRAME_RATE 60
 

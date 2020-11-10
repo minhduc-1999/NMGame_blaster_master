@@ -38,7 +38,18 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
 		y += min_ty * dy + nty * 0.4f;
 
-		if (ntx != 0) vx = 0;
+		if (ntx != 0)
+		{
+			if (GetNX() == 1)
+			{
+				SetState(SOPHIA_STATE_IDLE_RIGHT);
+
+			}
+			else
+			{
+				SetState(SOPHIA_STATE_IDLE_LEFT);
+			}
+		}
 		if (nty != 0) vy = 0;
 
 		//TODO: Collision logic with dynamic object (bots)
