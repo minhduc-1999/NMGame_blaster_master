@@ -61,6 +61,8 @@ public:
 	void ResetAnim() { currentFrame = -1; _isCompleted = false; }
 	void Add(int spriteId, DWORD time = 0);
 	void Render(float x, float y, int dir);
+	void RenderFrame(int frameID, float x, float y, int dir);
+	void RenderStartByFrame(int frameID, float x, float y, int dir);
 };
 
 typedef CAnimation* LPANIMATION;

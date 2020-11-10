@@ -1,14 +1,19 @@
 #include "Player.h"
 
+int lastHeight = 0;
+int currentWalkingColumn = 0;
+
+
 Player::Player(float x, float y) :CDynamicGameObject(x, y)
 {
+	height = PLAYER_HEIGHT_HIGH;
 };
 
 void Player::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 
-	vy += 0.05;
+	vy += PLAYER_GRAVITY;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -45,8 +50,76 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Player::Render()
 {
-	LPANIMATION ani = animations[0];
-	ani->Render(x, y, 1);
+	int ani = SOPHIA_ANI_RUN_HIGH;
+
+	switch (state)
+	{
+	case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
+		ani = SOPHIA_ANI_RUN_HIGH;
+		animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+		return;
+		break;
+	case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
+		if (height == PLAYER_HEIGHT_HIGH)
+		{
+			lastHeight = 0;
+			ani = SOPHIA_ANI_RUN_HIGH;
+			height++;
+		}
+		else if (height == PLAYER_HEIGHT_LOW)
+		{
+			lastHeight = 2;
+			ani = SOPHIA_ANI_RUN_LOW;
+			height--;
+		}
+		else
+		{
+			if (lastHeight == 0)
+			{
+				ani = SOPHIA_ANI_RUN_HIGH;
+				height++;
+			}
+			else
+			{
+				ani = SOPHIA_ANI_RUN_LOW;
+				height--;
+			}
+		}
+
+		if (currentWalkingColumn == 3)
+		{
+			currentWalkingColumn = 0;
+		}
+		else
+		{
+			currentWalkingColumn++;
+		}
+
+		animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y, nx);
+		return;
+		break;
+	case SOPHIA_STATE_JUMP_RIGHT:case SOPHIA_STATE_JUMP_LEFT:
+		ani = SOPHIA_ANI_JUMP_UP;
+		break;
+	case SOPHIA_STATE_TURN_RUN:
+		ani = SOPHIA_ANI_TURN_RUN;
+		animations[ani]->Render(x, y, nx);
+		if (animations[ani]->IsCompleted())
+		{
+			if (nx == -1)
+			{
+				SetState(SOPHIA_STATE_RUN_RIGHT);
+			}
+			else
+			{
+				SetState(SOPHIA_STATE_RUN_LEFT);
+			}
+		}
+		return;
+		break;
+	}
+
+	animations[ani]->Render(x, y, nx);
 }
 
 void Player::SetState(int state)
@@ -54,5 +127,31 @@ void Player::SetState(int state)
 	CDynamicGameObject::SetState(state);
 	switch (state)
 	{
+	case SOPHIA_STATE_IDLE_RIGHT:
+		vx = 0;
+		nx = 1;
+		break;
+	case SOPHIA_STATE_IDLE_LEFT:
+		vx = 0;
+		nx = -1;
+		break;
+	case SOPHIA_STATE_RUN_RIGHT:
+		vx = PLAYER_RUN_SPEED;
+		nx = 1;
+		break;
+	case SOPHIA_STATE_RUN_LEFT:
+		vx = -PLAYER_RUN_SPEED;
+		nx = -1;
+		break;
+	case SOPHIA_STATE_JUMP_RIGHT:
+		vy = -PLAYER_JUMP_SPEED_Y;
+		nx = 1;
+		break;
+	case SOPHIA_STATE_JUMP_LEFT:
+		vy = -PLAYER_JUMP_SPEED_Y;
+		nx = -1;
+		break;
+	case SOPHIA_STATE_TURN_RUN:
+		break;
 	}
 }

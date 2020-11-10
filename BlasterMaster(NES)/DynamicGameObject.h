@@ -13,6 +13,8 @@ protected:
 	vector<LPANIMATION> animations;
 public:
 	CDynamicGameObject(float x, float y);
+
+	int GetNX() { return nx; };
 	
 	virtual void SetState(int state);
 	int GetState();

@@ -127,24 +127,62 @@ D3DXVECTOR2 CTestScene::GetBoundGrid(Rect bound)
 
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 {
-
+	CGame* game = CGame::GetInstance();
+	Player* player = ((CTestScene*)scence)->GetPlayer();
+	switch (KeyCode)
+	{
+	case DIK_X:
+		if (player->GetNX() == 1)
+		{
+			player->SetState(SOPHIA_STATE_JUMP_RIGHT);
+		}
+		else
+		{
+			player->SetState(SOPHIA_STATE_JUMP_LEFT);
+		}
+		break;
+	}
 }
 
 void CTestSceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 	Player* player = ((CTestScene*)scence)->GetPlayer();
-	/*if (player->GetState() == -1) return;
+	if (player->GetState() == -1) return;
 	if (game->IsKeyDown(DIK_RIGHT))
-		player->SetState(GO_RIGHT);
+		if (player->GetNX() == -1)
+		{
+			player->SetState(SOPHIA_STATE_TURN_RUN);
+		}
+		else
+		{
+			player->SetState(SOPHIA_STATE_RUN_RIGHT);
+		}
 	else if (game->IsKeyDown(DIK_LEFT))
-		player->SetState(GO_LEFT);
-	else if (game->IsKeyDown(DIK_UP))
+		if (player->GetNX() == 1)
+		{
+			player->SetState(SOPHIA_STATE_TURN_RUN);
+		}
+		else
+		{
+			player->SetState(SOPHIA_STATE_RUN_LEFT);
+		}
+		//player->SetState(SOPHIA_STATE_RUN_LEFT);
+	/*else if (game->IsKeyDown(DIK_UP))
 		player->SetState(GO_TOP);
 	else if (game->IsKeyDown(DIK_DOWN))
-		player->SetState(GO_BOTTOM);
+		player->SetState(GO_BOTTOM);*/
 	else
-		player->SetState(IDLE);*/
+	{
+		if (player->GetNX() == 1)
+		{
+			player->SetState(SOPHIA_STATE_IDLE_RIGHT);
+		}
+		else
+		{
+			player->SetState(SOPHIA_STATE_IDLE_LEFT);
+		}
+	}
 
 }
 
@@ -281,9 +319,13 @@ void CTestScene::Load()
 			}
 
 		}
-	main->AddAnimation(500);
+	main->AddAnimation(100);
+	main->AddAnimation(101);
+	main->AddAnimation(102);
+	main->AddAnimation(103);
+	main->AddAnimation(104);
 	main->SetPosition(64, 100);
-	//main->SetState(IDLE);
+	main->SetState(SOPHIA_STATE_RUN_RIGHT);
 	player = main;
 	/*insect = new Insect();
 	insect->AddAnimation(500);

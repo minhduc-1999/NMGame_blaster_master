@@ -5,6 +5,8 @@
 #define ID_TEX_MISC 20
 #define ID_TEX_BOX	30
 #define ID_TEX_TILE 40
+#define ID_TEX_PLAYER_JASON 50
+#define ID_TEX_PLAYER_SOPHIA 60
 
 class ResourceManager
 {

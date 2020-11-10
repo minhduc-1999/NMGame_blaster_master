@@ -90,6 +90,55 @@ void CAnimation::Render(float x, float y, int dir)
 	frames[currentFrame]->GetSprite()->Draw(x, y, dir);
 }
 
+void CAnimation::RenderFrame(int frameID, float x, float y, int dir)
+{
+	currentFrame = frameID;
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			lastFrameTime = now;
+			if (currentFrame == frames.size())
+				currentFrame = 0;
+		}
+	}
+	if (currentFrame == frames.size() - 1)
+		_isCompleted = true;
+	frames[currentFrame]->GetSprite()->Draw(x, y, dir);
+}
+
+void CAnimation::RenderStartByFrame(int frameID, float x, float y, int dir)
+{
+	currentFrame = frameID;
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size())
+				currentFrame = 0;
+		}
+	}
+	if (currentFrame == frames.size() - 1)
+		_isCompleted = true;
+	frames[currentFrame]->GetSprite()->Draw(x, y, dir);
+}
+
 //class CAnimationManager
 CAnimationManager* CAnimationManager::__instance = NULL;
 
