@@ -132,13 +132,17 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if (player->GetNX() == 1)
+		if (player->GetIsJumping() == false)
 		{
-			player->SetState(SOPHIA_STATE_JUMP_RIGHT);
-		}
-		else
-		{
-			player->SetState(SOPHIA_STATE_JUMP_LEFT);
+			player->SetIsJumping(true);
+			if (player->GetNX() == 1)
+			{
+				player->SetState(SOPHIA_STATE_JUMP_RIGHT);
+			}
+			else
+			{
+				player->SetState(SOPHIA_STATE_JUMP_LEFT);
+			}
 		}
 		break;
 	}
@@ -148,30 +152,43 @@ void CTestSceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 	Player* player = ((CTestScene*)scence)->GetPlayer();
-	if (player->GetState() == -1) return;
+	if (player->GetState() == -1) return; //die
 	if (game->IsKeyDown(DIK_RIGHT))
-		if (player->GetNX() == -1)
-		{
-			player->SetState(SOPHIA_STATE_TURN_RUN);
-		}
-		else
+	{
+		if (player->GetIsUp())
 		{
 			player->SetState(SOPHIA_STATE_RUN_RIGHT);
 		}
-	else if (game->IsKeyDown(DIK_LEFT))
-		if (player->GetNX() == 1)
-		{
-			player->SetState(SOPHIA_STATE_TURN_RUN);
-		}
 		else
+		{
+			if (player->GetNX() == -1)
+			{
+				player->SetState(SOPHIA_STATE_TURN_RUN);
+			}
+			else
+			{
+				player->SetState(SOPHIA_STATE_RUN_RIGHT);
+			}
+		}
+	}
+	else if (game->IsKeyDown(DIK_LEFT))
+	{
+		if (player->GetIsUp())
 		{
 			player->SetState(SOPHIA_STATE_RUN_LEFT);
 		}
-		//player->SetState(SOPHIA_STATE_RUN_LEFT);
-	/*else if (game->IsKeyDown(DIK_UP))
-		player->SetState(GO_TOP);
-	else if (game->IsKeyDown(DIK_DOWN))
-		player->SetState(GO_BOTTOM);*/
+		else
+		{
+			if (player->GetNX() == 1)
+			{
+				player->SetState(SOPHIA_STATE_TURN_RUN);
+			}
+			else
+			{
+				player->SetState(SOPHIA_STATE_RUN_LEFT);
+			}
+		}
+	}
 	else
 	{
 		if (player->GetNX() == 1)
@@ -184,11 +201,35 @@ void CTestSceneKeyHandler::KeyState(BYTE* states)
 		}
 	}
 
+	if (game->IsKeyDown(DIK_UP))
+	{
+		if (player->GetIsUp() == false)
+		{
+			player->SetIsUp(true);
+		}
+	}
 }
 
 void CTestSceneKeyHandler::OnKeyUp(int KeyCode)
 {
-
+	CGame* game = CGame::GetInstance();
+	Player* player = ((CTestScene*)scence)->GetPlayer();
+	switch (KeyCode)
+	{
+	case DIK_UP:
+		player->SetIsUp(false);
+		break;
+	case DIK_RIGHT: case DIK_LEFT:
+		if (player->GetNX() == 1)
+		{
+			player->SetState(SOPHIA_STATE_IDLE_RIGHT);
+		}
+		else
+		{
+			player->SetState(SOPHIA_STATE_IDLE_LEFT);
+		}
+		break;
+	}
 }
 
 void CTestScene::GetMapInfo(string path)
@@ -324,8 +365,13 @@ void CTestScene::Load()
 	main->AddAnimation(102);
 	main->AddAnimation(103);
 	main->AddAnimation(104);
+	main->AddAnimation(105);
+	main->AddAnimation(106);
+	main->AddAnimation(107);
+	main->AddAnimation(108);
+	main->AddAnimation(109);
 	main->SetPosition(64, 100);
-	main->SetSize(24, 18);
+	main->SetSize(26, 18);
 	main->SetState(SOPHIA_STATE_RUN_RIGHT);
 	player = main;
 	/*insect = new Insect();

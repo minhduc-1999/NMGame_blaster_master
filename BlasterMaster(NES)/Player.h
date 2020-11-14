@@ -27,13 +27,25 @@
 	#define SOPHIA_ANI_JUMP_DOWN		03
 	#define SOPHIA_ANI_TURN_RUN			04
 	#define SOPHIA_ANI_TURN_JUMP		05
+	#define SOPHIA_ANI_UP				06
+	#define SOPHIA_ANI_UP_RUN_HIGH		07
+	#define SOPHIA_ANI_UP_RUN_LOW		8
+	#define SOPHIA_ANI_UP_JUMP			9
 
 class Player : public CDynamicGameObject
 {
 	int height = PLAYER_HEIGHT_HIGH;
+	bool isUp = false;
+	bool isJumping = false;
 public:
 	Player(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
+
+	bool GetIsUp() { return isUp; };
+	void SetIsUp(bool _isUp) { isUp = _isUp; };
+
+	bool GetIsJumping() { return isJumping; };
+	void SetIsJumping(bool _isJumping) { isJumping = _isJumping; };
 };

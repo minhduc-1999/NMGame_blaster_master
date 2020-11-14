@@ -40,6 +40,7 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (ntx != 0)
 		{
+			
 			if (GetNX() == 1)
 			{
 				SetState(SOPHIA_STATE_IDLE_RIGHT);
@@ -50,7 +51,12 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				SetState(SOPHIA_STATE_IDLE_LEFT);
 			}
 		}
-		if (nty != 0) vy = 0;
+
+		if (nty != 0)
+		{
+			SetIsJumping(false);
+			vy = 0;
+		}
 
 		//TODO: Collision logic with dynamic object (bots)
 	}
@@ -61,76 +67,271 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Player::Render()
 {
-	int ani = SOPHIA_ANI_RUN_HIGH;
+	int ani = -1;
 
-	switch (state)
+	if (GetIsJumping())
 	{
-	case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
-		ani = SOPHIA_ANI_RUN_HIGH;
-		animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
-		return;
-		break;
-	case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
-		if (height == PLAYER_HEIGHT_HIGH)
+		if (GetIsUp())
 		{
-			lastHeight = 0;
-			ani = SOPHIA_ANI_RUN_HIGH;
-			height++;
-		}
-		else if (height == PLAYER_HEIGHT_LOW)
-		{
-			lastHeight = 2;
-			ani = SOPHIA_ANI_RUN_LOW;
-			height--;
+			switch (state)
+			{
+			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
+				if (vy < 0)
+				{
+					ani = SOPHIA_ANI_UP_JUMP;
+				}
+				else
+				{
+					ani = SOPHIA_ANI_UP_RUN_LOW;
+				}
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			case SOPHIA_STATE_JUMP_RIGHT:case SOPHIA_STATE_JUMP_LEFT:
+				if (vy < 0)
+				{
+					ani = SOPHIA_ANI_UP_JUMP;
+				}
+				else
+				{
+					ani = SOPHIA_ANI_UP_RUN_LOW;
+				}
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
+				ani = SOPHIA_ANI_UP_JUMP;
+				if (currentWalkingColumn == 3)
+				{
+					currentWalkingColumn = 0;
+				}
+				else
+				{
+					currentWalkingColumn++;
+				}
+				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			}
 		}
 		else
 		{
-			if (lastHeight == 0)
+			animations[SOPHIA_ANI_UP]->ResetAnim();
+			switch (state)
 			{
-				ani = SOPHIA_ANI_RUN_HIGH;
-				height++;
-			}
-			else
-			{
-				ani = SOPHIA_ANI_RUN_LOW;
-				height--;
+			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
+				if (vy < 0)
+				{
+					ani = SOPHIA_ANI_JUMP_UP;
+				}
+				else
+				{
+					ani = SOPHIA_ANI_JUMP_DOWN;
+				}
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			case SOPHIA_STATE_JUMP_RIGHT:case SOPHIA_STATE_JUMP_LEFT:
+				if (vy < 0)
+				{
+					ani = SOPHIA_ANI_JUMP_UP;
+				}
+				else
+				{
+					ani = SOPHIA_ANI_JUMP_DOWN;
+				}
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
+				if (vy < 0)
+				{
+					ani = SOPHIA_ANI_JUMP_UP;
+				}
+				else
+				{
+					ani = SOPHIA_ANI_JUMP_DOWN;
+				}
+				if (currentWalkingColumn == 3)
+				{
+					currentWalkingColumn = 0;
+				}
+				else
+				{
+					currentWalkingColumn++;
+				}
+				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			case SOPHIA_STATE_TURN_RUN:
+				ani = SOPHIA_ANI_TURN_JUMP;
+				animations[ani]->Render(x, y, nx);
+				if (animations[ani]->IsCompleted())
+				{
+					if (nx == -1)
+					{
+						SetState(SOPHIA_STATE_RUN_RIGHT);
+					}
+					else
+					{
+						SetState(SOPHIA_STATE_RUN_LEFT);
+					}
+				}
+				return;
+				break;
 			}
 		}
-
-		if (currentWalkingColumn == 3)
-		{
-			currentWalkingColumn = 0;
-		}
-		else
-		{
-			currentWalkingColumn++;
-		}
-
-		animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y, nx);
-		return;
-		break;
-	case SOPHIA_STATE_JUMP_RIGHT:case SOPHIA_STATE_JUMP_LEFT:
-		ani = SOPHIA_ANI_JUMP_UP;
-		break;
-	case SOPHIA_STATE_TURN_RUN:
-		ani = SOPHIA_ANI_TURN_RUN;
-		animations[ani]->Render(x, y, nx);
-		if (animations[ani]->IsCompleted())
-		{
-			if (nx == -1)
-			{
-				SetState(SOPHIA_STATE_RUN_RIGHT);
-			}
-			else
-			{
-				SetState(SOPHIA_STATE_RUN_LEFT);
-			}
-		}
-		return;
-		break;
 	}
+	else
+	{
+		if (GetIsUp())
+		{
+			switch (state)
+			{
+			case SOPHIA_STATE_IDLE_RIGHT: case SOPHIA_STATE_IDLE_LEFT:
+				ani = SOPHIA_ANI_UP;
+				if (animations[ani]->IsCompleted())
+				{
+					ani = SOPHIA_ANI_UP_RUN_HIGH;
+					animations[ani]->RenderFrame(currentWalkingColumn,x, y, nx);
+				}
+				else
+				{
+					animations[ani]->Render(x, y, nx);
+				}
+				//ani = SOPHIA_ANI_UP_RUN_HIGH;
+				//animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			case SOPHIA_STATE_JUMP_RIGHT: case SOPHIA_STATE_JUMP_LEFT:
+				/*ani = SOPHIA_ANI_UP;
+				if (animations[ani]->IsCompleted())
+				{
+					ani = SOPHIA_ANI_UP_RUN_HIGH;
+					animations[ani]->RenderFrame(currentWalkingColumn,x, y, nx);
+				}
+				else
+				{
+					animations[ani]->Render(x, y, nx);
+				}*/
+				ani = SOPHIA_ANI_UP_RUN_HIGH;
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
+				if (height == PLAYER_HEIGHT_HIGH)
+				{
+					lastHeight = 0;
+					ani = SOPHIA_ANI_UP_RUN_HIGH;
+					height++;
+				}
+				else if (height == PLAYER_HEIGHT_LOW)
+				{
+					lastHeight = 2;
+					ani = SOPHIA_ANI_UP_RUN_LOW;
+					height--;
+				}
+				else
+				{
+					if (lastHeight == 0)
+					{
+						ani = SOPHIA_ANI_UP_RUN_HIGH;
+						height++;
+					}
+					else
+					{
+						ani = SOPHIA_ANI_UP_RUN_LOW;
+						height--;
+					}
+				}
 
-	animations[ani]->Render(x, y, nx);
+				if (currentWalkingColumn == 3)
+				{
+					currentWalkingColumn = 0;
+				}
+				else
+				{
+					currentWalkingColumn++;
+				}
+
+				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			/*case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
+				ani = SOPHIA_ANI_UP_RUN_HIGH;
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;*/
+			}
+		}
+		else
+		{
+			animations[SOPHIA_ANI_UP]->ResetAnim();
+			switch (state)
+			{
+			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
+				ani = SOPHIA_ANI_RUN_HIGH;
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
+				if (height == PLAYER_HEIGHT_HIGH)
+				{
+					lastHeight = 0;
+					ani = SOPHIA_ANI_RUN_HIGH;
+					height++;
+				}
+				else if (height == PLAYER_HEIGHT_LOW)
+				{
+					lastHeight = 2;
+					ani = SOPHIA_ANI_RUN_LOW;
+					height--;
+				}
+				else
+				{
+					if (lastHeight == 0)
+					{
+						ani = SOPHIA_ANI_RUN_HIGH;
+						height++;
+					}
+					else
+					{
+						ani = SOPHIA_ANI_RUN_LOW;
+						height--;
+					}
+				}
+
+				if (currentWalkingColumn == 3)
+				{
+					currentWalkingColumn = 0;
+				}
+				else
+				{
+					currentWalkingColumn++;
+				}
+
+				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			case SOPHIA_STATE_TURN_RUN:
+				ani = SOPHIA_ANI_TURN_RUN;
+				animations[ani]->Render(x, y, nx);
+				if (animations[ani]->IsCompleted())
+				{
+					if (nx == -1)
+					{
+						SetState(SOPHIA_STATE_RUN_RIGHT);
+					}
+					else
+					{
+						SetState(SOPHIA_STATE_RUN_LEFT);
+					}
+				}
+				return;
+				break;
+			}
+		}
+	}
 }
 
 void Player::SetState(int state)
