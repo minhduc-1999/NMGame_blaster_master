@@ -51,7 +51,7 @@ void ResourceManager::LoadResource()
 	sprites->Add(10601, texPlayerSophia, 208, 187, 208 + 34, 187 + 26);
 	sprites->Add(10602, texPlayerSophia, 208, 218, 208 + 34, 218 + 28);
 	sprites->Add(10603, texPlayerSophia, 208, 250, 208 + 34, 250 + 30);
-	sprites->Add(10604, texPlayerSophia, 208, 283, 208 + 34, 283 + 34);
+	sprites->Add(10604, texPlayerSophia, 204, 283, 204 + 34, 283 + 34);
 	//sophia up run high
 	sprites->Add(10701, texPlayerSophia, 204, 283, 204 + 34, 283 + 34);
 	sprites->Add(10702, texPlayerSophia, 147, 283, 147 + 34, 283 + 34);
@@ -67,6 +67,11 @@ void ResourceManager::LoadResource()
 	sprites->Add(10902, texPlayerSophia, 139, 414, 139 + 34, 414 + 37);
 	sprites->Add(10903, texPlayerSophia, 72, 414, 72 + 34, 414 + 37);
 	sprites->Add(10904, texPlayerSophia, 9, 414, 9 + 34, 414 + 37);
+	//sophia down
+	sprites->Add(11001, texPlayerSophia, 204, 283, 204 + 34, 283 + 34);
+	sprites->Add(11002, texPlayerSophia, 208, 250, 208 + 34, 250 + 30);
+	sprites->Add(11003, texPlayerSophia, 208, 218, 208 + 34, 218 + 28);
+	sprites->Add(11004, texPlayerSophia, 208, 187, 208 + 34, 187 + 26);
 
 	//load sprites of insect
 
@@ -165,6 +170,13 @@ void ResourceManager::LoadResource()
 	ani->Add(10903);
 	ani->Add(10904);
 	animations->Add(109, ani);
+
+	ani = new CAnimation(50);
+	ani->Add(11001);
+	ani->Add(11002);
+	ani->Add(11003);
+	ani->Add(11004);
+	animations->Add(110, ani);
 
 	////add anim Orb
 	////run left

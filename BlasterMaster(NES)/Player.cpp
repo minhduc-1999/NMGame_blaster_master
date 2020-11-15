@@ -73,6 +73,7 @@ void Player::Render()
 	{
 		if (GetIsUp())
 		{
+			animations[SOPHIA_ANI_DOWN]->ResetAnim();
 			switch (state)
 			{
 			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
@@ -186,6 +187,7 @@ void Player::Render()
 	{
 		if (GetIsUp())
 		{
+			animations[SOPHIA_ANI_DOWN]->ResetAnim();
 			switch (state)
 			{
 			case SOPHIA_STATE_IDLE_RIGHT: case SOPHIA_STATE_IDLE_LEFT:
@@ -270,34 +272,54 @@ void Player::Render()
 			switch (state)
 			{
 			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
-				ani = SOPHIA_ANI_RUN_HIGH;
-				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
-				return;
-				break;
-			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
-				if (height == PLAYER_HEIGHT_HIGH)
+				ani = SOPHIA_ANI_DOWN;
+				if (animations[ani]->IsCompleted())
 				{
-					lastHeight = 0;
 					ani = SOPHIA_ANI_RUN_HIGH;
-					height++;
-				}
-				else if (height == PLAYER_HEIGHT_LOW)
-				{
-					lastHeight = 2;
-					ani = SOPHIA_ANI_RUN_LOW;
-					height--;
+					animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
 				}
 				else
 				{
-					if (lastHeight == 0)
+					animations[ani]->Render(x, y, nx);
+				}
+				//ani = SOPHIA_ANI_RUN_HIGH;
+				//animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				return;
+				break;
+			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
+				ani = SOPHIA_ANI_DOWN;
+				if (!animations[ani]->IsCompleted())
+				{
+					animations[ani]->Render(x, y, nx);
+					//ani = SOPHIA_ANI_RUN_HIGH;
+					//animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				}
+				else
+				{
+					if (height == PLAYER_HEIGHT_HIGH)
 					{
+						lastHeight = 0;
 						ani = SOPHIA_ANI_RUN_HIGH;
 						height++;
 					}
-					else
+					else if (height == PLAYER_HEIGHT_LOW)
 					{
+						lastHeight = 2;
 						ani = SOPHIA_ANI_RUN_LOW;
 						height--;
+					}
+					else
+					{
+						if (lastHeight == 0)
+						{
+							ani = SOPHIA_ANI_RUN_HIGH;
+							height++;
+						}
+						else
+						{
+							ani = SOPHIA_ANI_RUN_LOW;
+							height--;
+						}
 					}
 				}
 

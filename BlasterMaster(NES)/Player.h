@@ -31,6 +31,7 @@
 	#define SOPHIA_ANI_UP_RUN_HIGH		07
 	#define SOPHIA_ANI_UP_RUN_LOW		8
 	#define SOPHIA_ANI_UP_JUMP			9
+	#define SOPHIA_ANI_DOWN				10
 
 class Player : public CDynamicGameObject
 {
