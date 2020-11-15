@@ -128,7 +128,7 @@ D3DXVECTOR2 CTestScene::GetBoundGrid(Rect bound)
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 {
 	CGame* game = CGame::GetInstance();
-	Player* player = ((CTestScene*)scence)->GetPlayer();
+	Sophia* player = ((CTestScene*)scence)->GetPlayer();
 	switch (KeyCode)
 	{
 	case DIK_X:
@@ -151,7 +151,7 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 void CTestSceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
-	Player* player = ((CTestScene*)scence)->GetPlayer();
+	Sophia* player = ((CTestScene*)scence)->GetPlayer();
 	if (player->GetState() == -1) return; //die
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
@@ -213,7 +213,7 @@ void CTestSceneKeyHandler::KeyState(BYTE* states)
 void CTestSceneKeyHandler::OnKeyUp(int KeyCode)
 {
 	CGame* game = CGame::GetInstance();
-	Player* player = ((CTestScene*)scence)->GetPlayer();
+	Sophia* player = ((CTestScene*)scence)->GetPlayer();
 	switch (KeyCode)
 	{
 	case DIK_UP:
@@ -273,8 +273,8 @@ void CTestScene::Load()
 	/*Insect* insect;
 	Orb* orb;
 	Jumper2* jumper2;*/
-	Player* main;
-	main = new Player(256, 256);
+	Sophia* main;
+	main = new Sophia(50, 100);
 
 
 	//Load object
@@ -371,8 +371,7 @@ void CTestScene::Load()
 	main->AddAnimation(108);
 	main->AddAnimation(109);
 	main->AddAnimation(110);
-	main->SetPosition(50, 150);
-	main->SetSize(26, 18);
+	main->SetPosition(50, 100);
 	main->SetState(SOPHIA_STATE_IDLE_RIGHT);
 	player = main;
 	/*insect = new Insect();

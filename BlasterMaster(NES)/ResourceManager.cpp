@@ -22,35 +22,35 @@ void ResourceManager::LoadResource()
 	// readline => id, left, top, right, bottom 
 
 	//sophia run high
-	sprites->Add(10001, texPlayerSophia, 109, 5, 109 + 26, 5 + 18);
-	sprites->Add(10002, texPlayerSophia, 77, 5, 77 + 26, 5 + 18);
-	sprites->Add(10003, texPlayerSophia, 44, 5, 44 + 26, 5 + 18);
-	sprites->Add(10004, texPlayerSophia, 13, 5, 13 + 26, 5 + 18);
+	sprites->Add(10001, texPlayerSophia, 109, -11, 109 + 26, -11 + 34);
+	sprites->Add(10002, texPlayerSophia, 77, -11, 77 + 26, -11 + 34);
+	sprites->Add(10003, texPlayerSophia, 44, -11, 44 + 26, -11 + 34);
+	sprites->Add(10004, texPlayerSophia, 13, -11, 13 + 26, -11 + 34);
 	//sophia run low
-	sprites->Add(10101, texPlayerSophia, 109, 30, 109 + 26, 30 + 18);
-	sprites->Add(10102, texPlayerSophia, 77, 30, 77 + 26, 30 + 18);
-	sprites->Add(10103, texPlayerSophia, 44, 30, 44 + 26, 30 + 18);
-	sprites->Add(10104, texPlayerSophia, 13, 30, 13 + 26, 30 + 18);
+	sprites->Add(10101, texPlayerSophia, 246, 14, 246 + 26, 14 + 34);
+	sprites->Add(10102, texPlayerSophia, 214, 14, 214 + 26, 14 + 34);
+	sprites->Add(10103, texPlayerSophia, 182, 14, 182 + 26, 14 + 34);
+	sprites->Add(10104, texPlayerSophia, 149, 14, 149 + 26, 14 + 34);
 	//sophia jump up
-	sprites->Add(10201, texPlayerSophia, 109, 130, 109 + 26, 130 + 21);
-	sprites->Add(10202, texPlayerSophia, 77, 130, 77 + 26, 130 + 21);
-	sprites->Add(10203, texPlayerSophia, 44, 130, 44 + 26, 130 + 21);
-	sprites->Add(10204, texPlayerSophia, 10, 130, 10 + 26, 130 + 21);
+	sprites->Add(10201, texPlayerSophia, 109, 117, 109 + 26, 117 + 34);
+	sprites->Add(10202, texPlayerSophia, 77, 117, 77 + 26, 117 + 34);
+	sprites->Add(10203, texPlayerSophia, 44, 117, 44 + 26, 117 + 34);
+	sprites->Add(10204, texPlayerSophia, 10, 117, 10 + 26, 117 + 34);
 	//sophia jump down
-	sprites->Add(10301, texPlayerSophia, 109, 56, 109 + 26, 56 + 16);
-	sprites->Add(10302, texPlayerSophia, 78, 56, 78 + 26, 56 + 16);
-	sprites->Add(10303, texPlayerSophia, 44, 56, 44 + 26, 56 + 16);
-	sprites->Add(10304, texPlayerSophia, 12, 56, 12 + 26, 56 + 16);
+	sprites->Add(10301, texPlayerSophia, 109, 38, 109 + 26, 38 + 34);
+	sprites->Add(10302, texPlayerSophia, 78, 38, 78 + 26, 38 + 34);
+	sprites->Add(10303, texPlayerSophia, 44, 38, 44 + 26, 38 + 34);
+	sprites->Add(10304, texPlayerSophia, 12, 38, 12 + 26, 38 + 34);
 	//sophia turn run
-	sprites->Add(10401, texPlayerSophia, 111, 80, 111 + 24, 80 + 18);
-	sprites->Add(10402, texPlayerSophia, 146, 80, 146 + 24, 80 + 18);
+	sprites->Add(10401, texPlayerSophia, 111, 76, 111 + 24, 76 + 34);
+	sprites->Add(10402, texPlayerSophia, 146, 76, 146 + 24, 76 + 34);
 	//sophia turn jump
-	sprites->Add(10501, texPlayerSophia, 111, 157, 111 + 24, 157 + 21);
-	sprites->Add(10502, texPlayerSophia, 146, 157, 146 + 24, 157 + 21);
+	sprites->Add(10501, texPlayerSophia, 111, 175, 111 + 24, 175 + 34);
+	sprites->Add(10502, texPlayerSophia, 146, 175, 146 + 24, 175 + 34);
 	//sophia up
-	sprites->Add(10601, texPlayerSophia, 208, 187, 208 + 34, 187 + 26);
-	sprites->Add(10602, texPlayerSophia, 208, 218, 208 + 34, 218 + 28);
-	sprites->Add(10603, texPlayerSophia, 208, 250, 208 + 34, 250 + 30);
+	sprites->Add(10601, texPlayerSophia, 208, 153, 208 + 34, 153 + 34);
+	sprites->Add(10602, texPlayerSophia, 208, 203, 208 + 34, 203 + 34);
+	sprites->Add(10603, texPlayerSophia, 208, 246, 208 + 34, 246 + 34);
 	sprites->Add(10604, texPlayerSophia, 204, 283, 204 + 34, 283 + 34);
 	//sophia up run high
 	sprites->Add(10701, texPlayerSophia, 204, 283, 204 + 34, 283 + 34);
@@ -58,10 +58,10 @@ void ResourceManager::LoadResource()
 	sprites->Add(10703, texPlayerSophia, 83, 283, 83 + 34, 283 + 34);
 	sprites->Add(10704, texPlayerSophia, 5, 283, 5 + 34, 283 + 34);
 	//sophia up run low
-	sprites->Add(10801, texPlayerSophia, 203, 367, 203 + 34, 367 + 33);
-	sprites->Add(10802, texPlayerSophia, 143, 367, 143 + 34, 367 + 33);
-	sprites->Add(10803, texPlayerSophia, 84, 367, 84 + 34, 367 + 33);
-	sprites->Add(10804, texPlayerSophia, 9, 367, 9 + 34, 367 + 33);
+	sprites->Add(10801, texPlayerSophia, 203, 366, 203 + 34, 366 + 34);
+	sprites->Add(10802, texPlayerSophia, 143, 366, 143 + 34, 366 + 34);
+	sprites->Add(10803, texPlayerSophia, 84, 366, 84 + 34, 366 + 34);
+	sprites->Add(10804, texPlayerSophia, 9, 366, 9 + 34, 366 + 34);
 	//sophia up jump
 	sprites->Add(10901, texPlayerSophia, 201, 414, 201 + 34, 414 + 37);
 	sprites->Add(10902, texPlayerSophia, 139, 414, 139 + 34, 414 + 37);
@@ -69,9 +69,9 @@ void ResourceManager::LoadResource()
 	sprites->Add(10904, texPlayerSophia, 9, 414, 9 + 34, 414 + 37);
 	//sophia down
 	sprites->Add(11001, texPlayerSophia, 204, 283, 204 + 34, 283 + 34);
-	sprites->Add(11002, texPlayerSophia, 208, 250, 208 + 34, 250 + 30);
-	sprites->Add(11003, texPlayerSophia, 208, 218, 208 + 34, 218 + 28);
-	sprites->Add(11004, texPlayerSophia, 208, 187, 208 + 34, 187 + 26);
+	sprites->Add(11002, texPlayerSophia, 208, 246, 208 + 34, 246 + 34);
+	sprites->Add(11003, texPlayerSophia, 208, 203, 208 + 34, 203 + 34);
+	sprites->Add(11004, texPlayerSophia, 208, 153, 208 + 34, 153 + 34);
 
 	//load sprites of insect
 

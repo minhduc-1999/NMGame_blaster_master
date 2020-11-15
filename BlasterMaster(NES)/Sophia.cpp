@@ -1,19 +1,20 @@
-#include "Player.h"
+#include "Sophia.h"
 
 int lastHeight = 0;
 int currentWalkingColumn = 0;
 
 
-Player::Player(float x, float y) :CDynamicGameObject(x, y)
+Sophia::Sophia(float x, float y) :CDynamicGameObject(x, y)
 {
-	height = PLAYER_HEIGHT_HIGH;
+	SetSize(SOPHIA_WIDTH, SOPHIA_HEIGHT);
+	heightLevel = SOPHIA_HEIGHT_HIGH;
 };
 
-void Player::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 
-	vy += PLAYER_GRAVITY;
+	vy += SOPHIA_GRAVITY;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -40,7 +41,6 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (ntx != 0)
 		{
-			
 			if (GetNX() == 1)
 			{
 				SetState(SOPHIA_STATE_IDLE_RIGHT);
@@ -65,7 +65,7 @@ void Player::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
-void Player::Render()
+void Sophia::Render()
 {
 	int ani = -1;
 
@@ -85,7 +85,7 @@ void Player::Render()
 				{
 					ani = SOPHIA_ANI_UP_RUN_LOW;
 				}
-				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
 			case SOPHIA_STATE_JUMP_RIGHT:case SOPHIA_STATE_JUMP_LEFT:
@@ -97,7 +97,7 @@ void Player::Render()
 				{
 					ani = SOPHIA_ANI_UP_RUN_LOW;
 				}
-				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
 			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
@@ -110,7 +110,7 @@ void Player::Render()
 				{
 					currentWalkingColumn++;
 				}
-				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y, nx);
+				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
 			}
@@ -129,7 +129,7 @@ void Player::Render()
 				{
 					ani = SOPHIA_ANI_JUMP_DOWN;
 				}
-				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
 			case SOPHIA_STATE_JUMP_RIGHT:case SOPHIA_STATE_JUMP_LEFT:
@@ -141,7 +141,7 @@ void Player::Render()
 				{
 					ani = SOPHIA_ANI_JUMP_DOWN;
 				}
-				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
 			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
@@ -161,12 +161,12 @@ void Player::Render()
 				{
 					currentWalkingColumn++;
 				}
-				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y, nx);
+				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
 			case SOPHIA_STATE_TURN_RUN:
 				ani = SOPHIA_ANI_TURN_JUMP;
-				animations[ani]->Render(x, y, nx);
+				animations[ani]->Render(x, y - 8, nx);
 				if (animations[ani]->IsCompleted())
 				{
 					if (nx == -1)
@@ -195,11 +195,11 @@ void Player::Render()
 				if (animations[ani]->IsCompleted())
 				{
 					ani = SOPHIA_ANI_UP_RUN_HIGH;
-					animations[ani]->RenderFrame(currentWalkingColumn,x, y, nx);
+					animations[ani]->RenderFrame(currentWalkingColumn,x, y-8, nx);
 				}
 				else
 				{
-					animations[ani]->Render(x, y, nx);
+					animations[ani]->Render(x, y - 8, nx);
 				}
 				//ani = SOPHIA_ANI_UP_RUN_HIGH;
 				//animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
@@ -217,33 +217,33 @@ void Player::Render()
 					animations[ani]->Render(x, y, nx);
 				}*/
 				ani = SOPHIA_ANI_UP_RUN_HIGH;
-				animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+				animations[ani]->RenderFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
 			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
-				if (height == PLAYER_HEIGHT_HIGH)
+				if (heightLevel == SOPHIA_HEIGHT_HIGH)
 				{
 					lastHeight = 0;
 					ani = SOPHIA_ANI_UP_RUN_HIGH;
-					height++;
+					heightLevel++;
 				}
-				else if (height == PLAYER_HEIGHT_LOW)
+				else if (heightLevel == SOPHIA_HEIGHT_LOW)
 				{
 					lastHeight = 2;
 					ani = SOPHIA_ANI_UP_RUN_LOW;
-					height--;
+					heightLevel--;
 				}
 				else
 				{
 					if (lastHeight == 0)
 					{
 						ani = SOPHIA_ANI_UP_RUN_HIGH;
-						height++;
+						heightLevel++;
 					}
 					else
 					{
 						ani = SOPHIA_ANI_UP_RUN_LOW;
-						height--;
+						heightLevel--;
 					}
 				}
 
@@ -256,7 +256,7 @@ void Player::Render()
 					currentWalkingColumn++;
 				}
 
-				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y, nx);
+				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
 			/*case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
@@ -276,11 +276,11 @@ void Player::Render()
 				if (animations[ani]->IsCompleted())
 				{
 					ani = SOPHIA_ANI_RUN_HIGH;
-					animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
+					animations[ani]->RenderFrame(currentWalkingColumn, x, y - 8 , nx);
 				}
 				else
 				{
-					animations[ani]->Render(x, y, nx);
+					animations[ani]->Render(x, y - 8, nx);
 				}
 				//ani = SOPHIA_ANI_RUN_HIGH;
 				//animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
@@ -290,35 +290,35 @@ void Player::Render()
 				ani = SOPHIA_ANI_DOWN;
 				if (!animations[ani]->IsCompleted())
 				{
-					animations[ani]->Render(x, y, nx);
+					animations[ani]->Render(x, y - 8, nx);
 					//ani = SOPHIA_ANI_RUN_HIGH;
 					//animations[ani]->RenderFrame(currentWalkingColumn, x, y, nx);
 				}
 				else
 				{
-					if (height == PLAYER_HEIGHT_HIGH)
+					if (heightLevel == SOPHIA_HEIGHT_HIGH)
 					{
 						lastHeight = 0;
 						ani = SOPHIA_ANI_RUN_HIGH;
-						height++;
+						heightLevel++;
 					}
-					else if (height == PLAYER_HEIGHT_LOW)
+					else if (heightLevel == SOPHIA_HEIGHT_LOW)
 					{
 						lastHeight = 2;
 						ani = SOPHIA_ANI_RUN_LOW;
-						height--;
+						heightLevel--;
 					}
 					else
 					{
 						if (lastHeight == 0)
 						{
 							ani = SOPHIA_ANI_RUN_HIGH;
-							height++;
+							heightLevel++;
 						}
 						else
 						{
 							ani = SOPHIA_ANI_RUN_LOW;
-							height--;
+							heightLevel--;
 						}
 					}
 				}
@@ -332,12 +332,12 @@ void Player::Render()
 					currentWalkingColumn++;
 				}
 
-				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y, nx);
+				animations[ani]->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
 			case SOPHIA_STATE_TURN_RUN:
 				ani = SOPHIA_ANI_TURN_RUN;
-				animations[ani]->Render(x, y, nx);
+				animations[ani]->Render(x, y - 8, nx);
 				if (animations[ani]->IsCompleted())
 				{
 					if (nx == -1)
@@ -356,7 +356,7 @@ void Player::Render()
 	}
 }
 
-void Player::SetState(int state)
+void Sophia::SetState(int state)
 {
 	CDynamicGameObject::SetState(state);
 	switch (state)
@@ -370,19 +370,19 @@ void Player::SetState(int state)
 		nx = -1;
 		break;
 	case SOPHIA_STATE_RUN_RIGHT:
-		vx = PLAYER_RUN_SPEED;
+		vx = SOPHIA_RUN_SPEED;
 		nx = 1;
 		break;
 	case SOPHIA_STATE_RUN_LEFT:
-		vx = -PLAYER_RUN_SPEED;
+		vx = -SOPHIA_RUN_SPEED;
 		nx = -1;
 		break;
 	case SOPHIA_STATE_JUMP_RIGHT:
-		vy = -PLAYER_JUMP_SPEED_Y;
+		vy = -SOPHIA_JUMP_SPEED_Y;
 		nx = 1;
 		break;
 	case SOPHIA_STATE_JUMP_LEFT:
-		vy = -PLAYER_JUMP_SPEED_Y;
+		vy = -SOPHIA_JUMP_SPEED_Y;
 		nx = -1;
 		break;
 	case SOPHIA_STATE_TURN_RUN:

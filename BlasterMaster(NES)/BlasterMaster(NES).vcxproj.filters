@@ -104,6 +104,9 @@
     <Filter Include="Object\DynamicObject\Player">
       <UniqueIdentifier>{a5e068a8-9d96-4f8c-ac78-91f3494cf41d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Player\Sophia">
+      <UniqueIdentifier>{f0d2d217-8950-4a50-a8b1-a76f2804eb21}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -187,8 +190,8 @@
     <ClInclude Include="Utils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Object\DynamicObject\Player</Filter>
+    <ClInclude Include="Sophia.h">
+      <Filter>Object\DynamicObject\Player\Sophia</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -279,8 +282,8 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Object\DynamicObject\Player</Filter>
+    <ClCompile Include="Sophia.cpp">
+      <Filter>Object\DynamicObject\Player\Sophia</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
