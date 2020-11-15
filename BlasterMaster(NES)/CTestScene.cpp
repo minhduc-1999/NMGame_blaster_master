@@ -129,107 +129,21 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 {
 	CGame* game = CGame::GetInstance();
 	Sophia* player = ((CTestScene*)scence)->GetPlayer();
-	switch (KeyCode)
-	{
-	case DIK_X:
-		if (player->GetIsJumping() == false)
-		{
-			player->SetIsJumping(true);
-			if (player->GetNX() == 1)
-			{
-				player->SetState(SOPHIA_STATE_JUMP_RIGHT);
-			}
-			else
-			{
-				player->SetState(SOPHIA_STATE_JUMP_LEFT);
-			}
-		}
-		break;
-	}
+	player->OnKeyDown(KeyCode);
 }
 
 void CTestSceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 	Sophia* player = ((CTestScene*)scence)->GetPlayer();
-	if (player->GetState() == -1) return; //die
-	if (game->IsKeyDown(DIK_RIGHT))
-	{
-		if (player->GetIsUp())
-		{
-			player->SetState(SOPHIA_STATE_RUN_RIGHT);
-		}
-		else
-		{
-			if (player->GetNX() == -1)
-			{
-				player->SetState(SOPHIA_STATE_TURN_RUN);
-			}
-			else
-			{
-				player->SetState(SOPHIA_STATE_RUN_RIGHT);
-			}
-		}
-	}
-	else if (game->IsKeyDown(DIK_LEFT))
-	{
-		if (player->GetIsUp())
-		{
-			player->SetState(SOPHIA_STATE_RUN_LEFT);
-		}
-		else
-		{
-			if (player->GetNX() == 1)
-			{
-				player->SetState(SOPHIA_STATE_TURN_RUN);
-			}
-			else
-			{
-				player->SetState(SOPHIA_STATE_RUN_LEFT);
-			}
-		}
-	}
-	else
-	{
-		if (player->GetNX() == 1)
-		{
-			player->SetState(SOPHIA_STATE_IDLE_RIGHT);
-		}
-		else
-		{
-			player->SetState(SOPHIA_STATE_IDLE_LEFT);
-		}
-	}
-
-	if (game->IsKeyDown(DIK_UP))
-	{
-		if (player->GetIsUp() == false)
-		{
-			player->SetIsUp(true);
-		}
-	}
+	player->KeyState(states);
 }
 
 void CTestSceneKeyHandler::OnKeyUp(int KeyCode)
 {
 	CGame* game = CGame::GetInstance();
 	Sophia* player = ((CTestScene*)scence)->GetPlayer();
-	switch (KeyCode)
-	{
-	case DIK_UP:
-		player->SetIsUp(false);
-		break;
-	case DIK_RIGHT: case DIK_LEFT:
-		if (player->GetNX() == 1)
-		{
-			player->SetState(SOPHIA_STATE_IDLE_RIGHT);
-		}
-		else
-		{
-			player->SetState(SOPHIA_STATE_IDLE_LEFT);
-		}
-		break;
-	}
+	player->OnKeyUp(KeyCode);
 }
 
 void CTestScene::GetMapInfo(string path)

@@ -48,4 +48,8 @@ public:
 
 	bool GetIsJumping() { return isJumping; };
 	void SetIsJumping(bool _isJumping) { isJumping = _isJumping; };
+
+	void KeyState(BYTE* states);
+	void OnKeyDown(int KeyCode);
+	void OnKeyUp(int KeyCode);
 };

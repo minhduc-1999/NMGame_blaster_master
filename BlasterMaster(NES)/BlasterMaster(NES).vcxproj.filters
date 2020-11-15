@@ -107,6 +107,12 @@
     <Filter Include="Object\DynamicObject\Player\Sophia">
       <UniqueIdentifier>{f0d2d217-8950-4a50-a8b1-a76f2804eb21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Player\SmallJason">
+      <UniqueIdentifier>{295d4485-3a37-4c97-baec-632890b7c462}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Player\BigJason">
+      <UniqueIdentifier>{e7f38ce0-9065-40b2-aec3-fe9f9924688c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">

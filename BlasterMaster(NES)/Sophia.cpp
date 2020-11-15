@@ -389,3 +389,113 @@ void Sophia::SetState(int state)
 		break;
 	}
 }
+
+
+void Sophia::KeyState(BYTE* states)
+{
+	CGame* game = CGame::GetInstance();
+
+	if (GetState() == -1) return; //die
+	if (game->IsKeyDown(DIK_RIGHT))
+	{
+		if (GetIsUp())
+		{
+			SetState(SOPHIA_STATE_RUN_RIGHT);
+		}
+		else
+		{
+			if (GetNX() == -1)
+			{
+				SetState(SOPHIA_STATE_TURN_RUN);
+			}
+			else
+			{
+				SetState(SOPHIA_STATE_RUN_RIGHT);
+			}
+		}
+	}
+	else if (game->IsKeyDown(DIK_LEFT))
+	{
+		if (GetIsUp())
+		{
+			SetState(SOPHIA_STATE_RUN_LEFT);
+		}
+		else
+		{
+			if (GetNX() == 1)
+			{
+				SetState(SOPHIA_STATE_TURN_RUN);
+			}
+			else
+			{
+				SetState(SOPHIA_STATE_RUN_LEFT);
+			}
+		}
+	}
+	else
+	{
+		if (GetNX() == 1)
+		{
+			SetState(SOPHIA_STATE_IDLE_RIGHT);
+		}
+		else
+		{
+			SetState(SOPHIA_STATE_IDLE_LEFT);
+		}
+	}
+
+	if (game->IsKeyDown(DIK_UP))
+	{
+		if (GetIsUp() == false)
+		{
+			SetIsUp(true);
+		}
+	}
+}
+
+void Sophia::OnKeyDown(int KeyCode)
+{
+	switch (KeyCode)
+	{
+	case DIK_X:
+		if (GetIsJumping() == false)
+		{
+			SetIsJumping(true);
+			if (GetNX() == 1)
+			{
+				SetState(SOPHIA_STATE_JUMP_RIGHT);
+			}
+			else
+			{
+				SetState(SOPHIA_STATE_JUMP_LEFT);
+			}
+		}
+		break;
+	case DIK_Z:
+		//sophia fire
+		break;
+	case DIK_C:
+		//mini jason jump out
+		break;
+	}
+}
+
+void Sophia::OnKeyUp(int KeyCode)
+{
+	switch (KeyCode)
+	{
+	case DIK_UP:
+		SetIsUp(false);
+		break;
+	case DIK_RIGHT: case DIK_LEFT:
+		if (GetNX() == 1)
+		{
+			SetState(SOPHIA_STATE_IDLE_RIGHT);
+		}
+		else
+		{
+			SetState(SOPHIA_STATE_IDLE_LEFT);
+		}
+		break;
+	}
+}
