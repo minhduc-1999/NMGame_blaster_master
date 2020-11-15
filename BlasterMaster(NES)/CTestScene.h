@@ -4,6 +4,7 @@
 #include "Scence.h"
 #include "GameObject.h"
 #include "Sophia.h"
+#include "MiniJason.h"
 #include "Orb.h"
 #include "Jumper2.h"
 #include "Insect.h"
@@ -15,6 +16,7 @@ class CTestScene : public CScene
 {
 protected:
 	Sophia* player;	// A play scene has to have player, right?
+	MiniJason* player2;
 
 	float gridWidth;
 	float gridHeight;
@@ -42,6 +44,7 @@ public:
 	virtual void Unload();
 
 	Sophia* GetPlayer() { return player; }
+	MiniJason* GetPlayer2() { return player2; }
 	D3DXVECTOR3 GetSceneMapPos() { return D3DXVECTOR3{ mapX, mapY, 0 }; }
 	D3DXVECTOR3 GetSceneMapDimension() { return D3DXVECTOR3{ mapWidth, mapHeight, 0 }; }
 	D3DXVECTOR2 GetBoundGrid(Rect bound);

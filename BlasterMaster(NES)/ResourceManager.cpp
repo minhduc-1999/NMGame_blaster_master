@@ -18,9 +18,10 @@ void ResourceManager::LoadResource()
 	LPDIRECT3DTEXTURE9 texEnemy = textures->Get(ID_TEX_ENEMY);
 	LPDIRECT3DTEXTURE9 texTile = textures->Get(ID_TEX_TILE);
 	LPDIRECT3DTEXTURE9 texPlayerSophia = textures->Get(ID_TEX_PLAYER_SOPHIA);
+	LPDIRECT3DTEXTURE9 texPlayerJason = textures->Get(ID_TEX_PLAYER_JASON);
 
 	// readline => id, left, top, right, bottom 
-
+#pragma region DEFINE SPRITES SOPHIA
 	//sophia run high
 	sprites->Add(10001, texPlayerSophia, 109, -11, 109 + 26, -11 + 34);
 	sprites->Add(10002, texPlayerSophia, 77, -11, 77 + 26, -11 + 34);
@@ -72,6 +73,22 @@ void ResourceManager::LoadResource()
 	sprites->Add(11002, texPlayerSophia, 208, 246, 208 + 34, 246 + 34);
 	sprites->Add(11003, texPlayerSophia, 208, 203, 208 + 34, 203 + 34);
 	sprites->Add(11004, texPlayerSophia, 208, 153, 208 + 34, 153 + 34);
+#pragma endregion
+
+#pragma region DEFINE SPRITES MINI JASON
+	//mini_jason idle
+	sprites->Add(20001, texPlayerJason, 121, 3, 121 + 10, 3	 + 17);
+	//mini_jason run
+	sprites->Add(20101, texPlayerJason, 95, 3, 95 + 10, 3 + 17);
+	sprites->Add(20102, texPlayerJason, 82, 3, 82 + 10, 3 + 17);
+	//mini_jason jump
+	sprites->Add(20201, texPlayerJason, 108, 3, 108 + 10, 3 + 17);
+	//mini_jason down run
+	sprites->Add(20301, texPlayerJason, 49, 10, 49 + 17, 10 + 10);
+	sprites->Add(20302, texPlayerJason, 32, 10, 32 + 17, 10 + 10);
+	//mini_jason climb
+
+#pragma endregion
 
 	//load sprites of insect
 
@@ -100,7 +117,7 @@ void ResourceManager::LoadResource()
 		{
 			int left = 1 + j * 20;
 			int top = 1 + i * 20;
-			sprites->Add(20000 + i * 11 + j, texTile, left, top, left + 16, top + 16);
+			sprites->Add(30000 + i * 11 + j, texTile, left, top, left + 16, top + 16);
 		}
 	LPANIMATION ani;
 
@@ -178,6 +195,24 @@ void ResourceManager::LoadResource()
 	ani->Add(11004);
 	animations->Add(110, ani);
 
+	//add anim MINI JASON
+	ani = new CAnimation(200);
+	ani->Add(20001);
+	animations->Add(200, ani);
+
+	ani = new CAnimation(200);
+	ani->Add(20101);
+	ani->Add(20102);
+	animations->Add(201, ani);
+
+	ani = new CAnimation(200);
+	ani->Add(20201);
+	animations->Add(202, ani);
+
+	ani = new CAnimation(200);
+	ani->Add(20301);
+	ani->Add(20302);
+	animations->Add(203, ani);
 	////add anim Orb
 	////run left
 	//ani = new CAnimation(100);

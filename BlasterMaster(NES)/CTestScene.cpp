@@ -77,11 +77,11 @@ void CTestScene::Update(DWORD dt)
 		}
 	}
 
-	player->Update(dt, &coObjs);
+	player2->Update(dt, &coObjs);
 
 	float cx, cy;
-	cx = player->GetPosition().x;
-	cy = player->GetPosition().y;
+	cx = player2->GetPosition().x;
+	cy = player2->GetPosition().y;
 
 	CGame* game = CGame::GetInstance();
 	cx -= game->GetScreenWidth() / 2;
@@ -101,7 +101,8 @@ void CTestScene::Render()
 			grids.at(i)->Render();
 	}
 	//render main
-	player->Render();
+	//player->Render();
+	player2->Render();
 }
 
 /*
@@ -129,21 +130,24 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 {
 	CGame* game = CGame::GetInstance();
 	Sophia* player = ((CTestScene*)scence)->GetPlayer();
-	player->OnKeyDown(KeyCode);
+	MiniJason* player2 = ((CTestScene*)scence)->GetPlayer2();
+	player2->OnKeyDown(KeyCode);
 }
 
 void CTestSceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 	Sophia* player = ((CTestScene*)scence)->GetPlayer();
-	player->KeyState(states);
+	MiniJason* player2 = ((CTestScene*)scence)->GetPlayer2();
+	player2->KeyState(states);
 }
 
 void CTestSceneKeyHandler::OnKeyUp(int KeyCode)
 {
 	CGame* game = CGame::GetInstance();
 	Sophia* player = ((CTestScene*)scence)->GetPlayer();
-	player->OnKeyUp(KeyCode);
+	MiniJason* player2 = ((CTestScene*)scence)->GetPlayer2();
+	player2->OnKeyUp(KeyCode);
 }
 
 void CTestScene::GetMapInfo(string path)
@@ -188,7 +192,9 @@ void CTestScene::Load()
 	Orb* orb;
 	Jumper2* jumper2;*/
 	Sophia* main;
+	MiniJason* main2;
 	main = new Sophia(50, 100);
+	main2 = new MiniJason(50, 100);
 
 
 	//Load object
@@ -215,24 +221,24 @@ void CTestScene::Load()
 				if (i == 0 && j == 31)
 					i += 0;
 				obj = new Brick(float(j * 16 + 8), float(i * 16 + 8));
-				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(30000 + t - 1));
 				break;
 			}
 			//object magma
 			case 107:
 			{
 				obj = new CMagma(float(j * 16 + 8), float(i * 16 + 8));
-				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(30000 + t - 1));
 				break;
 			}
 			//object gate
 			case 46:case 48:
 			{
 				obj = new CGate(float(j * 16 + 16), float(i * 16 + 16));
-				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
-				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t));
-				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t + 10));
-				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t + 11));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(30000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(30000 + t));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(30000 + t + 10));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(30000 + t + 11));
 				break;
 			}
 			//remain part of gate
@@ -242,14 +248,14 @@ void CTestScene::Load()
 			case 8:
 			{
 				obj = new CLadder(float(j * 16 + 8), float(i * 16 + 8));
-				obj->AddSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				obj->AddSprite(CSpriteManager::GetInstance()->Get(30000 + t - 1));
 				break;
 			}
 			//none object (background)
 			default:
 			{
 				bg = new CBackground(float(j * 16 + 8), float(i * 16 + 8));
-				bg->SetSprite(CSpriteManager::GetInstance()->Get(20000 + t - 1));
+				bg->SetSprite(CSpriteManager::GetInstance()->Get(30000 + t - 1));
 			}
 			}
 			if (obj != NULL)
@@ -274,7 +280,7 @@ void CTestScene::Load()
 			}
 
 		}
-	main->AddAnimation(100);
+	/*main->AddAnimation(100);
 	main->AddAnimation(101);
 	main->AddAnimation(102);
 	main->AddAnimation(103);
@@ -286,8 +292,20 @@ void CTestScene::Load()
 	main->AddAnimation(109);
 	main->AddAnimation(110);
 	main->SetPosition(50, 100);
-	main->SetState(SOPHIA_STATE_IDLE_RIGHT);
-	player = main;
+	main->SetState(SOPHIA_STATE_IDLE_RIGHT);*/
+
+
+	main2->AddAnimation(200);
+	main2->AddAnimation(201);
+	main2->AddAnimation(202);
+	main2->AddAnimation(203);
+	main2->SetPosition(50, 100);
+	main2->SetState(MINIJASON_STATE_IDLE_RIGHT);
+
+	//player = main;
+	player2 = main2;
+
+
 	/*insect = new Insect();
 	insect->AddAnimation(500);
 	insect->SetPosition(100, 100);
