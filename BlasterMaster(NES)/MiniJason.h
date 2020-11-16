@@ -30,11 +30,14 @@ class MiniJason : public CDynamicGameObject
 {
 	bool isDown = false;
 	bool isJumping = false;
+	bool isCollisionWithSophia = true;
 public:
 	MiniJason(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
+
+	bool IsCollisionWithSophia() { return isCollisionWithSophia; };
 
 	bool GetIsDown() { return isDown; };
 	void SetIsDown(bool _isDown) { isDown = _isDown; };

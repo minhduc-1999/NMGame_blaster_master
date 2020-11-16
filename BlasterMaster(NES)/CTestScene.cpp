@@ -77,11 +77,11 @@ void CTestScene::Update(DWORD dt)
 		}
 	}
 
-	player2->Update(dt, &coObjs);
+	mainPlayer->Update(dt, &coObjs);
 
 	float cx, cy;
-	cx = player2->GetPosition().x;
-	cy = player2->GetPosition().y;
+	cx = mainPlayer->GetPosition().x;
+	cy = mainPlayer->GetPosition().y;
 
 	CGame* game = CGame::GetInstance();
 	cx -= game->GetScreenWidth() / 2;
@@ -102,7 +102,11 @@ void CTestScene::Render()
 	}
 	//render main
 	//player->Render();
-	player2->Render();
+	if (mainPlayer != sophia)
+	{
+		sophia->Render();
+	}
+	mainPlayer->Render();
 }
 
 /*
@@ -126,28 +130,43 @@ D3DXVECTOR2 CTestScene::GetBoundGrid(Rect bound)
 	return D3DXVECTOR2(startGrid, endGrid);
 }
 
+
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 {
 	CGame* game = CGame::GetInstance();
-	Sophia* player = ((CTestScene*)scence)->GetPlayer();
-	MiniJason* player2 = ((CTestScene*)scence)->GetPlayer2();
-	player2->OnKeyDown(KeyCode);
+	if (KeyCode == DIK_C)
+	{
+		if (	((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA
+			&&	((CTestScene*)scence)->GetPlayerSophia()->GetIsJumping() == false)
+		{
+			((CTestScene*)scence)->GetPlayerJason()->SetPosition(((CTestScene*)scence)->GetPlayer()->GetPosition().x, ((CTestScene*)scence)->GetPlayer()->GetPosition().y - 5);
+			((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerJason());
+			((CTestScene*)scence)->ChangePlayerType();
+		}
+		else if (	((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
+			&&		((CTestScene*)scence)->GetPlayerJason()->IsCollisionWithSophia())
+		{
+			((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerSophia());
+			((CTestScene*)scence)->ChangePlayerType();
+		}
+		
+	}
+	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
+	currentPlayer->OnKeyDown(KeyCode);
 }
 
 void CTestSceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
-	Sophia* player = ((CTestScene*)scence)->GetPlayer();
-	MiniJason* player2 = ((CTestScene*)scence)->GetPlayer2();
-	player2->KeyState(states);
+	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
+	currentPlayer->KeyState(states);
 }
 
 void CTestSceneKeyHandler::OnKeyUp(int KeyCode)
 {
 	CGame* game = CGame::GetInstance();
-	Sophia* player = ((CTestScene*)scence)->GetPlayer();
-	MiniJason* player2 = ((CTestScene*)scence)->GetPlayer2();
-	player2->OnKeyUp(KeyCode);
+	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
+	currentPlayer->OnKeyUp(KeyCode);
 }
 
 void CTestScene::GetMapInfo(string path)
@@ -191,10 +210,8 @@ void CTestScene::Load()
 	/*Insect* insect;
 	Orb* orb;
 	Jumper2* jumper2;*/
-	Sophia* main;
-	MiniJason* main2;
-	main = new Sophia(50, 100);
-	main2 = new MiniJason(50, 100);
+	sophia = new Sophia(50, 100);
+	miniJason = new MiniJason(50, 100);
 
 
 	//Load object
@@ -280,30 +297,30 @@ void CTestScene::Load()
 			}
 
 		}
-	/*main->AddAnimation(100);
-	main->AddAnimation(101);
-	main->AddAnimation(102);
-	main->AddAnimation(103);
-	main->AddAnimation(104);
-	main->AddAnimation(105);
-	main->AddAnimation(106);
-	main->AddAnimation(107);
-	main->AddAnimation(108);
-	main->AddAnimation(109);
-	main->AddAnimation(110);
-	main->SetPosition(50, 100);
-	main->SetState(SOPHIA_STATE_IDLE_RIGHT);*/
+	sophia->AddAnimation(100);
+	sophia->AddAnimation(101);
+	sophia->AddAnimation(102);
+	sophia->AddAnimation(103);
+	sophia->AddAnimation(104);
+	sophia->AddAnimation(105);
+	sophia->AddAnimation(106);
+	sophia->AddAnimation(107);
+	sophia->AddAnimation(108);
+	sophia->AddAnimation(109);
+	sophia->AddAnimation(110);
+	sophia->SetPosition(50, 100);
+	sophia->SetState(SOPHIA_STATE_IDLE_RIGHT);
 
 
-	main2->AddAnimation(200);
-	main2->AddAnimation(201);
-	main2->AddAnimation(202);
-	main2->AddAnimation(203);
-	main2->SetPosition(50, 100);
-	main2->SetState(MINIJASON_STATE_IDLE_RIGHT);
+	miniJason->AddAnimation(200);
+	miniJason->AddAnimation(201);
+	miniJason->AddAnimation(202);
+	miniJason->AddAnimation(203);
+	//miniJason->SetPosition(50, 100);
+	miniJason->SetState(MINIJASON_STATE_IDLE_RIGHT);
 
 	//player = main;
-	player2 = main2;
+	mainPlayer = sophia;
 
 
 	/*insect = new Insect();

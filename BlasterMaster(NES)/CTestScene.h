@@ -11,12 +11,16 @@
 #include "StaticGameObject.h"
 #include "Grid.h"
 
+#define PLAYER_SOPHIA 0
+#define PLAYER_JASON  1
 
 class CTestScene : public CScene
 {
 protected:
-	Sophia* player;	// A play scene has to have player, right?
-	MiniJason* player2;
+	CDynamicGameObject* mainPlayer;
+	Sophia* sophia;	// A play scene has to have player, right?
+	MiniJason* miniJason;
+	int playerType = PLAYER_SOPHIA;
 
 	float gridWidth;
 	float gridHeight;
@@ -43,8 +47,23 @@ public:
 	virtual void Render();
 	virtual void Unload();
 
-	Sophia* GetPlayer() { return player; }
-	MiniJason* GetPlayer2() { return player2; }
+	CDynamicGameObject* GetPlayer() { return mainPlayer; }
+	MiniJason* GetPlayerJason() { return miniJason; }
+	Sophia* GetPlayerSophia() { return sophia; }
+	void SetPlayer(CDynamicGameObject* player) { mainPlayer = player; }
+	int GetPlayerType() { return playerType; }
+	void ChangePlayerType() 
+	{
+		if (playerType == PLAYER_SOPHIA)
+		{
+			playerType = PLAYER_JASON;
+		}
+		else
+		{
+			playerType = PLAYER_SOPHIA;
+		}
+	}
+	//MiniJason* GetPlayerJason() { return miniJason; }
 	D3DXVECTOR3 GetSceneMapPos() { return D3DXVECTOR3{ mapX, mapY, 0 }; }
 	D3DXVECTOR3 GetSceneMapDimension() { return D3DXVECTOR3{ mapWidth, mapHeight, 0 }; }
 	D3DXVECTOR2 GetBoundGrid(Rect bound);

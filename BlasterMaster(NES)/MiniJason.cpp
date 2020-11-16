@@ -1,4 +1,5 @@
 #include "MiniJason.h"
+#include "Sophia.h"
 
 int currentRunningColumn = 0;
 
@@ -56,6 +57,19 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 
 		//TODO: Collision logic with dynamic object (bots)
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			if (dynamic_cast<Sophia *>(e->obj)) // if e->obj is Sophia	
+			{
+				isCollisionWithSophia = true;
+			}
+			else
+			{
+				isCollisionWithSophia = false;
+			}
+		}
 	}
 
 	// clean up collision events

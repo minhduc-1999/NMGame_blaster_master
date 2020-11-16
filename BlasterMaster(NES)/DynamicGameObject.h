@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 class CDynamicGameObject :
-    public CGameObject
+	public CGameObject
 {
 protected:
 	float vx, vy;
@@ -15,11 +15,11 @@ public:
 	CDynamicGameObject(float x, float y);
 
 	int GetNX() { return nx; };
-	
+
 	virtual void SetState(int state);
 	int GetState();
 
-	
+
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void AddAnimation(int aniId);
 
@@ -32,6 +32,10 @@ public:
 		float& min_ty,
 		float& nx,
 		float& ny);
+
+	virtual void KeyState(BYTE* states) {};
+	virtual void OnKeyDown(int KeyCode) {};
+	virtual void OnKeyUp(int KeyCode) {};
 };
 typedef CDynamicGameObject* LPDYNAMICOBJECT;
 
