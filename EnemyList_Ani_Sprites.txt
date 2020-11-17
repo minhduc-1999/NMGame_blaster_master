@@ -69,8 +69,17 @@ Jason			3xx
 
 **area2
 Worm			4xx
+	//worm walking
+	sprites->Add(40001, texEnemy, 46, 412, 46 + 18, 412 + 10);
+	sprites->Add(40002, texEnemy, 64, 412, 64 + 18, 412 + 10);
+	//worm die
 Dome			5xx
 Floater2		6xx
+	//floater2 flying
+	sprites->Add(60001, texEnemy, 84, 407, 84 + 18, 407 + 15);
+	//floater2 fire
+	sprites->Add(60101, texEnemy, 104, 407, 104 + 18, 407 + 15);
+	//worm die
 Insect			7xx
 Jumper2			8xx
 Orb			9xx

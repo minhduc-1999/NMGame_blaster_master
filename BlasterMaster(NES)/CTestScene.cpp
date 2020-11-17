@@ -216,9 +216,7 @@ void CTestScene::GetMapInfo(string path)
 void CTestScene::Load()
 {
 	GetMapInfo("mapArea2.xml");
-	/*Insect* insect;
-	Orb* orb;
-	Jumper2* jumper2;*/
+	
 	sophia = new Sophia(50, 100);
 	miniJason = new MiniJason(50, 100);
 
@@ -326,28 +324,9 @@ void CTestScene::Load()
 	miniJason->AddAnimation(201);
 	miniJason->AddAnimation(202);
 	miniJason->AddAnimation(203);
-	//miniJason->SetPosition(50, 100);
 	miniJason->SetState(MINIJASON_STATE_IDLE_RIGHT);
 
-	//player = main;
 	mainPlayer = sophia;
-
-
-	/*insect = new Insect();
-	insect->AddAnimation(500);
-	insect->SetPosition(100, 100);
-	insect->SetState(INSECT_STATE_FLYING_RIGHT);
-
-	orb = new Orb();
-	orb->AddAnimation(510);
-	orb->AddAnimation(511);
-	orb->SetPosition(100, 250);
-	orb->SetState(ORB_STATE_RUNNING_RIGHT);
-
-	jumper2 = new Jumper2();
-	jumper2->AddAnimation(520);
-	jumper2->SetPosition(100, 350);
-	jumper2->SetState(JUMPER2_STATE_WALKING_LEFT);*/
 }
 
 

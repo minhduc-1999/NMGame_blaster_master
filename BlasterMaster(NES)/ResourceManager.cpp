@@ -21,7 +21,7 @@ void ResourceManager::LoadResource()
 	LPDIRECT3DTEXTURE9 texPlayerJason = textures->Get(ID_TEX_PLAYER_JASON);
 
 	// readline => id, left, top, right, bottom 
-#pragma region DEFINE SPRITES SOPHIA
+#pragma region ADD SPRITES SOPHIA
 	//sophia run high
 	sprites->Add(10001, texPlayerSophia, 109, -11, 109 + 26, -11 + 34);
 	sprites->Add(10002, texPlayerSophia, 77, -11, 77 + 26, -11 + 34);
@@ -77,7 +77,7 @@ void ResourceManager::LoadResource()
 	sprites->Add(11101, texPlayerSophia, 105, 326, 105 + 26, 326 + 34);
 #pragma endregion
 
-#pragma region DEFINE SPRITES MINI JASON
+#pragma region ADD SPRITES MINI JASON
 	//mini_jason idle
 	sprites->Add(20001, texPlayerJason, 121, 3, 121 + 10, 3	 + 17);
 	//mini_jason run
@@ -92,26 +92,20 @@ void ResourceManager::LoadResource()
 
 #pragma endregion
 
-	//load sprites of insect
+#pragma region ADD SPRITES ENEMY: WORM
+	//worm walking
+	sprites->Add(40001, texEnemy, 46, 412, 46 + 18, 412 + 10);
+	sprites->Add(40002, texEnemy, 64, 412, 64 + 18, 412 + 10);
+	//worm die
+#pragma endregion
 
-	////insect left fly
-	//sprites->Add(10001, texEnemy, 84, 530, 102, 548);
-	//sprites->Add(10002, texEnemy, 104, 530, 122, 548);
-
-	////load sprites of Orb
-
-	//sprites->Add(10011, texEnemy, 78, 387, 96, 405);
-	//sprites->Add(10012, texEnemy, 98, 387, 116, 405);
-	//sprites->Add(10013, texEnemy, 118, 387, 136, 405);
-	//sprites->Add(10014, texEnemy, 138, 387, 156, 405);
-	//sprites->Add(10015, texEnemy, 158, 387, 176, 405);
-
-
-
-	////load sprites of jumper 2
-	//sprites->Add(10021, texEnemy, 69, 500, 69 + 17, 500 + 26);
-	//sprites->Add(10022, texEnemy, 87, 499, 87 + 17, 499 + 26);
-	//sprites->Add(10023, texEnemy, 105, 500, 105 + 17, 500 + 26);
+#pragma region ADD SPRITES ENEMY: FLOATER2
+	//floater2 flying
+	sprites->Add(60001, texEnemy, 84, 407, 84 + 18, 407 + 15);
+	//floater2 fire
+	sprites->Add(60101, texEnemy, 104, 407, 104 + 18, 407 + 15);
+	//worm die
+#pragma endregion
 
 	//load tile
 	for (int i = 0; i < 13; i++)
@@ -123,7 +117,7 @@ void ResourceManager::LoadResource()
 		}
 	LPANIMATION ani;
 
-	//add anim SOPHIA RUN
+#pragma region ADD ANI SOPHIA
 	ani = new CAnimation(25);
 	ani->Add(10001);
 	ani->Add(10002);
@@ -201,8 +195,9 @@ void ResourceManager::LoadResource()
 	ani->Add(11101);
 	ani->Add(11101);
 	animations->Add(111, ani);
+#pragma endregion
 
-	//add anim MINI JASON
+#pragma region ADD ANI MINI JASON
 	ani = new CAnimation(200);
 	ani->Add(20001);
 	animations->Add(200, ani);
@@ -220,26 +215,21 @@ void ResourceManager::LoadResource()
 	ani->Add(20301);
 	ani->Add(20302);
 	animations->Add(203, ani);
-	////add anim Orb
-	////run left
-	//ani = new CAnimation(100);
-	//ani->Add(10011);
-	//animations->Add(510, ani);
-	////turn right
-	//ani = new CAnimation(100);
-	//ani->Add(10011);
-	//ani->Add(10012);
-	//ani->Add(10013);
-	//ani->Add(10014);
-	//ani->Add(10015);
-	//animations->Add(511, ani);
+#pragma endregion
 
-	////add anim jumper 2
-	//ani = new CAnimation(250);
-	//ani->Add(10021);
-	//ani->Add(10022);
-	//ani->Add(10023);
-	//animations->Add(520, ani);
+#pragma region ADD ANI WORM
+	ani = new CAnimation(200);
+	ani->Add(40001);
+	ani->Add(40002);
+	animations->Add(400, ani);
+#pragma endregion
+
+#pragma region ADD ANI FLOATER2
+	ani = new CAnimation(200);
+	ani->Add(60001);
+	animations->Add(600, ani);
+#pragma endregion
+	
 }
 
 ResourceManager* ResourceManager::GetInstance()
