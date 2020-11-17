@@ -185,6 +185,26 @@ void Sophia::Render()
 	}
 	else
 	{
+		if (state == SOPHIA_STATE_TRANSFORM)
+		{
+			ani = SOPHIA_ANI_TRANSFORM;
+			animations[ani]->Render(x, y - 8, -nx);
+			if (animations[ani]->IsCompleted())
+			{
+				SetIsUp(false);
+				animations[SOPHIA_ANI_DOWN]->SetIsCompleted();
+				animations[ani]->ResetAnim();
+				if (GetNX() == 1)
+				{
+					SetState(SOPHIA_STATE_IDLE_RIGHT);
+				}
+				else
+				{
+					SetState(SOPHIA_STATE_IDLE_LEFT);
+				}
+			}
+		}
+
 		if (GetIsUp())
 		{
 			animations[SOPHIA_ANI_DOWN]->ResetAnim();
@@ -387,6 +407,9 @@ void Sophia::SetState(int state)
 		break;
 	case SOPHIA_STATE_TURN_RUN:
 		break;
+	case SOPHIA_STATE_TRANSFORM:
+		vx = 0;
+		break;
 	}
 }
 
@@ -475,7 +498,7 @@ void Sophia::OnKeyDown(int KeyCode)
 		//sophia fire
 		break;
 	case DIK_C:
-		//mini jason jump out
+		SetState(SOPHIA_STATE_TRANSFORM);
 		break;
 	}
 }

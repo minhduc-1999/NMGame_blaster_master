@@ -139,15 +139,24 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 		if (	((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA
 			&&	((CTestScene*)scence)->GetPlayerSophia()->GetIsJumping() == false)
 		{
-			((CTestScene*)scence)->GetPlayerJason()->SetPosition(((CTestScene*)scence)->GetPlayer()->GetPosition().x, ((CTestScene*)scence)->GetPlayer()->GetPosition().y - 5);
+			((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
+
+			((CTestScene*)scence)->GetPlayerJason()->SetPosition(((CTestScene*)scence)->GetPlayer()->GetPosition().x, ((CTestScene*)scence)->GetPlayer()->GetPosition().y - 10);
 			((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerJason());
 			((CTestScene*)scence)->ChangePlayerType();
 		}
 		else if (	((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
-			&&		((CTestScene*)scence)->GetPlayerJason()->IsCollisionWithSophia())
+			/*&&		((CTestScene*)scence)->GetPlayerJason()->IsCollisionWithSophia()*/)
 		{
+			((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
+
 			((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerSophia());
 			((CTestScene*)scence)->ChangePlayerType();
+
+		}
+		else
+		{
+			return;
 		}
 		
 	}
@@ -308,6 +317,7 @@ void CTestScene::Load()
 	sophia->AddAnimation(108);
 	sophia->AddAnimation(109);
 	sophia->AddAnimation(110);
+	sophia->AddAnimation(111);
 	sophia->SetPosition(50, 100);
 	sophia->SetState(SOPHIA_STATE_IDLE_RIGHT);
 

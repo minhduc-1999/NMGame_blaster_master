@@ -21,6 +21,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	CalcPotentialCollisions(coObjects, coEvents);
 
+
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{

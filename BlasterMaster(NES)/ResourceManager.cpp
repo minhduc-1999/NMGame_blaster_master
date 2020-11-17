@@ -73,6 +73,8 @@ void ResourceManager::LoadResource()
 	sprites->Add(11002, texPlayerSophia, 208, 246, 208 + 34, 246 + 34);
 	sprites->Add(11003, texPlayerSophia, 208, 203, 208 + 34, 203 + 34);
 	sprites->Add(11004, texPlayerSophia, 208, 153, 208 + 34, 153 + 34);
+	//sophia transform
+	sprites->Add(11101, texPlayerSophia, 105, 326, 105 + 26, 326 + 34);
 #pragma endregion
 
 #pragma region DEFINE SPRITES MINI JASON
@@ -194,6 +196,11 @@ void ResourceManager::LoadResource()
 	ani->Add(11003);
 	ani->Add(11004);
 	animations->Add(110, ani);
+
+	ani = new CAnimation(400);
+	ani->Add(11101);
+	ani->Add(11101);
+	animations->Add(111, ani);
 
 	//add anim MINI JASON
 	ani = new CAnimation(200);

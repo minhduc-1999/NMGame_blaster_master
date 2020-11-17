@@ -18,6 +18,7 @@
 #define SOPHIA_STATE_JUMP_RIGHT		005
 #define SOPHIA_STATE_JUMP_LEFT		006
 #define SOPHIA_STATE_TURN_RUN		007
+#define SOPHIA_STATE_TRANSFORM		8
 
 //define ANI
 #define SOPHIA_ANI_RUN_HIGH			00
@@ -31,6 +32,7 @@
 #define SOPHIA_ANI_UP_RUN_LOW		8
 #define SOPHIA_ANI_UP_JUMP			9
 #define SOPHIA_ANI_DOWN				10
+#define SOPHIA_ANI_TRANSFORM		11
 
 class Sophia : public CDynamicGameObject
 {

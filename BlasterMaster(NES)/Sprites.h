@@ -58,6 +58,7 @@ public:
 		_isCompleted = false;
 	}
 	bool IsCompleted() { return _isCompleted; }
+	void SetIsCompleted() {_isCompleted = true; }
 	void ResetAnim() { currentFrame = -1; _isCompleted = false; }
 	void Add(int spriteId, DWORD time = 0);
 	void Render(float x, float y, int dir);
