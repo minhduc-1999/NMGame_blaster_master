@@ -10,6 +10,8 @@
 #include "Insect.h"
 #include "StaticGameObject.h"
 #include "Grid.h"
+#include "Skull.h"
+#include "Teleporter.h"
 
 #define PLAYER_SOPHIA 0
 #define PLAYER_JASON  1

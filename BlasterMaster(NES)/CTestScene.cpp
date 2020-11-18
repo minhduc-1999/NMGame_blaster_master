@@ -221,6 +221,7 @@ void CTestScene::Load()
 	miniJason = new MiniJason(50, 100);
 
 
+
 	//Load object
 	//tinh so luong tile cua map ma scene nay co
 	int numTileX = mapWidth / 16;
