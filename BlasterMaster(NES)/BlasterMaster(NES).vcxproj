@@ -162,6 +162,7 @@
     <ClInclude Include="Insect.h" />
     <ClInclude Include="Jumper2.h" />
     <ClInclude Include="KeyEventHandler.h" />
+    <ClInclude Include="Mine.h" />
     <ClInclude Include="MiniJason.h" />
     <ClInclude Include="Orb.h" />
     <ClInclude Include="Sophia.h" />
@@ -195,6 +196,7 @@
     <ClCompile Include="Insect.cpp" />
     <ClCompile Include="Jumper2.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mine.cpp" />
     <ClCompile Include="MiniJason.cpp" />
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="Sophia.cpp" />

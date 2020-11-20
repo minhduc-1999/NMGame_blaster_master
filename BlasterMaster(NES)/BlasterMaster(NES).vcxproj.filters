@@ -128,6 +128,9 @@
     <Filter Include="Resources\Config">
       <UniqueIdentifier>{61de8993-958a-4ff3-9dff-adad6005d00f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Mine">
+      <UniqueIdentifier>{c9fcbcbc-3c0c-421b-8d7e-fdb7599e4975}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -222,6 +225,9 @@
     </ClInclude>
     <ClInclude Include="Dome.h">
       <Filter>Object\DynamicObject\Dome</Filter>
+    </ClInclude>
+    <ClInclude Include="Mine.h">
+      <Filter>Object\DynamicObject\Mine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -323,6 +329,9 @@
     </ClCompile>
     <ClCompile Include="Dome.cpp">
       <Filter>Object\DynamicObject\Dome</Filter>
+    </ClCompile>
+    <ClCompile Include="Mine.cpp">
+      <Filter>Object\DynamicObject\Mine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
