@@ -54,8 +54,17 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (nty != 0)
 		{
-			SetIsJumping(false);
+			//SetIsJumping(false);
 			vy = 0;
+		}
+
+		for (UINT i = 0; i < coEvents.size(); i++)
+		{
+			if (coEvents[i]->ny < 0)
+			{
+				SetIsJumping(false);
+				vy = 0;
+			}
 		}
 
 		//TODO: Collision logic with dynamic object (bots)

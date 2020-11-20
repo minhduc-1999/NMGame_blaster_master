@@ -53,8 +53,17 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (nty != 0)
 		{
-			SetIsJumping(false);
+			//SetIsJumping(false);
 			vy = 0;
+		}
+
+		for (UINT i = 0; i < coEvents.size(); i++)
+		{
+			if (coEvents[i]->ny < 0)
+			{
+				SetIsJumping(false);
+				vy = 0;
+			}
 		}
 
 		//TODO: Collision logic with dynamic object (bots)
@@ -62,7 +71,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<Sophia *>(e->obj)) // if e->obj is Sophia	
+			if (dynamic_cast<Sophia*>(e->obj)) // if e->obj is Sophia	
 			{
 				isCollisionWithSophia = true;
 			}

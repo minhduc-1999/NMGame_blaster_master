@@ -152,6 +152,7 @@
     <ClInclude Include="CLadder.h" />
     <ClInclude Include="CMagma.h" />
     <ClInclude Include="CTestScene.h" />
+    <ClInclude Include="Dome.h" />
     <ClInclude Include="DynamicGameObject.h" />
     <ClInclude Include="Enemy1.h" />
     <ClInclude Include="Floater2.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="CLadder.cpp" />
     <ClCompile Include="CMagma.cpp" />
     <ClCompile Include="CTestScene.cpp" />
+    <ClCompile Include="Dome.cpp" />
     <ClCompile Include="DynamicGameObject.cpp" />
     <ClCompile Include="Enemy1.cpp" />
     <ClCompile Include="Floater2.cpp" />
