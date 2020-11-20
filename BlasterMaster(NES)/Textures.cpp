@@ -6,6 +6,17 @@ CTextureManager::CTextureManager() {
 
 }
 
+void CTextureManager::Clear()
+{
+	for (auto x : textures)
+	{
+		LPDIRECT3DTEXTURE9 tex = x.second;
+		if (tex != NULL) tex->Release();
+	}
+
+	textures.clear();
+}
+
 CTextureManager* CTextureManager::GetInstance()
 {
 	if (__instance == NULL)

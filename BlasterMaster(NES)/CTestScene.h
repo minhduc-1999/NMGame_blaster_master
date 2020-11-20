@@ -1,7 +1,7 @@
 #pragma once
 #include "Game.h"
 #include "Textures.h"
-#include "Scence.h"
+#include "Scene.h"
 #include "GameObject.h"
 #include "Sophia.h"
 #include "MiniJason.h"
@@ -29,20 +29,24 @@ protected:
 	int gridCol, gridRow;
 	float mapX, mapY, mapWidth, mapHeight;
 
+	vector<CDynamicGameObject*> dynamicObj;
+	vector<CStaticGameObject*> staticObj;
+
 	unordered_map<int, LPGRID> grids;
 	unordered_map<int, unordered_map<int, int>> map;
 
 	void GetMapInfo(string path);
 
-	/*void _ParseSection_SPRITES(string line);
+	void _ParseSection_TEXTURES(string line);
+	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
 	void _ParseSection_ANIMATION_SETS(string line);
-	void _ParseSection_OBJECTS(string line);*/
-
+	void _ParseSection_DYNAMIC_OBJECTS(string line);
+	void _ParseSection_STATIC_OBJECTS(string line);
 
 public:
 	CTestScene();
-	CTestScene(int id, LPCWSTR filePath);
+	CTestScene(int id, string filePath);
 
 	virtual void Load();
 	virtual void Update(DWORD dt);

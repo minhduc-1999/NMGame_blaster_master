@@ -125,6 +125,9 @@
     <Filter Include="Object\DynamicObject\Floater2">
       <UniqueIdentifier>{58772946-68b0-4124-be24-4fa39fe12931}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Config">
+      <UniqueIdentifier>{61de8993-958a-4ff3-9dff-adad6005d00f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -141,9 +144,6 @@
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>FrameWork\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="Scence.h">
-      <Filter>FrameWork\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Game</Filter>
@@ -211,14 +211,14 @@
     <ClInclude Include="CTestScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScence.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Worm.h">
       <Filter>Object\DynamicObject\Worm</Filter>
     </ClInclude>
     <ClInclude Include="Floater2.h">
       <Filter>Object\DynamicObject\Floater2</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>FrameWork\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -233,9 +233,6 @@
     </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>FrameWork\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="Scence.cpp">
-      <Filter>FrameWork\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>WinMain</Filter>
@@ -312,14 +309,14 @@
     <ClCompile Include="CTestScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScence.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Worm.cpp">
       <Filter>Object\DynamicObject\Worm</Filter>
     </ClCompile>
     <ClCompile Include="Floater2.cpp">
       <Filter>Object\DynamicObject\Floater2</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>FrameWork\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -343,5 +340,16 @@
     <Xml Include="mapArea2.xml">
       <Filter>Resources\MapXML\Area2</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Gamemap.txt">
+      <Filter>Resources\Config</Filter>
+    </Text>
+    <Text Include="Gameworld.txt">
+      <Filter>Resources\Config</Filter>
+    </Text>
+    <Text Include="scene-test.txt">
+      <Filter>Resources\Config</Filter>
+    </Text>
   </ItemGroup>
 </Project>

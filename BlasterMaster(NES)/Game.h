@@ -4,9 +4,11 @@
 #include <Windows.h>
 #include <d3dx9.h>
 #include <dinput.h>
-#include "Scence.h"
+#include <unordered_map>
+#include "Scene.h"
 #include "Camera.h"
-#include "Utils.h"
+
+using namespace std;
 #define KEYBOARD_BUFFER_SIZE 1024
 #define DIRECTINPUT_VERSION 0x0800
 
@@ -35,12 +37,17 @@ class CGame
 	LPKEYEVENTHANDLER keyHandler;
 
 	Camera* camera;
-	LPSCENE scene1;
 	float cam_x = 0.0f;
 	float cam_y = 0.0f;
 
 	int screen_width;
 	int screen_height;
+
+	unordered_map<int, LPSCENE> scenes;
+	int current_scene;
+
+	void _ParseSection_SETTINGS(string line);
+	void _ParseSection_SCENES(string line);
 public:
 	void Init(HWND hWnd);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir);
@@ -61,7 +68,6 @@ public:
 
 	void Render();
 	void Update(DWORD dt);
-	void InitGameObject();
 
 	void SetCamPos(float x, float y, D3DXVECTOR3 mapPos, D3DXVECTOR3 mapDimen) { camera->SetPosition(x, y, mapPos, mapDimen); }
 	void SetCamPos(float x, float y) { camera->SetPosition(x, y); }
@@ -86,5 +92,9 @@ public:
 		float& ny);
 
 	~CGame();
+
+	void Load(LPCSTR gameFile);
+	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
+	void SwitchScene(int scene_id);
 
 };

@@ -83,7 +83,7 @@ void MiniJason::Render()
 	if (GetIsJumping())
 	{
 		ani = MINIJASON_ANI_JUMP;
-		animations[ani]->Render(x, y, nx);
+		animation_set->at(ani)->Render(x, y, nx);
 	}
 	else
 	{
@@ -93,7 +93,7 @@ void MiniJason::Render()
 			{
 			case MINIJASON_STATE_IDLE_RIGHT: case MINIJASON_STATE_IDLE_LEFT:
 				ani = MINIJASON_ANI_DOWN_RUN;
-				animations[ani]->RenderFrame(currentRunningColumn, x, y, nx);
+				animation_set->at(ani)->RenderFrame(currentRunningColumn, x, y, nx);
 				return;
 				break;
 			case MINIJASON_STATE_RUN_RIGHT: case MINIJASON_STATE_RUN_LEFT:
@@ -106,7 +106,7 @@ void MiniJason::Render()
 				{
 					currentRunningColumn = 1;
 				}
-				animations[ani]->RenderStartByFrame(currentRunningColumn, x, y, nx);
+				animation_set->at(ani)->RenderStartByFrame(currentRunningColumn, x, y, nx);
 				return;
 				break;
 			}
@@ -117,7 +117,7 @@ void MiniJason::Render()
 			{
 			case MINIJASON_STATE_IDLE_RIGHT:case MINIJASON_STATE_IDLE_LEFT:
 				ani = MINIJASON_ANI_IDLE;
-				animations[ani]->Render(x, y, nx);
+				animation_set->at(ani)->Render(x, y, nx);
 				break;
 			case MINIJASON_STATE_RUN_RIGHT:case MINIJASON_STATE_RUN_LEFT:
 				ani = MINIJASON_ANI_RUN;
@@ -129,13 +129,13 @@ void MiniJason::Render()
 				{
 					currentRunningColumn = 1;
 				}
-				animations[ani]->RenderStartByFrame(currentRunningColumn, x, y, nx);
+				animation_set->at(ani)->RenderStartByFrame(currentRunningColumn, x, y, nx);
 				return;
 				break;
 			}
 		}
 	}
-	animations[ani]->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx);
 }
 
 void MiniJason::SetState(int state)

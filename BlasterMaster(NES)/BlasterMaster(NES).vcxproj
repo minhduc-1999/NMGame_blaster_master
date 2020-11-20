@@ -164,9 +164,8 @@
     <ClInclude Include="MiniJason.h" />
     <ClInclude Include="Orb.h" />
     <ClInclude Include="Sophia.h" />
-    <ClInclude Include="PlayScence.h" />
     <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="Scence.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Skull.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="StaticGameObject.h" />
@@ -197,9 +196,8 @@
     <ClCompile Include="MiniJason.cpp" />
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="Sophia.cpp" />
-    <ClCompile Include="PlayScence.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="Scence.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Skull.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="StaticGameObject.cpp" />
@@ -221,6 +219,11 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="mapArea2.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Gamemap.txt" />
+    <Text Include="Gameworld.txt" />
+    <Text Include="scene-test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,8 +4,8 @@
 #define WINDOW_TITLE "NES-BlasterMaster"
 #define WINDOW_ICON_PATH "BlasterMaster.ico"
 
-#define SCREEN_WIDTH 350
-#define SCREEN_HEIGHT 300
+#define SCREEN_WIDTH 240
+#define SCREEN_HEIGHT 240
 
 #define MAX_FRAME_RATE 60
 
@@ -200,10 +200,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	game->InitKeyboard();
 
-	resourceManager = ResourceManager::GetInstance();
-	resourceManager->LoadResource();
+	//resourceManager = ResourceManager::GetInstance();
+	//resourceManager->LoadResource();
 
-	game->InitGameObject();
+	game->Load("Gameworld.txt");
+
 	Run();
 
 	return 0;

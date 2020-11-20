@@ -27,6 +27,7 @@ public:
 	void Add(int id, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom);
 	LPSPRITE Get(int id);
 
+	void Clear();
 	static CSpriteManager* GetInstance();
 };
 
@@ -50,7 +51,7 @@ class CAnimation
 	bool _isCompleted;
 	vector<LPANIMATION_FRAME> frames;
 public:
-	CAnimation(int defaultTime) 
+	CAnimation(int defaultTime = 100) 
 	{ 
 		this->defaultTime = defaultTime;
 		lastFrameTime = -1; 
@@ -75,4 +76,26 @@ public:
 	void Add(int id, LPANIMATION ani);
 	LPANIMATION Get(int id);
 	static CAnimationManager* GetInstance();
+	void Clear();
+};
+
+typedef vector<LPANIMATION> CAnimationSet;
+
+typedef CAnimationSet* LPANIMATION_SET;
+
+/*
+	Manage animation set database
+*/
+class CAnimationSets
+{
+private:
+	static CAnimationSets* __instance;
+	unordered_map<int, LPANIMATION_SET> animation_sets;
+public:
+	CAnimationSets();
+	void Add(int id, LPANIMATION_SET ani);
+	LPANIMATION_SET Get(unsigned int id);
+
+
+	static CAnimationSets* GetInstance();
 };

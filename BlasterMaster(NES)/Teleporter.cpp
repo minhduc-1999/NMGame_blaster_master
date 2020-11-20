@@ -43,7 +43,7 @@ void Teleporter::Render()
 	}
 
 
-	animations[ani]->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx);
 }
 void Teleporter::SetState(int state)
 {

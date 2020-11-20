@@ -1,6 +1,6 @@
 Game Object 		Animation ID
 **main player
-Sophia			1xx
+Sophia			1xxxx
 	//sophia run high
 	sprites->Add(10001, texPlayerSophia, 109, -11, 109 + 26, -11 + 34);
 	sprites->Add(10002, texPlayerSophia, 77, -11, 77 + 26, -11 + 34);
@@ -54,7 +54,7 @@ Sophia			1xx
 	sprites->Add(11004, texPlayerSophia, 208, 153, 208 + 34, 153 + 34);
 	//sophia transform
 	sprites->Add(11101, texPlayerSophia, 105, 326, 105 + 26, 326 + 34);
-MiniJason		2xx
+MiniJason		2xxxx
 	//mini_jason idle
 	sprites->Add(20001, texPlayerJason, 121, 3, 121 + 10, 3	 + 17);
 	//mini_jason run
@@ -65,30 +65,32 @@ MiniJason		2xx
 	//mini_jason down run
 	sprites->Add(20301, texPlayerJason, 49, 10, 49 + 17, 10 + 10);
 	sprites->Add(20302, texPlayerJason, 32, 10, 32 + 17, 10 + 10);
-Jason			3xx
+Jason			3xxxx
 
 **area2
-Worm			4xx
+Worm			4xxxx
 	//worm walking
 	sprites->Add(40001, texEnemy, 46, 412, 46 + 18, 412 + 10);
 	sprites->Add(40002, texEnemy, 64, 412, 64 + 18, 412 + 10);
 	//worm die
-Dome			5xx
-Floater2		6xx
+Dome			5xxxx
+Floater2		6xxxx
 	//floater2 flying
 	sprites->Add(60001, texEnemy, 84, 407, 84 + 18, 407 + 15);
 	//floater2 fire
 	sprites->Add(60101, texEnemy, 104, 407, 104 + 18, 407 + 15);
 	//worm die
-Insect			7xx
-Jumper2			8xx
-Orb			9xx
-Skull			10xx
-Mine			11xx
+Insect			7xxxx
+Jumper2			8xxxx
+Orb			9xxxx
+Skull			10xxxx
+Mine			11xxxx
 
 **area2 overworld
-Teleporter		12xx
-Cannon			13xx
-Eyeball			14xx
+Teleporter		12xxxx
+Cannon			13xxxx
+Eyeball			14xxxx
 
-*xx from 01 to 99
+*xxxx from 0001 to 9999
+
+[ANIMATION ID]

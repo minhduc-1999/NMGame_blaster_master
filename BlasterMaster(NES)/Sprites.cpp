@@ -21,6 +21,17 @@ void CSprite::Draw(float x, float y, int dir)
 //class CSpriteManager
 CSpriteManager* CSpriteManager::__instance = NULL;
 
+void CSpriteManager::Clear()
+{
+	for (auto x : sprites)
+	{
+		LPSPRITE s = x.second;
+		delete s;
+	}
+
+	sprites.clear();
+}
+
 CSpriteManager* CSpriteManager::GetInstance()
 {
 	if (__instance == NULL) __instance = new CSpriteManager();
@@ -149,6 +160,17 @@ CAnimationManager* CAnimationManager::GetInstance()
 	return __instance;
 }
 
+void CAnimationManager::Clear()
+{
+	for (auto x : animations)
+	{
+		LPANIMATION ani = x.second;
+		delete ani;
+	}
+
+	animations.clear();
+}
+
 void CAnimationManager::Add(int id, LPANIMATION ani)
 {
 	animations[id] = ani;
@@ -157,4 +179,31 @@ void CAnimationManager::Add(int id, LPANIMATION ani)
 LPANIMATION CAnimationManager::Get(int id)
 {
 	return animations[id];
+}
+
+CAnimationSets* CAnimationSets::__instance = NULL;
+
+CAnimationSets::CAnimationSets()
+{
+
+}
+
+CAnimationSets* CAnimationSets::GetInstance()
+{
+	if (__instance == NULL) 
+		__instance = new CAnimationSets();
+	return __instance;
+}
+
+LPANIMATION_SET CAnimationSets::Get(unsigned int id)
+{
+	LPANIMATION_SET ani_set = animation_sets[id];
+	//if (ani_set == NULL)
+		//DebugOut("[ERROR] Failed to find animation set id: %d\n", id);
+	return ani_set;
+}
+
+void CAnimationSets::Add(int id, LPANIMATION_SET ani_set)
+{
+	animation_sets[id] = ani_set;
 }

@@ -14,6 +14,7 @@ public:
 	void Add(int id, LPCSTR filePath, D3DCOLOR transColor);
 	LPDIRECT3DTEXTURE9 Get(unsigned int id);
 
+	void Clear();
 	static CTextureManager* GetInstance();
 };
 

@@ -27,7 +27,7 @@ void Jumper2::Render()
 		ani = INSECT_ANI_WALKING_RIGHT;
 	else ani = INSECT_ANI_WALKING_LEFT;*/
 
-	animations[ani]->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx);
 }
 
 void Jumper2::SetState(int state)

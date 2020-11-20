@@ -56,7 +56,7 @@ D3DXVECTOR3 Camera::GetPosition()
 
 Rect Camera::GetBound()
 {
-    Rect bound; 
+    Rect bound;
 
     bound.left = mPosition.x;
     bound.right = bound.left + mWidth - 1;

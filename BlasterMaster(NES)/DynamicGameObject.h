@@ -10,7 +10,7 @@ protected:
 	int state;
 
 	DWORD dt;
-	vector<LPANIMATION> animations;
+	LPANIMATION_SET animation_set;
 public:
 	CDynamicGameObject(float x, float y);
 
@@ -19,9 +19,9 @@ public:
 	virtual void SetState(int state);
 	int GetState();
 
-
+	virtual void Render() = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
-	void AddAnimation(int aniId);
+	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);

@@ -15,13 +15,13 @@ void Orb::Update(DWORD dt)
 	}
 	else if (vx == 0 && vy == 0)
 	{
-		if (animations[ORB_ANI_TURN_RIGHT]->IsCompleted())
+		if (animation_set->at(ORB_ANI_TURN_RIGHT)->IsCompleted())
 		{
 			if (nx == 1)
 				SetState(ORB_STATE_RUNNING_LEFT);
 			else
 				SetState(ORB_STATE_RUNNING_RIGHT);
-			animations[ORB_ANI_TURN_RIGHT]->ResetAnim();
+			animation_set->at(ORB_ANI_TURN_RIGHT)->ResetAnim();
 		}
 	}
 }
@@ -47,7 +47,7 @@ void Orb::Render()
 		break;
 	}
 
-	animations[ani]->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx);
 }
 
 void Orb::SetState(int state)

@@ -46,7 +46,7 @@ void Insect::Render()
 		ani = INSECT_ANI_FLYING_RIGHT;
 	else ani = INSECT_ANI_FLYING_LEFT;*/
 	
-	animations[ani]->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx);
 }
 
 void Insect::SetState(int state)

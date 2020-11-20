@@ -1,6 +1,6 @@
 ﻿#include "Game.h"
-#include "PlayScence.h"
 #include "CTestScene.h"
+#include <fstream>
 
 CGame* CGame::__instance = NULL;
 
@@ -9,8 +9,7 @@ void CGame::Init(HWND hWnd)
 	d3d = Direct3DCreate9(D3D_SDK_VERSION);
 	if (d3d == NULL)
 	{
-		//MessageBox(hwnd, "Error initializing Direct3D",
-			//"Error", MB_OK);
+		//DebugOut("[ERROR] Error initializing Direct3D!\n");
 		return;
 	}
 
@@ -47,7 +46,6 @@ void CGame::Init(HWND hWnd)
 	if (d3ddev == NULL)
 	{
 		//DebugOut("[ERROR] Create Device failed!\n");
-		//MessageBox(hWnd, "Create device failed!", "Error", MB_OK);
 		return;
 	}
 
@@ -58,16 +56,10 @@ void CGame::Init(HWND hWnd)
 	result = D3DXCreateSprite(d3ddev, &spriteHander);
 	if (result != D3D_OK)
 	{
-		//MessageBox(hwnd,
-			//"Error creating Sprite handler",
-			//"Error",
-			//MB_OK);
+		//DebugOut("[ERROR] Error creating Sprite handler!\n");
 		return;
 	}
-	//MessageBox(hwnd,
-	//	"Init done!",
-	//	"Success",
-	//	MB_OK);
+	//DebugOut("[INFO] Init done!\n");
 	camera = new Camera(screen_width, screen_height);
 	camera->SetPosition(0, 0);
 }
@@ -248,7 +240,7 @@ void CGame::Render()
 
 		spriteHander->Begin(D3DXSPRITE_ALPHABLEND);
 
-		scene1->Render();
+		scenes[current_scene]->Render();
 
 		spriteHander->End();
 		d3ddev->EndScene();
@@ -261,17 +253,7 @@ void CGame::Render()
 
 void CGame::Update(DWORD dt)
 {
-	scene1->Update(dt);
-}
-
-void CGame::InitGameObject()
-{
-	/*scene1 = new CPlayScene();
-	scene1->Load();
-	this->SetKeyHandler(scene1->GetKeyEventHandler());*/
-	scene1 = new CTestScene();
-	scene1->Load();
-	this->SetKeyHandler(scene1->GetKeyEventHandler());
+	scenes[current_scene]->Update(dt);
 }
 
 void CGame::SweptAABB(
@@ -371,4 +353,84 @@ void CGame::SweptAABB(
 		dy > 0 ? ny = -1.0f : ny = 1.0f;
 	}
 
+}
+
+#define GAME_FILE_SECTION_UNKNOWN -1
+#define GAME_FILE_SECTION_SETTINGS 1
+#define GAME_FILE_SECTION_SCENES 2
+
+void CGame::_ParseSection_SETTINGS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return;
+	if (tokens[0] == "start")
+		current_scene = atoi(tokens[1].c_str());
+	else
+		DebugOut("[ERROR] Unknown game setting %s\n", tokens[0]);
+}
+
+void CGame::_ParseSection_SCENES(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return;
+	int id = atoi(tokens[0].c_str());
+	string path = tokens[1];
+
+	LPSCENE scene = new CTestScene(id, path);
+	scenes[id] = scene;
+}
+
+/*
+	Load game campaign file and load/initiate first scene
+*/
+void CGame::Load(LPCSTR gameFile)
+{
+	DebugOut("[INFO] Start loading game file : %s\n", gameFile);
+
+	ifstream f;
+	f.open(gameFile);
+	string line;
+	// current resource section flag
+	int section = GAME_FILE_SECTION_UNKNOWN;
+
+	while (getline(f, line))
+	{
+		if (line[0] == '#') continue;	// skip comment lines	
+
+		if (line == "[SETTINGS]") { section = GAME_FILE_SECTION_SETTINGS; continue; }
+		if (line == "[SCENES]") { section = GAME_FILE_SECTION_SCENES; continue; }
+
+		//
+		// data section
+		//
+		switch (section)
+		{
+		case GAME_FILE_SECTION_SETTINGS: _ParseSection_SETTINGS(line); break;
+		case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
+		}
+	}
+	f.close();
+
+	DebugOut("[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
+
+	SwitchScene(current_scene);
+}
+
+void CGame::SwitchScene(int scene_id)
+{
+	DebugOut("[INFO] Switching to scene %d\n", scene_id);
+
+	scenes[current_scene]->Unload();;
+
+	CTextureManager::GetInstance()->Clear();
+	CSpriteManager::GetInstance()->Clear();
+	CAnimationManager::GetInstance()->Clear();
+
+	current_scene = scene_id;
+	LPSCENE s = scenes[scene_id];
+	s->Load();
+	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
+	//SetKeyHandler(s->GetKeyEventHandler());
 }

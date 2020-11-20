@@ -27,12 +27,6 @@ void CDynamicGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	dy = vy * dt;
 }
 
-void CDynamicGameObject::AddAnimation(int aniId)
-{
-	LPANIMATION ani = CAnimationManager::GetInstance()->Get(aniId);
-	animations.push_back(ani);
-}
-
 LPCOLLISIONEVENT CDynamicGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 {
 	if (this == coO)

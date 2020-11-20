@@ -42,7 +42,7 @@ void Skull::Render()
 		break;
 	}
 
-	animations[ani]->Render(x, y,nx);
+	animation_set->at(ani)->Render(x, y,nx);
 }
 void Skull::SetState(int state)
 {

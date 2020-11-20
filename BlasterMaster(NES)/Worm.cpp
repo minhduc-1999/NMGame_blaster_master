@@ -71,7 +71,7 @@ void Worm::Render()
 		break;
 	}
 
-	animations[ani]->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx);
 }
 
 void Worm::SetState(int state)

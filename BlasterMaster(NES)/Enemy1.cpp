@@ -45,7 +45,7 @@ void Enemy1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Enemy1::Render()
 {
-	LPANIMATION ani = animations[0];
+	LPANIMATION ani = animation_set->at(0);
 	ani->Render(x, y, 1);
 }
 

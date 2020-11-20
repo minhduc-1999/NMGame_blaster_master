@@ -12,9 +12,9 @@
 
 using namespace std;
 
-//void DebugOut(wchar_t *fmt, ...);
+void DebugOut(const char* szFormat, ...);
 //
-//vector<string> split(string line, string delimeter = "\t");
+vector<string> split(string line, string delimeter = "\t");
 //wstring ToWSTR(string st);
 //
 //LPCWSTR ToLPCWSTR(string st);
