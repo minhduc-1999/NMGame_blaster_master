@@ -62,6 +62,9 @@ CTestScene::CTestScene() :
 #define OBJECT_TYPE_SOPHIA	0
 #define OBJECT_TYPE_BRICK	1
 #define OBJECT_TYPE_ARROW	2
+#define	OBJECT_TYPE_SKULL	10
+#define OBJECT_TYPE_MINE	11
+#define	OBJECT_TYPE_TELEPORTER 12
 
 #define MAX_SCENE_LINE 1024
 
@@ -180,6 +183,15 @@ void CTestScene::_ParseSection_DYNAMIC_OBJECTS(string line)
 
 		DebugOut("[INFO] Player object created!\n");
 		break;
+	case OBJECT_TYPE_SKULL:
+		obj = new Skull(x, y);
+		break;
+	case OBJECT_TYPE_MINE:
+		obj = new Mine(x, y);
+		break;
+	case OBJECT_TYPE_TELEPORTER:
+		obj = new Teleporter(x, y);
+		break;
 	default:
 		DebugOut("[ERROR] Invalid object type: %d\n", object_type);
 		return;
@@ -187,7 +199,6 @@ void CTestScene::_ParseSection_DYNAMIC_OBJECTS(string line)
 
 	// General object setup
 	obj->SetPosition(x, y);
-
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 	obj->SetAnimationSet(ani_set);
@@ -289,8 +300,8 @@ void CTestScene::Render()
 	for (int i = 0; i < staticObj.size(); i++)
 		staticObj[i]->Render();
 	mainPlayer->Render();
-	/*for (int i = 0; i < dynamicObj.size(); i++)
-		dynamicObj[i]->Render();*/
+	//for (int i = 0; i < dynamicObj.size(); i++)
+	//	dynamicObj[i]->Render();
 }
 
 /*

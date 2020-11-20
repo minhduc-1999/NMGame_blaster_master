@@ -6,9 +6,8 @@
 #define TELEPORTER_DELAY_TIME		15
 #define TELEPORTER_SWAP				5
 
-#define TELEPORTER_STATE_IDLE		0
+#define TELEPORTER_STATE_GRAY		0
 #define TELEPORTER_STATE_GREEN		1
-#define TELEPORTER_STATE_GRAY		2
 
 #define TELEPORTER_ANI_GREEN		0
 #define TELEPORTER_ANI_GRAY			1
@@ -17,10 +16,10 @@
 class Teleporter : public CDynamicGameObject
 {
 public:
-	Teleporter (float x, float y) : CDynamicGameObject(x, y) {}
+	Teleporter(float x, float y);
 	bool isTele = false;
 	int swap, delay;
-	void Update(DWORD dt);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
 };
