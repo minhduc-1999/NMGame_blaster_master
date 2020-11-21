@@ -8,17 +8,10 @@ Jason			3xxxx
 
 **area2
 Worm			4xxxx
-	//worm walking
-	sprites->Add(40001, texEnemy, 46, 412, 46 + 18, 412 + 10);
-	sprites->Add(40002, texEnemy, 64, 412, 64 + 18, 412 + 10);
-	//worm die
+	
 Dome			5xxxx
 Floater2		6xxxx
-	//floater2 flying
-	sprites->Add(60001, texEnemy, 84, 407, 84 + 18, 407 + 15);
-	//floater2 fire
-	sprites->Add(60101, texEnemy, 104, 407, 104 + 18, 407 + 15);
-	//worm die
+	
 Insect			7xxxx
 Jumper2			8xxxx
 Orb			9xxxx
@@ -32,4 +25,35 @@ Eyeball			14xxxx
 
 *xxxx from 0001 to 9999
 
-[ANIMATION ID]
+[OBJECTS ID TYPE]
+
+Sophia			1
+	
+MiniJason		2
+	
+Jason			3
+
+**area2
+Worm			4
+	
+Dome			5
+Floater2		6
+	
+Insect			7
+Jumper2			8
+Orb			9
+Skull			10
+Mine			11
+
+**area2 overworld
+Teleporter		12
+Cannon			13
+Eyeball			14
+
+
+#static obj
+brick			15
+arrow			16
+Gate			17
+Ladder			18
+Magma			19

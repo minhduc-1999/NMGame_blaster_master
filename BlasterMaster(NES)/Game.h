@@ -69,9 +69,9 @@ public:
 	void Render();
 	void Update(DWORD dt);
 
-	void SetCamPos(float x, float y, D3DXVECTOR3 mapPos, D3DXVECTOR3 mapDimen) { camera->SetPosition(x, y, mapPos, mapDimen); }
+	void SetCamPos(float x, float y, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDimen) { camera->SetPosition(x, y, mapPos, mapDimen); }
 	void SetCamPos(float x, float y) { camera->SetPosition(x, y); }
-	D3DXVECTOR3 GetCamPos() { return camera->GetPosition(); }
+	D3DXVECTOR2 GetCamPos() { return camera->GetPosition(); }
 	Rect GetCamBound() { return camera->GetBound(); }
 	int GetScreenWidth() { return screen_width; }
 	int GetScreenHeight() { return screen_height; }

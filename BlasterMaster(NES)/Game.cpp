@@ -1,6 +1,7 @@
 ﻿#include "Game.h"
 #include "CTestScene.h"
 #include <fstream>
+#include "Textures.h"
 
 CGame* CGame::__instance = NULL;
 
@@ -66,7 +67,7 @@ void CGame::Init(HWND hWnd)
 
 void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir)
 {
-	D3DXVECTOR3 camPos = GetCamPos();
+	D3DXVECTOR2 camPos = GetCamPos();
 	int viewPortY = y - camPos.y;
 	int viewPortX = x - camPos.x;
 	D3DXVECTOR3 pCenter((right - left) / 2, (bottom - top) / 2, 0);

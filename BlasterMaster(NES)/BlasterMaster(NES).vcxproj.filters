@@ -199,9 +199,6 @@
     <ClInclude Include="Teleporter.h">
       <Filter>Object\DynamicObject\Teleporter</Filter>
     </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>FrameWork\Background</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -303,9 +300,6 @@
     <ClCompile Include="Teleporter.cpp">
       <Filter>Object\DynamicObject\Teleporter</Filter>
     </ClCompile>
-    <ClCompile Include="Background.cpp">
-      <Filter>FrameWork\Background</Filter>
-    </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -351,7 +345,10 @@
       <Filter>Resources\Sprites\Player</Filter>
     </Image>
     <Image Include="sectionA-background.png">
-      <Filter>Resources</Filter>
+      <Filter>Resources\Background</Filter>
+    </Image>
+    <Image Include="area2_bg.png">
+      <Filter>Resources\Background</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -360,14 +357,20 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Gamemap.txt">
-      <Filter>Resources\Config</Filter>
-    </Text>
     <Text Include="Gameworld.txt">
       <Filter>Resources\Config</Filter>
     </Text>
     <Text Include="scene-test.txt">
       <Filter>Resources\Config</Filter>
+    </Text>
+    <Text Include="area2_secB.txt">
+      <Filter>Resources\Config\Area2</Filter>
+    </Text>
+    <Text Include="area2_secA.txt">
+      <Filter>Resources\Config\Area2</Filter>
+    </Text>
+    <Text Include="area2.txt">
+      <Filter>Resources\Config\Area2</Filter>
     </Text>
   </ItemGroup>
 </Project>

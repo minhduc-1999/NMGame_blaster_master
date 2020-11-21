@@ -10,13 +10,13 @@ public:
 
     //center of camera
     void SetPosition(float x, float y);
-    void SetPosition(float x, float y, D3DXVECTOR3 mapPos, D3DXVECTOR3 mapDimen);
-    void SetPosition(D3DXVECTOR3 pos);
+    void SetPosition(float x, float y, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDimen);
+    void SetPosition(D3DXVECTOR2 pos);
 
     int GetWidth();
     int GetHeight();
 
-    D3DXVECTOR3 GetPosition();    
+    D3DXVECTOR2 GetPosition();    
     Rect GetBound();
 
     ~Camera();
@@ -25,6 +25,6 @@ private:
     int             mWidth,
                     mHeight;
 
-    D3DXVECTOR3     mPosition;
+    D3DXVECTOR2     mPosition;
 };
 

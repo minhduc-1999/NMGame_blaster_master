@@ -6,7 +6,7 @@ Camera::Camera(int width, int height)
     mWidth = width ;
     mHeight = height ;
 
-    mPosition = D3DXVECTOR3(0, 0, 0);
+    mPosition = D3DXVECTOR2(0, 0);
 }
 
 
@@ -17,10 +17,10 @@ Camera::~Camera()
 
 void Camera::SetPosition(float x, float y)
 {
-    SetPosition(D3DXVECTOR3(x, y, 0));
+    SetPosition(D3DXVECTOR2(x, y));
 }
 
-void Camera::SetPosition(float x, float y, D3DXVECTOR3 mapPos, D3DXVECTOR3 mapDimen)
+void Camera::SetPosition(float x, float y, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDimen)
 {
     int lastX = x, lastY = y;
     if (x < mapPos.x)
@@ -44,12 +44,12 @@ void Camera::SetPosition(float x, float y, D3DXVECTOR3 mapPos, D3DXVECTOR3 mapDi
     this->SetPosition(lastX, lastY);
 }
 
-void Camera::SetPosition(D3DXVECTOR3 pos)
+void Camera::SetPosition(D3DXVECTOR2 pos)
 {
     mPosition = pos;
 }
 
-D3DXVECTOR3 Camera::GetPosition()
+D3DXVECTOR2 Camera::GetPosition()
 {
     return mPosition;
 }

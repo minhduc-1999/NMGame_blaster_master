@@ -1,17 +1,11 @@
 #pragma once
 #include "Game.h"
-#include "Textures.h"
 #include "Scene.h"
 #include "GameObject.h"
 #include "Sophia.h"
 #include "MiniJason.h"
-#include "Orb.h"
-#include "Jumper2.h"
-#include "Insect.h"
 #include "StaticGameObject.h"
-#include "Grid.h"
-#include "Skull.h"
-#include "Teleporter.h"
+#include "Section.h"
 #include "Mine.h"
 
 #define PLAYER_SOPHIA 0
@@ -25,28 +19,17 @@ protected:
 	MiniJason* miniJason;
 	int playerType = PLAYER_SOPHIA;
 
-	float gridWidth;
-	float gridHeight;
-	int gridCol, gridRow;
-	float mapX, mapY, mapWidth, mapHeight;
-
-	vector<CDynamicGameObject*> dynamicObj;
-	vector<CStaticGameObject*> staticObj;
-
-	unordered_map<int, LPGRID> grids;
-	unordered_map<int, unordered_map<int, int>> map;
-
-	void GetMapInfo(string path);
+	unordered_map<int, LPSECTION> sections;
+	int current_section;
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
 	void _ParseSection_ANIMATION_SETS(string line);
-	void _ParseSection_DYNAMIC_OBJECTS(string line);
-	void _ParseSection_STATIC_OBJECTS(string line);
+	void _ParseSection_SECTION(string line);
+	void _ParseSection_SETTINGS(string line);
 
 public:
-	CTestScene();
 	CTestScene(int id, string filePath);
 
 	virtual void Load();
@@ -71,9 +54,7 @@ public:
 		}
 	}
 	//MiniJason* GetPlayerJason() { return miniJason; }
-	D3DXVECTOR3 GetSceneMapPos() { return D3DXVECTOR3{ mapX, mapY, 0 }; }
-	D3DXVECTOR3 GetSceneMapDimension() { return D3DXVECTOR3{ mapWidth, mapHeight, 0 }; }
-	D3DXVECTOR2 GetBoundGrid(Rect bound);
+	void SwitchSection(int section_id);
 
 	//friend class CTestSceneKeyHandler;
 };

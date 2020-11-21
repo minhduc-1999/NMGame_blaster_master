@@ -1,20 +1,21 @@
 #pragma once
 #include "StaticGameObject.h"
-#include "Background.h"
+#include "DynamicGameObject.h"
 class Grid
 {
 protected:
-	int rowID, colID;
+	int gridID;
 	vector<LPSTATICOBJECT> staticObjs;
-	vector<LPBACKGROUND> backgrounds;
+	vector<LPDYNAMICOBJECT> dynamicObjs;
 public:
-	void AddObject(LPSTATICOBJECT obj);
-	void AddBackgroundTile(LPBACKGROUND bg);
-	Grid(int rowid, int colid) { rowID = rowid; colID = colid; }
+	void AddStaticObj(LPSTATICOBJECT obj);
+	void AddDynamicObj(LPDYNAMICOBJECT obj);
+	Grid(int id) { gridID = id; }
 	void RemoveObject(LPSTATICOBJECT obj);
-	void Update(DWORD dt);
-	vector<LPSTATICOBJECT>* GetcoObjectList();
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	vector<LPGAMEOBJECT>* GetcoObjectList();
 	void Render();
+	void Clear();
 };
 
 typedef Grid* LPGRID;

@@ -17,33 +17,7 @@ CTestScene::CTestScene(int id, string filePath) :
 	CScene(id, filePath)
 {
 	key_handler = new CTestSceneKeyHandler(this);
-	mapX = 0.0f;
-	mapY = 0.0f;
-	mapWidth = 1024.0f;
-	mapHeight = 240.0f;
 }
-
-CTestScene::CTestScene() :
-	CScene()
-{
-	key_handler = new CTestSceneKeyHandler(this);
-	gridHeight = 160.0f;
-	gridWidth = 256.0f;
-	mapX = 0.0f;
-	mapY = 0.0f;
-	mapWidth = 512.0f;
-	mapHeight = 1280.0f;
-	gridRow = mapHeight / gridHeight;
-	gridCol = mapWidth / gridWidth;
-
-	for (int i = 0; i < gridRow; i++)
-		for (int j = 0; j < gridCol; j++)
-		{
-			LPGRID temp = new Grid(i, j);
-			int index = (i % gridRow) * gridCol + j % gridCol;
-			grids.emplace(index, temp);
-		}
-} 
 
 /*
 	Load scene resources from scene file (textures, sprites, animations and objects)
@@ -55,9 +29,8 @@ CTestScene::CTestScene() :
 #define SCENE_SECTION_SPRITES 3
 #define SCENE_SECTION_ANIMATIONS 4
 #define SCENE_SECTION_ANIMATION_SETS	5
-#define SCENE_SECTION_STATIC_OBJECTS	6
-#define SCENE_SECTION_DYNAMIC_OBJECTS	7
-#define SCENE_SECTION_MAP	8
+#define SCENE_SECTION_SECTION	6
+#define SCENE_SECTION_SETTING	7
 
 #define OBJECT_TYPE_SOPHIA	0
 #define OBJECT_TYPE_BRICK	1
@@ -67,8 +40,6 @@ CTestScene::CTestScene() :
 #define	OBJECT_TYPE_TELEPORTER 12
 
 #define TEXTURE_BACKGROUND 40
-
-#define MAX_SCENE_LINE 1024
 
 void CTestScene::_ParseSection_TEXTURES(string line)
 {
@@ -152,124 +123,36 @@ void CTestScene::_ParseSection_ANIMATION_SETS(string line)
 	CAnimationSets::GetInstance()->Add(ani_set_id, s);
 }
 
+void CTestScene::_ParseSection_SECTION(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return;
+	int id = atoi(tokens[0].c_str());
+	string path = tokens[1];
+
+	LPSECTION section = new Section(id, path);
+	sections[id] = section;
+}
+
+void CTestScene::_ParseSection_SETTINGS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return;
+	if (tokens[0] == "start")
+		current_section = atoi(tokens[1].c_str());
+	else
+		DebugOut("[ERROR] Unknown scene setting %s\n", tokens[0]);
+}
 /*
 	Parse a line in section [OBJECTS]
 */
-void CTestScene::_ParseSection_DYNAMIC_OBJECTS(string line)
-{
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 3) return; // skip invalid lines - an object set must have at least id, x, y
-
-	int object_type = atoi(tokens[0].c_str());
-	float x = atof(tokens[1].c_str());
-	float y = atof(tokens[2].c_str());
-
-	int ani_set_id = atoi(tokens[3].c_str());
-
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-
-	CDynamicGameObject* obj = NULL;
-
-	switch (object_type)
-	{
-		//dynamic obj
-	case OBJECT_TYPE_SOPHIA:
-		if (mainPlayer != NULL)
-		{
-			DebugOut("[ERROR] main object was created before!\n");
-			return;
-		}
-		obj = new Sophia(x, y);
-		mainPlayer = (Sophia*)obj;
-
-		DebugOut("[INFO] Player object created!\n");
-		break;
-	case OBJECT_TYPE_SKULL:
-		obj = new Skull(x, y);
-		break;
-	case OBJECT_TYPE_MINE:
-		obj = new Mine(x, y);
-		break;
-	case OBJECT_TYPE_TELEPORTER:
-		obj = new Teleporter(x, y);
-		break;
-	default:
-		DebugOut("[ERROR] Invalid object type: %d\n", object_type);
-		return;
-	}
-
-	// General object setup
-	obj->SetPosition(x, y);
-	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-
-	obj->SetAnimationSet(ani_set);
-	dynamicObj.push_back(obj);
-}
-
-void CTestScene::_ParseSection_STATIC_OBJECTS(string line)
-{
-	vector<string> tokens = split(line);
-
-	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
-
-	if (tokens.size() < 3) return; // skip invalid lines - an object set must have at least id, x, y
-
-	int object_type = atoi(tokens[0].c_str());
-	float x = atof(tokens[1].c_str());
-	float y = atof(tokens[2].c_str());
-
-	CStaticGameObject* obj = NULL;
-
-	switch (object_type)
-	{
-		//static obj
-	case OBJECT_TYPE_BRICK:
-		obj = new Brick(x, y);
-		break;
-		/*case OBJECT_TYPE_GATE:
-		{
-			float r = atof(tokens[4].c_str());
-			float b = atof(tokens[5].c_str());
-			int scene_id = atoi(tokens[6].c_str());
-			obj = new CPortal(x, y, r, b, scene_id);
-		}
-		break;*/
-	default:
-		DebugOut("[ERROR] Invalid object type: %d\n", object_type);
-		return;
-	}
-
-	// General object setup
-	for (int i = 3; i < tokens.size(); i++)
-	{
-		int spriteID = atoi(tokens[i].c_str());
-		obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
-	}
-	staticObj.push_back(obj);
-}
 
 //Update render
 void CTestScene::Update(DWORD dt)
 {
-	/*vector<LPGAMEOBJECT> coObjs;
-	Rect camPos = CGame::GetInstance()->GetCamBound();
-	D3DXVECTOR2 grid = GetBoundGrid(camPos);
-	for (int i = (int)grid.x; i <= (int)grid.y; i++)
-	{
-		if (grids.find(i) != grids.end())
-		{
-			vector<LPSTATICOBJECT>* temp = grids.at(i)->GetcoObjectList();
-			coObjs.insert(coObjs.end(), temp->begin(), temp->end());
-		}
-	}
-	
-	mainPlayer->Update(dt, &coObjs);*/
-	vector<LPGAMEOBJECT> coObjs;
-	coObjs.insert(coObjs.end(), staticObj.begin(), staticObj.end());
-	/*for (int i = 0; i < dynamicObj.size(); i++)
-		dynamicObj[i]->Update(dt, &coObjs);*/
-	mainPlayer->Update(dt, &coObjs);
+	sections[current_section]->Update(dt);
 	float cx, cy;
 	cx = mainPlayer->GetPosition().x;
 	cy = mainPlayer->GetPosition().y;
@@ -278,27 +161,13 @@ void CTestScene::Update(DWORD dt)
 	cx -= game->GetScreenWidth() / 2;
 	cy -= game->GetScreenHeight() / 2;
 
-	CGame::GetInstance()->SetCamPos(cx, cy, D3DXVECTOR3{ mapX, mapY, 0 }, D3DXVECTOR3{ mapWidth, mapHeight, 0 });
+	D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();
+	D3DXVECTOR2 mapDimen = sections[current_section]->GetSectionMapDimension();
+	CGame::GetInstance()->SetCamPos(cx, cy, mapPos, mapDimen);
 }
 
 void CTestScene::Render()
 {
-	//Kiem tra xem camera chiem grid nao
-	//Rect camPos = CGame::GetInstance()->GetCamBound();
-	//D3DXVECTOR2 grid = GetBoundGrid(camPos);
-	//for (int i = (int)grid.x; i <= (int)grid.y; i++)
-	//{
-	//	if (grids.find(i) != grids.end())
-	//		grids.at(i)->Render();
-	//}
-	////render main
-	////player->Render();
-	//if (mainPlayer != sophia)
-	//{
-	//	sophia->Render();
-	//} 
-	//mainPlayer->Render();
-
 	//Render background
 	Rect cam = CGame::GetInstance()->GetCamBound();
 	LPDIRECT3DTEXTURE9 tex = CTextureManager::GetInstance()->Get(TEXTURE_BACKGROUND);
@@ -306,11 +175,8 @@ void CTestScene::Render()
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
 	CGame::GetInstance()->Draw(bgX, bgY, tex, cam.left, cam.top, cam.right, cam.bottom, -1);
 	//Render object
-	for (int i = 0; i < staticObj.size(); i++)
-		staticObj[i]->Render();
+	sections[current_section]->Render();
 	mainPlayer->Render();
-	//for (int i = 0; i < dynamicObj.size(); i++)
-	//	dynamicObj[i]->Render();
 }
 
 /*
@@ -321,19 +187,17 @@ void CTestScene::Unload()
 
 }
 
-D3DXVECTOR2 CTestScene::GetBoundGrid(Rect bound)
+void CTestScene::SwitchSection(int section_id)
 {
-	//	D3DXVECTOR2 start(startRow, startCol,  0);
-	D3DXVECTOR2 start(bound.top / gridHeight, bound.left / gridWidth);
-	//	D3DXVECTOR2 end(endRow, endCol,  0);
-	D3DXVECTOR2 end(bound.bottom / gridHeight, bound.right / gridWidth);
+	DebugOut("[INFO] Switching to section %d\n", section_id);
 
-	int startGrid = ((int)start.x % gridRow) * gridCol + (int)start.y % gridCol;
-	int endGrid = ((int)end.x % gridRow) * gridCol + (int)end.y % gridCol;
+	sections[current_section]->Unload();
 
-	return D3DXVECTOR2(startGrid, endGrid);
+	current_section = section_id;
+	LPSECTION s = sections[current_section];
+	s->Load();
+	mainPlayer = s->GetPlayer();
 }
-
 
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 {
@@ -382,41 +246,6 @@ void CTestSceneKeyHandler::OnKeyUp(int KeyCode)
 	currentPlayer->OnKeyUp(KeyCode);
 }
 
-void CTestScene::GetMapInfo(string path)
-{
-	TiXmlDocument doc("mapArea2.xml");
-	if (!doc.LoadFile())
-	{
-		printf("%s", doc.ErrorDesc());
-		return;
-	}
-	TiXmlElement* root = doc.RootElement();
-	TiXmlElement* data = root->FirstChildElement()
-		->NextSiblingElement()
-		->NextSiblingElement()
-		->FirstChildElement();
-	string s = data->GetText();
-
-	std::string delimiter = ",";
-	size_t pos = 0;
-	std::string token;
-	int i = 0, j = 0;
-	while ((pos = s.find(delimiter)) != std::string::npos) {
-		token = s.substr(0, pos);
-		//std::cout << token << std::endl;
-		map[i][j] = stoi(token);
-		s.erase(0, pos + delimiter.length());
-		j++;
-		if (i == 128)
-			i = 0;
-		if (j == 128)
-		{
-			j = 0;
-			i++;
-		}
-	}
-}
-
 void CTestScene::Load()
 {
 	DebugOut("[INFO] Start loading scene resources from : %s \n", sceneFilePath);
@@ -427,7 +256,6 @@ void CTestScene::Load()
 	// current resource section flag
 	int section = SCENE_SECTION_UNKNOWN;
 
-	char str[MAX_SCENE_LINE];
 	while (getline(f, line))
 	{
 		if (line[0] == '#') continue;	// skip comment lines	
@@ -442,11 +270,11 @@ void CTestScene::Load()
 		if (line == "[ANIMATION_SETS]") {
 			section = SCENE_SECTION_ANIMATION_SETS; continue;
 		}
-		if (line == "[STATIC_OBJECTS]") {
-			section = SCENE_SECTION_STATIC_OBJECTS; continue;
+		if (line == "[SECTIONS]") {
+			section = SCENE_SECTION_SECTION; continue;
 		}
-		if (line == "[DYNAMIC_OBJECTS]") {
-			section = SCENE_SECTION_DYNAMIC_OBJECTS; continue;
+		if (line == "[SETTINGS]") {
+			section = SCENE_SECTION_SETTING; continue;
 		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
@@ -455,12 +283,14 @@ void CTestScene::Load()
 		//
 		switch (section)
 		{
+		case SCENE_SECTION_SETTING: _ParseSection_SETTINGS(line); break;
+		case SCENE_SECTION_SECTION:
+			_ParseSection_SECTION(line); break;
 		case SCENE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
 		case SCENE_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
-		case SCENE_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
+		case SCENE_SECTION_ANIMATIONS:
+			_ParseSection_ANIMATIONS(line); break;
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
-		case SCENE_SECTION_DYNAMIC_OBJECTS: _ParseSection_DYNAMIC_OBJECTS(line); break;
-		case SCENE_SECTION_STATIC_OBJECTS: _ParseSection_STATIC_OBJECTS(line); break;
 		}
 	}
 
@@ -468,7 +298,9 @@ void CTestScene::Load()
 
 	//CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 
-	DebugOut("[INFO] Done loading scene resources %s\n", sceneFilePath);
+	DebugOut("[INFO] Loading section file : %s has been loaded successfully\n", sceneFilePath);
+
+	SwitchSection(current_section);
 }
 
 

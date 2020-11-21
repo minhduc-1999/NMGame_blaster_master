@@ -1,13 +1,13 @@
 #include "Grid.h"
 
-void Grid::AddObject(LPSTATICOBJECT obj)
+void Grid::AddStaticObj(LPSTATICOBJECT obj)
 {
 	staticObjs.push_back(obj);
 }
 
-void Grid::AddBackgroundTile(LPBACKGROUND bg)
+void Grid::AddDynamicObj(LPDYNAMICOBJECT obj)
 {
-	backgrounds.push_back(bg);
+	dynamicObjs.push_back(obj);
 }
 
 void Grid::RemoveObject(LPSTATICOBJECT obj)
@@ -17,25 +17,28 @@ void Grid::RemoveObject(LPSTATICOBJECT obj)
 		staticObjs.erase(it);
 }
 
-void Grid::Update(DWORD dt)
+void Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	
+	for (int i = 0; i < dynamicObjs.size(); i++)
+	{
+		dynamicObjs[i]->Update(dt, coObjects);
+	}
 }
 
-vector<LPSTATICOBJECT>* Grid::GetcoObjectList()
+vector<LPGAMEOBJECT>* Grid::GetcoObjectList()
 {
-	return &staticObjs;
+	vector<LPGAMEOBJECT>* temp = new vector<LPGAMEOBJECT>;
+	temp->insert(temp->end(), staticObjs.begin(), staticObjs.end());
+	temp->insert(temp->end(), staticObjs.begin(), staticObjs.end());
+	return temp;
 }
 
 void Grid::Render()
 {
-	int n = staticObjs.size();
-	for (int i = 0; i < n; i++)
-	{
-		staticObjs[i]->Render();
-	}
-	for (int i = 0; i < backgrounds.size(); i++)
-	{
-		backgrounds[i]->Render();
-	}
+	
+}
+
+void Grid::Clear()
+{
+	
 }

@@ -145,7 +145,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Background.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CGate.h" />
@@ -165,6 +164,7 @@
     <ClInclude Include="Mine.h" />
     <ClInclude Include="MiniJason.h" />
     <ClInclude Include="Orb.h" />
+    <ClInclude Include="Section.h" />
     <ClInclude Include="Sophia.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
@@ -179,7 +179,6 @@
     <ClInclude Include="Worm.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CGate.cpp" />
@@ -199,6 +198,7 @@
     <ClCompile Include="Mine.cpp" />
     <ClCompile Include="MiniJason.cpp" />
     <ClCompile Include="Orb.cpp" />
+    <ClCompile Include="Section.cpp" />
     <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -216,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="area2-tile.png" />
+    <Image Include="area2_bg.png" />
     <Image Include="BlasterMaster.ico" />
     <Image Include="enemy.png" />
     <Image Include="Jason.png" />
@@ -226,7 +227,9 @@
     <Xml Include="mapArea2.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Gamemap.txt" />
+    <Text Include="area2.txt" />
+    <Text Include="area2_secA.txt" />
+    <Text Include="area2_secB.txt" />
     <Text Include="Gameworld.txt" />
     <Text Include="scene-test.txt" />
   </ItemGroup>
