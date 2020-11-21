@@ -66,6 +66,8 @@ CTestScene::CTestScene() :
 #define OBJECT_TYPE_MINE	11
 #define	OBJECT_TYPE_TELEPORTER 12
 
+#define TEXTURE_BACKGROUND 40
+
 #define MAX_SCENE_LINE 1024
 
 void CTestScene::_ParseSection_TEXTURES(string line)
@@ -294,9 +296,16 @@ void CTestScene::Render()
 	//if (mainPlayer != sophia)
 	//{
 	//	sophia->Render();
-	//}
+	//} 
 	//mainPlayer->Render();
-	
+
+	//Render background
+	Rect cam = CGame::GetInstance()->GetCamBound();
+	LPDIRECT3DTEXTURE9 tex = CTextureManager::GetInstance()->Get(TEXTURE_BACKGROUND);
+	float bgX = cam.left + (cam.right - cam.left) / 2.0f;
+	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
+	CGame::GetInstance()->Draw(bgX, bgY, tex, cam.left, cam.top, cam.right, cam.bottom, -1);
+	//Render object
 	for (int i = 0; i < staticObj.size(); i++)
 		staticObj[i]->Render();
 	mainPlayer->Render();

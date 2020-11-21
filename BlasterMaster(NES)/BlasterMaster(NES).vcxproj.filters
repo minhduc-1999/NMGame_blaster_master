@@ -350,6 +350,9 @@
     <Image Include="Sophia.png">
       <Filter>Resources\Sprites\Player</Filter>
     </Image>
+    <Image Include="sectionA-background.png">
+      <Filter>Resources</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="mapArea2.xml">

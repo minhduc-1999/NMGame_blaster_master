@@ -219,6 +219,7 @@
     <Image Include="BlasterMaster.ico" />
     <Image Include="enemy.png" />
     <Image Include="Jason.png" />
+    <Image Include="sectionA-background.png" />
     <Image Include="Sophia.png" />
   </ItemGroup>
   <ItemGroup>

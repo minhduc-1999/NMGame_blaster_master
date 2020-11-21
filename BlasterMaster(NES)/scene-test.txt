@@ -4,6 +4,7 @@
 10	Jason.png	0	0	255
 20	Sophia.png	0	0	255
 30	area2-tile.png	255	255	255
+40	sectionA-background.png	255	255	255
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 #=========TILE=============
