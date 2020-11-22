@@ -140,6 +140,15 @@
     <Filter Include="Resources\Background">
       <UniqueIdentifier>{1dbe0f61-73ca-43d3-84e8-f99195ed38b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Sprites\Item">
+      <UniqueIdentifier>{ab8e5c48-06f3-4ed0-9aa2-01a202035908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Cannon">
+      <UniqueIdentifier>{0d064d9f-ded5-47dc-bfed-5ae0ab6558d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Eyeball">
+      <UniqueIdentifier>{1ce8f857-069d-47c6-b0af-e2347053f51b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -234,6 +243,12 @@
     </ClInclude>
     <ClInclude Include="Section.h">
       <Filter>FrameWork\Section</Filter>
+    </ClInclude>
+    <ClInclude Include="Cannon.h">
+      <Filter>Object\DynamicObject\Cannon</Filter>
+    </ClInclude>
+    <ClInclude Include="Eyeball.h">
+      <Filter>Object\DynamicObject\Eyeball</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -336,6 +351,12 @@
     <ClCompile Include="Section.cpp">
       <Filter>FrameWork\Section</Filter>
     </ClCompile>
+    <ClCompile Include="Cannon.cpp">
+      <Filter>Object\DynamicObject\Cannon</Filter>
+    </ClCompile>
+    <ClCompile Include="Eyeball.cpp">
+      <Filter>Object\DynamicObject\Eyeball</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="BlasterMaster.ico">
@@ -358,6 +379,9 @@
     </Image>
     <Image Include="sectionA-background.png">
       <Filter>Resources\Background</Filter>
+    </Image>
+    <Image Include="Items.png">
+      <Filter>Resources\Sprites\Item</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

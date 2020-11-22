@@ -147,12 +147,14 @@
   <ItemGroup>
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Cannon.h" />
     <ClInclude Include="CGate.h" />
     <ClInclude Include="CLadder.h" />
     <ClInclude Include="CMagma.h" />
     <ClInclude Include="CTestScene.h" />
     <ClInclude Include="Dome.h" />
     <ClInclude Include="DynamicGameObject.h" />
+    <ClInclude Include="Eyeball.h" />
     <ClInclude Include="Floater2.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -180,12 +182,14 @@
   <ItemGroup>
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="CGate.cpp" />
     <ClCompile Include="CLadder.cpp" />
     <ClCompile Include="CMagma.cpp" />
     <ClCompile Include="CTestScene.cpp" />
     <ClCompile Include="Dome.cpp" />
     <ClCompile Include="DynamicGameObject.cpp" />
+    <ClCompile Include="Eyeball.cpp" />
     <ClCompile Include="Floater2.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -217,6 +221,7 @@
     <Image Include="area2_bg.png" />
     <Image Include="BlasterMaster.ico" />
     <Image Include="enemy.png" />
+    <Image Include="Items.png" />
     <Image Include="Jason.png" />
     <Image Include="sectionA-background.png" />
     <Image Include="Sophia.png" />
