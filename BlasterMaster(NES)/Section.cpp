@@ -2,6 +2,9 @@
 #include <fstream>
 #include "Brick.h"
 #include "Sophia.h"
+#include "Mine.h"
+#include "Skull.h"
+#include "Teleporter.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -43,8 +46,8 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	int object_type = atoi(tokens[0].c_str());
 	float x = atof(tokens[1].c_str());
 	float y = atof(tokens[2].c_str());
-
-	int ani_set_id = atoi(tokens[3].c_str());
+	int grid = atof(tokens[3].c_str());
+	int ani_set_id = atoi(tokens[4].c_str());
 
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 
@@ -64,6 +67,18 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 
 		DebugOut("[INFO] Player object created!\n");
 		break;
+	case OBJECT_TYPE_SKULL:
+		obj = new Skull(x, y);
+		obj->SetState(SKULL_STATE_FLYING_LEFT);
+		break;
+	case OBJECT_TYPE_MINE:
+		obj = new Mine(x, y);
+		obj->SetState(MINE_STATE_ONGROUND);
+		break;
+	case OBJECT_TYPE_TELEPORTER:
+		obj = new Teleporter(x, y);
+		obj->SetState(TELEPORTER_STATE_GRAY);
+		break;
 	default:
 		DebugOut("[ERROR] Invalid object type: %d\n", object_type);
 		return;
@@ -75,6 +90,8 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 	obj->SetAnimationSet(ani_set);
+	grids[grid]->AddDynamicObj(obj);
+
 
 }
 
