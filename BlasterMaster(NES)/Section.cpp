@@ -5,6 +5,8 @@
 #include "Mine.h"
 #include "Skull.h"
 #include "Teleporter.h"
+#include "Cannon.h"
+#include "Eyeball.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -78,6 +80,14 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	case OBJECT_TYPE_TELEPORTER:
 		obj = new Teleporter(x, y);
 		obj->SetState(TELEPORTER_STATE_GRAY);
+		break;
+	case OBJECT_TYPE_CANNON:
+		obj = new Cannon(x, y);
+		obj->SetState(CANNON_STATE_ALIVE);
+		break;
+	case OBJECT_TYPE_EYEBALL:
+		obj = new Eyeball(x, y);
+		obj->SetState(EYEBALL_STATE_ALIVE);
 		break;
 	default:
 		DebugOut("[ERROR] Invalid object type: %d\n", object_type);
