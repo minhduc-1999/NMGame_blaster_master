@@ -1,47 +1,78 @@
 #include "Orb.h"
 
-void Orb::Update(DWORD dt)
+Orb::Orb(float x, float y) :CDynamicGameObject(x, y)
+{
+	SetSize(18, 18);
+}
+
+
+void Orb::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
-	if (vx > 0 && x > 290)
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
+
+	CalcPotentialCollisions(coObjects, coEvents);
+
+	// No collision occured, proceed normally
+	if (coEvents.size() == 0)
 	{
-		x = 290;
-		SetState(ORB_STATE_TURN_LEFT);
+		x += dx;
+		y += dy;
 	}
-	else if (vx < 0 && x < 0)
+	else
 	{
-		x = 0;
-		SetState(ORB_STATE_TURN_RIGHT);
-	}
-	else if (vx == 0 && vy == 0)
-	{
-		if (animation_set->at(ORB_ANI_TURN_RIGHT)->IsCompleted())
+		float min_tx, min_ty, ntx, nty;
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
+
+		// block 
+		x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + nty * 0.4f;
+
+		if (ntx != 0)
 		{
-			if (nx == 1)
-				SetState(ORB_STATE_RUNNING_LEFT);
+			if (GetNX() == 1)
+			{
+				SetState(ORB_STATE_ROLLING_LEFT);
+
+			}
 			else
-				SetState(ORB_STATE_RUNNING_RIGHT);
-			animation_set->at(ORB_ANI_TURN_RIGHT)->ResetAnim();
+			{
+				SetState(ORB_STATE_ROLLING_RIGHT);
+			}
 		}
+
+		/*	if (nty != 0)
+			{
+				if (GetNX() == 1)
+				{
+					SetState(SKULL_STATE_FLYING_LEFT);
+					vy = 0;
+				}
+				else
+				{
+					SetState(SKULL_STATE_FLYING_RIGHT);
+					vy = 0;
+				}
+			}*/
+
+			//TODO: Collision logic with dynamic object (bots)
 	}
 }
 
 void Orb::Render()
 {
-	int ani = ORB_ANI_RUN_LEFT;
+	int ani = ORB_ANI_ROLL;
 	switch (state)
 	{
-	case ORB_STATE_TURN_RIGHT:
-		ani = ORB_ANI_TURN_RIGHT;
+	case ORB_STATE_ROLLING_LEFT:
+		ani = ORB_ANI_ROLL;
 		break;
-	case ORB_STATE_TURN_LEFT:
-		ani = ORB_ANI_TURN_RIGHT;
-		break;
-	case ORB_STATE_RUNNING_LEFT:
-		ani = ORB_ANI_RUN_LEFT;
-		break;
-	case ORB_STATE_RUNNING_RIGHT:
-		ani = ORB_ANI_RUN_LEFT;
+	case ORB_STATE_ROLLING_RIGHT:
+		ani = ORB_ANI_ROLL;
 		break;
 	default:
 		break;
@@ -55,21 +86,11 @@ void Orb::SetState(int state)
 	CDynamicGameObject::SetState(state);
 	switch (state)
 	{
-	case ORB_STATE_TURN_RIGHT:
-		vx = 0;
-		vy = 0;
-		nx = -1;
-		break;
-	case ORB_STATE_TURN_LEFT:
-		vx = 0;
-		vy = 0;
-		nx = 1;
-		break;
-	case ORB_STATE_RUNNING_LEFT:
+	case ORB_STATE_ROLLING_LEFT:
 		vx = -ORB_RUNNING_SPEED;
 		nx = -1;
 		break;
-	case ORB_STATE_RUNNING_RIGHT:
+	case ORB_STATE_ROLLING_RIGHT:
 		vx = ORB_RUNNING_SPEED;
 		nx = 1;
 		break;

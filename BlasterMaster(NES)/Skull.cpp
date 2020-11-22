@@ -37,18 +37,17 @@ void Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			if (GetNX() == 1)
 			{
-				SetState(SKULL_STATE_FIRE_RIGHT);
+				SetState(SKULL_STATE_FIRE_LEFT);
 
 			}
 			else
 			{
-				SetState(SKULL_STATE_FIRE_LEFT);
+				SetState(SKULL_STATE_FIRE_RIGHT);
 			}
 		}
 
-		if (nty != 0)
+	/*	if (nty != 0)
 		{
-			vy = vy;
 			if (GetNX() == 1)
 			{
 				SetState(SKULL_STATE_FLYING_LEFT);
@@ -59,7 +58,7 @@ void Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				SetState(SKULL_STATE_FLYING_RIGHT);
 				vy = 0;
 			}
-		}
+		}*/
 
 		//TODO: Collision logic with dynamic object (bots)
 	}

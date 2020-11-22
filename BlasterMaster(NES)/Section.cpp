@@ -5,6 +5,10 @@
 #include "Mine.h"
 #include "Skull.h"
 #include "Teleporter.h"
+#include "Floater2.h"
+#include "Insect.h"
+#include "Jumper2.h"
+#include "Orb.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -66,6 +70,22 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		mainPlayer = (Sophia*)obj;
 
 		DebugOut("[INFO] Player object created!\n");
+		break;
+	case OBJECT_TYPE_FLOATER2:
+		obj = new	Floater2(x, y);
+		obj->SetState(FLOATER2_STATE_FLYING_LEFT);
+		break;
+	case OBJECT_TYPE_INSECT:
+		obj = new Insect(x, y);
+		obj->SetState(INSECT_STATE_FLYDOWN_RIGHT);
+		break;
+	case OBJECT_TYPE_JUMPER2:
+		obj = new Jumper2(x, y);
+		obj->SetState(JUMPER2_STATE_JUMPING_RIGHT);
+		break;
+	case OBJECT_TYPE_ORB:
+		obj=new Orb(x, y);
+		obj->SetState(ORB_STATE_ROLLING_LEFT);
 		break;
 	case OBJECT_TYPE_SKULL:
 		obj = new Skull(x, y);

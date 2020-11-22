@@ -1,31 +1,84 @@
 #include "Jumper2.h"
-
-void Jumper2::Update(DWORD dt)
+Jumper2::Jumper2(float x, float y) :CDynamicGameObject(x, y)
+{
+	SetSize(18, 26);
+	vy = JUMPER2_WALKING_SPEED;
+}
+bool Jumper2::IsJumping()
+{
+	if (vy < 0) return false;
+	return true;
+}
+void Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
-	if (vx > 0 && x > 290)
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
+	vy += JUMPER2_GRAVITY;
+	CalcPotentialCollisions(coObjects, coEvents);
+	// No collision occured, proceed normally
+	if (coEvents.size() == 0)
 	{
-		x = 290;
-		SetState(JUMPER2_STATE_WALKING_LEFT);
+		x += dx;
+		y += dy;
 	}
-	if (vx < 0 && x < 0)
+	else
 	{
-		x = 0;
-		SetState(JUMPER2_STATE_WALKING_RIGHT);
+		float min_tx, min_ty, ntx, nty;
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
+
+		// block 
+		x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		y += min_ty * dy + nty * 0.4f;
+
+		if (ntx != 0)
+		{
+			if (GetNX() == 1)
+			{
+				SetState(JUMPER2_STATE_WALKING_RIGHT);
+
+			}
+			else
+			{
+				SetState(JUMPER2_STATE_WALKING_LEFT);
+			}
+		}
+		if (nty != 0)
+		{
+			for (UINT i = 0; i < coEvents.size(); i++)
+			{
+				if (coEvents[i]->ny < 0)
+				{
+					if (IsJumping()) {
+						jump--;
+						if (jump < 0)
+						{
+							vy = -vy;
+							vx = JUMPER2_WALKING_SPEED;
+						}
+					}
+				}
+			}
+		}
+		//TODO: Collision logic with dynamic object (bots)
 	}
 }
 
 void Jumper2::Render()
 {
-	int ani = JUMPER2_ANI_WALK_LEFT;
-	/*if (vx == 0)
+	int ani = JUMPER2_ANI_WALK;
+	switch (state)
 	{
-		if (nx > 0) ani = INSECT_ANI_IDLE_RIGHT;
-		else ani = INSECT_ANI_IDLE_LEFT;
+	case JUMPER2_STATE_WALKING_LEFT:
+		ani = JUMPER2_ANI_WALK;
+		break;
+	case JUMPER2_STATE_WALKING_RIGHT:
+		ani = JUMPER2_ANI_WALK;
+		break;
 	}
-	else if (vx > 0)
-		ani = INSECT_ANI_WALKING_RIGHT;
-	else ani = INSECT_ANI_WALKING_LEFT;*/
 
 	animation_set->at(ani)->Render(x, y, nx);
 }
@@ -35,17 +88,17 @@ void Jumper2::SetState(int state)
 	CDynamicGameObject::SetState(state);
 	switch (state)
 	{
-	case JUMPER2_STATE_IDLE:
-		vx = 0;
-		vy = 0;
-		break;
 	case JUMPER2_STATE_WALKING_RIGHT:
 		vx = JUMPER2_WALKING_SPEED;
+		vy = JUMPER2_GRAVITY;
 		nx = 1;
 		break;
 	case JUMPER2_STATE_WALKING_LEFT:
 		vx = -JUMPER2_WALKING_SPEED;
+		vy = JUMPER2_GRAVITY;
 		nx = -1;
+		break;
+	case JUMPER2_STATE_JUMPING_RIGHT:
 		break;
 	default:
 		break;
