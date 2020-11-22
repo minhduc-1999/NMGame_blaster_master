@@ -35,7 +35,14 @@ vector<LPGAMEOBJECT>* Grid::GetcoObjectList()
 
 void Grid::Render()
 {
-	
+	for (int i = 0; i < staticObjs.size(); i++)
+	{
+		staticObjs[i]->Render();
+	}
+	for (int i = 0; i < dynamicObjs.size(); i++)
+	{
+		dynamicObjs[i]->Render();
+	}
 }
 
 void Grid::Clear()

@@ -32,13 +32,6 @@ CTestScene::CTestScene(int id, string filePath) :
 #define SCENE_SECTION_SECTION	6
 #define SCENE_SECTION_SETTING	7
 
-#define OBJECT_TYPE_SOPHIA	0
-#define OBJECT_TYPE_BRICK	1
-#define OBJECT_TYPE_ARROW	2
-#define	OBJECT_TYPE_SKULL	10
-#define OBJECT_TYPE_MINE	11
-#define	OBJECT_TYPE_TELEPORTER 12
-
 #define TEXTURE_BACKGROUND 40
 
 void CTestScene::_ParseSection_TEXTURES(string line)

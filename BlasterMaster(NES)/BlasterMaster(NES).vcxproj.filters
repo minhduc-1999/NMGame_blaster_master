@@ -169,9 +169,6 @@
     <ClInclude Include="CMagma.h">
       <Filter>Object\StaticObject\Magma</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy1.h">
-      <Filter>Object\DynamicObject</Filter>
-    </ClInclude>
     <ClInclude Include="Insect.h">
       <Filter>Object\DynamicObject\Insect</Filter>
     </ClInclude>
@@ -226,6 +223,9 @@
     <ClInclude Include="Mine.h">
       <Filter>Object\DynamicObject\Mine</Filter>
     </ClInclude>
+    <ClInclude Include="Section.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -263,9 +263,6 @@
     </ClCompile>
     <ClCompile Include="CMagma.cpp">
       <Filter>Object\StaticObject\Magma</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy1.cpp">
-      <Filter>Object\DynamicObject</Filter>
     </ClCompile>
     <ClCompile Include="Insect.cpp">
       <Filter>Object\DynamicObject\Insect</Filter>
@@ -327,6 +324,7 @@
     <ClCompile Include="Mine.cpp">
       <Filter>Object\DynamicObject\Mine</Filter>
     </ClCompile>
+    <ClCompile Include="Section.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="BlasterMaster.ico">
@@ -344,12 +342,8 @@
     <Image Include="Sophia.png">
       <Filter>Resources\Sprites\Player</Filter>
     </Image>
-    <Image Include="sectionA-background.png">
-      <Filter>Resources\Background</Filter>
-    </Image>
-    <Image Include="area2_bg.png">
-      <Filter>Resources\Background</Filter>
-    </Image>
+    <Image Include="area2_bg.png" />
+    <Image Include="sectionA-background.png" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="mapArea2.xml">
@@ -363,14 +357,8 @@
     <Text Include="scene-test.txt">
       <Filter>Resources\Config</Filter>
     </Text>
-    <Text Include="area2_secB.txt">
-      <Filter>Resources\Config\Area2</Filter>
-    </Text>
-    <Text Include="area2_secA.txt">
-      <Filter>Resources\Config\Area2</Filter>
-    </Text>
-    <Text Include="area2.txt">
-      <Filter>Resources\Config\Area2</Filter>
-    </Text>
+    <Text Include="area2.txt" />
+    <Text Include="area2_secA.txt" />
+    <Text Include="area2_secB.txt" />
   </ItemGroup>
 </Project>
