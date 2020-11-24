@@ -45,7 +45,7 @@ LPCOLLISIONEVENT CDynamicGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 
 	// deal with moving object: m speed = original m speed - collide object speed
 	float svx, svy;
-	D3DXVECTOR3 sSpeed = coO->GetSpeed();
+	D3DXVECTOR2 sSpeed = coO->GetSpeed();
 	svx = sSpeed.x;
 	svy = sSpeed.y;
 

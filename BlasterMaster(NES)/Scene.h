@@ -3,14 +3,15 @@
 #include <d3dx9.h>
 #include "KeyEventHandler.h"
 #include <string>
+
 using namespace std;
+
 class CScene
 {
 protected:
 	CKeyEventHandler* key_handler;
 	int id;
 	string sceneFilePath;
-
 public:
 	CScene() {}
 	CScene(int id, string filePath);
@@ -20,6 +21,9 @@ public:
 	virtual void Unload() = 0;
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
+
+	virtual void SwitchSection(int section_id, D3DXVECTOR2 telePos) = 0;
+
 };
 typedef CScene* LPSCENE;
 

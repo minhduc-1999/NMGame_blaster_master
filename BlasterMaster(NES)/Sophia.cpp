@@ -1,4 +1,5 @@
 #include "Sophia.h"
+#include "CGate.h"
 
 int lastHeight = 0;
 int currentWalkingColumn = 0;
@@ -66,12 +67,23 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				vy = 0;
 			}
 		}
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
 
+			if (dynamic_cast<CGate*>(e->obj)) // if e->obj is Goomba 
+			{
+				CGate* gate = dynamic_cast<CGate*>(e->obj);
+				CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
+					gate->GetDesTelePos());
+			}
+		}
 		//TODO: Collision logic with dynamic object (bots)
 	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	DebugOut("[UPDATE SOPHIA]\t%f\t%f\n", x, y);
 }
 
 void Sophia::Render()
@@ -224,7 +236,7 @@ void Sophia::Render()
 				if (animation_set->at(ani)->IsCompleted())
 				{
 					ani = SOPHIA_ANI_UP_RUN_HIGH;
-					animation_set->at(ani)->RenderFrame(currentWalkingColumn,x, y-8, nx);
+					animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx);
 				}
 				else
 				{
@@ -288,11 +300,11 @@ void Sophia::Render()
 				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
-			/*case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
-				ani = SOPHIA_ANI_UP_RUN_HIGH;
-				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y, nx);
-				return;
-				break;*/
+				/*case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
+					ani = SOPHIA_ANI_UP_RUN_HIGH;
+					animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y, nx);
+					return;
+					break;*/
 			}
 		}
 		else
@@ -305,7 +317,7 @@ void Sophia::Render()
 				if (animation_set->at(ani)->IsCompleted())
 				{
 					ani = SOPHIA_ANI_RUN_HIGH;
-					animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8 , nx);
+					animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx);
 				}
 				else
 				{

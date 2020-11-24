@@ -7,6 +7,7 @@
 #include "StaticGameObject.h"
 #include "Section.h"
 #include "Mine.h"
+#include "SectionTransition.h"
 
 #define PLAYER_SOPHIA 0
 #define PLAYER_JASON  1
@@ -19,16 +20,10 @@ protected:
 	MiniJason* miniJason;
 	int playerType = PLAYER_SOPHIA;
 
+	LPSECTRANSITION transition;
 	unordered_map<int, LPSECTION> sections;
 	int current_section;
-
-	void _ParseSection_TEXTURES(string line);
-	void _ParseSection_SPRITES(string line);
-	void _ParseSection_ANIMATIONS(string line);
-	void _ParseSection_ANIMATION_SETS(string line);
-	void _ParseSection_SECTION(string line);
-	void _ParseSection_SETTINGS(string line);
-
+	bool isSwitchingSection;
 public:
 	CTestScene(int id, string filePath);
 
@@ -36,6 +31,14 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
+	virtual void SwitchSection(int section_id, D3DXVECTOR2 telePos);
+
+	void _ParseSection_TEXTURES(string line);
+	void _ParseSection_SPRITES(string line);
+	void _ParseSection_ANIMATIONS(string line);
+	void _ParseSection_ANIMATION_SETS(string line);
+	void _ParseSection_SECTION(string line);
+	void _ParseSection_SETTINGS(string line);
 
 	CDynamicGameObject* GetPlayer() { return mainPlayer; }
 	MiniJason* GetPlayerJason() { return miniJason; }
@@ -54,7 +57,6 @@ public:
 		}
 	}
 	//MiniJason* GetPlayerJason() { return miniJason; }
-	void SwitchSection(int section_id);
 
 	//friend class CTestSceneKeyHandler;
 };

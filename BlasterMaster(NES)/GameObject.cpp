@@ -17,14 +17,14 @@ void CGameObject::SetPosition(float x, float y)
 {
 	this->x = x; this->y = y;
 }
-D3DXVECTOR3 CGameObject::GetPosition()
+D3DXVECTOR2 CGameObject::GetPosition()
 {
-	return D3DXVECTOR3(x, y, 0);
+	return D3DXVECTOR2(x, y);
 }
 
-D3DXVECTOR3 CGameObject::GetSize()
+D3DXVECTOR2 CGameObject::GetSize()
 {
-	return D3DXVECTOR3(width, height, 0);
+	return D3DXVECTOR2(width, height);
 }
 
 
@@ -46,7 +46,7 @@ void CGameObject::SetSpeed(float vx, float vy)
 	this->vy = vy;
 }
 
-D3DXVECTOR3 CGameObject::GetSpeed()
+D3DXVECTOR2 CGameObject::GetSpeed()
 {
-	return D3DXVECTOR3(vx, vy, 0);
+	return D3DXVECTOR2(vx, vy);
 }

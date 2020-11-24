@@ -2,7 +2,7 @@
 #include <fstream>
 #include "Brick.h"
 #include "Sophia.h"
-#include "Mine.h"
+#include "CGate.h"#include "Mine.h"
 #include "Skull.h"
 #include "Teleporter.h"
 #include "Floater2.h"
@@ -72,6 +72,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		mainPlayer = (Sophia*)obj;
 
 		DebugOut("[INFO] Player object created!\n");
+		//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
 		break;
 	case OBJECT_TYPE_FLOATER2:
 		obj = new	Floater2(x, y);
@@ -143,26 +144,32 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 	case OBJECT_TYPE_BRICK:
 		obj = new Brick(x, y);
 		break;
-		/*case OBJECT_TYPE_GATE:
+	case OBJECT_TYPE_GATE:
+	{
+		int section = atoi(tokens[8].c_str());
+		float telex = stof(tokens[9].c_str());
+		float teley = stof(tokens[10].c_str());
+		D3DXVECTOR2 telePos = D3DXVECTOR2(telex, teley);
+		obj = new CGate(x, y, section, telePos);
+		for (int i = 4; i <= 7; i++)
 		{
-			float r = atof(tokens[4].c_str());
-			float b = atof(tokens[5].c_str());
-			int scene_id = atoi(tokens[6].c_str());
-			obj = new CPortal(x, y, r, b, scene_id);
+			int spriteID = atoi(tokens[i].c_str());
+			obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
 		}
-		break;*/
+		grids[grid]->AddStaticObj(obj);
+		return;
+		break;
+	}
 	default:
 		DebugOut("[ERROR] Invalid object type: %d\n", object_type);
 		return;
 	}
 
 	// General object setup
-	for (int i = 4; i < tokens.size(); i++)
-	{
-		int spriteID = atoi(tokens[i].c_str());
-		obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
-	}
+	int spriteID = atoi(tokens[4].c_str());
+	obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
 	grids[grid]->AddStaticObj(obj);
+	//DebugOut("[STATIC OBJ POSITION]\t%d\t%f\t%f\n", object_type, x, y);
 }
 
 void Section::_ParseSection_MAP(string line)
@@ -176,6 +183,7 @@ void Section::_ParseSection_MAP(string line)
 	mapWidth = atof(tokens[2].c_str());
 	mapHeight = atof(tokens[3].c_str());
 	DebugOut("[INFO] Done loading section map info!\n");
+	DebugOut("[MAP POSITION]\t%f\t%f\n", mapX, mapY);
 }
 
 void Section::_ParseSection_GRID(string line)
@@ -288,12 +296,12 @@ void Section::Unload()
 vector<int> Section::GetBoundGrid(Rect bound)
 {
 	vector<int> result;
-	int startRow = bound.top / gridHeight;
-	int startCol = bound.left / gridWidth;
-	int endRow = bound.bottom / gridHeight;
-	int endCol = bound.right / gridWidth;
+	int startRow = (bound.top - mapY) / gridHeight;
+	int startCol = (bound.left - mapX) / gridWidth;
+	int endRow = (bound.bottom - mapY) / gridHeight;
+	int endCol = (bound.right - mapX) / gridWidth;
 
-	for (int i = startRow; i<= endRow; i++)
+	for (int i = startRow; i <= endRow; i++)
 		for (int j = startCol; j <= endCol; j++)
 		{
 			int temp = ((int)i % gridRow) * gridCol + (int)j % gridCol;

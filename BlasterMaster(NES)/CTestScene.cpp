@@ -17,6 +17,7 @@ CTestScene::CTestScene(int id, string filePath) :
 	CScene(id, filePath)
 {
 	key_handler = new CTestSceneKeyHandler(this);
+	isSwitchingSection = false;
 }
 
 /*
@@ -138,25 +139,37 @@ void CTestScene::_ParseSection_SETTINGS(string line)
 	else
 		DebugOut("[ERROR] Unknown scene setting %s\n", tokens[0]);
 }
-/*
-	Parse a line in section [OBJECTS]
-*/
 
 //Update render
 void CTestScene::Update(DWORD dt)
 {
-	sections[current_section]->Update(dt);
-	float cx, cy;
-	cx = mainPlayer->GetPosition().x;
-	cy = mainPlayer->GetPosition().y;
+	if (isSwitchingSection == false)
+	{
+		sections[current_section]->Update(dt);
+		D3DXVECTOR2 mainPos = mainPlayer->GetPosition();
+		D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();
+		D3DXVECTOR2 mapDimen = sections[current_section]->GetSectionMapDimension();
+		CGame::GetInstance()->UpdateCamera(mainPos, mapPos, mapDimen);
+	}
+	else
+	{
+		if (!transition->IsFinish())
+		{
+			transition->Update(dt);
+			CGame::GetInstance()->UpdateSwitchSectionCamera(mainPlayer->GetPosition());
+		}
+		else
+		{
+			isSwitchingSection = false;
+			sections[current_section]->Update(dt);
+			transition->Reset();
+			D3DXVECTOR2 mainPos = mainPlayer->GetPosition();
+			D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();
+			D3DXVECTOR2 mapDimen = sections[current_section]->GetSectionMapDimension();
+			CGame::GetInstance()->UpdateCamera(mainPos, mapPos, mapDimen);
+		}
+	}
 
-	CGame* game = CGame::GetInstance();
-	cx -= game->GetScreenWidth() / 2;
-	cy -= game->GetScreenHeight() / 2;
-
-	D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();
-	D3DXVECTOR2 mapDimen = sections[current_section]->GetSectionMapDimension();
-	CGame::GetInstance()->SetCamPos(cx, cy, mapPos, mapDimen);
 }
 
 void CTestScene::Render()
@@ -168,8 +181,11 @@ void CTestScene::Render()
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
 	CGame::GetInstance()->Draw(bgX, bgY, tex, cam.left, cam.top, cam.right, cam.bottom, -1);
 	//Render object
-	sections[current_section]->Render();
-	mainPlayer->Render();
+	if (!isSwitchingSection)
+	{
+		sections[current_section]->Render();
+		mainPlayer->Render();
+	}
 }
 
 /*
@@ -180,16 +196,25 @@ void CTestScene::Unload()
 
 }
 
-void CTestScene::SwitchSection(int section_id)
+void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
 {
 	DebugOut("[INFO] Switching to section %d\n", section_id);
 
-	sections[current_section]->Unload();
-
+	//sections[current_section]->Unload();
+	transition->Setsection(sections[current_section], sections[section_id], telePos);
+	isSwitchingSection = true;
 	current_section = section_id;
 	LPSECTION s = sections[current_section];
-	s->Load();
 	mainPlayer = s->GetPlayer();
+	if (transition->IsFinish())
+	{
+		CGame::GetInstance()->UpdateCamera(
+			mainPlayer->GetPosition(),
+			s->GetSectionMapPos(),
+			s->GetSectionMapDimension());
+		isSwitchingSection = false;
+		transition->Reset();
+	}
 }
 
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
@@ -293,7 +318,8 @@ void CTestScene::Load()
 
 	DebugOut("[INFO] Loading section file : %s has been loaded successfully\n", sceneFilePath);
 
-	SwitchSection(current_section);
+	this->transition = new SectionTransition();
+	SwitchSection(current_section, D3DXVECTOR2(-1, -1));
 }
 
 

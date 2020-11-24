@@ -4,7 +4,6 @@ class CDynamicGameObject :
 	public CGameObject
 {
 protected:
-	float vx, vy;
 	float dx, dy;
 	int nx;
 	int state;

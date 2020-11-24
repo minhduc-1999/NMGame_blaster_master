@@ -26,6 +26,7 @@ public:
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
+	void SetMainPlayer(CDynamicGameObject* player) { mainPlayer = player; }
 	vector<int> GetBoundGrid(Rect bound);
 	D3DXVECTOR2 GetSectionMapPos() { return D3DXVECTOR2{ mapX, mapY }; }
 	D3DXVECTOR2 GetSectionMapDimension() { return D3DXVECTOR2{ mapWidth, mapHeight }; }

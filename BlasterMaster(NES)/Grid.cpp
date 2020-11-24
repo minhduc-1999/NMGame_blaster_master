@@ -29,7 +29,7 @@ vector<LPGAMEOBJECT>* Grid::GetcoObjectList()
 {
 	vector<LPGAMEOBJECT>* temp = new vector<LPGAMEOBJECT>;
 	temp->insert(temp->end(), staticObjs.begin(), staticObjs.end());
-	temp->insert(temp->end(), staticObjs.begin(), staticObjs.end());
+	temp->insert(temp->end(), dynamicObjs.begin(), dynamicObjs.end());
 	return temp;
 }
 

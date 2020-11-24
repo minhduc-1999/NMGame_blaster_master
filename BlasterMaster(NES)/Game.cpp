@@ -62,7 +62,6 @@ void CGame::Init(HWND hWnd)
 	}
 	//DebugOut("[INFO] Init done!\n");
 	camera = new Camera(screen_width, screen_height);
-	camera->SetPosition(0, 0);
 }
 
 void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir)
@@ -423,7 +422,7 @@ void CGame::SwitchScene(int scene_id)
 {
 	DebugOut("[INFO] Switching to scene %d\n", scene_id);
 
-	scenes[current_scene]->Unload();;
+	scenes[current_scene]->Unload();
 
 	CTextureManager::GetInstance()->Clear();
 	CSpriteManager::GetInstance()->Clear();
@@ -435,3 +434,15 @@ void CGame::SwitchScene(int scene_id)
 	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
 	//SetKeyHandler(s->GetKeyEventHandler());
 }
+
+void CGame::SwitchSection(int section_id, D3DXVECTOR2 tlPos)
+{
+	scenes[current_scene]->SwitchSection(section_id, tlPos);
+}
+
+void CGame::UpdateSwitchSectionCamera(D3DXVECTOR2 mainPos)
+{
+	camera->UpdateSwitchSection(mainPos);
+}
+
+

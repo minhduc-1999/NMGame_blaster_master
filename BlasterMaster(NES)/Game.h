@@ -69,8 +69,7 @@ public:
 	void Render();
 	void Update(DWORD dt);
 
-	void SetCamPos(float x, float y, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDimen) { camera->SetPosition(x, y, mapPos, mapDimen); }
-	void SetCamPos(float x, float y) { camera->SetPosition(x, y); }
+	void UpdateCamera(D3DXVECTOR2 mainPos, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDimen) { camera->Update(mainPos, mapPos, mapDimen); }
 	D3DXVECTOR2 GetCamPos() { return camera->GetPosition(); }
 	Rect GetCamBound() { return camera->GetBound(); }
 	int GetScreenWidth() { return screen_width; }
@@ -96,5 +95,6 @@ public:
 	void Load(LPCSTR gameFile);
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	void SwitchScene(int scene_id);
-
+	void SwitchSection(int section_id, D3DXVECTOR2 tlPos);
+	void UpdateSwitchSectionCamera(D3DXVECTOR2 mainPos);
 };

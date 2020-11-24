@@ -140,6 +140,9 @@
     <Filter Include="Resources\Background">
       <UniqueIdentifier>{1dbe0f61-73ca-43d3-84e8-f99195ed38b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\Section\Transition">
+      <UniqueIdentifier>{6fd80b78-fc6b-4107-b003-b4053dff59c3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Resources\Sprites\Item">
       <UniqueIdentifier>{ab8e5c48-06f3-4ed0-9aa2-01a202035908}</UniqueIdentifier>
     </Filter>
@@ -243,6 +246,9 @@
     </ClInclude>
     <ClInclude Include="Section.h">
       <Filter>FrameWork\Section</Filter>
+    </ClInclude>
+    <ClInclude Include="SectionTransition.h">
+      <Filter>FrameWork\Section\Transition</Filter>
     </ClInclude>
     <ClInclude Include="Cannon.h">
       <Filter>Object\DynamicObject\Cannon</Filter>
@@ -350,6 +356,9 @@
     </ClCompile>
     <ClCompile Include="Section.cpp">
       <Filter>FrameWork\Section</Filter>
+    </ClCompile>
+    <ClCompile Include="SectionTransition.cpp">
+      <Filter>FrameWork\Section\Transition</Filter>
     </ClCompile>
     <ClCompile Include="Cannon.cpp">
       <Filter>Object\DynamicObject\Cannon</Filter>

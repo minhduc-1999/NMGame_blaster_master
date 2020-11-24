@@ -29,10 +29,10 @@ public:
 	CGameObject(float x, float y);
 	void SetSize(float width, float height);
 	void SetPosition(float x, float y);
-	D3DXVECTOR3 GetPosition();
-	D3DXVECTOR3 GetSize();
+	D3DXVECTOR2 GetPosition();
+	D3DXVECTOR2 GetSize();
 	void SetSpeed(float vx, float vy);
-	D3DXVECTOR3 GetSpeed();
+	D3DXVECTOR2 GetSpeed();
 	virtual void Render() = 0;
 	virtual Rect GetBound();
 };

@@ -166,6 +166,7 @@
     <ClInclude Include="MiniJason.h" />
     <ClInclude Include="Orb.h" />
     <ClInclude Include="Section.h" />
+    <ClInclude Include="SectionTransition.h" />
     <ClInclude Include="Sophia.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="MiniJason.cpp" />
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="Section.cpp" />
+    <ClCompile Include="SectionTransition.cpp" />
     <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />

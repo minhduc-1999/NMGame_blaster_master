@@ -10,9 +10,9 @@ public:
 
     //center of camera
     void SetPosition(float x, float y);
-    void SetPosition(float x, float y, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDimen);
     void SetPosition(D3DXVECTOR2 pos);
-
+    void Update(D3DXVECTOR2 mainPos, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDimen);
+    void UpdateSwitchSection(D3DXVECTOR2 mainPos);
     int GetWidth();
     int GetHeight();
 

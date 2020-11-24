@@ -347,5 +347,6 @@
 [SECTIONS]
 #id	filepath
 0	area2_secA.txt
+1	area2_secB.txt
 [SETTINGS]
 start	0
