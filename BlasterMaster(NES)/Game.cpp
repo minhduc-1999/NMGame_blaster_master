@@ -94,7 +94,7 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 		// thực hiện việc chuyển đổi.
 		spriteHander->SetTransform(&matScale);
 		spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_XRGB(255, 255, 255));
-		
+
 		//reset transform
 		D3DXMatrixScaling(&matScale, 1.0f, 1.0f, .0f);
 		spriteHander->SetTransform(&matScale);
@@ -248,7 +248,7 @@ void CGame::Render()
 
 	// Display back buffer content to the screen
 	d3ddev->Present(NULL, NULL, NULL, NULL);
-	
+
 }
 
 void CGame::Update(DWORD dt)
@@ -431,18 +431,12 @@ void CGame::SwitchScene(int scene_id)
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
 	s->Load();
-	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
-	//SetKeyHandler(s->GetKeyEventHandler());
+	SetKeyHandler(s->GetKeyEventHandler());
 }
 
 void CGame::SwitchSection(int section_id, D3DXVECTOR2 tlPos)
 {
 	scenes[current_scene]->SwitchSection(section_id, tlPos);
-}
-
-void CGame::UpdateSwitchSectionCamera(D3DXVECTOR2 mainPos)
-{
-	camera->UpdateSwitchSection(mainPos);
 }
 
 

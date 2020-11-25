@@ -10,6 +10,7 @@ public:
 	SectionTransition() { _isFinish = false; }
 	void Reset() { _isFinish = false; }
 	virtual bool IsFinish() { return _isFinish; }
+	int GetNextSectionId() { return sectionDes->GetId(); }
 	virtual void Update(DWORD dt);
 	virtual void DoAfterSetsection();
 	void Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlPos);

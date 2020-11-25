@@ -7,12 +7,14 @@
 void SectionTransition::Update(DWORD dt)
 {
 	CDynamicGameObject* player = sectionDes->GetPlayer();
-	DebugOut("[Trans Update]\t%s", player);
+	//DebugOut("[Trans Update]\t%s", player);
 	int nx = player->GetNX();
 	float dx = nx * SWITCH_SECTION_SPEED * dt;
+	//DebugOut("[Delta x player trans]\t%f, Dir: %d, dt: %d\n", dx, nx, dt);
 	D3DXVECTOR2 pos = player->GetPosition();
 	pos = pos + D3DXVECTOR2(dx, 0);
 	player->SetPosition(pos.x, pos.y);
+	CGame::GetInstance()->UpdateSwitchSectionCamera(dt, nx, sectionDes->GetSectionMapPos(), sectionDes->GetSectionMapDimension());
 	if ((nx == 1 && pos.x >= telePos.x) || (nx == -1 && pos.x <= telePos.x))
 		_isFinish = true;
 }

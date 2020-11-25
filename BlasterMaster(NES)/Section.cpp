@@ -2,7 +2,8 @@
 #include <fstream>
 #include "Brick.h"
 #include "Sophia.h"
-#include "CGate.h"#include "Mine.h"
+#include "CGate.h"
+#include "Mine.h"
 #include "Skull.h"
 #include "Teleporter.h"
 #include "Floater2.h"
@@ -56,6 +57,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	int ani_set_id = atoi(tokens[4].c_str());
 
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
 	CDynamicGameObject* obj = NULL;
 
@@ -70,8 +72,9 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		}
 		obj = new Sophia(x, y);
 		mainPlayer = (Sophia*)obj;
-
+		obj->SetAnimationSet(ani_set);
 		DebugOut("[INFO] Player object created!\n");
+		return;
 		//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
 		break;
 	case OBJECT_TYPE_FLOATER2:
@@ -116,14 +119,9 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	}
 
 	// General object setup
-	obj->SetPosition(x, y);
-
-	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-
+	//obj->SetPosition(x, y);
 	obj->SetAnimationSet(ani_set);
 	grids[grid]->AddDynamicObj(obj);
-
-
 }
 
 void Section::_ParseSection_STATIC_OBJECTS(string line)

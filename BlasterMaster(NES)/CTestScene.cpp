@@ -34,6 +34,7 @@ CTestScene::CTestScene(int id, string filePath) :
 #define SCENE_SECTION_SETTING	7
 
 #define TEXTURE_BACKGROUND 40
+#define TEXTURE_FOREGROUND 50
 
 void CTestScene::_ParseSection_TEXTURES(string line)
 {
@@ -145,6 +146,7 @@ void CTestScene::Update(DWORD dt)
 {
 	if (isSwitchingSection == false)
 	{
+		CGame::GetInstance()->ProcessKeyboard();
 		sections[current_section]->Update(dt);
 		D3DXVECTOR2 mainPos = mainPlayer->GetPosition();
 		D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();
@@ -156,13 +158,16 @@ void CTestScene::Update(DWORD dt)
 		if (!transition->IsFinish())
 		{
 			transition->Update(dt);
-			CGame::GetInstance()->UpdateSwitchSectionCamera(mainPlayer->GetPosition());
 		}
 		else
 		{
 			isSwitchingSection = false;
-			sections[current_section]->Update(dt);
 			transition->Reset();
+
+			current_section = transition->GetNextSectionId();	
+			sections[current_section]->Update(dt);
+			mainPlayer = sections[current_section]->GetPlayer();
+
 			D3DXVECTOR2 mainPos = mainPlayer->GetPosition();
 			D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();
 			D3DXVECTOR2 mapDimen = sections[current_section]->GetSectionMapDimension();
@@ -176,16 +181,19 @@ void CTestScene::Render()
 {
 	//Render background
 	Rect cam = CGame::GetInstance()->GetCamBound();
-	LPDIRECT3DTEXTURE9 tex = CTextureManager::GetInstance()->Get(TEXTURE_BACKGROUND);
+	LPDIRECT3DTEXTURE9 texbg = CTextureManager::GetInstance()->Get(TEXTURE_BACKGROUND);
+	LPDIRECT3DTEXTURE9 texfg = CTextureManager::GetInstance()->Get(TEXTURE_FOREGROUND);
 	float bgX = cam.left + (cam.right - cam.left) / 2.0f;
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
-	CGame::GetInstance()->Draw(bgX, bgY, tex, cam.left, cam.top, cam.right, cam.bottom, -1);
+	CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1);
 	//Render object
 	if (!isSwitchingSection)
 	{
 		sections[current_section]->Render();
-		mainPlayer->Render();
 	}
+	mainPlayer->Render();
+	//render foreground
+	CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1);
 }
 
 /*
@@ -203,7 +211,7 @@ void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
 	//sections[current_section]->Unload();
 	transition->Setsection(sections[current_section], sections[section_id], telePos);
 	isSwitchingSection = true;
-	current_section = section_id;
+	/*current_section = section_id;
 	LPSECTION s = sections[current_section];
 	mainPlayer = s->GetPlayer();
 	if (transition->IsFinish())
@@ -214,7 +222,7 @@ void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
 			s->GetSectionMapDimension());
 		isSwitchingSection = false;
 		transition->Reset();
-	}
+	}*/
 }
 
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)

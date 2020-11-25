@@ -143,7 +143,9 @@
     <Filter Include="FrameWork\Section\Transition">
       <UniqueIdentifier>{6fd80b78-fc6b-4107-b003-b4053dff59c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\Sprites\Item">
+    <Filter Include="Resources\Foreground">
+      <UniqueIdentifier>{bb68b6dc-3f21-4b9f-b286-399586ca48c2}</UniqueIdentifier>
+    </Filter>    <Filter Include="Resources\Sprites\Item">
       <UniqueIdentifier>{ab8e5c48-06f3-4ed0-9aa2-01a202035908}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\DynamicObject\Cannon">
@@ -391,6 +393,9 @@
     </Image>
     <Image Include="Items.png">
       <Filter>Resources\Sprites\Item</Filter>
+    </Image>
+    <Image Include="area2_fg.png">
+      <Filter>Resources\Foreground</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

@@ -223,6 +223,7 @@
     <Image Include="area2_bg.png" />
     <Image Include="BlasterMaster.ico" />
     <Image Include="enemy.png" />
+    <Image Include="area2_fg.png" />
     <Image Include="Items.png" />
     <Image Include="Jason.png" />
     <Image Include="sectionA-background.png" />
