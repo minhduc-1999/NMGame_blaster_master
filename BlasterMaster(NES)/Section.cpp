@@ -65,6 +65,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	{
 		//dynamic obj
 	case OBJECT_TYPE_SOPHIA:
+	{
 		if (mainPlayer != NULL)
 		{
 			DebugOut("[ERROR] main object was created before!\n");
@@ -77,6 +78,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		return;
 		//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
 		break;
+	}		
 	case OBJECT_TYPE_FLOATER2:
 		obj = new	Floater2(x, y);
 		obj->SetState(FLOATER2_STATE_FLYING_LEFT);

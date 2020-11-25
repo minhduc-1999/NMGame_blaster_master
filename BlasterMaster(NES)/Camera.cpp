@@ -51,10 +51,8 @@ void Camera::Update(D3DXVECTOR2 mainPos, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDime
 	{
 		lastY = mainPos.y - (lockBound.top - mPosition.y);
 	}
-	else //if (mainPos.y > lockBound.bottom)
+	else
 		lastY = mainPos.y - (mPosition.y + mHeight - lockBound.bottom - 1);
-	//else
-		//lastY = mainPos.y - (mHeight / 2);
 	if (lastY < mapPos.y)
 	{
 		lastY = mapPos.y;

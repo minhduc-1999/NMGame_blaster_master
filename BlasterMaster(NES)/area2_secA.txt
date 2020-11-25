@@ -9,7 +9,7 @@
 #object type: 14 = eyeball, 15 = brick, 16 = arrow, 17 = Gate, 18 = ladder, 19 = magma
 [DYNAMIC_OBJECTS]
 #type	x	y	grid	ani_set_id
-1	911	2943	0	1
+1	72	2943	0	1
 6	72	2902	0	6
 7	72	2902	0	7
 8	72	2902	0	8

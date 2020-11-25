@@ -1,6 +1,7 @@
 #include "Sophia.h"
 #include "CGate.h"
-
+#include "Jumper2.h"
+#include "Brick.h"
 int lastHeight = 0;
 int currentWalkingColumn = 0;
 
@@ -45,7 +46,6 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (GetNX() == 1)
 			{
 				SetState(SOPHIA_STATE_IDLE_RIGHT);
-
 			}
 			else
 			{
@@ -67,18 +67,25 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				vy = 0;
 			}
 		}
+		//TODO: Collision logic with dynamic object (bots)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-
-			if (dynamic_cast<CGate*>(e->obj)) // if e->obj is Goomba 
+			// if e->obj is Gate 
+			if (dynamic_cast<CGate*>(e->obj))
 			{
 				CGate* gate = dynamic_cast<CGate*>(e->obj);
 				CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 					gate->GetDesTelePos());
 			}
+			// if e->obj is Jumper 
+			if (!dynamic_cast<Brick*>(e->obj))
+			{
+
+				x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+				y += (1 - min_ty) * dy - nty * 0.4f;
+			}
 		}
-		//TODO: Collision logic with dynamic object (bots)
 	}
 
 	// clean up collision events
