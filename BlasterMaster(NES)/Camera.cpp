@@ -7,7 +7,6 @@ Camera::Camera(int width, int height)
 {
 	mWidth = width;
 	mHeight = height;
-
 	mPosition = D3DXVECTOR2(0, 0);
 }
 

@@ -1,4 +1,5 @@
 #include "Grid.h"
+#include "Utils.h"
 
 void Grid::AddStaticObj(LPSTATICOBJECT obj)
 {
@@ -10,19 +11,20 @@ void Grid::AddDynamicObj(LPDYNAMICOBJECT obj)
 	dynamicObjs.push_back(obj);
 }
 
-void Grid::RemoveObject(LPSTATICOBJECT obj)
+vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	auto it = find(staticObjs.begin(), staticObjs.end(), obj);
-	if (it != staticObjs.end())
-		staticObjs.erase(it);
-}
-
-void Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
+	vector<LPDYNAMICOBJECT>* res = new vector<LPDYNAMICOBJECT>;
 	for (int i = 0; i < dynamicObjs.size(); i++)
 	{
-		dynamicObjs[i]->Update(dt, coObjects);
+		LPDYNAMICOBJECT temp = dynamicObjs[i];
+		temp->Update(dt, coObjects);
+		if (!CheckIfBound(this->bound, temp->GetBound()))
+		{
+			res->push_back(temp);
+			dynamicObjs.erase(dynamicObjs.begin() + i);
+		}
 	}
+	return res;
 }
 
 vector<LPGAMEOBJECT>* Grid::GetcoObjectList()
@@ -47,5 +49,5 @@ void Grid::Render()
 
 void Grid::Clear()
 {
-	
+
 }

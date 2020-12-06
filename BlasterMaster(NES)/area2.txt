@@ -1,3 +1,9 @@
+[SECTIONS]
+#id	filepath
+0	area2_secA.txt
+1	area2_secB.txt
+[SETTINGS]
+start	0
 #id	file_path	transparent_color_r g b
 [TEXTURES]
 0	enemy.png	0	0	255
@@ -345,9 +351,3 @@
 13	1300
 #======eyeball======
 14	1400
-[SECTIONS]
-#id	filepath
-0	area2_secA.txt
-1	area2_secB.txt
-[SETTINGS]
-start	0

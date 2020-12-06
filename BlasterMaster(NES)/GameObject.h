@@ -25,9 +25,12 @@ protected:
 	float x, y;
 	float vx, vy;
 	float width, height;
+	int team;
 public:
 	CGameObject(float x, float y);
 	void SetSize(float width, float height);
+	void SetTeam(int t) { team = t; }
+	int GetTeam() { return team; }
 	void SetPosition(float x, float y);
 	D3DXVECTOR2 GetPosition();
 	D3DXVECTOR2 GetSize();

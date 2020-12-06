@@ -9,6 +9,8 @@ Skull::Skull(float x, float y) :CDynamicGameObject(x, y)
 
 void Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isUpdated)
+		return;
 	CDynamicGameObject::Update(dt);
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -32,6 +34,23 @@ void Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		// block 
 		x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
 		y += min_ty * dy + nty * 0.4f;
+
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			// if e->obj is Gate
+			if (dynamic_cast<CDynamicGameObject*>(e->obj))
+			{
+				CDynamicGameObject* obj = dynamic_cast<CDynamicGameObject*>(e->obj);
+				if (this->team == obj->GetTeam())
+				{
+					x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+					y += (1 - min_ty) * dy - nty * 0.4f;
+					for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+					return;
+				}
+			}
+		}
 
 		if (ntx != 0)
 		{
@@ -62,10 +81,14 @@ void Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		//TODO: Collision logic with dynamic object (bots)
 	}
+	isRendered = false;
+	isUpdated = true;
 }
 
 void Skull::Render()
 {
+	if (isRendered)
+		return;
 	int ani = SKULL_ANI_FLYING;
 	switch (state)
 	{
@@ -86,6 +109,8 @@ void Skull::Render()
 	}
 
 	animation_set->at(ani)->Render(x, y, nx);
+	isRendered = true;
+	isUpdated = false;
 }
 void Skull::SetState(int state)
 {

@@ -28,7 +28,7 @@ vector<string> split(string line, string delimeter)
 	return tokens;
 }
 //
-///*
+//
 //char * string to wchar_t* string.
 //*/
 //wstring ToWSTR(string st)
@@ -46,7 +46,7 @@ vector<string> split(string line, string delimeter)
 //	return wstr;
 //}
 //
-///*
+//
 //	Convert char* string to wchar_t* string.
 //*/
 //LPCWSTR ToLPCWSTR(string st)
@@ -63,3 +63,11 @@ vector<string> split(string line, string delimeter)
 //	// delete wcstring   // << can I ? 
 //	return w->c_str();
 //}
+
+bool CheckIfBound(Rect b1, Rect b2)
+{
+	if (b2.left > b1.right || b2.top > b1.bottom
+		|| b2.bottom < b1.top || b2.right < b1.left)
+		return false;
+	return true;
+}

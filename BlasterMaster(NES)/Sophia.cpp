@@ -22,8 +22,8 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-
-	CalcPotentialCollisions(coObjects, coEvents);
+	if (coObjects != NULL)
+		CalcPotentialCollisions(coObjects, coEvents);
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -77,13 +77,7 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				CGate* gate = dynamic_cast<CGate*>(e->obj);
 				CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 					gate->GetDesTelePos());
-			}
-			// if e->obj is Jumper 
-			if (!dynamic_cast<Brick*>(e->obj))
-			{
-
-				x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-				y += (1 - min_ty) * dy - nty * 0.4f;
+				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
 			}
 		}
 	}

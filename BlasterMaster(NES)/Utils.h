@@ -22,3 +22,6 @@ struct Rect
 {
 	float left, top, right, bottom;
 };
+
+bool CheckIfBound(Rect b1, Rect b2);
+

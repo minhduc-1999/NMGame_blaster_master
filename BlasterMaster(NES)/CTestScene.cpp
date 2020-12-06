@@ -148,6 +148,7 @@ void CTestScene::Update(DWORD dt)
 	{
 		CGame::GetInstance()->ProcessKeyboard();
 		sections[current_section]->Update(dt);
+		//update camera
 		D3DXVECTOR2 mainPos = mainPlayer->GetPosition();
 		D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();
 		D3DXVECTOR2 mapDimen = sections[current_section]->GetSectionMapDimension();
@@ -164,7 +165,7 @@ void CTestScene::Update(DWORD dt)
 			isSwitchingSection = false;
 			transition->Reset();
 
-			current_section = transition->GetNextSectionId();	
+			current_section = transition->GetNextSectionId();
 			sections[current_section]->Update(dt);
 			mainPlayer = sections[current_section]->GetPlayer();
 
@@ -185,7 +186,7 @@ void CTestScene::Render()
 	LPDIRECT3DTEXTURE9 texfg = CTextureManager::GetInstance()->Get(TEXTURE_FOREGROUND);
 	float bgX = cam.left + (cam.right - cam.left) / 2.0f;
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
-	//CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1);
+	CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1);
 	//Render object
 	if (!isSwitchingSection)
 	{
@@ -193,7 +194,7 @@ void CTestScene::Render()
 	}
 	mainPlayer->Render();
 	//render foreground
-	//CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1);
+	CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1);
 }
 
 /*
@@ -208,21 +209,8 @@ void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
 {
 	DebugOut("[INFO] Switching to section %d\n", section_id);
 
-	//sections[current_section]->Unload();
 	transition->Setsection(sections[current_section], sections[section_id], telePos);
 	isSwitchingSection = true;
-	/*current_section = section_id;
-	LPSECTION s = sections[current_section];
-	mainPlayer = s->GetPlayer();
-	if (transition->IsFinish())
-	{
-		CGame::GetInstance()->UpdateCamera(
-			mainPlayer->GetPosition(),
-			s->GetSectionMapPos(),
-			s->GetSectionMapDimension());
-		isSwitchingSection = false;
-		transition->Reset();
-	}*/
 }
 
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)

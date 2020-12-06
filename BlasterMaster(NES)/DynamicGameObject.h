@@ -7,7 +7,7 @@ protected:
 	float dx, dy;
 	int nx;
 	int state;
-
+	bool isUpdated, isRendered;
 	DWORD dt;
 	LPANIMATION_SET animation_set;
 public:

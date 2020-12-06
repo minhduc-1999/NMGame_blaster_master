@@ -5,14 +5,14 @@ class Grid
 {
 protected:
 	int gridID;
+	Rect bound;
 	vector<LPSTATICOBJECT> staticObjs;
 	vector<LPDYNAMICOBJECT> dynamicObjs;
 public:
-	void AddStaticObj(LPSTATICOBJECT obj);
+ 	void AddStaticObj(LPSTATICOBJECT obj);
 	void AddDynamicObj(LPDYNAMICOBJECT obj);
-	Grid(int id) { gridID = id; }
-	void RemoveObject(LPSTATICOBJECT obj);
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	Grid(int id, Rect b) { gridID = id; bound = b; }
+	vector<LPDYNAMICOBJECT>* Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	vector<LPGAMEOBJECT>* GetcoObjectList();
 	void Render();
 	void Clear();

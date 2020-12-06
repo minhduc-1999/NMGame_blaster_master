@@ -68,17 +68,20 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	{
 		if (mainPlayer != NULL)
 		{
+			D3DXVECTOR2 pos = mainPlayer->GetPosition();
+			//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
 			DebugOut("[ERROR] main object was created before!\n");
 			return;
 		}
 		obj = new Sophia(x, y);
 		mainPlayer = (Sophia*)obj;
 		obj->SetAnimationSet(ani_set);
+		obj->SetTeam(0);
 		DebugOut("[INFO] Player object created!\n");
 		return;
 		//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
 		break;
-	}		
+	}
 	case OBJECT_TYPE_FLOATER2:
 		obj = new	Floater2(x, y);
 		obj->SetState(FLOATER2_STATE_FLYING_LEFT);
@@ -92,7 +95,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		obj->SetState(JUMPER2_STATE_JUMPING_RIGHT);
 		break;
 	case OBJECT_TYPE_ORB:
-		obj=new Orb(x, y);
+		obj = new Orb(x, y);
 		obj->SetState(ORB_STATE_ROLLING_LEFT);
 		break;
 	case OBJECT_TYPE_SKULL:
@@ -122,6 +125,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 
 	// General object setup
 	//obj->SetPosition(x, y);
+	obj->SetTeam(1);
 	obj->SetAnimationSet(ani_set);
 	grids[grid]->AddDynamicObj(obj);
 }
@@ -201,7 +205,12 @@ void Section::_ParseSection_GRID(string line)
 		for (int j = 0; j < gridCol; j++)
 		{
 			int index = (i % gridRow) * gridCol + j % gridCol;
-			LPGRID temp = new Grid(index);
+			Rect bound;
+			bound.top = i * gridHeight + mapY;
+			bound.left = j * gridWidth + mapX;
+			bound.right = bound.left + gridWidth - 1;
+			bound.bottom = bound.top + gridHeight - 1;
+			LPGRID temp = new Grid(index, bound);
 			grids.emplace(index, temp);
 		}
 	DebugOut("[INFO] Done loading section grid info!\n");
@@ -246,7 +255,6 @@ void Section::Load()
 	f.close();
 
 	//CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-
 	DebugOut("[INFO] Done loading SECTION resources %s\n", secFilePath);
 }
 
@@ -254,20 +262,33 @@ void Section::Update(DWORD dt)
 {
 	vector<LPGAMEOBJECT> coObjs;
 	Rect camPos = CGame::GetInstance()->GetCamBound();
-	vector<int> grid = GetBoundGrid(camPos);
-	for (int i = 0; i < grid.size(); i++)
+	vector<int> camBoundGrid = GetBoundGrid(camPos);
+	for (int i = 0; i < camBoundGrid.size(); i++)
 	{
-		if (grids.find(grid[i]) != grids.end())
+		if (grids.find(camBoundGrid[i]) != grids.end())
 		{
-			vector<LPGAMEOBJECT>* temp = grids.at(grid[i])->GetcoObjectList();
+			vector<LPGAMEOBJECT>* temp = grids.at(camBoundGrid[i])->GetcoObjectList();
 			coObjs.insert(coObjs.end(), temp->begin(), temp->end());
 		}
 	}
-	for (int i = 0; i < grid.size(); i++)
+	vector<LPDYNAMICOBJECT>* changeGridObjs;
+	for (int i = 0; i < camBoundGrid.size(); i++)
 	{
-		if (grids.find(grid[i]) != grids.end())
+		if (grids.find(camBoundGrid[i]) != grids.end())
 		{
-			grids.at(grid[i])->Update(dt, &coObjs);
+			changeGridObjs = grids.at(camBoundGrid[i])->Update(dt, &coObjs);
+			for (int j = 0; j < changeGridObjs->size(); j++)
+			{
+				LPDYNAMICOBJECT obj = changeGridObjs->at(j);
+				vector<int> objBoundGrids;
+				objBoundGrids = this->GetBoundGrid(obj->GetBound());
+				for (int k = 0; k < objBoundGrids.size(); k++)
+				{
+					int index = objBoundGrids[k];
+					grids[index]->AddDynamicObj(obj);
+				}
+			}
+			delete changeGridObjs;
 		}
 	}
 	mainPlayer->Update(dt, &coObjs);
@@ -300,12 +321,14 @@ vector<int> Section::GetBoundGrid(Rect bound)
 	int startCol = (bound.left - mapX) / gridWidth;
 	int endRow = (bound.bottom - mapY) / gridHeight;
 	int endCol = (bound.right - mapX) / gridWidth;
-
+	int maxIndex = gridRow * gridCol - 1;
 	for (int i = startRow; i <= endRow; i++)
 		for (int j = startCol; j <= endCol; j++)
 		{
-			int temp = ((int)i % gridRow) * gridCol + (int)j % gridCol;
-			result.push_back(temp);
+			int temp = (i % gridRow) * gridCol + j % gridCol;
+			//int temp = ((int)i % gridRow) * gridCol + (int)j % gridCol;
+			if (temp >= 0 && temp <= maxIndex)
+				result.push_back(temp);
 		}
 	return result;
 }

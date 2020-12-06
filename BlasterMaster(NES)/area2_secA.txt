@@ -8,15 +8,15 @@
 #object type: 7 = insect, 8 = jumper2, 9 = orb, 10 = skull, 11 = mine, 12 = teleporter, 13 = cannon
 #object type: 14 = eyeball, 15 = brick, 16 = arrow, 17 = Gate, 18 = ladder, 19 = magma
 [DYNAMIC_OBJECTS]
-#type	x	y	grid	ani_set_id
-1	72	2943	0	1
+#type	x	y	grid_id	ani_set_id
+1	50	2955	0	1
 6	72	2902	0	6
 7	72	2902	0	7
 8	72	2902	0	8
 9	72	2902	0	9
-10	200	2952	0	10
+10	72	2952	0	10
 11	86	2916	0	11
-#type	x	y	grid id	sprite_id1	sprite_id2
+#type	x	y	grid_id	sprite_id1	sprite_id2
 [STATIC_OBJECTS]
 15	40	2840	0	128
 15	88	2840	0	128
@@ -251,7 +251,6 @@
 16	760	3032	5	125
 16	776	3032	6	125
 15	792	3032	6	56
-15	280	3048	2	51
 15	296	3048	2	51
 15	312	3048	2	51
 15	328	3048	2	51
@@ -283,4 +282,3 @@
 15	744	3048	5	51
 15	760	3048	5	51
 15	776	3048	6	51
-15	792	3048	6	51
