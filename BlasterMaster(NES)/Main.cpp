@@ -203,7 +203,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//resourceManager = ResourceManager::GetInstance();
 	//resourceManager->LoadResource();
 
-	game->Load("Gameworld.txt");
+	game->Load("Resource/Config/Gameworld.txt");
 
 	Run();
 

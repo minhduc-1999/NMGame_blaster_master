@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="192" height="192" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="192" height="192" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="29">
  <tileset firstgid="1" source="BlasterMaster_Area2_final.tsx"/>
  <layer id="1" name="Tile Layer 1" width="192" height="192">
   <data encoding="csv">
@@ -197,4 +197,34 @@
 51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,51,65,66,66,64,65,66,66,64,65,66,66,64,65,66,66,64,65,66,66,64,65,66,66,64,65,66,66,64,65,66,66,64,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="2" name="tele">
+  <object id="1" name="C-&gt;B" x="1452.52" y="1933.32" width="16" height="16"/>
+  <object id="2" name="B-&gt;C" x="1604.5" y="1933" width="16" height="16"/>
+  <object id="3" name="DtoC" x="1965" y="1933.17" width="16" height="16"/>
+  <object id="4" name="CtoD" x="2115.67" y="1934" width="16" height="16"/>
+  <object id="5" name="EtoD" x="2476.67" y="1934" width="16" height="16"/>
+  <object id="6" name="DtoE" x="2626.67" y="1934" width="16" height="16"/>
+  <object id="7" name="FtoD" x="2117" y="1166" width="16" height="16"/>
+  <object id="8" name="DtoF" x="1964" y="1166.33" width="16" height="16"/>
+  <object id="9" name="GtoF" x="1964" y="655" width="16" height="16"/>
+  <object id="10" name="FtoG" x="2115.5" y="655.5" width="16" height="16"/>
+  <object id="11" name="HtoF" x="1964.83" y="142.667" width="16" height="16"/>
+  <object id="12" name="FtoH" x="2115.5" y="143" width="16" height="16"/>
+  <object id="13" name="ItoH" x="2477.17" y="142.667" width="16" height="16"/>
+  <object id="14" name="HtoI" x="2626.83" y="141.667" width="16" height="16"/>
+  <object id="15" name="JtoI" x="2626.17" y="397.167" width="16" height="16"/>
+  <object id="16" name="ItoJ" x="2477.33" y="398.667" width="16" height="16"/>
+  <object id="17" name="KtoF" x="1604.33" y="1166.67" width="16" height="16"/>
+  <object id="18" name="FtoK" x="1451.33" y="1164.67" width="16" height="16"/>
+  <object id="19" name="LtoF" x="1603.67" y="1678.67" width="16" height="16"/>
+  <object id="20" name="FtoL" x="1452.67" y="1678" width="16" height="16"/>
+  <object id="21" name="MtoL" x="835" y="1678.33" width="16" height="16"/>
+  <object id="22" name="LtoM" x="684.667" y="1678.67" width="16" height="16"/>
+  <object id="23" name="NtoM" x="682.667" y="1166" width="16" height="16"/>
+  <object id="24" name="MtoN" x="834" y="1164.67" width="16" height="16"/>
+  <object id="25" name="OtoN" x="1196" y="1420.67" width="16" height="16"/>
+  <object id="26" name="NtoO" x="1346" y="1421.33" width="16" height="16"/>
+  <object id="27" name="AtoB" x="1094.5" y="2957.5" width="16" height="16"/>
+  <object id="28" name="BtoA" x="946" y="2957" width="16" height="16"/>
+ </objectgroup>
 </map>

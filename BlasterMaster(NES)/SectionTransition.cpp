@@ -3,7 +3,7 @@
 #include "DynamicGameObject.h"
 #include "Sophia.h"
 
-#define SWITCH_SECTION_SPEED 0.09f
+#define SWITCH_SECTION_SPEED 0.07f
 
 void SectionTransition::Update(DWORD dt)
 {

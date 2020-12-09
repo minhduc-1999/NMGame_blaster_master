@@ -326,7 +326,6 @@ vector<int> Section::GetBoundGrid(Rect bound)
 		for (int j = startCol; j <= endCol; j++)
 		{
 			int temp = (i % gridRow) * gridCol + j % gridCol;
-			//int temp = ((int)i % gridRow) * gridCol + (int)j % gridCol;
 			if (temp >= 0 && temp <= maxIndex)
 				result.push_back(temp);
 		}

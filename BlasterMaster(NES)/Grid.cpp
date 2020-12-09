@@ -14,7 +14,20 @@ void Grid::AddDynamicObj(LPDYNAMICOBJECT obj)
 vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vector<LPDYNAMICOBJECT>* res = new vector<LPDYNAMICOBJECT>;
-	for (int i = 0; i < dynamicObjs.size(); i++)
+	int i = 0;
+	while (i < dynamicObjs.size())
+	{
+		LPDYNAMICOBJECT temp = dynamicObjs[i];
+		temp->Update(dt, coObjects);
+		if (!CheckIfBound(this->bound, temp->GetBound()))
+		{
+			res->push_back(temp);
+			dynamicObjs.erase(dynamicObjs.begin() + i);
+			continue;
+		}
+		i++;
+	}
+	/*for (int i = 0; i < dynamicObjs.size(); i++)
 	{
 		LPDYNAMICOBJECT temp = dynamicObjs[i];
 		temp->Update(dt, coObjects);
@@ -23,7 +36,7 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			res->push_back(temp);
 			dynamicObjs.erase(dynamicObjs.begin() + i);
 		}
-	}
+	}*/
 	return res;
 }
 

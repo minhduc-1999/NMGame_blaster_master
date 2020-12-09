@@ -220,24 +220,33 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="area2-tile.png" />
-    <Image Include="area2_bg.png" />
     <Image Include="BlasterMaster.ico" />
     <Image Include="enemy.png" />
-    <Image Include="area2_fg.png" />
     <Image Include="Items.png" />
     <Image Include="Jason.png" />
-    <Image Include="sectionA-background.png" />
+    <Image Include="Resource\Background\area2_bg.png" />
+    <Image Include="Resource\Foreground\area2_fg.png" />
     <Image Include="Sophia.png" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="mapArea2.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="area2.txt" />
-    <Text Include="area2_secA.txt" />
-    <Text Include="area2_secB.txt" />
-    <Text Include="Gameworld.txt" />
-    <Text Include="scene-test.txt" />
+    <Text Include="Resource\Config\Area2\area2.txt" />
+    <Text Include="Resource\Config\Area2\area2_secA.txt" />
+    <Text Include="Resource\Config\Area2\area2_secB.txt" />
+    <Text Include="Resource\Config\Area2\area2_secC.txt" />
+    <Text Include="Resource\Config\Area2\area2_secD.txt" />
+    <Text Include="Resource\Config\Area2\area2_secE.txt" />
+    <Text Include="Resource\Config\Area2\area2_secF.txt" />
+    <Text Include="Resource\Config\Area2\area2_secG.txt" />
+    <Text Include="Resource\Config\Area2\area2_secH.txt" />
+    <Text Include="Resource\Config\Area2\area2_secI.txt" />
+    <Text Include="Resource\Config\Area2\area2_secJ.txt" />
+    <Text Include="Resource\Config\Area2\area2_secK.txt" />
+    <Text Include="Resource\Config\Area2\area2_secL.txt" />
+    <Text Include="Resource\Config\Area2\area2_secM.txt" />
+    <Text Include="Resource\Config\Area2\area2_secN.txt" />
+    <Text Include="Resource\Config\Area2\area2_secO.txt" />
+    <Text Include="Resource\Config\Gameworld.txt" />
+    <Text Include="Resource\Config\scene-test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -82,6 +82,7 @@ void Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 		}
+		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 		//TODO: Collision logic with dynamic object (bots)
 	}
 	isUpdated = true;

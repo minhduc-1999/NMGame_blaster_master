@@ -80,14 +80,8 @@
     <Filter Include="Resources\GameIcon">
       <UniqueIdentifier>{42cd039f-cef7-485b-b874-7863e518d791}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\MapXML">
-      <UniqueIdentifier>{de631371-04b4-4157-8924-9faba168b26e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources\Sprites\Map\Area2">
       <UniqueIdentifier>{8d2d1433-e260-45f6-a037-c18d4b068c54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\MapXML\Area2">
-      <UniqueIdentifier>{887b3d5e-2d02-44e3-9fb4-be8e1592521b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Object\DynamicObject\Skull">
       <UniqueIdentifier>{85c2dce0-a24b-4d69-950e-27ee3a6610ab}</UniqueIdentifier>
@@ -386,39 +380,70 @@
     <Image Include="Sophia.png">
       <Filter>Resources\Sprites\Player</Filter>
     </Image>
-    <Image Include="area2_bg.png">
-      <Filter>Resources\Background</Filter>
-    </Image>
-    <Image Include="sectionA-background.png">
-      <Filter>Resources\Background</Filter>
-    </Image>
     <Image Include="Items.png">
       <Filter>Resources\Sprites\Item</Filter>
     </Image>
-    <Image Include="area2_fg.png">
+    <Image Include="Resource\Foreground\area2_fg.png">
       <Filter>Resources\Foreground</Filter>
+    </Image>
+    <Image Include="Resource\Background\area2_bg.png">
+      <Filter>Resources\Background</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="mapArea2.xml">
-      <Filter>Resources\MapXML\Area2</Filter>
-    </Xml>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Gameworld.txt">
+    <Text Include="Resource\Config\Area2\area2.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secA.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secB.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secC.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secD.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secE.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secF.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secG.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secH.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secI.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secJ.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secK.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secL.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secM.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secN.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Area2\area2_secO.txt">
+      <Filter>Resources\Config\area2</Filter>
+    </Text>
+    <Text Include="Resource\Config\Gameworld.txt">
       <Filter>Resources\Config</Filter>
     </Text>
-    <Text Include="scene-test.txt">
+    <Text Include="Resource\Config\scene-test.txt">
       <Filter>Resources\Config</Filter>
-    </Text>
-    <Text Include="area2.txt">
-      <Filter>Resources\Config\area2</Filter>
-    </Text>
-    <Text Include="area2_secA.txt">
-      <Filter>Resources\Config\area2</Filter>
-    </Text>
-    <Text Include="area2_secB.txt">
-      <Filter>Resources\Config\area2</Filter>
     </Text>
   </ItemGroup>
 </Project>

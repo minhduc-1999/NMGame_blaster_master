@@ -1,6 +1,0 @@
-[SETTINGS]
-start	2
-#scene list
-[SCENES]
-1	scene-test.txt
-2	area2.txt

@@ -208,7 +208,8 @@ void CTestScene::Unload()
 void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
 {
 	DebugOut("[INFO] Switching to section %d\n", section_id);
-
+	if (section_id == -1)
+		return;
 	transition->Setsection(sections[current_section], sections[section_id], telePos);
 	isSwitchingSection = true;
 }

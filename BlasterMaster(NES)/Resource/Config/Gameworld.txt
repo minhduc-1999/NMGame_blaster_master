@@ -1,0 +1,6 @@
+[SETTINGS]
+start	2
+#scene list
+[SCENES]
+1	Resource/Config/scene-test.txt
+2	Resource\Config\Area2\area2.txt
