@@ -96,5 +96,5 @@ public:
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	void SwitchScene(int scene_id);
 	void SwitchSection(int section_id, D3DXVECTOR2 tlPos);
-	void UpdateSwitchSectionCamera(DWORD dt, int nx, D3DXVECTOR2 desMapPos, D3DXVECTOR2 desMapDimen) { camera->UpdateSwitchSection(dt, nx, desMapPos, desMapDimen); }
+	void UpdateSwitchSectionCamera(DWORD dt, int nx, D3DXVECTOR2 desPos, D3DXVECTOR2 desMapPos, D3DXVECTOR2 desMapDimen) { camera->UpdateSwitchSection(dt, nx, desPos, desMapPos, desMapDimen); }
 };
