@@ -1,6 +1,7 @@
 #pragma once
 #include "DynamicGameObject.h"
 #include "Grid.h"
+#include "Bullet.h"
 class Section
 {
 private:
@@ -12,6 +13,7 @@ private:
 	float gridHeight;
 	int gridCol, gridRow;
 	float mapX, mapY, mapWidth, mapHeight;
+	vector<Bullet*> bulletObjs;
 
 	unordered_map<int, LPGRID> grids;
 

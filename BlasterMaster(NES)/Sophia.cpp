@@ -98,7 +98,7 @@ void Sophia::Render()
 			animation_set->at(SOPHIA_ANI_DOWN)->ResetAnim();
 			switch (state)
 			{
-			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
+			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:case SOPHIA_STATE_FIRING_UP_LEFT:case SOPHIA_STATE_FIRING_UP_RIGHT:
 				if (vy < 0)
 				{
 					ani = SOPHIA_ANI_UP_JUMP;
@@ -142,7 +142,7 @@ void Sophia::Render()
 			animation_set->at(SOPHIA_ANI_UP)->ResetAnim();
 			switch (state)
 			{
-			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
+			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:case SOPHIA_STATE_FIRING_LEFT:case SOPHIA_STATE_FIRING_RIGHT:
 				if (vy < 0)
 				{
 					ani = SOPHIA_ANI_JUMP_UP;
@@ -232,7 +232,7 @@ void Sophia::Render()
 			animation_set->at(SOPHIA_ANI_DOWN)->ResetAnim();
 			switch (state)
 			{
-			case SOPHIA_STATE_IDLE_RIGHT: case SOPHIA_STATE_IDLE_LEFT:
+			case SOPHIA_STATE_IDLE_RIGHT: case SOPHIA_STATE_IDLE_LEFT: case SOPHIA_STATE_FIRING_UP_LEFT:case SOPHIA_STATE_FIRING_UP_RIGHT:
 				ani = SOPHIA_ANI_UP;
 				if (animation_set->at(ani)->IsCompleted())
 				{
@@ -313,7 +313,7 @@ void Sophia::Render()
 			animation_set->at(SOPHIA_ANI_UP)->ResetAnim();
 			switch (state)
 			{
-			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
+			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT: case SOPHIA_STATE_FIRING_LEFT: case SOPHIA_STATE_FIRING_RIGHT:
 				ani = SOPHIA_ANI_DOWN;
 				if (animation_set->at(ani)->IsCompleted())
 				{
@@ -517,7 +517,20 @@ void Sophia::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_Z:
-		//sophia fire
+		if (GetIsUp())
+		{
+			if (GetNX() == 1)
+				SetState(SOPHIA_STATE_FIRING_UP_RIGHT);
+			else
+				SetState(SOPHIA_STATE_FIRING_UP_LEFT);
+		}
+		else
+		{
+			if (GetNX() == 1)
+				SetState(SOPHIA_STATE_FIRING_RIGHT);
+			else
+				SetState(SOPHIA_STATE_FIRING_LEFT);
+		}
 		break;
 	case DIK_C:
 		SetState(SOPHIA_STATE_TRANSFORM);

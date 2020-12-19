@@ -149,6 +149,9 @@
     <Filter Include="Object\DynamicObject\Eyeball">
       <UniqueIdentifier>{1ce8f857-069d-47c6-b0af-e2347053f51b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Bullet">
+      <UniqueIdentifier>{4f7fc8bb-9746-4f47-a8b5-bbbb648533e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -252,6 +255,9 @@
     </ClInclude>
     <ClInclude Include="Eyeball.h">
       <Filter>Object\DynamicObject\Eyeball</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Object\DynamicObject\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -362,6 +368,9 @@
     </ClCompile>
     <ClCompile Include="Eyeball.cpp">
       <Filter>Object\DynamicObject\Eyeball</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Object\DynamicObject\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
