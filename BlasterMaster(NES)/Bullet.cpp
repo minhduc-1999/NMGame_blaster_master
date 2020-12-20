@@ -1,15 +1,16 @@
 #include "Bullet.h"
 
-Bullet::Bullet(float x, float y, int a) : CDynamicGameObject(x, y)
+Bullet::Bullet(float x, float y, int type, int n) : CDynamicGameObject(x, y)
 {
 	startFiringTime = GetTickCount();
 	isDestroyed = false;
 
-	if (a == BULLET_HORIZONTAL)
+	if (type == BULLET_HORIZONTAL)
 	{
 		SetSize(26, 8);
 
-		vx = 0.15f;
+		nx = n;
+		vx = (float)(-n) * 0.2f;
 		vy = 0;
 
 		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
@@ -20,8 +21,9 @@ Bullet::Bullet(float x, float y, int a) : CDynamicGameObject(x, y)
 	{
 		SetSize(8, 26);
 
+		nx = n;
 		vx = 0;
-		vy = -0.15f;
+		vy = -0.2f;
 
 		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 		LPANIMATION_SET ani_set = animation_sets->Get(21);
@@ -42,7 +44,7 @@ void Bullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (coEvents.size() == 0)
 	{
-		x += (-nx) * dx;
+		x += dx;
 		y += dy;
 	}
 	else
@@ -54,7 +56,7 @@ void Bullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isDestroyed = true;
 
 	// clean up collision events
-	//for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void Bullet::Render()
@@ -68,9 +70,4 @@ void Bullet::SetState(int state)
 {
 	CDynamicGameObject::SetState(state);
 	nx = -1;
-}
-
-void Bullet::SetDir(int dir)
-{
-	nx = -dir;
 }
