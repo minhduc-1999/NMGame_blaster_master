@@ -78,6 +78,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		mainPlayer = (Sophia*)obj;
 		obj->SetAnimationSet(ani_set);
 		obj->SetTeam(0);
+		obj->SetType(object_type);
 		DebugOut("[INFO] Player object created!\n");
 		return;
 		//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
@@ -127,6 +128,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	// General object setup
 	//obj->SetPosition(x, y);
 	obj->SetTeam(1);
+	obj->SetType(object_type);
 	obj->SetAnimationSet(ani_set);
 	grids[grid]->AddDynamicObj(obj);
 }
@@ -148,6 +150,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		//static obj
 	case OBJECT_TYPE_BRICK:
 		obj = new Brick(x, y);
+		obj->SetType(object_type);
 		break;
 	case OBJECT_TYPE_GATE:
 	{
@@ -156,6 +159,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		float teley = stof(tokens[10].c_str());
 		D3DXVECTOR2 telePos = D3DXVECTOR2(telex, teley);
 		obj = new CGate(x, y, section, telePos);
+		obj->SetType(object_type);
 		for (int i = 4; i <= 7; i++)
 		{
 			int spriteID = atoi(tokens[i].c_str());

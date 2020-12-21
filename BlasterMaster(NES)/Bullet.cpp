@@ -10,7 +10,7 @@ Bullet::Bullet(float x, float y, int type, int n) : CDynamicGameObject(x, y)
 		SetSize(26, 8);
 
 		nx = n;
-		vx = (float)(-n) * 0.2f;
+		vx = -(float)n * 0.2f;
 		vy = 0;
 
 		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
