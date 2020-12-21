@@ -1,6 +1,7 @@
 [SETTINGS]
-start	2
+start	3
 #scene list
 [SCENES]
 1	Resource/Config/scene-test.txt
-2	Resource\Config\Area2\area2.txt
+2	Resource/Config/Area2/area2.txt
+3	Resource/Config/OverWorld/overworld.txt

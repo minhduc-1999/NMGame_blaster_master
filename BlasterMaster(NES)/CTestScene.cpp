@@ -195,7 +195,7 @@ void CTestScene::Render()
 	}
 	mainPlayer->Render();
 	//render foreground
-	CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1);
+	//CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1);
 	//render hpbar
 	hpBar->Render();
 }
