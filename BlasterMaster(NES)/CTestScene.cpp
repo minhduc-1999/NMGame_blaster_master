@@ -18,6 +18,7 @@ CTestScene::CTestScene(int id, string filePath) :
 {
 	key_handler = new CTestSceneKeyHandler(this);
 	isSwitchingSection = false;
+
 }
 
 /*
@@ -168,6 +169,7 @@ void CTestScene::Update(DWORD dt)
 			current_section = transition->GetNextSectionId();
 			sections[current_section]->Update(dt);
 			mainPlayer = sections[current_section]->GetPlayer();
+
 
 			D3DXVECTOR2 mainPos = mainPlayer->GetPosition();
 			D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();

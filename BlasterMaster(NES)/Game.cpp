@@ -5,6 +5,7 @@
 
 CGame* CGame::__instance = NULL;
 
+
 void CGame::Init(HWND hWnd)
 {
 	d3d = Direct3DCreate9(D3D_SDK_VERSION);

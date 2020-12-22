@@ -8,6 +8,8 @@
 #include "Section.h"
 #include "Mine.h"
 #include "SectionTransition.h"
+#include "HPBar.h"
+
 
 #define PLAYER_SOPHIA 0
 #define PLAYER_JASON  1

@@ -152,6 +152,15 @@
     <Filter Include="Object\DynamicObject\Bullet">
       <UniqueIdentifier>{4f7fc8bb-9746-4f47-a8b5-bbbb648533e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Sprites\StatusBar">
+      <UniqueIdentifier>{dd3f18b8-60b6-4667-aaa2-ef4be975e54c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\StatusBar">
+      <UniqueIdentifier>{82aed2fd-3cfc-4782-b753-3cd8142cca29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\StatusBar\HpBar">
+      <UniqueIdentifier>{cd336f95-33c7-4b25-99c5-56cd586c2d7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -258,6 +267,12 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Object\DynamicObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>FrameWork\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="HPBar.h">
+      <Filter>Object\DynamicObject\StatusBar\HpBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -372,6 +387,12 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Object\DynamicObject\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>FrameWork\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="HPBar.cpp">
+      <Filter>Object\DynamicObject\StatusBar\HpBar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="BlasterMaster.ico">
@@ -397,6 +418,9 @@
     </Image>
     <Image Include="Resource\Background\area2_bg.png">
       <Filter>Resources\Background</Filter>
+    </Image>
+    <Image Include="Resource\StatusBar\StatusBar.png">
+      <Filter>Resources\Sprites\StatusBar</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

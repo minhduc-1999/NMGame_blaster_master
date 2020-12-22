@@ -12,6 +12,7 @@
 #include "Orb.h"
 #include "Cannon.h"
 #include "Eyeball.h"
+#include "HPBar.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -59,7 +60,6 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-
 	CDynamicGameObject* obj = NULL;
 
 	switch (object_type)
