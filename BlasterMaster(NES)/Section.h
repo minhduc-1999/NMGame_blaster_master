@@ -14,7 +14,9 @@ private:
 	float gridHeight;
 	int gridCol, gridRow;
 	float mapX, mapY, mapWidth, mapHeight;
+
 	vector<Bullet*> bulletObjs;
+	bool canFire;
 
 	unordered_map<int, LPGRID> grids;
 

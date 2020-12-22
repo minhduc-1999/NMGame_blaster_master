@@ -13,11 +13,10 @@ class Bullet :
 	bool isDestroyed;
 	DWORD startFiringTime;
 public:
-	Bullet(float x, float y, int a);
+	Bullet(float x, float y, int type, int n);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void SetState(int state);
-	virtual void SetDir(int dir);
 	virtual bool GetIsDestroyed() { return isDestroyed; }
 	virtual DWORD GetStartFiringTime() { return startFiringTime; }
 };

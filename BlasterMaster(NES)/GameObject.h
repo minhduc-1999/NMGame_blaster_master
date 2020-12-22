@@ -26,11 +26,14 @@ protected:
 	float vx, vy;
 	float width, height;
 	int team;
+	int type;
 public:
 	CGameObject(float x, float y);
 	void SetSize(float width, float height);
 	void SetTeam(int t) { team = t; }
+	void SetType(int ty) { type = ty; }
 	int GetTeam() { return team; }
+	int GetType() { return type; }
 	void SetPosition(float x, float y);
 	D3DXVECTOR2 GetPosition();
 	D3DXVECTOR2 GetSize();
