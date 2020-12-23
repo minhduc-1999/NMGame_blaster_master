@@ -1,29 +1,35 @@
 #include "HPBar.h"
 #include <cmath>
 
-HPBar::HPBar(float x, float y) :CDynamicGameObject(x, y)
+HPBar::HPBar() :CDynamicGameObject(x, y)
 {
 	shp = SOPHIA_MAX_HP;
 	jhp = JASON_MAX_HP;
-	hp = JASON_MAX_HP;
+	hp = 8;
 	SetSize(45, 233);
+
+	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	LPANIMATION_SET ani_set = animation_sets->Get(50);
+	this->SetAnimationSet(ani_set);
 }
 
-void HPBar::Update(DWORD dt)
+void HPBar::Update(DWORD dt, float x, float y)
 {
-	/*if (isUpdated)
-		return;*/
-	/*hp--;
-	if (hp == 0)
-		hp = JASON_MAX_HP;*/
+	this->SetPosition(x, y);
+	//vector<LPCOLLISIONEVENT> coEvents;
+	//vector<LPCOLLISIONEVENT> coEventsResult;
+
+	//coEvents.clear();
+
+	//CalcPotentialCollisions(coObjects, coEvents);
 	CDynamicGameObject::Update(dt);
 }
 
 void HPBar::Render()
 {
-	if (isRendered)
-		return;
 	int ani = HP_BAR_FULL;
+	if (hp > 8)
+		hp = 8;
 	switch (hp)
 	{
 	case 8:
@@ -57,9 +63,7 @@ void HPBar::Render()
 		break;
 	}
 
-	animation_set->at(ani)->Render(x, y, 1);
-	isRendered = true;
-	isUpdated = false;
+	animation_set->at(ani)->Render(x, y, -1);
 }
 void HPBar::SetState(int bar)
 {
@@ -67,7 +71,7 @@ void HPBar::SetState(int bar)
 	switch (bar)
 	{
 	case SOPHIA_HPBAR:
-		hp = shp;
+		hp = (shp+1)/2;
 		curBar = 0;
 		break;
 	case JASON_HPBAR:
@@ -75,18 +79,32 @@ void HPBar::SetState(int bar)
 		curBar = 1;
 		break;
 	case HP_UP:
-		hp++;
 		if (curBar == 0)
-			shp = hp*2;
+		{
+			shp += 2;
+			hp = shp;
+			this->SetState(SOPHIA_HPBAR);
+		}
 		else
-			jhp = hp;
+		{
+			jhp++;
+			hp = jhp;
+			this->SetState(JASON_HPBAR);
+		}
 		break;
 	case HP_DOWN:
-		hp--;
 		if (curBar == 0)
-			shp = hp * 2;
+		{
+			shp--;
+			hp = (shp+1)/2;
+			this->SetState(SOPHIA_HPBAR);
+		}
 		else
-			jhp = hp;
+		{
+			jhp--;
+			hp=jhp;
+			this->SetState(JASON_HPBAR);
+		}
 		break;
 	default:
 		break;

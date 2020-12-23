@@ -57,11 +57,9 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	float y = atof(tokens[2].c_str());
 	int grid = atof(tokens[3].c_str());
 	int ani_set_id = atoi(tokens[4].c_str());
-
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 	CDynamicGameObject* obj = NULL;
-
 	switch (object_type)
 	{
 		//dynamic obj
@@ -125,6 +123,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		return;
 	}
 
+
 	// General object setup
 	//obj->SetPosition(x, y);
 	obj->SetTeam(1);
@@ -144,7 +143,6 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 	float y = atof(tokens[2].c_str());
 	int grid = atoi(tokens[3].c_str());
 	CStaticGameObject* obj = NULL;
-
 	switch (object_type)
 	{
 		//static obj
@@ -297,7 +295,6 @@ void Section::Update(DWORD dt)
 		}
 	}
 	mainPlayer->Update(dt, &coObjs);
-
 	if (bulletObjs.empty())
 	{
 		canFire = true;
@@ -356,7 +353,6 @@ void Section::Render()
 	}
 	//render main
 	mainPlayer->Render();
-
 	for (int i = 0; i < bulletObjs.size(); i++)
 		bulletObjs[i]->Render();
 }

@@ -27,8 +27,8 @@ class HPBar : public CDynamicGameObject
 public:
 	int hp,jhp,shp,bar;
 	bool curBar;
-	HPBar(float x, float y);
-	void Update(DWORD dt);
+	HPBar();
+	void Update(DWORD dt, float x, float y);
 	void Render();
 	void SetState(int bar);
 };
