@@ -152,13 +152,15 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_GATE:
 	{
-		int section = atoi(tokens[8].c_str());
-		float telex = stof(tokens[9].c_str());
-		float teley = stof(tokens[10].c_str());
+		int section = atoi(tokens[tokens.size() - 3].c_str());
+		float telex = stof(tokens[tokens.size() - 2].c_str());
+		float teley = stof(tokens[tokens.size() - 1].c_str());
+		int size_w = atoi(tokens[tokens.size() - 5].c_str());
+		int size_h = atoi(tokens[tokens.size() - 4].c_str());
 		D3DXVECTOR2 telePos = D3DXVECTOR2(telex, teley);
-		obj = new CGate(x, y, section, telePos);
+		obj = new CGate(x, y, section, telePos, size_w, size_h);
 		obj->SetType(object_type);
-		for (int i = 4; i <= 7; i++)
+		for (int i = 4; i <= tokens.size() - 6; i++)
 		{
 			int spriteID = atoi(tokens[i].c_str());
 			obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
@@ -176,7 +178,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 	int spriteID = atoi(tokens[4].c_str());
 	obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
 	grids[grid]->AddStaticObj(obj);
-	//DebugOut("[STATIC OBJ POSITION]\t%d\t%f\t%f\n", object_type, x, y);
+	//DebugOut("[STATIC OBJ POSITION]\t%d\t%f\t%f\n", object_type, x, y); 
 }
 
 void Section::_ParseSection_MAP(string line)
@@ -359,6 +361,13 @@ void Section::Render()
 
 void Section::Unload()
 {
+	unordered_map<int, LPGRID>::iterator temp = grids.begin();
+	while (temp != grids.end())
+	{
+ 		temp->second->Clear();
+		delete temp->second;
+		temp = grids.erase(grids.begin());
+	}
 }
 
 vector<int> Section::GetBoundGrid(Rect bound)

@@ -6,9 +6,10 @@
 128	122
 #object type: 1 = sophia, 2 = minijason, 3 = jason, 4 = worm, 5 = dome, 6 = floater2
 #object type: 7 = insect, 8 = jumper2, 9 = orb, 10 = skull, 11 = mine, 12 = teleporter, 13 = cannon
-#object type: 14 = eyeball, 15 = brick, 16 = arrow, 17 = Gate, 18 = ladder, 19 = magma
+#object type: 14 = eyeball, 15 = brick, 16 = spike, 17 = Gate, 18 = ladder, 19 = magma
+#object type: 80 = gatescene, 81 = brokenable-brick
 [DYNAMIC_OBJECTS]
-#type	x	y	grid_id	ani_set_ids
+#type	x	y	grid_id	ani_set_id
 [STATIC_OBJECTS]
 #type	x	y	grid_id	sprite_id1	...
 15	2072	1080	0	66
@@ -64,9 +65,10 @@
 15	2456	1144	3	66
 15	2536	1144	3	66
 15	2072	1160	0	65
-17	2096	1168	0	48	49	59	60	5	1972	1174
+15	2104	1160	0	49
 15	2536	1160	3	64
 15	2072	1176	0	66
+17	2104	1176	0	60	16	16	6	1972	1174
 15	2536	1176	3	66
 15	2088	1192	4	64
 15	2104	1192	4	65
@@ -459,10 +461,12 @@
 15	2504	1912	31	65
 15	2520	1912	31	66
 15	2072	1928	28	65
-17	2096	1936	28	48	49	59	60	2	1973	1940
-17	2512	1936	31	46	47	57	58	4	2634	1940
+15	2104	1928	28	49
+15	2504	1928	31	46
 15	2536	1928	31	64
 15	2072	1944	28	66
+17	2104	1944	28	60	16	16	3	1973	1940
+17	2504	1944	31	57	16	16	5	2634	1940
 15	2536	1944	31	66
 15	2088	1960	28	64
 15	2104	1960	28	65

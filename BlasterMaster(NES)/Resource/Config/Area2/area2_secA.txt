@@ -6,10 +6,12 @@
 128	224
 #object type: 1 = sophia, 2 = minijason, 3 = jason, 4 = worm, 5 = dome, 6 = floater2
 #object type: 7 = insect, 8 = jumper2, 9 = orb, 10 = skull, 11 = mine, 12 = teleporter, 13 = cannon
-#object type: 14 = eyeball, 15 = brick, 16 = arrow, 17 = Gate, 18 = ladder, 19 = magma, 20 = bullet
+#object type: 14 = eyeball, 15 = brick, 16 = spike, 17 = Gate, 18 = ladder, 19 = magma, 20 = bullet
+#object type: 80 = gatescene, 81 = brokenable-brick
 #object	type:	50	=	hpbar
 [DYNAMIC_OBJECTS]
 #type	x	y	grid_id	ani_set_id
+1	850	2957	0	1
 13	800	2957	6	13
 [STATIC_OBJECTS]
 #type	x	y	grid_id	sprite_id1	...
@@ -139,8 +141,9 @@
 15	24	2936	0	115
 15	952	2936	7	113
 15	24	2952	0	115
-17	976	2960	7	127	87	106	98	1	1102	2964
+15	968	2952	7	127
 15	24	2968	0	115
+17	968	2968	7	106	16	16	2	1102	2964
 15	40	2984	0	24
 15	56	2984	0	25
 15	72	2984	0	26

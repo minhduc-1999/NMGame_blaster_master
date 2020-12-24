@@ -16,7 +16,7 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 
-	//vy += SOPHIA_GRAVITY;
+	vy += SOPHIA_GRAVITY;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -72,11 +72,12 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			// if e->obj is Gate 
-			if (dynamic_cast<CGate*>(e->obj))
+			CGate* gate = dynamic_cast<CGate*>(e->obj);
+			if (gate != 0)
 			{
-				CGate* gate = dynamic_cast<CGate*>(e->obj);
 				CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 					gate->GetDesTelePos());
+				break;
 				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
 			}
 		}

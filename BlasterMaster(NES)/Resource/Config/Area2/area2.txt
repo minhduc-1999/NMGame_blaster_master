@@ -1,22 +1,22 @@
 [SECTIONS]
 #id	filepath
-0	Resource/Config/Area2/area2_secA.txt
-1	Resource/Config/Area2/area2_secB.txt
-2	Resource/Config/Area2/area2_secC.txt
-3	Resource/Config/Area2/area2_secD.txt
-4	Resource/Config/Area2/area2_secE.txt
-5	Resource/Config/Area2/area2_secF.txt
-6	Resource/Config/Area2/area2_secG.txt
-7	Resource/Config/Area2/area2_secH.txt
-8	Resource/Config/Area2/area2_secI.txt
-9	Resource/Config/Area2/area2_secJ.txt
-10	Resource/Config/Area2/area2_secK.txt
-11	Resource/Config/Area2/area2_secL.txt
-12	Resource/Config/Area2/area2_secM.txt
-13	Resource/Config/Area2/area2_secN.txt
-14	Resource/Config/Area2/area2_secO.txt
+1	Resource/Config/Area2/area2_secA.txt
+2	Resource/Config/Area2/area2_secB.txt
+3	Resource/Config/Area2/area2_secC.txt
+4	Resource/Config/Area2/area2_secD.txt
+5	Resource/Config/Area2/area2_secE.txt
+6	Resource/Config/Area2/area2_secF.txt
+7	Resource/Config/Area2/area2_secG.txt
+8	Resource/Config/Area2/area2_secH.txt
+9	Resource/Config/Area2/area2_secI.txt
+10	Resource/Config/Area2/area2_secJ.txt
+11	Resource/Config/Area2/area2_secK.txt
+12	Resource/Config/Area2/area2_secL.txt
+13	Resource/Config/Area2/area2_secM.txt
+14	Resource/Config/Area2/area2_secN.txt
+15	Resource/Config/Area2/area2_secO.txt
 [SETTINGS]
-start	5
+start	1
 #id	file_path	transparent_color_r g b
 [TEXTURES]
 0	enemy.png	0	0	255

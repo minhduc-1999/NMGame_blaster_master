@@ -44,7 +44,7 @@ start	1
 20	Sophia.png	0	0	255
 30	Resource/tileset/overworld_tileset.png	0	0	255
 40	Resource/Background/overworld_bg.png	0	0	255
-#50	Resource/Foreground/overworld_fg.png	0	0	255
+50	Resource/Foreground/overworld_fg.png	0	0	255
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 #=========TILE=============

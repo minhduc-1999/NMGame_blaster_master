@@ -128,9 +128,6 @@
     <Filter Include="Resources\Config\area2">
       <UniqueIdentifier>{eac9bea8-7c1a-45f9-816e-e893ccad46f4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\Config\overworld">
-      <UniqueIdentifier>{3c2300bf-0292-4f31-b821-a346d9312aa7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resources\Background">
       <UniqueIdentifier>{1dbe0f61-73ca-43d3-84e8-f99195ed38b2}</UniqueIdentifier>
     </Filter>
@@ -166,6 +163,9 @@
     </Filter>
     <Filter Include="Resources\Sprites\Map\Overworld">
       <UniqueIdentifier>{c797b775-d19c-48fa-b7a2-c6192fe4aba9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Config\overworld">
+      <UniqueIdentifier>{72ba0ac4-24e5-47fc-950a-16206dcd16fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -434,6 +434,9 @@
     <Image Include="Resource\Background\overworld_bg.png">
       <Filter>Resources\Background</Filter>
     </Image>
+    <Image Include="Resource\Foreground\overworld_fg.png">
+      <Filter>Resources\Foreground</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\Config\Area2\area2.txt">
@@ -493,109 +496,10 @@
     <Text Include="Resource\Config\OverWorld\overworld.txt">
       <Filter>Resources\Config\overworld</Filter>
     </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec12.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
     <Text Include="Resource\Config\OverWorld\ovw_sec1.txt">
       <Filter>Resources\Config\overworld</Filter>
     </Text>
     <Text Include="Resource\Config\OverWorld\ovw_sec2.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec4.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec3.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec5.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec6.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec7.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec8.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec9.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec10.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec11.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec13.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec14.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec15.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec16.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec17.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec18.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec19.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec20.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec21.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec22.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec24.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec23.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec25.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec26.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec27.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec28.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec29.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec30.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec31.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec32.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec33.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec34.txt">
-      <Filter>Resources\Config\overworld</Filter>
-    </Text>
-    <Text Include="Resource\Config\OverWorld\ovw_sec35.txt">
       <Filter>Resources\Config\overworld</Filter>
     </Text>
   </ItemGroup>
