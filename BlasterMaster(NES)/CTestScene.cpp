@@ -154,7 +154,7 @@ void CTestScene::Update(DWORD dt)
 		D3DXVECTOR2 mapDimen = sections[current_section]->GetSectionMapDimension();
 		CGame::GetInstance()->UpdateCamera(mainPos, mapPos, mapDimen);
 		Rect camPos = CGame::GetInstance()->GetCamBound();
-		hpBar->Update(dt, camPos.left + 10, camPos.top + 180);
+		hpBar->Update(dt, camPos.left + 10, camPos.top + 170);
 	}
 	else
 	{

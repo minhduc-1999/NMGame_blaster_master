@@ -16,12 +16,7 @@ HPBar::HPBar() :CDynamicGameObject(x, y)
 void HPBar::Update(DWORD dt, float x, float y)
 {
 	this->SetPosition(x, y);
-	//vector<LPCOLLISIONEVENT> coEvents;
-	//vector<LPCOLLISIONEVENT> coEventsResult;
-
-	//coEvents.clear();
-
-	//CalcPotentialCollisions(coObjects, coEvents);
+	
 	CDynamicGameObject::Update(dt);
 }
 
