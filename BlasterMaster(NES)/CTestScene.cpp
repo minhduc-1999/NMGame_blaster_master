@@ -125,7 +125,6 @@ void CTestScene::_ParseSection_SECTION(string line)
 	if (tokens.size() < 2) return;
 	int id = atoi(tokens[0].c_str());
 	string path = tokens[1];
-
 	LPSECTION section = new Section(id, path);
 	sections[id] = section;
 }
@@ -148,11 +147,14 @@ void CTestScene::Update(DWORD dt)
 	{
 		CGame::GetInstance()->ProcessKeyboard();
 		sections[current_section]->Update(dt);
+
 		//update camera
 		D3DXVECTOR2 mainPos = mainPlayer->GetPosition();
 		D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();
 		D3DXVECTOR2 mapDimen = sections[current_section]->GetSectionMapDimension();
 		CGame::GetInstance()->UpdateCamera(mainPos, mapPos, mapDimen);
+		Rect camPos = CGame::GetInstance()->GetCamBound();
+		hpBar->Update(dt, camPos.left + 10, camPos.top + 170);
 	}
 	else
 	{
@@ -164,11 +166,10 @@ void CTestScene::Update(DWORD dt)
 		{
 			isSwitchingSection = false;
 			transition->Reset();
-
+			//hpBar->SetState(HP_DOWN);
 			current_section = transition->GetNextSectionId();
 			sections[current_section]->Update(dt);
 			mainPlayer = sections[current_section]->GetPlayer();
-
 			D3DXVECTOR2 mainPos = mainPlayer->GetPosition();
 			D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();
 			D3DXVECTOR2 mapDimen = sections[current_section]->GetSectionMapDimension();
@@ -195,6 +196,8 @@ void CTestScene::Render()
 	mainPlayer->Render();
 	//render foreground
 	CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1);
+	//render hpbar
+	hpBar->Render();
 }
 
 /*
@@ -270,7 +273,6 @@ void CTestScene::Load()
 	string line;
 	// current resource section flag
 	int section = SCENE_SECTION_UNKNOWN;
-
 	while (getline(f, line))
 	{
 		if (line[0] == '#') continue;	// skip comment lines	
@@ -317,6 +319,7 @@ void CTestScene::Load()
 
 	this->transition = new SectionTransition();
 	SwitchSection(current_section, D3DXVECTOR2(-1, -1));
+	hpBar = new HPBar();
 }
 
 

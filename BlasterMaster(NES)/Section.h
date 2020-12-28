@@ -2,6 +2,7 @@
 #include "DynamicGameObject.h"
 #include "Grid.h"
 #include "Bullet.h"
+#include "HPBar.h"
 class Section
 {
 private:

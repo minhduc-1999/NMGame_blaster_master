@@ -1,5 +1,6 @@
 #include "DynamicGameObject.h"
 #include <algorithm>
+#include "CGate.h"
 
 CDynamicGameObject::CDynamicGameObject(float x, float y) :CGameObject(x, y)
 {
@@ -117,7 +118,8 @@ void CDynamicGameObject::FilterCollision(
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
-
+		CGate* gate = dynamic_cast<CGate*>(c->obj);
+		
 		if (c->t < min_tx && c->nx != 0) {
 			min_tx = c->t; nx = c->nx; min_ix = i;
 		}

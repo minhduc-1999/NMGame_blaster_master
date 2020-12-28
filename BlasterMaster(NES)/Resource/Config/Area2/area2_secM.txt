@@ -6,7 +6,8 @@
 128	180
 #object type: 1 = sophia, 2 = minijason, 3 = jason, 4 = worm, 5 = dome, 6 = floater2
 #object type: 7 = insect, 8 = jumper2, 9 = orb, 10 = skull, 11 = mine, 12 = teleporter, 13 = cannon
-#object type: 14 = eyeball, 15 = brick, 16 = arrow, 17 = Gate, 18 = ladder, 19 = magma
+#object type: 14 = eyeball, 15 = brick, 16 = spike, 17 = Gate, 18 = ladder, 19 = magma
+#object type: 80 = gatescene, 81 = brokenable-brick
 [DYNAMIC_OBJECTS]
 #type	x	y	grid_id	ani_set_id
 [STATIC_OBJECTS]
@@ -37,8 +38,9 @@
 15	696	1144	1	62
 15	712	1144	1	63
 15	536	1160	0	63
-17	720	1168	1	46	47	57	58	13	842	1174
+15	712	1160	1	46
 15	536	1176	0	61
+17	712	1176	1	57	16	16	14	842	1174
 15	536	1192	0	63
 15	616	1192	0	62
 15	632	1192	0	63
@@ -118,8 +120,9 @@
 15	696	1656	7	62
 15	712	1656	7	63
 15	536	1672	6	63
-17	720	1680	7	46	47	57	58	11	842	1174
+15	712	1672	7	46
 15	536	1688	6	61
+17	712	1688	7	57	16	16	12	842	1686
 15	536	1704	6	63
 15	680	1704	7	62
 15	696	1704	7	63
