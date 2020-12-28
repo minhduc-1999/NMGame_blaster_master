@@ -1,9 +1,11 @@
 #include "Cannon.h"
-#include "Bullet.h"
 
 Cannon::Cannon(float x, float y) : CDynamicGameObject(x, y)
 {
 	SetSize(26, 26);
+
+	startTime = 0;
+	hor = false;
 }
 
 void Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -16,32 +18,37 @@ void Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	coEvents.clear();
 
 	CalcPotentialCollisions(coObjects, coEvents);
+	startTime += dt;
 
-	if (coEvents.size() == 0)
+	if (startTime > 600)
 	{
-		int dft = GetTickCount() % 1000;
+		if (hor)
+		{
+			Bullet* bulletR = new Bullet(GetPosition().x + 7, GetPosition().y, CANNON_BULLET_HORIZONTAL, 1);
+			Bullet* bulletL = new Bullet(GetPosition().x - 7, GetPosition().y, CANNON_BULLET_HORIZONTAL, -1);
 
-		if (dft > 250 && dft < 500)
-		{
-			SetState(CANNON_STATE_FIRE_VER);
-		}
-		else if (dft > 750 && dft < 999)
-		{
-			SetState(CANNON_STATE_FIRE_HOR);
+			cannonBulls.push_back(bulletR);
+			cannonBulls.push_back(bulletL);
 		}
 		else
 		{
-			SetState(CANNON_STATE_ALIVE);
+			Bullet* bulletU = new Bullet(GetPosition().x, GetPosition().y - 7, CANNON_BULLET_VERTICAL, -1);
+			Bullet* bulletD = new Bullet(GetPosition().x, GetPosition().y + 7, CANNON_BULLET_VERTICAL, 1);
+
+			cannonBulls.push_back(bulletU);
+			cannonBulls.push_back(bulletD);
 		}
 
-		if (GetState() == CANNON_STATE_FIRE_VER)
-		{
+		startTime = 0;
+		hor = !hor;
+	}
 
-		}
-		else if (GetState() == CANNON_STATE_FIRE_HOR)
-		{
+	for (int i = 0; i < cannonBulls.size(); i++)
+		cannonBulls[i]->Update(dt, coObjects);
 
-		}
+	if (coEvents.size() == 0)
+	{
+		
 	}
 	else
 	{
@@ -76,6 +83,12 @@ void Cannon::Render()
 	}
 
 	animation_set->at(ani)->Render(x, y, nx);
+
+	for (int i = 0; i < cannonBulls.size(); i++)
+		if (cannonBulls[i]->GetIsDestroyed())
+			cannonBulls.erase(cannonBulls.begin() + i);
+		else
+			cannonBulls[i]->Render();
 }
 
 void Cannon::SetState(int state)

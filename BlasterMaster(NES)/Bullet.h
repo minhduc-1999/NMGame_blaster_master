@@ -5,8 +5,11 @@
 #define BULLET_FIRING		0
 #define BULLET_DESTROY		1
 
-#define BULLET_HORIZONTAL	0
-#define BULLET_VERTICAL		1
+#define SOPHIA_BULLET_HORIZONTAL	0
+#define SOPHIA_BULLET_VERTICAL		1
+#define CANNON_BULLET_HORIZONTAL	131
+#define CANNON_BULLET_VERTICAL		132
+
 class Bullet :
 	public CDynamicGameObject
 {

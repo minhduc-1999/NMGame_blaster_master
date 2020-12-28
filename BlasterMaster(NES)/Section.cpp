@@ -314,22 +314,22 @@ void Section::Update(DWORD dt)
 	{
 		if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_RIGHT)
 		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 13, mainPlayer->GetPosition().y - 5, BULLET_HORIZONTAL, -1);
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 13, mainPlayer->GetPosition().y - 5, SOPHIA_BULLET_HORIZONTAL, -1);
 			bulletObjs.push_back(bullet);
 		}
 		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_LEFT)
 		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 13, mainPlayer->GetPosition().y - 5, BULLET_HORIZONTAL, 1);
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 13, mainPlayer->GetPosition().y - 5, SOPHIA_BULLET_HORIZONTAL, 1);
 			bulletObjs.push_back(bullet);
 		}
 		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_UP_RIGHT)
 		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 4, mainPlayer->GetPosition().y - 20, BULLET_VERTICAL, -1);
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 4, mainPlayer->GetPosition().y - 20, SOPHIA_BULLET_VERTICAL, -1);
 			bulletObjs.push_back(bullet);
 		}
 		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_UP_LEFT)
 		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 4, mainPlayer->GetPosition().y - 20, BULLET_VERTICAL, 1);
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 4, mainPlayer->GetPosition().y - 20, SOPHIA_BULLET_VERTICAL, 1);
 			bulletObjs.push_back(bullet);
 		}
 	}

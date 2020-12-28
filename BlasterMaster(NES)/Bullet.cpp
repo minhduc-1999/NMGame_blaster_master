@@ -5,7 +5,7 @@ Bullet::Bullet(float x, float y, int type, int n) : CDynamicGameObject(x, y)
 	startFiringTime = GetTickCount();
 	isDestroyed = false;
 
-	if (type == BULLET_HORIZONTAL)
+	if (type == SOPHIA_BULLET_HORIZONTAL)
 	{
 		SetSize(26, 8);
 
@@ -17,7 +17,7 @@ Bullet::Bullet(float x, float y, int type, int n) : CDynamicGameObject(x, y)
 		LPANIMATION_SET ani_set = animation_sets->Get(20);
 		this->SetAnimationSet(ani_set);
 	}
-	else
+	else if (type == SOPHIA_BULLET_VERTICAL)
 	{
 		SetSize(8, 26);
 
@@ -27,6 +27,30 @@ Bullet::Bullet(float x, float y, int type, int n) : CDynamicGameObject(x, y)
 
 		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 		LPANIMATION_SET ani_set = animation_sets->Get(21);
+		this->SetAnimationSet(ani_set);
+	}
+	else if (type == CANNON_BULLET_HORIZONTAL)
+	{
+		SetSize(8, 8);
+
+		nx = 1;
+		vx = n * 0.12f;
+		vy = 0;
+
+		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+		LPANIMATION_SET ani_set = animation_sets->Get(22);
+		this->SetAnimationSet(ani_set);
+	}
+	else if (type == CANNON_BULLET_VERTICAL)
+	{
+		SetSize(8, 8);
+
+		nx = 1;
+		vx = 0;
+		vy = n * 0.12f;
+
+		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+		LPANIMATION_SET ani_set = animation_sets->Get(22);
 		this->SetAnimationSet(ani_set);
 	}
 }

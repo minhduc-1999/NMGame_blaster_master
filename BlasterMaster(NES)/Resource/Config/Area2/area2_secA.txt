@@ -10,7 +10,7 @@
 [DYNAMIC_OBJECTS]
 #type	x	y	grid_id	ani_set_id
 1	946	2957	0	1
-13	800	2957	6	13
+13	800	2927	6	13
 [STATIC_OBJECTS]
 #type	x	y	grid_id	sprite_id1	...
 15	40	2840	0	128
