@@ -14,6 +14,7 @@
 #include "Eyeball.h"
 #include "HPBar.h"
 #include "Boss.h"
+#include "Jason.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -73,7 +74,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	{
 		if (mainPlayer != NULL)
 		{
-			D3DXVECTOR2 pos = mainPlayer->GetPosition();
+			//D3DXVECTOR2 pos = mainPlayer->GetPosition();
 			//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
 			DebugOut("[ERROR] main object was created before!\n");
 			return;
@@ -88,6 +89,22 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
 		break;
 	}
+	case OBJECT_TYPE_JASON:
+		if (mainPlayer != NULL)
+		{
+			//D3DXVECTOR2 pos = mainPlayer->GetPosition();
+			//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
+			DebugOut("[ERROR] main object was created before!\n");
+			return;
+		}
+		obj = new Jason(x, y);
+		mainPlayer = (Jason*)obj;
+		obj->SetAnimationSet(ani_set);
+		obj->SetTeam(0);
+		obj->SetType(object_type);
+		DebugOut("[INFO] Player object created!\n");
+		return;
+		break;
 	case OBJECT_TYPE_BOSS:
 		bossHand_ani_set_id = atoi(tokens[5].c_str());
 		bossArm_ani_set_id = atoi(tokens[6].c_str());

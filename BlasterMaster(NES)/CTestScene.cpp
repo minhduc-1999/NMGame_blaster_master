@@ -219,40 +219,40 @@ void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
 
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 {
-	CGame* game = CGame::GetInstance();
-	if (KeyCode == DIK_C)
-	{
-		if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA
-			&& ((CTestScene*)scence)->GetPlayerSophia()->GetIsJumping() == false)
-		{
-			((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
+	//CGame* game = CGame::GetInstance();
+	//if (KeyCode == DIK_C)
+	//{
+	//	if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA
+	//		&& ((CTestScene*)scence)->GetPlayerSophia()->GetIsJumping() == false)
+	//	{
+	//		((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
 
-			((CTestScene*)scence)->GetPlayerJason()->SetPosition(((CTestScene*)scence)->GetPlayer()->GetPosition().x, ((CTestScene*)scence)->GetPlayer()->GetPosition().y - 10);
-			((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerJason());
-			((CTestScene*)scence)->ChangePlayerType();
-		}
-		else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
-			/*&&		((CTestScene*)scence)->GetPlayerJason()->IsCollisionWithSophia()*/)
-		{
-			((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
+	//		((CTestScene*)scence)->GetPlayerJason()->SetPosition(((CTestScene*)scence)->GetPlayer()->GetPosition().x, ((CTestScene*)scence)->GetPlayer()->GetPosition().y - 10);
+	//		((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerJason());
+	//		((CTestScene*)scence)->ChangePlayerType();
+	//	}
+	//	else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
+	//		/*&&		((CTestScene*)scence)->GetPlayerJason()->IsCollisionWithSophia()*/)
+	//	{
+	//		((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
 
-			((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerSophia());
-			((CTestScene*)scence)->ChangePlayerType();
+	//		((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerSophia());
+	//		((CTestScene*)scence)->ChangePlayerType();
 
-		}
-		else
-		{
-			return;
-		}
+	//	}
+	//	else
+	//	{
+	//		return;
+	//	}
 
-	}
+	//}
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->OnKeyDown(KeyCode);
 }
 
 void CTestSceneKeyHandler::KeyState(BYTE* states)
 {
-	CGame* game = CGame::GetInstance();
+	//CGame* game = CGame::GetInstance();
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->KeyState(states);
 }
