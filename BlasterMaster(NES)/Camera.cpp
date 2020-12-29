@@ -31,7 +31,7 @@ void Camera::Update(D3DXVECTOR2 mainPos, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDime
 {
 	//cal cam X
 	Rect lockBound = GetLockBound();
-	
+
 	int lastX, lastY;
 	if (mainPos.x >= lockBound.left && mainPos.x <= lockBound.right)
 	{
@@ -77,28 +77,38 @@ void Camera::Update(D3DXVECTOR2 mainPos, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDime
 	//DebugOut("[UPDATE CAM]\t%f\t%f\n", mPosition.x, mPosition.y);
 }
 
-void Camera::UpdateSwitchSection(DWORD dt, int nx, D3DXVECTOR2 desPos, D3DXVECTOR2 desMapPos, D3DXVECTOR2 desMapDimen)
+void Camera::UpdateSwitchSection(DWORD dt, int nx, int ny, D3DXVECTOR2 desPos, D3DXVECTOR2 desMapPos, D3DXVECTOR2 desMapDimen)
 {
 	float dx = nx * SWITCH_SECTION_CAM_SPEED * dt;
-	float dy = SWITCH_SECTION_CAM_SPEED * dt;
+	float dy = ny * SWITCH_SECTION_CAM_SPEED * dt;
 	float lastX = this->mPosition.x + dx;
-	float lastY;
+	float lastY = this->mPosition.y + dy;
 	if (nx == 1)
 	{
 		if (lastX > desMapPos.x)
 			lastX = desMapPos.x;
 	}
-	else
+	else if(nx == -1)
 	{
 		if (lastX + mWidth < desMapPos.x + desMapDimen.x)
 			lastX = desMapPos.x + desMapDimen.x - mWidth;
 	}
-	if (mPosition.y > desPos.y - (mHeight - CONST_DETAL_Y_BELOW))
+	if (ny == 1)
+	{
+		if (lastY > desMapPos.y)
+			lastY = desMapPos.y;
+	}
+	else if(ny == -1)
+	{
+		if (lastY + mHeight < desMapPos.y + desMapDimen.y)
+			lastY = desMapPos.y + desMapDimen.y - mHeight;
+	}
+	/*if (mPosition.y > desPos.y - (mHeight - CONST_DETAL_Y_BELOW))
 	{
 		lastY = mPosition.y - dy;
 	}
 	else
-		lastY = desPos.y - (mHeight - CONST_DETAL_Y_BELOW);
+		lastY = desPos.y - (mHeight - CONST_DETAL_Y_BELOW);*/
 	//DebugOut("[Delta x Cam trans]\t%f, Dir: %d, dt: %d\n", dx, nx, dt);
 	this->SetPosition(lastX, lastY);
 }

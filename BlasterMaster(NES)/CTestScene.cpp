@@ -160,7 +160,7 @@ void CTestScene::Update(DWORD dt)
 	{
 		if (!transition->IsFinish())
 		{
-			transition->Update(dt);
+			transition->Update(dt); 
 		}
 		else
 		{

@@ -5,7 +5,7 @@ class CDynamicGameObject :
 {
 protected:
 	float dx, dy;
-	int nx;
+	int nx, ny;
 	int state;
 	bool isUpdated, isRendered;
 	DWORD dt;
@@ -14,6 +14,7 @@ public:
 	CDynamicGameObject(float x, float y);
 
 	int GetNX() { return nx; };
+	int GetNY() { return ny; };
 
 	virtual void SetState(int state);
 	int GetState();

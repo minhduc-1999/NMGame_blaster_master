@@ -5,6 +5,7 @@
 CDynamicGameObject::CDynamicGameObject(float x, float y) :CGameObject(x, y)
 {
 	nx = 1;
+	ny = 0;
 	SetSize(16, 16);
 	isUpdated = false;
 	isRendered = false;

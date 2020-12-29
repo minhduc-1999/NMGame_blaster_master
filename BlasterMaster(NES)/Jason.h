@@ -24,7 +24,6 @@
 #define JASON_UNSTOPABLE	2000
 class Jason : public CDynamicGameObject
 {
-	int ny;
 public:
 	Jason(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
