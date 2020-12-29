@@ -28,7 +28,7 @@ protected:
 	int current_section;
 	bool isSwitchingSection;
 public:
-	CTestScene(int id, string filePath);
+	CTestScene(int id, string filePath, int type);
 
 	virtual void Load();
 	virtual void Update(DWORD dt);

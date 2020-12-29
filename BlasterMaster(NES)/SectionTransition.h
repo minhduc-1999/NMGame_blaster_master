@@ -2,7 +2,7 @@
 #include "Section.h"
 class SectionTransition
 {
-private:
+protected:
 	LPSECTION sectionSrc, sectionDes;
 	D3DXVECTOR2 telePos;
 	bool _isFinish;

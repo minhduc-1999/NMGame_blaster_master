@@ -295,6 +295,9 @@
     <ClInclude Include="Jason.h">
       <Filter>Object\DynamicObject\Player\Jason</Filter>
     </ClInclude>
+    <ClInclude Include="OvwSectionTransition.h">
+      <Filter>FrameWork\Section\Transition</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -422,6 +425,9 @@
     </ClCompile>
     <ClCompile Include="Jason.cpp">
       <Filter>Object\DynamicObject\Player\Jason</Filter>
+    </ClCompile>
+    <ClCompile Include="OvwSectionTransition.cpp">
+      <Filter>FrameWork\Section\Transition</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -170,6 +170,7 @@
     <ClInclude Include="Mine.h" />
     <ClInclude Include="MiniJason.h" />
     <ClInclude Include="Orb.h" />
+    <ClInclude Include="OvwSectionTransition.h" />
     <ClInclude Include="Section.h" />
     <ClInclude Include="SectionTransition.h" />
     <ClInclude Include="Sophia.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="Mine.cpp" />
     <ClCompile Include="MiniJason.cpp" />
     <ClCompile Include="Orb.cpp" />
+    <ClCompile Include="OvwSectionTransition.cpp" />
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="SectionTransition.cpp" />
     <ClCompile Include="Sophia.cpp" />

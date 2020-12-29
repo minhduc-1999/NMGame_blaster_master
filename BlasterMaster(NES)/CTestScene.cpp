@@ -10,14 +10,28 @@
 #include "CMagma.h"
 #include "CGate.h"
 #include "CLadder.h"
+#include "OvwSectionTransition.h"
 
 using namespace std;
 
-CTestScene::CTestScene(int id, string filePath) :
+CTestScene::CTestScene(int id, string filePath, int type) :
 	CScene(id, filePath)
 {
 	key_handler = new CTestSceneKeyHandler(this);
 	isSwitchingSection = false;
+	switch (type)
+	{
+	case 1:
+		this->transition = new SectionTransition();
+		break;
+	case 2:
+		this->transition = new OvwSectionTransition();
+		break;
+	case 3:
+		break;
+	default:
+		break;
+	}
 }
 
 /*
@@ -317,7 +331,6 @@ void CTestScene::Load()
 
 	DebugOut("[INFO] Loading section file : %s has been loaded successfully\n", sceneFilePath);
 
-	this->transition = new SectionTransition();
 	SwitchSection(current_section, D3DXVECTOR2(-1, -1));
 	hpBar = new HPBar();
 }

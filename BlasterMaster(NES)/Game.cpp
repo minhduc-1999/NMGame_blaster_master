@@ -375,11 +375,11 @@ void CGame::_ParseSection_SCENES(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 2) return;
+	if (tokens.size() < 3) return;
 	int id = atoi(tokens[0].c_str());
 	string path = tokens[1];
-
-	LPSCENE scene = new CTestScene(id, path);
+	int type = atoi(tokens[2].c_str());
+	LPSCENE scene = new CTestScene(id, path, type);
 	scenes[id] = scene;
 }
 
