@@ -1,8 +1,6 @@
 #include "OvwSectionTransition.h"
 #include "Jason.h"
 
-#define SWITCH_SECTION_SPEED 0.07f
-
 void OvwSectionTransition::Update(DWORD dt)
 {
 	CDynamicGameObject* player = sectionDes->GetPlayer();

@@ -4,13 +4,13 @@
 #include <string>
 #include "Textures.h"
 #include "Sprites.h"
-#include "tinyxml.h"
 #include "Brick.h"
 #include "ResourceManager.h"
 #include "CMagma.h"
 #include "CGate.h"
 #include "CLadder.h"
 #include "OvwSectionTransition.h"
+#include "AreaSectionTransition.h"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ CTestScene::CTestScene(int id, string filePath, int type) :
 	switch (type)
 	{
 	case 1:
-		this->transition = new SectionTransition();
+		this->transition = new AreaSectionTransition();
 		break;
 	case 2:
 		this->transition = new OvwSectionTransition();

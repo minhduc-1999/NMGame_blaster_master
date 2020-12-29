@@ -298,6 +298,9 @@
     <ClInclude Include="OvwSectionTransition.h">
       <Filter>FrameWork\Section\Transition</Filter>
     </ClInclude>
+    <ClInclude Include="AreaSectionTransition.h">
+      <Filter>FrameWork\Section\Transition</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -427,6 +430,9 @@
       <Filter>Object\DynamicObject\Player\Jason</Filter>
     </ClCompile>
     <ClCompile Include="OvwSectionTransition.cpp">
+      <Filter>FrameWork\Section\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaSectionTransition.cpp">
       <Filter>FrameWork\Section\Transition</Filter>
     </ClCompile>
   </ItemGroup>
