@@ -7,6 +7,7 @@
 #include "StaticGameObject.h"
 #include "Section.h"
 #include "Mine.h"
+#include "Boss.h"
 #include "SectionTransition.h"
 
 #define PLAYER_SOPHIA 0

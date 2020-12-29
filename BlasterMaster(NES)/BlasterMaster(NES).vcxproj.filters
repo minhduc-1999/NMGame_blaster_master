@@ -149,6 +149,12 @@
     <Filter Include="Object\DynamicObject\Eyeball">
       <UniqueIdentifier>{1ce8f857-069d-47c6-b0af-e2347053f51b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Boss">
+      <UniqueIdentifier>{a496bcc5-bfc1-4402-8494-b1f84a5470f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sprites\Boss">
+      <UniqueIdentifier>{239368fe-9de9-4918-9619-7b1d7c42c84c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -252,6 +258,12 @@
     </ClInclude>
     <ClInclude Include="Eyeball.h">
       <Filter>Object\DynamicObject\Eyeball</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Object\DynamicObject\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Hand.h">
+      <Filter>Object\DynamicObject\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -363,6 +375,12 @@
     <ClCompile Include="Eyeball.cpp">
       <Filter>Object\DynamicObject\Eyeball</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Object\DynamicObject\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Hand.cpp">
+      <Filter>Object\DynamicObject\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="BlasterMaster.ico">
@@ -388,6 +406,9 @@
     </Image>
     <Image Include="Resource\Background\area2_bg.png">
       <Filter>Resources\Background</Filter>
+    </Image>
+    <Image Include="boss.png">
+      <Filter>Resources\Sprites\Boss</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
