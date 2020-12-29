@@ -1,0 +1,295 @@
+[SECTIONS]
+#id	filepath
+1	Resource/Config/OverWorld/ovw_sec1.txt
+2	Resource/Config/OverWorld/ovw_sec2.txt
+3	Resource/Config/OverWorld/ovw_sec3.txt
+4	Resource/Config/OverWorld/ovw_sec4.txt
+5	Resource/Config/OverWorld/ovw_sec5.txt
+6	Resource/Config/OverWorld/ovw_sec6.txt
+7	Resource/Config/OverWorld/ovw_sec7.txt
+8	Resource/Config/OverWorld/ovw_sec8.txt
+9	Resource/Config/OverWorld/ovw_sec9.txt
+10	Resource/Config/OverWorld/ovw_sec10.txt
+11	Resource/Config/OverWorld/ovw_sec11.txt
+12	Resource/Config/OverWorld/ovw_sec12.txt
+13	Resource/Config/OverWorld/ovw_sec13.txt
+14	Resource/Config/OverWorld/ovw_sec14.txt
+15	Resource/Config/OverWorld/ovw_sec15.txt
+16	Resource/Config/OverWorld/ovw_sec16.txt
+17	Resource/Config/OverWorld/ovw_sec17.txt
+18	Resource/Config/OverWorld/ovw_sec18.txt
+19	Resource/Config/OverWorld/ovw_sec19.txt
+20	Resource/Config/OverWorld/ovw_sec20.txt
+21	Resource/Config/OverWorld/ovw_sec21.txt
+22	Resource/Config/OverWorld/ovw_sec22.txt
+23	Resource/Config/OverWorld/ovw_sec23.txt
+24	Resource/Config/OverWorld/ovw_sec24.txt
+25	Resource/Config/OverWorld/ovw_sec25.txt
+26	Resource/Config/OverWorld/ovw_sec26.txt
+27	Resource/Config/OverWorld/ovw_sec27.txt
+28	Resource/Config/OverWorld/ovw_sec28.txt
+29	Resource/Config/OverWorld/ovw_sec29.txt
+30	Resource/Config/OverWorld/ovw_sec30.txt
+31	Resource/Config/OverWorld/ovw_sec31.txt
+32	Resource/Config/OverWorld/ovw_sec32.txt
+33	Resource/Config/OverWorld/ovw_sec33.txt
+34	Resource/Config/OverWorld/ovw_sec34.txt
+35	Resource/Config/OverWorld/ovw_sec35.txt
+[SETTINGS]
+start	1
+#id	file_path	transparent_color_r g b
+[TEXTURES]
+0	enemy.png	0	0	255
+10	Jason.png	0	0	255
+20	Sophia.png	0	0	255
+30	Resource/tileset/overworld_tileset.png	0	0	255
+40	Resource/Background/overworld_bg.png	0	0	255
+50	Resource/Foreground/overworld_fg.png	0	0	255
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+#=========TILE=============
+61	0	85	16	101	30
+62	17	85	33	101	30
+63	34	85	50	101	30
+64	51	85	67	101	30
+65	68	85	84	101	30
+66	85	85	101	101	30
+67	102	85	118	101	30
+68	119	85	135	101	30
+69	136	85	152	101	30
+70	153	85	169	101	30
+71	170	85	186	101	30
+72	187	85	203	101	30
+73	0	102	16	118	30
+74	17	102	33	118	30
+75	34	102	50	118	30
+76	51	102	67	118	30
+77	68	102	84	118	30
+78	85	102	101	118	30
+79	102	102	118	118	30
+80	119	102	135	118	30
+81	136	102	152	118	30
+82	153	102	169	118	30
+83	170	102	186	118	30
+84	187	102	203	118	30
+85	0	119	16	135	30
+86	17	119	33	135	30
+87	34	119	50	135	30
+88	51	119	67	135	30
+89	68	119	84	135	30
+90	85	119	101	135	30
+91	102	119	118	135	30
+92	119	119	135	135	30
+93	136	119	152	135	30
+94	153	119	169	135	30
+95	170	119	186	135	30
+96	187	119	203	135	30
+97	0	136	16	152	30
+98	17	136	33	152	30
+99	34	136	50	152	30
+100	51	136	67	152	30
+101	68	136	84	152	30
+102	85	136	101	152	30
+103	102	136	118	152	30
+104	119	136	135	152	30
+105	136	136	152	152	30
+106	153	136	169	152	30
+107	170	136	186	152	30
+108	187	136	203	152	30
+109	0	153	16	169	30
+110	17	153	33	169	30
+111	34	153	50	169	30
+112	51	153	67	169	30
+#=========Sophia===========
+# run hight
+10001	109	-11	135	23	20
+10002	77	-11	103	23	20
+10003	44	-11	70	23	20
+10004	13	-11	39	23	20
+# run low
+10101	246	14	272	48	20
+10102	214	14	240	48	20
+10103	182	14	208	48	20
+10104	149	14	175	48	20
+# jump up
+10201	109	117	135	151	20
+10202	77	117	103	151	20
+10203	44	117	70	151	20
+10204	10	117	36	151	20
+# jump down
+10301	109	38	135	72	20
+10302	78	38	104	72	20
+10303	44	38	70	72	20
+10304	12	38	38	72	20
+# turn run
+10401	111	76	135	110	20
+10402	146	76	170	110	20
+# turn jump 
+10501	111	175	135	209	20
+10502	146	175	170	209	20
+# up
+10601	208	153	242	187	20
+10602	208	203	242	237	20
+10603	208	246	242	280	20
+10604	204	283	238	317	20
+# up run hight
+10701	204	283	238	317	20
+10702	147	283	181	317	20
+10703	83	283	117	317	20
+10704	5	283	39	317	20
+# up run low
+10801	203	366	237	400	20
+10802	143	366	177	400	20
+10803	84	366	118	400	20
+10804	9	366	43	400	20
+# up jump
+10901	201	414	235	451	20
+10902	139	414	173	451	20
+10903	72	414	106	451	20
+10904	9	414	43	451	20
+# down
+11001	204	283	238	317	20
+11002	208	246	242	280	20
+11003	208	203	242	237	20
+11004	208	153	242	187	20
+# transform
+11101	105	326	131	360	20
+#==========mini jason=============
+# IDLE
+20001	121	3	131	20	10
+# run
+20101	95	3	105	20	10
+20102	82	3	92	20	10
+# jump
+20201	108	3	118	20	10
+# down run
+20301	49	10	66	20	10
+20302	32	10	49	20	10
+# climb
+
+#========worm========
+# walking
+40001	46	412	64	422	0
+40002	64	412	82	422	0
+#worm die
+
+#========Floater 2==========
+# flying
+60001	84	407	102	422	0
+# fire
+60101	104	407	122	422	0
+# die
+#=======insect===========
+#flying
+70001	84	530	102	548	0
+70002	104	530	122	548	0
+#die
+#=======jumper2==========
+#walking
+80001	105	499	122	525	0
+80002	85	499	102	525	0
+80003	67	499	84	525	0
+#======orb============
+#rolling
+90001	118	387	136	403	0
+90002	98	387	116	403	0
+90003	78	387	96	403	0
+90004	58	387	76	403	0
+#========skull========
+# flying
+100001	42	530	60	551	0
+# fire
+100101	62	527	80	548	0
+# die
+#========mine========
+#blinking
+110001	53	557	68	565	0
+110002	76	557	91	565	0
+#die
+
+#=======cannon=======
+# normal
+130001	96	603	122	629	0
+# vertical fire
+130002	41	605	67	631	0
+# horizontal fire
+130003	68	603	94	629	0
+# die
+
+#======eyeball======
+# moving
+140001	136	550	152	566	0
+140002	102	550	118	566	0
+140003	119	550	135	566	0
+# die
+
+
+#...
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+#======sophia=========
+100	10001	25	10002	25	10003	25	10004	25
+101	10101	25	10102	25	10103	25	10104	25
+102	10201	25	10202	25	10203	25	10204	25
+103	10301	25	10302	25	10303	25	10304	25
+104	10401	400	10402	400
+105	10501	400	10502	400
+106	10601	50	10602	50	10603	50	10604	50
+107	10701	25	10702	25	10703	25	10704	25
+108	10801	25	10802	25	10803	25	10804	25
+109	10901	25	10902	25	10903	25	10904	25
+110	11001	50	11002	50	11003	50	11004	50
+111	11101	400	11101	400
+#=========mini_jason==========
+200	20001	200
+201	20101	200	20102	200
+202	20201	200
+203	20301	200	20302	200
+#=========Worm===========
+400	40001	200	40002	200
+#=========Floater2==========
+600	60001	200
+#=========Insect=======
+700	70001	200	70002	200
+#=========Jumper2=========
+800	80001	200	80002	200	80003	200
+#=========orb=============
+900	90001	40	90002	40	90003	40	90004	40
+#=========skull===========
+1000	100001	200
+1001	100101	200
+#=========mine============
+1100	110001	200	110002	200
+#======cannon======
+1300	130001	250	130002	250	130001	250	130003	250
+#======eyeball======
+1400	140001	200	140002	200	140001	200	140002	200	140001	200	140002	200	140001	200	140003	200
+
+
+
+
+# id	ani1	ani2	ani3
+[ANIMATION_SETS]
+#======sophia=========
+1	100	101	102	103	104	105	106	107	108	109	110	111
+#======miniJason=======
+2	200	201	202	203
+#======worm=======
+4	400
+#======Floater2=======
+6	600
+#======Insect=====
+7	700
+#======Jumper2=====
+8	800
+#======Orb=========
+9	900
+#======skull=======
+10	1000	1001
+#======mine========
+11	1100
+#======cannon======
+13	1300
+#======eyeball======
+14	1400

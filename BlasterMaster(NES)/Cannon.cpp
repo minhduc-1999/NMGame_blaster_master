@@ -1,4 +1,5 @@
 #include "Cannon.h"
+#include "Bullet.h"
 
 Cannon::Cannon(float x, float y) : CDynamicGameObject(x, y)
 {
@@ -18,8 +19,29 @@ void Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (coEvents.size() == 0)
 	{
-		x += dx;
-		y += dy;
+		int dft = GetTickCount() % 1000;
+
+		if (dft > 250 && dft < 500)
+		{
+			SetState(CANNON_STATE_FIRE_VER);
+		}
+		else if (dft > 750 && dft < 999)
+		{
+			SetState(CANNON_STATE_FIRE_HOR);
+		}
+		else
+		{
+			SetState(CANNON_STATE_ALIVE);
+		}
+
+		if (GetState() == CANNON_STATE_FIRE_VER)
+		{
+
+		}
+		else if (GetState() == CANNON_STATE_FIRE_HOR)
+		{
+
+		}
 	}
 	else
 	{
@@ -41,7 +63,7 @@ void Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	// clean up collision events
-	//for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void Cannon::Render()

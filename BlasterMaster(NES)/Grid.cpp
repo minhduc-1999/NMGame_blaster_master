@@ -59,8 +59,19 @@ void Grid::Render()
 		dynamicObjs[i]->Render();
 	}
 }
-
 void Grid::Clear()
 {
-
+	vector<LPSTATICOBJECT>::iterator temp = staticObjs.begin();
+	while (temp != staticObjs.end())
+	{
+		delete* temp;
+		temp = staticObjs.erase(staticObjs.begin());
+	}
+	vector<LPDYNAMICOBJECT>::iterator temp2 = dynamicObjs.begin();
+	while (temp2 != dynamicObjs.end())
+	{
+		delete* temp2;
+		temp2 = dynamicObjs.erase(dynamicObjs.begin());
+	}
 }
+

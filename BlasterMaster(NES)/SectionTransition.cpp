@@ -19,7 +19,7 @@ void SectionTransition::Update(DWORD dt)
 	player->Update(dt);
 	D3DXVECTOR2 pos = player->GetPosition();
 	//DebugOut("[Pos player trans]\tx: %f, y: %f\n", pos.x, pos.y);
-	CGame::GetInstance()->UpdateSwitchSectionCamera(dt, nx, sectionDes->GetSectionMapPos(), sectionDes->GetSectionMapDimension());
+	CGame::GetInstance()->UpdateSwitchSectionCamera(dt, nx, telePos, sectionDes->GetSectionMapPos(), sectionDes->GetSectionMapDimension());
 	if ((nx == 1 && pos.x >= telePos.x) || (nx == -1 && pos.x <= telePos.x))
 	{
 		_isFinish = true;

@@ -2,6 +2,7 @@
 
 
 #define SWITCH_SECTION_CAM_SPEED 0.2f
+#define CONST_DETAL_Y_BELOW		96.0f
 
 Camera::Camera(int width, int height)
 {
@@ -30,7 +31,18 @@ void Camera::Update(D3DXVECTOR2 mainPos, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDime
 {
 	//cal cam X
 	Rect lockBound = GetLockBound();
-	int lastX = mainPos.x - (mWidth / 2), lastY;
+	
+	int lastX, lastY;
+	if (mainPos.x >= lockBound.left && mainPos.x <= lockBound.right)
+	{
+		lastX = mPosition.x;
+	}
+	else if (mainPos.x < lockBound.left)
+	{
+		lastX = mainPos.x - (lockBound.left - mPosition.x);
+	}
+	else
+		lastX = mainPos.x - (lockBound.right - mPosition.x + 1);
 	if (lastX < mapPos.x)
 	{
 		lastX = mapPos.x;
@@ -43,15 +55,14 @@ void Camera::Update(D3DXVECTOR2 mainPos, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDime
 	//call cam Y
 	if (mainPos.y >= lockBound.top && mainPos.y <= lockBound.bottom)
 	{
-		this->SetPosition(lastX, mPosition.y);
-		return;
+		lastY = mPosition.y;
 	}
 	else if (mainPos.y < lockBound.top)
 	{
 		lastY = mainPos.y - (lockBound.top - mPosition.y);
 	}
 	else
-		lastY = mainPos.y - (mPosition.y + mHeight - lockBound.bottom - 1);
+		lastY = mainPos.y - (lockBound.bottom - mPosition.y + 1);
 	if (lastY < mapPos.y)
 	{
 		lastY = mapPos.y;
@@ -66,10 +77,12 @@ void Camera::Update(D3DXVECTOR2 mainPos, D3DXVECTOR2 mapPos, D3DXVECTOR2 mapDime
 	//DebugOut("[UPDATE CAM]\t%f\t%f\n", mPosition.x, mPosition.y);
 }
 
-void Camera::UpdateSwitchSection(DWORD dt, int nx, D3DXVECTOR2 desMapPos, D3DXVECTOR2 desMapDimen)
+void Camera::UpdateSwitchSection(DWORD dt, int nx, D3DXVECTOR2 desPos, D3DXVECTOR2 desMapPos, D3DXVECTOR2 desMapDimen)
 {
 	float dx = nx * SWITCH_SECTION_CAM_SPEED * dt;
+	float dy = SWITCH_SECTION_CAM_SPEED * dt;
 	float lastX = this->mPosition.x + dx;
+	float lastY;
 	if (nx == 1)
 	{
 		if (lastX > desMapPos.x)
@@ -80,8 +93,14 @@ void Camera::UpdateSwitchSection(DWORD dt, int nx, D3DXVECTOR2 desMapPos, D3DXVE
 		if (lastX + mWidth < desMapPos.x + desMapDimen.x)
 			lastX = desMapPos.x + desMapDimen.x - mWidth;
 	}
+	if (mPosition.y > desPos.y - (mHeight - CONST_DETAL_Y_BELOW))
+	{
+		lastY = mPosition.y - dy;
+	}
+	else
+		lastY = desPos.y - (mHeight - CONST_DETAL_Y_BELOW);
 	//DebugOut("[Delta x Cam trans]\t%f, Dir: %d, dt: %d\n", dx, nx, dt);
-	this->SetPosition(lastX, this->mPosition.y);
+	this->SetPosition(lastX, lastY);
 }
 
 D3DXVECTOR2 Camera::GetPosition()
@@ -105,10 +124,10 @@ Rect Camera::GetLockBound()
 {
 	Rect bound;
 
-	bound.left = mPosition.x + mWidth / 2.0f;
-	bound.right = bound.left;
+	bound.left = mPosition.x + mWidth / 2.5f;
+	bound.right = bound.left + mWidth / 5.0f;
 	bound.top = mPosition.y + mHeight / 4.0f;
-	bound.bottom = bound.top + mHeight / 2.5f;
+	bound.bottom = bound.top + mHeight / 2.0f;
 
 	return bound;
 }

@@ -9,10 +9,10 @@ private:
     int nx;
 public:
     CGate(float x, float y) :CStaticGameObject(x, y) { SetSize(32, 32); this->nx = nx; }
-    CGate(float x, float y, int sectionId, D3DXVECTOR2 tele);
+    CGate(float x, float y, int sectionId, D3DXVECTOR2 tele, int width, int height);
     int GetNextSectionID() { return nextSectionID; }
     D3DXVECTOR2 GetDesTelePos() { return desTelePos; }
     virtual void Render();
-    
+    Rect GetBound();
 };
 

@@ -12,6 +12,7 @@
 #include "Orb.h"
 #include "Cannon.h"
 #include "Eyeball.h"
+#include "HPBar.h"
 #include "Boss.h"
 using namespace std;
 
@@ -44,6 +45,7 @@ using namespace std;
 #define OBJECT_TYPE_GATE		17
 #define OBJECT_TYPE_LADDER		18
 #define OBJECT_TYPE_MAGMA		19
+#define OBJECT_TYPE_BULLET		20
 #pragma endregion
 
 void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
@@ -63,9 +65,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-
 	CDynamicGameObject* obj = NULL;
-
 	switch (object_type)
 	{
 		//dynamic obj
@@ -82,6 +82,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		mainPlayer = (Sophia*)obj;
 		obj->SetAnimationSet(ani_set);
 		obj->SetTeam(0);
+		obj->SetType(object_type);
 		DebugOut("[INFO] Player object created!\n");
 		return;
 		//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
@@ -135,9 +136,11 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		return;
 	}
 
+
 	// General object setup
 	//obj->SetPosition(x, y);
 	obj->SetTeam(1);
+	obj->SetType(object_type);
 	obj->SetAnimationSet(ani_set);
 	grids[grid]->AddDynamicObj(obj);
 }
@@ -153,21 +156,24 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 	float y = atof(tokens[2].c_str());
 	int grid = atoi(tokens[3].c_str());
 	CStaticGameObject* obj = NULL;
-
 	switch (object_type)
 	{
 		//static obj
 	case OBJECT_TYPE_BRICK:
 		obj = new Brick(x, y);
+		obj->SetType(object_type);
 		break;
 	case OBJECT_TYPE_GATE:
 	{
-		int section = atoi(tokens[8].c_str());
-		float telex = stof(tokens[9].c_str());
-		float teley = stof(tokens[10].c_str());
+		int section = atoi(tokens[tokens.size() - 3].c_str());
+		float telex = stof(tokens[tokens.size() - 2].c_str());
+		float teley = stof(tokens[tokens.size() - 1].c_str());
+		int size_w = atoi(tokens[tokens.size() - 5].c_str());
+		int size_h = atoi(tokens[tokens.size() - 4].c_str());
 		D3DXVECTOR2 telePos = D3DXVECTOR2(telex, teley);
-		obj = new CGate(x, y, section, telePos);
-		for (int i = 4; i <= 7; i++)
+		obj = new CGate(x, y, section, telePos, size_w, size_h);
+		obj->SetType(object_type);
+		for (int i = 4; i <= tokens.size() - 6; i++)
 		{
 			int spriteID = atoi(tokens[i].c_str());
 			obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
@@ -185,7 +191,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 	int spriteID = atoi(tokens[4].c_str());
 	obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
 	grids[grid]->AddStaticObj(obj);
-	//DebugOut("[STATIC OBJ POSITION]\t%d\t%f\t%f\n", object_type, x, y);
+	//DebugOut("[STATIC OBJ POSITION]\t%d\t%f\t%f\n", object_type, x, y); 
 }
 
 void Section::_ParseSection_MAP(string line)
@@ -304,6 +310,48 @@ void Section::Update(DWORD dt)
 		}
 	}
 	mainPlayer->Update(dt, &coObjs);
+	if (bulletObjs.empty())
+	{
+		canFire = true;
+	}
+	else
+	{
+		if (GetTickCount() - bulletObjs.back()->GetStartFiringTime() >= 200)
+			canFire = true;
+		else
+			canFire = false;
+	}
+
+	if (canFire)
+	{
+		if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_RIGHT)
+		{
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 13, mainPlayer->GetPosition().y - 5, BULLET_HORIZONTAL, -1);
+			bulletObjs.push_back(bullet);
+		}
+		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_LEFT)
+		{
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 13, mainPlayer->GetPosition().y - 5, BULLET_HORIZONTAL, 1);
+			bulletObjs.push_back(bullet);
+		}
+		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_UP_RIGHT)
+		{
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 4, mainPlayer->GetPosition().y - 20, BULLET_VERTICAL, -1);
+			bulletObjs.push_back(bullet);
+		}
+		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_UP_LEFT)
+		{
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 4, mainPlayer->GetPosition().y - 20, BULLET_VERTICAL, 1);
+			bulletObjs.push_back(bullet);
+		}
+	}
+
+	for (int i = 0; i < bulletObjs.size(); i++)
+	{
+		bulletObjs[i]->Update(dt, &coObjs);
+		if (bulletObjs[i]->GetIsDestroyed())
+			bulletObjs.erase(bulletObjs.begin() + i);
+	}
 }
 
 void Section::Render()
@@ -320,10 +368,19 @@ void Section::Render()
 	}
 	//render main
 	mainPlayer->Render();
+	for (int i = 0; i < bulletObjs.size(); i++)
+		bulletObjs[i]->Render();
 }
 
 void Section::Unload()
 {
+	unordered_map<int, LPGRID>::iterator temp = grids.begin();
+	while (temp != grids.end())
+	{
+ 		temp->second->Clear();
+		delete temp->second;
+		temp = grids.erase(grids.begin());
+	}
 }
 
 vector<int> Section::GetBoundGrid(Rect bound)

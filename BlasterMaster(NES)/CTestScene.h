@@ -9,6 +9,8 @@
 #include "Mine.h"
 #include "Boss.h"
 #include "SectionTransition.h"
+#include "HPBar.h"
+
 
 #define PLAYER_SOPHIA 0
 #define PLAYER_JASON  1
@@ -20,8 +22,8 @@ protected:
 	Sophia* sophia;	// A play scene has to have player, right?
 	MiniJason* miniJason;
 	int playerType = PLAYER_SOPHIA;
-
 	LPSECTRANSITION transition;
+	HPBar* hpBar;
 	unordered_map<int, LPSECTION> sections;
 	int current_section;
 	bool isSwitchingSection;
@@ -33,6 +35,7 @@ public:
 	virtual void Render();
 	virtual void Unload();
 	virtual void SwitchSection(int section_id, D3DXVECTOR2 telePos);
+	void	SetHPBarState(int state) { this->hpBar->SetState(state); }
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
