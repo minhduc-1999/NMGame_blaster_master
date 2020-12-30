@@ -281,7 +281,7 @@ void Section::Update(DWORD dt)
 	{
 		if (grids.find(camBoundGrid[i]) != grids.end())
 		{
-			changeGridObjs = grids.at(camBoundGrid[i])->Update(dt, &coObjs);
+			changeGridObjs = grids.at(camBoundGrid[i])->Update(dt, &coObjs, mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
 			for (int j = 0; j < changeGridObjs->size(); j++)
 			{
 				LPDYNAMICOBJECT obj = changeGridObjs->at(j);
@@ -297,6 +297,15 @@ void Section::Update(DWORD dt)
 		}
 	}
 	mainPlayer->Update(dt, &coObjs);
+
+	for (int i = 0; i < coObjs.size(); i++)
+	{
+		int temp = 0;
+		if (coObjs[i]->GetType() == OBJECT_TYPE_CANNON)
+		{
+			temp = 1;
+		}
+	}
 	if (bulletObjs.empty())
 	{
 		canFire = true;
@@ -337,7 +346,10 @@ void Section::Update(DWORD dt)
 	{
 		bulletObjs[i]->Update(dt, &coObjs);
 		if (bulletObjs[i]->GetIsDestroyed())
+		{
+			delete bulletObjs[i];
 			bulletObjs.erase(bulletObjs.begin() + i);
+		}
 	}
 }
 

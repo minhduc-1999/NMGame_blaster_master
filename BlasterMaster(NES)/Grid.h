@@ -12,7 +12,7 @@ public:
  	void AddStaticObj(LPSTATICOBJECT obj);
 	void AddDynamicObj(LPDYNAMICOBJECT obj);
 	Grid(int id, Rect b) { gridID = id; bound = b; }
-	vector<LPDYNAMICOBJECT>* Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	vector<LPDYNAMICOBJECT>* Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, float xMain, float yMain);
 	vector<LPGAMEOBJECT>* GetcoObjectList();
 	void Render();
 	void Clear();

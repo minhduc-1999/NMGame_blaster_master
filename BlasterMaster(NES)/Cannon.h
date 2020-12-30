@@ -20,6 +20,12 @@ private:
 	bool hor;
 public:
 	Cannon(float x, float y);
+	~Cannon() 
+	{
+		for (Bullet* p : cannonBulls)
+			delete p;
+		cannonBulls.clear();
+	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void SetState(int state);

@@ -24,16 +24,16 @@ void Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		if (hor)
 		{
-			Bullet* bulletR = new Bullet(GetPosition().x + 7, GetPosition().y, CANNON_BULLET_HORIZONTAL, 1);
-			Bullet* bulletL = new Bullet(GetPosition().x - 7, GetPosition().y, CANNON_BULLET_HORIZONTAL, -1);
+			Bullet* bulletR = new Bullet(x + 7, y, CANNON_BULLET_HORIZONTAL, 1);
+			Bullet* bulletL = new Bullet(x - 7, y, CANNON_BULLET_HORIZONTAL, -1);
 
 			cannonBulls.push_back(bulletR);
 			cannonBulls.push_back(bulletL);
 		}
 		else
 		{
-			Bullet* bulletU = new Bullet(GetPosition().x, GetPosition().y - 7, CANNON_BULLET_VERTICAL, -1);
-			Bullet* bulletD = new Bullet(GetPosition().x, GetPosition().y + 7, CANNON_BULLET_VERTICAL, 1);
+			Bullet* bulletU = new Bullet(x, y - 7, CANNON_BULLET_VERTICAL, -1);
+			Bullet* bulletD = new Bullet(x, y + 7, CANNON_BULLET_VERTICAL, 1);
 
 			cannonBulls.push_back(bulletU);
 			cannonBulls.push_back(bulletD);
@@ -57,8 +57,8 @@ void Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
 
 		// block 
-		x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + nty * 0.4f;
+		//x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		//y += min_ty * dy + nty * 0.4f;
 
 
 		if (nty != 0)
@@ -85,10 +85,15 @@ void Cannon::Render()
 	animation_set->at(ani)->Render(x, y, nx);
 
 	for (int i = 0; i < cannonBulls.size(); i++)
+	{
 		if (cannonBulls[i]->GetIsDestroyed())
+		{
+			delete cannonBulls[i];
 			cannonBulls.erase(cannonBulls.begin() + i);
+		}
 		else
 			cannonBulls[i]->Render();
+	}
 }
 
 void Cannon::SetState(int state)

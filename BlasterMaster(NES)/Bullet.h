@@ -7,8 +7,16 @@
 
 #define SOPHIA_BULLET_HORIZONTAL	0
 #define SOPHIA_BULLET_VERTICAL		1
+#define FLOATER_BULLET				6
 #define CANNON_BULLET_HORIZONTAL	131
 #define CANNON_BULLET_VERTICAL		132
+#define EYEBALL_BULLET				14
+
+#define BULLET_ANI_SOPHIA_HOR	20
+#define BULLET_ANI_SOPHIA_VER	21
+#define BULLET_ANI_RED			22
+#define BULLET_ANI_BLACK		23
+#define BULLET_ANI_FLOATER		24
 
 class Bullet :
 	public CDynamicGameObject
@@ -22,5 +30,6 @@ public:
 	virtual void SetState(int state);
 	virtual bool GetIsDestroyed() { return isDestroyed; }
 	virtual DWORD GetStartFiringTime() { return startFiringTime; }
+	virtual void SetSpeed(float spX, float spY);
 };
 #endif

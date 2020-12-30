@@ -1,5 +1,6 @@
 #include "Grid.h"
 #include "Utils.h"
+#include "Floater2.h"
 
 void Grid::AddStaticObj(LPSTATICOBJECT obj)
 {
@@ -11,14 +12,22 @@ void Grid::AddDynamicObj(LPDYNAMICOBJECT obj)
 	dynamicObjs.push_back(obj);
 }
 
-vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, float xMain, float yMain)
 {
 	vector<LPDYNAMICOBJECT>* res = new vector<LPDYNAMICOBJECT>;
 	int i = 0;
 	while (i < dynamicObjs.size())
 	{
 		LPDYNAMICOBJECT temp = dynamicObjs[i];
-		temp->Update(dt, coObjects);
+		if (temp->GetType() == 6)
+		{
+			Floater2* floater = dynamic_cast<Floater2*>(temp);
+			floater->Update(dt, coObjects, xMain, yMain);
+		}
+		else
+		{
+			temp->Update(dt, coObjects);
+		}
 		if (!CheckIfBound(this->bound, temp->GetBound()))
 		{
 			res->push_back(temp);

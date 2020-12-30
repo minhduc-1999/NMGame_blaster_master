@@ -1,4 +1,5 @@
 #include "DynamicGameObject.h"
+#include "Bullet.h"
 
 #define FLOATER2_WIDTH		    18
 #define FLOATER2_HEIGHT			15
@@ -16,9 +17,20 @@
 
 class Floater2 : public CDynamicGameObject
 {
+private:
+    vector<Bullet*> floaterBulls;
+    DWORD startTime;
 public:
     Floater2(float x, float y);
+    ~Floater2()
+    {
+        for (Bullet* p : floaterBulls)
+            delete p;
+        floaterBulls.clear();
+    }
     void SetState(int state);
     void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, float xMain, float yMain);
     void Render();
+    int FindMain(float xF, float yF, float xMain, float yMain);
 };
