@@ -1,7 +1,8 @@
 [SETTINGS]
 start	2
 #scene list
+#id	path	type: 1. area2	2. overworld	3.intro
 [SCENES]
-1	Resource/Config/scene-test.txt
-2	Resource/Config/Area2/area2.txt
-3	Resource/Config/OverWorld/overworld.txt
+1	Resource/Config/scene-test.txt	3
+2	Resource/Config/Area2/area2.txt	1
+3	Resource/Config/OverWorld/overworld.txt	2

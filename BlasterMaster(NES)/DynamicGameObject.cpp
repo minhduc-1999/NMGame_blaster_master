@@ -5,6 +5,7 @@
 CDynamicGameObject::CDynamicGameObject(float x, float y) :CGameObject(x, y)
 {
 	nx = 1;
+	ny = 0;
 	SetSize(16, 16);
 	isUpdated = false;
 	isRendered = false;
@@ -86,6 +87,8 @@ void CDynamicGameObject::CalcPotentialCollisions(
 	vector<LPGAMEOBJECT>* coObjects,
 	vector<LPCOLLISIONEVENT>& coEvents)
 {
+	if (coObjects == NULL)
+		return;
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));

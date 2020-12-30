@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="128" height="128" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
- <tileset firstgid="1" source="BlasterMaster_Area2_final.tsx"/>
+ <tileset firstgid="1" source="D:\Code\C++\NMGame_blaster_master\Map\BlasterMaster_Area2_final.tsx"/>
  <imagelayer id="2" name="Image Layer 1" opacity="0.17" offsetx="-0.0833333" offsety="0.227273">
-  <image source="../Sprites/Map2.png" width="2048" height="2048"/>
+  <image source="D:\Code\C++\NMGame_blaster_master\Map\BlasterMaster_Area2.png" width="2048" height="2048"/>
  </imagelayer>
  <layer id="1" name="Tile Layer 1" width="128" height="128">
   <data encoding="csv">

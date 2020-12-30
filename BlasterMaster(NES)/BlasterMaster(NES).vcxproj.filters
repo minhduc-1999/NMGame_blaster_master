@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="FrameWork">
       <UniqueIdentifier>{5da2349f-a1b9-4758-b7e8-8292bd2f5733}</UniqueIdentifier>
     </Filter>
@@ -146,6 +142,12 @@
     <Filter Include="Object\DynamicObject\Eyeball">
       <UniqueIdentifier>{1ce8f857-069d-47c6-b0af-e2347053f51b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Boss">
+      <UniqueIdentifier>{a496bcc5-bfc1-4402-8494-b1f84a5470f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Sprites\Boss">
+      <UniqueIdentifier>{239368fe-9de9-4918-9619-7b1d7c42c84c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Object\DynamicObject\Bullet">
       <UniqueIdentifier>{4f7fc8bb-9746-4f47-a8b5-bbbb648533e9}</UniqueIdentifier>
     </Filter>
@@ -167,10 +169,14 @@
     <Filter Include="Resources\Config\overworld">
       <UniqueIdentifier>{72ba0ac4-24e5-47fc-950a-16206dcd16fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KeyHandler">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
-      <Filter>Header Files</Filter>
+      <Filter>KeyHandler</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>FrameWork\Camera</Filter>
@@ -271,6 +277,12 @@
     <ClInclude Include="Eyeball.h">
       <Filter>Object\DynamicObject\Eyeball</Filter>
     </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Object\DynamicObject\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Hand.h">
+      <Filter>Object\DynamicObject\Boss</Filter>
+    </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Object\DynamicObject\Bullet</Filter>
     </ClInclude>
@@ -279,6 +291,15 @@
     </ClInclude>
     <ClInclude Include="HPBar.h">
       <Filter>Object\DynamicObject\StatusBar\HpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Jason.h">
+      <Filter>Object\DynamicObject\Player\Jason</Filter>
+    </ClInclude>
+    <ClInclude Include="OvwSectionTransition.h">
+      <Filter>FrameWork\Section\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaSectionTransition.h">
+      <Filter>FrameWork\Section\Transition</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -390,6 +411,12 @@
     <ClCompile Include="Eyeball.cpp">
       <Filter>Object\DynamicObject\Eyeball</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Object\DynamicObject\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Hand.cpp">
+      <Filter>Object\DynamicObject\Boss</Filter>
+    </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Object\DynamicObject\Bullet</Filter>
     </ClCompile>
@@ -398,6 +425,15 @@
     </ClCompile>
     <ClCompile Include="HPBar.cpp">
       <Filter>Object\DynamicObject\StatusBar\HpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="Jason.cpp">
+      <Filter>Object\DynamicObject\Player\Jason</Filter>
+    </ClCompile>
+    <ClCompile Include="OvwSectionTransition.cpp">
+      <Filter>FrameWork\Section\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaSectionTransition.cpp">
+      <Filter>FrameWork\Section\Transition</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,6 +460,9 @@
     </Image>
     <Image Include="Resource\Background\area2_bg.png">
       <Filter>Resources\Background</Filter>
+    </Image>
+    <Image Include="boss.png">
+      <Filter>Resources\Sprites\Boss</Filter>
     </Image>
     <Image Include="Resource\StatusBar\StatusBar.png">
       <Filter>Resources\Sprites\StatusBar</Filter>

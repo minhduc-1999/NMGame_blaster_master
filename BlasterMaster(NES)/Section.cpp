@@ -13,6 +13,8 @@
 #include "Cannon.h"
 #include "Eyeball.h"
 #include "HPBar.h"
+#include "Boss.h"
+#include "Jason.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -27,6 +29,7 @@ using namespace std;
 #define OBJECT_TYPE_SOPHIA		1
 #define OBJECT_TYPE_MINI_JASON	2
 #define OBJECT_TYPE_JASON		3
+#define OBJECT_TYPE_BOSS		40
 #define OBJECT_TYPE_WORM		4
 #define OBJECT_TYPE_DOME		5
 #define OBJECT_TYPE_FLOATER2	6
@@ -57,6 +60,10 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	float y = atof(tokens[2].c_str());
 	int grid = atof(tokens[3].c_str());
 	int ani_set_id = atoi(tokens[4].c_str());
+
+	int	bossHand_ani_set_id;
+	int bossArm_ani_set_id;
+
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 	CDynamicGameObject* obj = NULL;
@@ -67,7 +74,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	{
 		if (mainPlayer != NULL)
 		{
-			D3DXVECTOR2 pos = mainPlayer->GetPosition();
+			//D3DXVECTOR2 pos = mainPlayer->GetPosition();
 			//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
 			DebugOut("[ERROR] main object was created before!\n");
 			return;
@@ -82,6 +89,29 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
 		break;
 	}
+	case OBJECT_TYPE_JASON:
+		if (mainPlayer != NULL)
+		{
+			//D3DXVECTOR2 pos = mainPlayer->GetPosition();
+			//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
+			DebugOut("[ERROR] main object was created before!\n");
+			return;
+		}
+		obj = new Jason(x, y);
+		mainPlayer = (Jason*)obj;
+		obj->SetAnimationSet(ani_set);
+		obj->SetTeam(0);
+		obj->SetType(object_type);
+		DebugOut("[INFO] Player object created!\n");
+		return;
+		break;
+	case OBJECT_TYPE_BOSS:
+		bossHand_ani_set_id = atoi(tokens[5].c_str());
+		bossArm_ani_set_id = atoi(tokens[6].c_str());
+		obj = new Boss(x, y, bossHand_ani_set_id, bossArm_ani_set_id);
+		obj->SetState(BOSS_STATE_FLYING);
+		//boss = (Boss*)obj;
+		break;
 	case OBJECT_TYPE_FLOATER2:
 		obj = new	Floater2(x, y);
 		obj->SetState(FLOATER2_STATE_FLYING_LEFT);

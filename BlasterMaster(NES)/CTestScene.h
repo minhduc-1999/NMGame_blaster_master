@@ -7,6 +7,7 @@
 #include "StaticGameObject.h"
 #include "Section.h"
 #include "Mine.h"
+#include "Boss.h"
 #include "SectionTransition.h"
 #include "HPBar.h"
 
@@ -27,7 +28,7 @@ protected:
 	int current_section;
 	bool isSwitchingSection;
 public:
-	CTestScene(int id, string filePath);
+	CTestScene(int id, string filePath, int type);
 
 	virtual void Load();
 	virtual void Update(DWORD dt);
