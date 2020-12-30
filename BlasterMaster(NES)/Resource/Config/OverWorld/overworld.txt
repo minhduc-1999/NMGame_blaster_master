@@ -44,6 +44,7 @@ start	1
 30	Resource/tileset/overworld_tileset.png	0	0	255
 40	Resource/Background/overworld_bg.png	0	0	255
 50	Resource/Foreground/overworld_fg.png	0	0	255
+60	Items.png	0	0	255
 70	Resource\StatusBar\StatusBar.png	0	0	255
 # id	left	top	right	bottom	texture_id
 [SPRITES]
@@ -138,6 +139,19 @@ start	1
 140003	119	550	135	566	0
 # die
 
+#======sophia_bullet======
+200001	300	113	326	121	60
+200002	406	103	414	129	60
+
+#======red_bullet======
+210001	359	113	367	121	60
+
+#======black_bullet======
+220001	258	12	268	22	60
+
+#======floater_bullet======
+230001	360	164	366	170	60
+
 #======HPBar=======
 500001	1	0	11	95	70
 500002	12	0	22	95	70
@@ -164,6 +178,15 @@ start	1
 1300	130001	250	130002	250	130001	250	130003	250
 #======eyeball======
 1400	140001	200	140002	200	140001	200	140002	200	140001	200	140002	200	140001	200	140003	200
+#======sophia_bullet======
+2000	200001	1000
+2001	200002	1000
+#======red_bullet======
+2100	210001	1000
+#======black_bullet======
+2200	220001	1000
+#======floater_bullet======
+2300	230001	1000
 #======HPbar=======
 5000	500001	200
 5001	500002	200
@@ -184,5 +207,14 @@ start	1
 13	1300
 #======eyeball=====
 14	1400
+#======sophia_bullet======
+20	2000
+21	2001
+#======red_bullet======
+22	2100
+#======black_bullet======
+23	2200
+#======floater_bullet======
+24	2300
 #======hpbar=======
 50	5000	5001	5002	5003	5004	5005	5006	5007	5008

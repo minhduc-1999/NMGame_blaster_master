@@ -1,6 +1,7 @@
 #include "Grid.h"
 #include "Utils.h"
 #include "Floater2.h"
+#include "Eyeball.h"
 
 void Grid::AddStaticObj(LPSTATICOBJECT obj)
 {
@@ -23,6 +24,11 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 		{
 			Floater2* floater = dynamic_cast<Floater2*>(temp);
 			floater->Update(dt, coObjects, xMain, yMain);
+		}
+		else if (temp->GetType() == 14)
+		{
+			Eyeball* eyeball = dynamic_cast<Eyeball*>(temp);
+			eyeball->Update(dt, coObjects, xMain, yMain);
 		}
 		else
 		{

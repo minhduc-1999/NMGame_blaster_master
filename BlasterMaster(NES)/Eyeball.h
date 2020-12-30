@@ -27,6 +27,7 @@ public:
 	float startY;
 	Eyeball(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, float xMain, float yMain);
 	virtual void Render();
 	virtual void SetState(int state);
 };
