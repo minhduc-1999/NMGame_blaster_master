@@ -58,7 +58,7 @@ void Section::AddMiniJason()
 	Sophia* sophia = new Sophia(mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
 	sophia->SetState(SOPHIA_STATE_IDLE_RIGHT);
 	sophia->SetAnimationSet(ani_setSOPHIA);
-	sophia->SetTeam(0); 
+	sophia->SetTeam(0);
 	sophia->SetType(OBJECT_TYPE_SOPHIA);
 	vector<int> rs = GetBoundGrid(sophia->GetBound());
 	for (int i = 0; i < rs.size(); i++)
@@ -217,7 +217,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		obj = new Brick(x, y);
 		obj->SetType(object_type);
 		break;
-	case OBJECT_TYPE_GATE:
+	case OBJECT_TYPE_GATE: case 80:
 	{
 		int section = atoi(tokens[tokens.size() - 3].c_str());
 		float telex = stof(tokens[tokens.size() - 2].c_str());
@@ -440,14 +440,22 @@ void Section::Render()
 
 void Section::Unload()
 {
-	unordered_map<int, LPGRID>::iterator temp = grids.begin();
+	/*unordered_map<int, LPGRID>::iterator temp = grids.begin();
 	while (temp != grids.end())
 	{
- 		temp->second->Clear();
+		temp->second->Clear();
 		delete temp->second;
 		temp = grids.erase(grids.begin());
+	}*/
+	for (int i = 0; i < grids.size(); i++)
+	{
+		LPGRID temp = grids[i];
+		temp->Clear();
+		delete temp;
 	}
+	grids.clear();
 }
+
 
 vector<int> Section::GetBoundGrid(Rect bound)
 {

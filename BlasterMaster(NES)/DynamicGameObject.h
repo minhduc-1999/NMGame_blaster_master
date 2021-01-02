@@ -24,6 +24,8 @@ public:
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
+	LPCOLLISIONEVENT SweptCollistion(LPGAMEOBJECT coO);
+	void CalcNowCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
 	void FilterCollision(
 		vector<LPCOLLISIONEVENT>& coEvents,

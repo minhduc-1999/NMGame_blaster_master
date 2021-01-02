@@ -64,6 +64,8 @@ vector<string> split(string line, string delimeter)
 //	return w->c_str();
 //}
 
+
+//check if b2 is bounded by b1
 bool CheckIfBound(Rect b1, Rect b2)
 {
 	if (b2.left > b1.right || b2.top > b1.bottom

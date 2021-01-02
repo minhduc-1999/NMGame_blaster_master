@@ -476,6 +476,9 @@
     <Image Include="Resource\Foreground\overworld_fg.png">
       <Filter>Resources\Foreground</Filter>
     </Image>
+    <Image Include="Resource\Background\bbox.png">
+      <Filter>Resources\Background</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Resource\Config\Area2\area2.txt">
@@ -539,6 +542,9 @@
       <Filter>Resources\Config\overworld</Filter>
     </Text>
     <Text Include="Resource\Config\OverWorld\ovw_sec2.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec8.txt">
       <Filter>Resources\Config\overworld</Filter>
     </Text>
   </ItemGroup>

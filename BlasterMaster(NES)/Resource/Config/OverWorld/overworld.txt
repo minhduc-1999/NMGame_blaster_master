@@ -46,6 +46,7 @@ start	1
 50	Resource/Foreground/overworld_fg.png	0	0	255
 60	Items.png	0	0	255
 70	Resource\StatusBar\StatusBar.png	0	0	255
+-100	Resource/Background/bbox.png	0	0	255
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 #=========TILE=============

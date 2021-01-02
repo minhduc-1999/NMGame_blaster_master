@@ -1,5 +1,5 @@
 [SETTINGS]
-start	2
+start	3
 #scene list
 #id	path	type: 1. area2	2. overworld	3.intro
 [SCENES]

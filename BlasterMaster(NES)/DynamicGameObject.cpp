@@ -1,6 +1,7 @@
 #include "DynamicGameObject.h"
 #include <algorithm>
 #include "CGate.h"
+#include "Utils.h"
 
 CDynamicGameObject::CDynamicGameObject(float x, float y) :CGameObject(x, y)
 {
@@ -75,6 +76,31 @@ LPCOLLISIONEVENT CDynamicGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 
 	CCollisionEvent* e = new CCollisionEvent(t, nx, ny, coO);
 	return e;
+}
+
+LPCOLLISIONEVENT CDynamicGameObject::SweptCollistion(LPGAMEOBJECT coO)
+{
+	CCollisionEvent* e = NULL;
+	if (CheckIfBound(coO->GetBound(), this->GetBound()))
+	{
+		e = new CCollisionEvent(0, 0, 0, coO);
+	}
+	return e;
+}
+
+void CDynamicGameObject::CalcNowCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents)
+{
+	if (coObjects == NULL)
+		return;
+	for (UINT i = 0; i < coObjects->size(); i++)
+	{
+		LPCOLLISIONEVENT e = SweptCollistion(coObjects->at(i));
+		if (e == NULL) continue;
+		if (e->t == 0 && e->nx == 0 && e->ny == 0)
+			coEvents.push_back(e);
+		else
+			delete e;
+	}
 }
 
 /*

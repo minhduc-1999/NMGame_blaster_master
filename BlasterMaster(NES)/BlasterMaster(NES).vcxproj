@@ -242,6 +242,7 @@
     <Image Include="Items.png" />
     <Image Include="Jason.png" />
     <Image Include="Resource\Background\area2_bg.png" />
+    <Image Include="Resource\Background\bbox.png" />
     <Image Include="Resource\Background\overworld_bg.png" />
     <Image Include="Resource\Foreground\area2_fg.png" />
     <Image Include="Resource\Foreground\overworld_fg.png" />
@@ -270,6 +271,7 @@
     <Text Include="Resource\Config\OverWorld\overworld.txt" />
     <Text Include="Resource\Config\OverWorld\ovw_sec1.txt" />
     <Text Include="Resource\Config\OverWorld\ovw_sec2.txt" />
+    <Text Include="Resource\Config\OverWorld\ovw_sec8.txt" />
     <Text Include="Resource\Config\scene-test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

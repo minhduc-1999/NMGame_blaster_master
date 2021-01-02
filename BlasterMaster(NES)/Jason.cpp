@@ -10,6 +10,22 @@ Jason::Jason(float x, float y) :CDynamicGameObject(x, y)
 void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
+	vector< LPCOLLISIONEVENT> curCoEvents;
+
+	CalcNowCollisions(coObjects, curCoEvents);
+	for (int i = 0; i < curCoEvents.size(); i++)
+	{
+		LPGAMEOBJECT temp = curCoEvents[i]->obj;
+		switch (temp->GetType())
+		{
+		case 80:
+			DebugOut("[Collide with new gate]\n");
+			break;
+		default:
+			break;
+		}
+	}
+	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -32,27 +48,43 @@ void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
 
 		// block 
-		x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + nty * 0.4f;
+		//x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		//y += min_ty * dy + nty * 0.4f;
 
 		//TODO: Collision logic with dynamic object (bots)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-
-			CGate* gate = dynamic_cast<CGate*>(e->obj);
-			if (gate != 0)
+			int objType = e->obj->GetType();
+			if (objType == 17)
 			{
-				CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
-					gate->GetDesTelePos());
-				break;
-				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
+
+				CGate* gate = dynamic_cast<CGate*>(e->obj);
+				if (gate != 0)
+				{
+					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
+						gate->GetDesTelePos());
+					break;
+					//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
+				}
+			}
+			else if (objType == 80)
+			{
+				if (e->nx != 0)
+				{
+					x += dx;
+				}
+				else
+				{
+					y += dy;
+				}
 			}
 		}
+
 	}
 
-	// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+// clean up collision events
+for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void Jason::Render()
@@ -164,22 +196,22 @@ void Jason::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
-	/*case DIK_Z:
-		if (GetIsUp())
-		{
-			if (GetNX() == 1)
-				SetState(SOPHIA_STATE_FIRING_UP_RIGHT);
+		/*case DIK_Z:
+			if (GetIsUp())
+			{
+				if (GetNX() == 1)
+					SetState(SOPHIA_STATE_FIRING_UP_RIGHT);
+				else
+					SetState(SOPHIA_STATE_FIRING_UP_LEFT);
+			}
 			else
-				SetState(SOPHIA_STATE_FIRING_UP_LEFT);
-		}
-		else
-		{
-			if (GetNX() == 1)
-				SetState(SOPHIA_STATE_FIRING_RIGHT);
-			else
-				SetState(SOPHIA_STATE_FIRING_LEFT);
-		}
-		break;*/
+			{
+				if (GetNX() == 1)
+					SetState(SOPHIA_STATE_FIRING_RIGHT);
+				else
+					SetState(SOPHIA_STATE_FIRING_LEFT);
+			}
+			break;*/
 	}
 }
 
@@ -194,7 +226,7 @@ Rect Jason::GetBound()
 	bound.left = x - width / 2;
 	bound.right = bound.left + width - 1;
 	bound.top = y + 3;
-	bound.bottom = bound.top + 15;
+	bound.bottom = bound.top + 13;
 
 	return bound;
 }

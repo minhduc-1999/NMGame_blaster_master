@@ -93,7 +93,7 @@ void Grid::Render()
 
 void Grid::Clear()
 {
-	vector<LPSTATICOBJECT>::iterator temp = staticObjs.begin();
+	/*vector<LPSTATICOBJECT>::iterator temp = staticObjs.begin();
 	while (temp != staticObjs.end())
 	{
 		delete* temp;
@@ -104,6 +104,16 @@ void Grid::Clear()
 	{
 		delete* temp2;
 		temp2 = dynamicObjs.erase(dynamicObjs.begin());
-	}
+	}*/
+	for (int i = 0; i < staticObjs.size(); i++)
+	{
+		delete staticObjs[i];
+	}/*
+	for (int i = 0; i < dynamicObjs.size(); i++)
+	{
+		delete dynamicObjs[i];
+	}*/
+	staticObjs.clear();
+	dynamicObjs.clear();
 }
 

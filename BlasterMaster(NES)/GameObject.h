@@ -41,6 +41,7 @@ public:
 	D3DXVECTOR2 GetSpeed();
 	virtual void Render() = 0;
 	virtual Rect GetBound();
+	void RenderBoundingBox();
 };
 #endif
 

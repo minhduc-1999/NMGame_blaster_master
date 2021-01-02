@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Textures.h"
 
 
 CGameObject::CGameObject(float x, float y)
@@ -49,4 +50,20 @@ void CGameObject::SetSpeed(float vx, float vy)
 D3DXVECTOR2 CGameObject::GetSpeed()
 {
 	return D3DXVECTOR2(vx, vy);
+}
+
+void CGameObject::RenderBoundingBox()
+{
+	Rect rect;
+
+	LPDIRECT3DTEXTURE9 bbox = CTextureManager::GetInstance()->Get(-100);
+
+	Rect bound = this->GetBound();
+
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = bound.right - bound.left;
+	rect.bottom = bound.bottom - bound.top;
+
+	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, -1);
 }
