@@ -75,14 +75,13 @@ void Section::AddMiniJason()
 
 void Section::DeleteMiniJason()
 {
-	vector<int> rs = GetBoundGrid(mainPlayer->GetBound());
+	vector<int> rs = GetBoundGrid(CGame::GetInstance()->GetCamBound());
 	for (int i = 0; i < rs.size(); i++)
 	{
-		mainPlayer = NULL;
-		mainPlayer = (Sophia*)grids[rs[i]]->GetSophia();
-		if (mainPlayer != NULL)
+		Sophia* temp = grids[rs[i]]->GetSophia();
+		if (temp != NULL)
 		{
-			break;
+			mainPlayer = temp;
 		}
 	}
 }
