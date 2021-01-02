@@ -1,3 +1,6 @@
+#ifndef _SOPHIA_H
+#define _SOPHIA_H
+
 #include "DynamicGameObject.h"
 
 #define SOPHIA_WIDTH 26
@@ -59,3 +62,5 @@ public:
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
 };
+
+#endif

@@ -60,6 +60,19 @@ public:
 			playerType = PLAYER_SOPHIA;
 		}
 	}
+
+	void addMiniJason()
+	{
+		sections[current_section]->AddMiniJason();
+		mainPlayer = (MiniJason*)sections[current_section]->GetPlayer();
+	}
+
+	void deleteMiniJason()
+	{
+		sections[current_section]->DeleteMiniJason();
+		mainPlayer = (Sophia*)sections[current_section]->GetPlayer();
+	}
+
 	//MiniJason* GetPlayerJason() { return miniJason; }
 
 	//friend class CTestSceneKeyHandler;

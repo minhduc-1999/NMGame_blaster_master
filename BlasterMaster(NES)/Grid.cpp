@@ -11,6 +11,22 @@ void Grid::AddDynamicObj(LPDYNAMICOBJECT obj)
 	dynamicObjs.push_back(obj);
 }
 
+Sophia* Grid::GetSophia()
+{
+	for (int i = 0; i < dynamicObjs.size(); i++)
+	{
+		LPDYNAMICOBJECT temp = dynamicObjs[i];
+		if (temp->GetType() == 1)
+		{
+			Sophia* sophia = (Sophia*)temp;
+			dynamicObjs.erase(dynamicObjs.begin() + i);
+			return sophia;
+		}
+	}
+
+	return NULL;
+}
+
 vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vector<LPDYNAMICOBJECT>* res = new vector<LPDYNAMICOBJECT>;
@@ -59,6 +75,7 @@ void Grid::Render()
 		dynamicObjs[i]->Render();
 	}
 }
+
 void Grid::Clear()
 {
 	vector<LPSTATICOBJECT>::iterator temp = staticObjs.begin();

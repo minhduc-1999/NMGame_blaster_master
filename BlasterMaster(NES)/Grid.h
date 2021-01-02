@@ -1,6 +1,7 @@
 #pragma once
 #include "StaticGameObject.h"
 #include "DynamicGameObject.h"
+#include "Sophia.h"
 class Grid
 {
 protected:
@@ -16,6 +17,8 @@ public:
 	vector<LPGAMEOBJECT>* GetcoObjectList();
 	void Render();
 	void Clear();
+
+	Sophia* GetSophia();
 };
 
 typedef Grid* LPGRID;

@@ -36,5 +36,8 @@ public:
 	vector<int> GetBoundGrid(Rect bound);
 	D3DXVECTOR2 GetSectionMapPos() { return D3DXVECTOR2{ mapX, mapY }; }
 	D3DXVECTOR2 GetSectionMapDimension() { return D3DXVECTOR2{ mapWidth, mapHeight }; }
+
+	void AddMiniJason();
+	void DeleteMiniJason();
 };
 typedef Section* LPSECTION;

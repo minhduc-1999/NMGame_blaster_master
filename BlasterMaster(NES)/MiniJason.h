@@ -1,3 +1,5 @@
+#ifndef _MINIJASON_H
+#define _MINIJASON_H
 #include "DynamicGameObject.h"
 
 #define MINIJASON_WIDTH			10
@@ -5,8 +7,8 @@
 #define MINIJASON_DOWN_WIDTH	17
 #define MINIJASON_DOWN_HEIGHT	10
 
-#define MINIJASON_RUN_SPEED						0.04f
-#define MINIJASON_DOWN_RUN_SPEED				0.02f
+#define MINIJASON_RUN_SPEED						0.06f
+#define MINIJASON_DOWN_RUN_SPEED				0.03f
 #define MINIJASON_JUMP_SPEED_Y					0.29f
 #define MINIJASON_GRAVITY						0.02f
 
@@ -17,7 +19,8 @@
 #define MINIJASON_STATE_RUN_LEFT		003
 #define MINIJASON_STATE_JUMP_RIGHT		004
 #define MINIJASON_STATE_JUMP_LEFT		005
-#define MINIJASON_STATE_CLIMB			006
+#define MINIJASON_STATE_TRANSFORM		006
+#define MINIJASON_STATE_CLIMB			007
 
 //define ANI
 #define MINIJASON_ANI_IDLE				00
@@ -31,13 +34,14 @@ class MiniJason : public CDynamicGameObject
 	bool isDown = false;
 	bool isJumping = false;
 	bool isCollisionWithSophia = true;
+	Rect SophiaBound;
 public:
 	MiniJason(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
 
-	bool IsCollisionWithSophia() { return isCollisionWithSophia; };
+	bool IsCollisionWithSophia();
 
 	bool GetIsDown() { return isDown; };
 	void SetIsDown(bool _isDown) { isDown = _isDown; };
@@ -49,3 +53,4 @@ public:
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
 };
+#endif

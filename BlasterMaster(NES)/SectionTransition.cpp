@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "DynamicGameObject.h"
 #include "Sophia.h"
+#include "MiniJason.h"
 
 #define SWITCH_SECTION_SPEED 0.07f
 
@@ -11,10 +12,22 @@ void SectionTransition::Update(DWORD dt)
 	//DebugOut("[Trans Update]\t%s", player);
 	int nx = player->GetNX();
 	//DebugOut("[nx player trans]\tDir: %d, dt: %d\n", nx, dt);
-	if (nx == -1)
-		player->SetState(SOPHIA_STATE_RUN_LEFT);
+	int mainPlayerType = player->GetType();
+	if (mainPlayerType == 1)
+	{
+		if (nx == -1)
+			player->SetState(SOPHIA_STATE_RUN_LEFT);
+		else
+			player->SetState(SOPHIA_STATE_RUN_RIGHT);
+	}
 	else
-		player->SetState(SOPHIA_STATE_RUN_RIGHT);
+	{
+		if (nx == -1)
+			player->SetState(MINIJASON_STATE_RUN_LEFT);
+		else
+			player->SetState(MINIJASON_STATE_RUN_RIGHT);
+	}
+	
 	player->SetSpeed(SWITCH_SECTION_SPEED * nx, 0.0f);
 	player->Update(dt);
 	D3DXVECTOR2 pos = player->GetPosition();

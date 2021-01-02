@@ -223,20 +223,20 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 	if (KeyCode == DIK_C)
 	{
 		if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA
-			&& ((CTestScene*)scence)->GetPlayerSophia()->GetIsJumping() == false)
+			&& ((Sophia*)(((CTestScene*)scence)->GetPlayer()))->GetIsJumping() == false)
 		{
-			((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
-
-			((CTestScene*)scence)->GetPlayerJason()->SetPosition(((CTestScene*)scence)->GetPlayer()->GetPosition().x, ((CTestScene*)scence)->GetPlayer()->GetPosition().y - 10);
-			((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerJason());
+			((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
+			((CTestScene*)scence)->addMiniJason();
 			((CTestScene*)scence)->ChangePlayerType();
 		}
 		else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
-			/*&&		((CTestScene*)scence)->GetPlayerJason()->IsCollisionWithSophia()*/)
+			&& ((MiniJason*)(((CTestScene*)scence)->GetPlayer()))->IsCollisionWithSophia())
 		{
-			((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
+			//((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
 
-			((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerSophia());
+			//((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerSophia());
+			((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
+			((CTestScene*)scence)->deleteMiniJason();
 			((CTestScene*)scence)->ChangePlayerType();
 
 		}
