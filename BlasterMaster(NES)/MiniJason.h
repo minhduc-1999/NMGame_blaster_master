@@ -33,7 +33,6 @@ class MiniJason : public CDynamicGameObject
 {
 	bool isDown = false;
 	bool isJumping = false;
-	bool isCollisionWithSophia = true;
 	Rect SophiaBound;
 public:
 	MiniJason(float x, float y);

@@ -98,14 +98,14 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			};
 
 
-			//CGate* gate = dynamic_cast<CGate*>(e->obj);
-			//if (gate != 0)
-			//{
-			//	CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
-			//		gate->GetDesTelePos());
-			//	break;
-			//	//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
-			//}
+			CGate* gate = dynamic_cast<CGate*>(e->obj);
+			if (gate != 0)
+			{
+				CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
+					gate->GetDesTelePos());
+				break;
+				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
+			}
 			/*if (e->obj->GetType() == 1)
 			{
 				if (ntx != 0)

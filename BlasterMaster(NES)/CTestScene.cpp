@@ -253,13 +253,13 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 			((CTestScene*)scence)->deleteMiniJason();
 			((CTestScene*)scence)->ChangePlayerType();
 
-	//	}
-	//	else
-	//	{
-	//		return;
-	//	}
+		}
+		else
+		{
+			return;
+		}
 
-	//}
+	}
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->OnKeyDown(KeyCode);
 }

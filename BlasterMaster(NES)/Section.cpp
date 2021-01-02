@@ -366,14 +366,14 @@ void Section::Update(DWORD dt)
 	}
 	mainPlayer->Update(dt, &coObjs);
 
-	for (int i = 0; i < coObjs.size(); i++)
+	/*for (int i = 0; i < coObjs.size(); i++)
 	{
 		int temp = 0;
 		if (coObjs[i]->GetType() == OBJECT_TYPE_CANNON)
 		{
 			temp = 1;
 		}
-	}
+	}*/
 	if (bulletObjs.empty())
 	{
 		canFire = true;
