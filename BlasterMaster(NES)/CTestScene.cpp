@@ -4,20 +4,34 @@
 #include <string>
 #include "Textures.h"
 #include "Sprites.h"
-#include "tinyxml.h"
 #include "Brick.h"
 #include "ResourceManager.h"
 #include "CMagma.h"
 #include "CGate.h"
 #include "CLadder.h"
+#include "OvwSectionTransition.h"
+#include "AreaSectionTransition.h"
 
 using namespace std;
 
-CTestScene::CTestScene(int id, string filePath) :
+CTestScene::CTestScene(int id, string filePath, int type) :
 	CScene(id, filePath)
 {
 	key_handler = new CTestSceneKeyHandler(this);
 	isSwitchingSection = false;
+	switch (type)
+	{
+	case 1:
+		this->transition = new AreaSectionTransition();
+		break;
+	case 2:
+		this->transition = new OvwSectionTransition();
+		break;
+	case 3:
+		break;
+	default:
+		break;
+	}
 }
 
 /*
@@ -160,7 +174,7 @@ void CTestScene::Update(DWORD dt)
 	{
 		if (!transition->IsFinish())
 		{
-			transition->Update(dt);
+			transition->Update(dt); 
 		}
 		else
 		{
@@ -239,20 +253,20 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 			((CTestScene*)scence)->deleteMiniJason();
 			((CTestScene*)scence)->ChangePlayerType();
 
-		}
-		else
-		{
-			return;
-		}
+	//	}
+	//	else
+	//	{
+	//		return;
+	//	}
 
-	}
+	//}
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->OnKeyDown(KeyCode);
 }
 
 void CTestSceneKeyHandler::KeyState(BYTE* states)
 {
-	CGame* game = CGame::GetInstance();
+	//CGame* game = CGame::GetInstance();
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->KeyState(states);
 }
@@ -317,7 +331,6 @@ void CTestScene::Load()
 
 	DebugOut("[INFO] Loading section file : %s has been loaded successfully\n", sceneFilePath);
 
-	this->transition = new SectionTransition();
 	SwitchSection(current_section, D3DXVECTOR2(-1, -1));
 	hpBar = new HPBar();
 }

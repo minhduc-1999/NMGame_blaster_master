@@ -14,6 +14,7 @@
 #include "Eyeball.h"
 #include "HPBar.h"
 #include "Boss.h"
+#include "Jason.h"
 #include "MiniJason.h"
 using namespace std;
 
@@ -111,7 +112,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	{
 		if (mainPlayer != NULL)
 		{
-			D3DXVECTOR2 pos = mainPlayer->GetPosition();
+			//D3DXVECTOR2 pos = mainPlayer->GetPosition();
 			//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
 			DebugOut("[ERROR] main object was created before!\n");
 			return;
@@ -126,6 +127,22 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
 		break;
 	}
+	case OBJECT_TYPE_JASON:
+		if (mainPlayer != NULL)
+		{
+			//D3DXVECTOR2 pos = mainPlayer->GetPosition();
+			//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
+			DebugOut("[ERROR] main object was created before!\n");
+			return;
+		}
+		obj = new Jason(x, y);
+		mainPlayer = (Jason*)obj;
+		obj->SetAnimationSet(ani_set);
+		obj->SetTeam(0);
+		obj->SetType(object_type);
+		DebugOut("[INFO] Player object created!\n");
+		return;
+		break;
 	case OBJECT_TYPE_BOSS:
 		bossHand_ani_set_id = atoi(tokens[5].c_str());
 		bossArm_ani_set_id = atoi(tokens[6].c_str());
@@ -332,7 +349,7 @@ void Section::Update(DWORD dt)
 	{
 		if (grids.find(camBoundGrid[i]) != grids.end())
 		{
-			changeGridObjs = grids.at(camBoundGrid[i])->Update(dt, &coObjs);
+			changeGridObjs = grids.at(camBoundGrid[i])->Update(dt, &coObjs, mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
 			for (int j = 0; j < changeGridObjs->size(); j++)
 			{
 				LPDYNAMICOBJECT obj = changeGridObjs->at(j);
@@ -348,6 +365,15 @@ void Section::Update(DWORD dt)
 		}
 	}
 	mainPlayer->Update(dt, &coObjs);
+
+	for (int i = 0; i < coObjs.size(); i++)
+	{
+		int temp = 0;
+		if (coObjs[i]->GetType() == OBJECT_TYPE_CANNON)
+		{
+			temp = 1;
+		}
+	}
 	if (bulletObjs.empty())
 	{
 		canFire = true;
@@ -364,22 +390,22 @@ void Section::Update(DWORD dt)
 	{
 		if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_RIGHT)
 		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 13, mainPlayer->GetPosition().y - 5, BULLET_HORIZONTAL, -1);
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 13, mainPlayer->GetPosition().y - 5, SOPHIA_BULLET_HORIZONTAL, -1);
 			bulletObjs.push_back(bullet);
 		}
 		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_LEFT)
 		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 13, mainPlayer->GetPosition().y - 5, BULLET_HORIZONTAL, 1);
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 13, mainPlayer->GetPosition().y - 5, SOPHIA_BULLET_HORIZONTAL, 1);
 			bulletObjs.push_back(bullet);
 		}
 		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_UP_RIGHT)
 		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 4, mainPlayer->GetPosition().y - 20, BULLET_VERTICAL, -1);
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 4, mainPlayer->GetPosition().y - 20, SOPHIA_BULLET_VERTICAL, -1);
 			bulletObjs.push_back(bullet);
 		}
 		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_UP_LEFT)
 		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 4, mainPlayer->GetPosition().y - 20, BULLET_VERTICAL, 1);
+			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 4, mainPlayer->GetPosition().y - 20, SOPHIA_BULLET_VERTICAL, 1);
 			bulletObjs.push_back(bullet);
 		}
 	}
@@ -388,7 +414,10 @@ void Section::Update(DWORD dt)
 	{
 		bulletObjs[i]->Update(dt, &coObjs);
 		if (bulletObjs[i]->GetIsDestroyed())
+		{
+			delete bulletObjs[i];
 			bulletObjs.erase(bulletObjs.begin() + i);
+		}
 	}
 }
 

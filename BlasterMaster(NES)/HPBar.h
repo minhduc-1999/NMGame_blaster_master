@@ -20,8 +20,6 @@
 #define	HP_BAR_FULL					0
 
 
-
-
 class HPBar : public CDynamicGameObject
 {
 public:

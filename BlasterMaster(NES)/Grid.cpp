@@ -1,5 +1,7 @@
 #include "Grid.h"
 #include "Utils.h"
+#include "Floater2.h"
+#include "Eyeball.h"
 
 void Grid::AddStaticObj(LPSTATICOBJECT obj)
 {
@@ -27,14 +29,27 @@ Sophia* Grid::GetSophia()
 	return NULL;
 }
 
-vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, float xMain, float yMain)
 {
 	vector<LPDYNAMICOBJECT>* res = new vector<LPDYNAMICOBJECT>;
 	int i = 0;
 	while (i < dynamicObjs.size())
 	{
 		LPDYNAMICOBJECT temp = dynamicObjs[i];
-		temp->Update(dt, coObjects);
+		if (temp->GetType() == 6)
+		{
+			Floater2* floater = dynamic_cast<Floater2*>(temp);
+			floater->Update(dt, coObjects, xMain, yMain);
+		}
+		else if (temp->GetType() == 14)
+		{
+			Eyeball* eyeball = dynamic_cast<Eyeball*>(temp);
+			eyeball->Update(dt, coObjects, xMain, yMain);
+		}
+		else
+		{
+			temp->Update(dt, coObjects);
+		}
 		if (!CheckIfBound(this->bound, temp->GetBound()))
 		{
 			res->push_back(temp);

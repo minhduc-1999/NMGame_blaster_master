@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="FrameWork">
       <UniqueIdentifier>{5da2349f-a1b9-4758-b7e8-8292bd2f5733}</UniqueIdentifier>
     </Filter>
@@ -173,10 +169,14 @@
     <Filter Include="Resources\Config\overworld">
       <UniqueIdentifier>{72ba0ac4-24e5-47fc-950a-16206dcd16fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KeyHandler">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
-      <Filter>Header Files</Filter>
+      <Filter>KeyHandler</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>FrameWork\Camera</Filter>
@@ -291,6 +291,15 @@
     </ClInclude>
     <ClInclude Include="HPBar.h">
       <Filter>Object\DynamicObject\StatusBar\HpBar</Filter>
+    </ClInclude>
+    <ClInclude Include="Jason.h">
+      <Filter>Object\DynamicObject\Player\Jason</Filter>
+    </ClInclude>
+    <ClInclude Include="OvwSectionTransition.h">
+      <Filter>FrameWork\Section\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="AreaSectionTransition.h">
+      <Filter>FrameWork\Section\Transition</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -416,6 +425,15 @@
     </ClCompile>
     <ClCompile Include="HPBar.cpp">
       <Filter>Object\DynamicObject\StatusBar\HpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="Jason.cpp">
+      <Filter>Object\DynamicObject\Player\Jason</Filter>
+    </ClCompile>
+    <ClCompile Include="OvwSectionTransition.cpp">
+      <Filter>FrameWork\Section\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="AreaSectionTransition.cpp">
+      <Filter>FrameWork\Section\Transition</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
