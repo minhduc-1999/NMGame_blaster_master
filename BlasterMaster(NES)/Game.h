@@ -48,6 +48,8 @@ class CGame
 
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
+
+	bool disableKeyboard = false;
 public:
 	void Init(HWND hWnd);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir);
@@ -58,6 +60,9 @@ public:
 
 	int GetBackBufferWidth() { return backbufferWidth; }
 	int GetBackBufferHeight() { return backbufferHeight; }
+
+	bool IsDisableKeyboard() { return disableKeyboard; }
+	void DisableKeyboard(bool b) { disableKeyboard = b; }
 
 	static CGame* GetInstance();
 

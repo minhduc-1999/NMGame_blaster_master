@@ -159,7 +159,7 @@ void CTestScene::Update(DWORD dt)
 {
 	if (isSwitchingSection == false)
 	{
-		CGame::GetInstance()->ProcessKeyboard();
+		//CGame::GetInstance()->ProcessKeyboard();
 		sections[current_section]->Update(dt);
 
 		//update camera
@@ -178,6 +178,7 @@ void CTestScene::Update(DWORD dt)
 		}
 		else
 		{
+			CGame::GetInstance()->DisableKeyboard(false);
 			isSwitchingSection = false;
 			transition->Reset();
 			//hpBar->SetState(HP_DOWN);
@@ -219,12 +220,13 @@ void CTestScene::Render()
 */
 void CTestScene::Unload()
 {
-
+	
 }
 
 void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
 {
 	DebugOut("[INFO] Switching to section %d\n", section_id);
+	CGame::GetInstance()->DisableKeyboard(true);
 	if (section_id == -1)
 		return;
 	transition->Setsection(sections[current_section], sections[section_id], telePos);
@@ -233,7 +235,6 @@ void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
 
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 {
-	CGame* game = CGame::GetInstance();
 	if (KeyCode == DIK_C)
 	{
 		if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA

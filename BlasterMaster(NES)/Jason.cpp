@@ -19,9 +19,12 @@ void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		switch (temp->GetType())
 		{
 		case 80:
+			canGoArea = true;
 			DebugOut("[Collide with new gate]\n");
 			break;
 		default:
+			canGoArea = false;
+			hasExplored = true;
 			break;
 		}
 	}
@@ -196,6 +199,13 @@ void Jason::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
+	case DIK_Q:
+		if (canGoArea)
+		{
+			CGame::GetInstance()->SwitchScene(2);
+			return;
+		}
+		break;
 		/*case DIK_Z:
 			if (GetIsUp())
 			{
@@ -212,6 +222,8 @@ void Jason::OnKeyDown(int KeyCode)
 					SetState(SOPHIA_STATE_FIRING_LEFT);
 			}
 			break;*/
+	default:
+		break;
 	}
 }
 
