@@ -21,6 +21,15 @@ void Floater2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	CalcPotentialCollisions(coObjects, coEvents);
 
+
+	startTime += dt;
+
+	if (startTime > 600)
+	{
+		isShooting = true;
+		startTime = 0;
+	}
+
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
@@ -29,96 +38,6 @@ void Floater2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		/*for (int i = 0; i < floaterBulls.size(); i++)
 			floaterBulls[i]->Update(dt, coObjects);*/
-	}
-	else
-	{
-		float min_tx, min_ty, ntx, nty;
-
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
-
-		// block 
-		x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + nty * 0.4f;
-
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-			// if e->obj is Gate 
-			if (dynamic_cast<CDynamicGameObject*>(e->obj))
-			{
-				CDynamicGameObject* obj = dynamic_cast<CDynamicGameObject*>(e->obj);
-				if (this->team == obj->GetTeam())
-				{
-					x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-					y += (1 - min_ty) * dy - nty * 0.4f;
-					for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-					return;
-				}
-			}
-		}
-
-		if (ntx != 0)
-		{
-			if (GetNX() == 1)
-			{
-				SetState(FLOATER2_STATE_FLYING_LEFT);
-
-			}
-			else
-			{
-				SetState(FLOATER2_STATE_FLYING_RIGHT);
-			}
-		}
-
-		if (nty != 0)
-		{
-			vy = -vy;
-		}
-
-		//TODO: Collision logic with dynamic object (bots)
-	}
-
-	// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	isUpdated = true;
-	isRendered = false;
-}
-
-void Floater2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, float xMain, float yMain)
-{
-	if (isUpdated)
-		return;
-	CDynamicGameObject::Update(dt);
-
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult;
-
-	coEvents.clear();
-
-	CalcPotentialCollisions(coObjects, coEvents);
-
-	startTime += dt;
-
-	if (startTime > 600)
-	{
-		Bullet* bullet = new Bullet(x, y, FLOATER_BULLET, 1);
-		float a = xMain - x;
-		float b = yMain - y;
-		bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 5, b / sqrt(pow(a, 2) + pow(b, 2)) / 5);
-		floaterBulls.push_back(bullet);
-
-		startTime = 0;
-	}
-		
-	for (int i = 0; i < floaterBulls.size(); i++)
-		floaterBulls[i]->Update(dt, coObjects);
-	
-
-	// No collision occured, proceed normally
-	if (coEvents.size() == 0)
-	{
-		x += dx;
-		y += dy;
 	}
 	else
 	{
@@ -192,18 +111,6 @@ void Floater2::Render()
 	animation_set->at(ani)->Render(x, y, nx);
 	isRendered = true;
 	isUpdated = false;
-
-	
-	for (int i = 0; i < floaterBulls.size(); i++)
-	{
-		if (floaterBulls[i]->GetIsDestroyed())
-		{
-			delete floaterBulls[i];
-			floaterBulls.erase(floaterBulls.begin() + i);
-		}
-		else
-			floaterBulls[i]->Render();
-	}
 }
 
 void Floater2::SetState(int state)
@@ -224,6 +131,19 @@ void Floater2::SetState(int state)
 		vy = 0;
 		break;
 	}
+}
+
+vector<LPDYNAMICOBJECT> Floater2::Fire(float xMain, float yMain)
+{
+	vector<LPDYNAMICOBJECT> floaterBulls;
+
+	Bullet* bullet = new Bullet(x, y, FLOATER_BULLET, 1);
+	float a = xMain - x;
+	float b = yMain - y;
+	bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 5, b / sqrt(pow(a, 2) + pow(b, 2)) / 5);
+	floaterBulls.push_back(bullet);
+
+	return floaterBulls;
 }
 
 int Floater2::FindMain(float xF, float yF, float xMain, float yMain)

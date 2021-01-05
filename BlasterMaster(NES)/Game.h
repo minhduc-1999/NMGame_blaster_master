@@ -48,6 +48,8 @@ class CGame
 
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
+
+	bool disableKeyboard = false;
 public:
 	void Init(HWND hWnd);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir, int alpha);
@@ -58,6 +60,9 @@ public:
 
 	int GetBackBufferWidth() { return backbufferWidth; }
 	int GetBackBufferHeight() { return backbufferHeight; }
+
+	bool IsDisableKeyboard() { return disableKeyboard; }
+	void DisableKeyboard(bool b) { disableKeyboard = b; }
 
 	static CGame* GetInstance();
 
@@ -94,7 +99,7 @@ public:
 
 	void Load(LPCSTR gameFile);
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
-	void SwitchScene(int scene_id);
+	void SwitchScene(int scene_id, int section);
 	void SwitchSection(int section_id, D3DXVECTOR2 tlPos);
 	void UpdateSwitchSectionCamera(DWORD dt, int nx, int ny, D3DXVECTOR2 desPos, D3DXVECTOR2 desMapPos, D3DXVECTOR2 desMapDimen) { camera->UpdateSwitchSection(dt, nx, ny, desPos, desMapPos, desMapDimen); }
 };

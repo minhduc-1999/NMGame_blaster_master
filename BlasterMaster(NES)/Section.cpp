@@ -26,6 +26,8 @@ using namespace std;
 #define SECTION_SECTION_GRID 2
 #define SECTION_SECTION_STATIC_OBJECTS	3
 #define SECTION_SECTION_DYNAMIC_OBJECTS	4
+#define SECTION_SECTION_DEFAULT			5
+
 #pragma endregion
 
 #pragma region OBJECT TYPE
@@ -116,41 +118,41 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	switch (object_type)
 	{
 		//dynamic obj
-	case OBJECT_TYPE_SOPHIA:
-	{
-		if (mainPlayer != NULL)
-		{
-			//D3DXVECTOR2 pos = mainPlayer->GetPosition();
-			//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
-			DebugOut("[ERROR] main object was created before!\n");
-			return;
-		}
-		obj = new Sophia(x, y);
-		mainPlayer = (Sophia*)obj;
-		obj->SetAnimationSet(ani_set);
-		obj->SetTeam(0);
-		obj->SetType(object_type);
-		DebugOut("[INFO] Player object created!\n");
-		return;
-		//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
-		break;
-	}
-	case OBJECT_TYPE_JASON:
-		if (mainPlayer != NULL)
-		{
-			//D3DXVECTOR2 pos = mainPlayer->GetPosition();
-			//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
-			DebugOut("[ERROR] main object was created before!\n");
-			return;
-		}
-		obj = new Jason(x, y);
-		mainPlayer = (Jason*)obj;
-		obj->SetAnimationSet(ani_set);
-		obj->SetTeam(0);
-		obj->SetType(object_type);
-		DebugOut("[INFO] Player object created!\n");
-		return;
-		break;
+	//case OBJECT_TYPE_SOPHIA:
+	//{
+	//	if (mainPlayer != NULL)
+	//	{
+	//		//D3DXVECTOR2 pos = mainPlayer->GetPosition();
+	//		//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
+	//		DebugOut("[ERROR] main object was created before!\n");
+	//		return;
+	//	}
+	//	obj = new Sophia(x, y);
+	//	mainPlayer = (Sophia*)obj;
+	//	obj->SetAnimationSet(ani_set);
+	//	obj->SetTeam(0);
+	//	obj->SetType(object_type);
+	//	DebugOut("[INFO] Player object created!\n");
+	//	return;
+	//	//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
+	//	break;
+	//}
+	//case OBJECT_TYPE_JASON:
+	//	if (mainPlayer != NULL)
+	//	{
+	//		//D3DXVECTOR2 pos = mainPlayer->GetPosition();
+	//		//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
+	//		DebugOut("[ERROR] main object was created before!\n");
+	//		return;
+	//	}
+	//	obj = new Jason(x, y);
+	//	mainPlayer = (Jason*)obj;
+	//	obj->SetAnimationSet(ani_set);
+	//	obj->SetTeam(0);
+	//	obj->SetType(object_type);
+	//	DebugOut("[INFO] Player object created!\n");
+	//	return;
+	//	break;
 	case OBJECT_TYPE_BOSS:
 		bossHand_ani_set_id = atoi(tokens[5].c_str());
 		bossArm_ani_set_id = atoi(tokens[6].c_str());
@@ -234,7 +236,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		obj = new CLadder(x, y);
 		obj->SetType(object_type);
 		break;
-	case OBJECT_TYPE_GATE: case 80:
+	case OBJECT_TYPE_GATE: case 80: case 79:
 	{
 		int section = atoi(tokens[tokens.size() - 3].c_str());
 		float telex = stof(tokens[tokens.size() - 2].c_str());
@@ -276,7 +278,7 @@ void Section::_ParseSection_MAP(string line)
 	mapWidth = atof(tokens[2].c_str());
 	mapHeight = atof(tokens[3].c_str());
 	DebugOut("[INFO] Done loading section map info!\n");
-	DebugOut("[MAP POSITION]\t%f\t%f\n", mapX, mapY);
+	//DebugOut("[MAP POSITION]\t%f\t%f\n", mapX, mapY);
 }
 
 void Section::_ParseSection_GRID(string line)
@@ -305,6 +307,15 @@ void Section::_ParseSection_GRID(string line)
 	DebugOut("[INFO] Done loading section grid info!\n");
 }
 
+void Section::_ParseSection_DEFAULT(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() != 2) return; // skip invalid lines - map must have 4 value
+	defaultPos = D3DXVECTOR2(atof(tokens[0].c_str()), atof(tokens[1].c_str()));
+	DebugOut("[INFO] Done loading default info!\n");
+}
+
 void Section::Load()
 {
 	DebugOut("[INFO] Start loading SECTION resources from : %s \n", secFilePath);
@@ -327,6 +338,9 @@ void Section::Load()
 		if (line == "[DYNAMIC_OBJECTS]") {
 			section = SECTION_SECTION_DYNAMIC_OBJECTS; continue;
 		}
+		if (line == "[DEFAULT]") {
+			section = SECTION_SECTION_DEFAULT; continue;
+		}
 		if (line[0] == '[') { section = SECTION_SECTION_UNKNOWN; continue; }
 
 		//
@@ -334,6 +348,7 @@ void Section::Load()
 		//
 		switch (section)
 		{
+		case SECTION_SECTION_DEFAULT: _ParseSection_DEFAULT(line); break;
 		case SECTION_SECTION_GRID: _ParseSection_GRID(line); break;
 		case SECTION_SECTION_MAP: _ParseSection_MAP(line); break;
 		case SECTION_SECTION_DYNAMIC_OBJECTS: _ParseSection_DYNAMIC_OBJECTS(line); break;
@@ -472,7 +487,6 @@ void Section::Unload()
 	}
 	grids.clear();
 }
-
 
 vector<int> Section::GetBoundGrid(Rect bound)
 {

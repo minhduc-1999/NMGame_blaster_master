@@ -11,6 +11,8 @@
 #include "CLadder.h"
 #include "OvwSectionTransition.h"
 #include "AreaSectionTransition.h"
+#include "SectionArea.h"
+#include "SectionOvw.h"
 
 using namespace std;
 
@@ -19,7 +21,8 @@ CTestScene::CTestScene(int id, string filePath, int type) :
 {
 	key_handler = new CTestSceneKeyHandler(this);
 	isSwitchingSection = false;
-	switch (type)
+	this->type = type;
+	switch (this->type)
 	{
 	case 1:
 		this->transition = new AreaSectionTransition();
@@ -139,8 +142,13 @@ void CTestScene::_ParseSection_SECTION(string line)
 	if (tokens.size() < 2) return;
 	int id = atoi(tokens[0].c_str());
 	string path = tokens[1];
-	LPSECTION section = new Section(id, path);
-	sections[id] = section;
+	LPSECTION section = NULL;
+	if (this->type == 1)
+		section = new SectionArea(id, path);
+	else if (this->type == 2)
+		section = new SectionOvw(id, path);
+	if(section != NULL)
+		sections[id] = section;
 }
 
 void CTestScene::_ParseSection_SETTINGS(string line)
@@ -159,7 +167,7 @@ void CTestScene::Update(DWORD dt)
 {
 	if (isSwitchingSection == false)
 	{
-		CGame::GetInstance()->ProcessKeyboard();
+		//CGame::GetInstance()->ProcessKeyboard();
 		sections[current_section]->Update(dt);
 
 		//update camera
@@ -174,10 +182,11 @@ void CTestScene::Update(DWORD dt)
 	{
 		if (!transition->IsFinish())
 		{
-			transition->Update(dt); 
+			transition->Update(dt);
 		}
 		else
 		{
+			CGame::GetInstance()->DisableKeyboard(false);
 			isSwitchingSection = false;
 			transition->Reset();
 			//hpBar->SetState(HP_DOWN);
@@ -225,40 +234,69 @@ void CTestScene::Unload()
 void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
 {
 	DebugOut("[INFO] Switching to section %d\n", section_id);
+	CGame::GetInstance()->DisableKeyboard(true);
 	if (section_id == -1)
 		return;
-	transition->Setsection(sections[current_section], sections[section_id], telePos);
+	transition->Setsection(sections[current_section], sections[section_id], telePos, saveData);
 	isSwitchingSection = true;
 }
 
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 {
-	CGame* game = CGame::GetInstance();
-	if (KeyCode == DIK_C)
+	if (scence->GetType() == 1)
 	{
-		if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA
-			&& ((Sophia*)(((CTestScene*)scence)->GetPlayer()))->GetIsJumping() == false)
+		if (KeyCode == DIK_C)
 		{
-			((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
-			((CTestScene*)scence)->addMiniJason();
-			((CTestScene*)scence)->ChangePlayerType();
-		}
-		else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
-			&& ((MiniJason*)(((CTestScene*)scence)->GetPlayer()))->IsCollisionWithSophia())
-		{
-			//((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
+			SaveData* saveData = scence->GetSaveData();
+			if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA
+				&& ((Sophia*)(((CTestScene*)scence)->GetPlayer()))->GetIsJumping() == false)
+			{
+				//save sophia state
 
-			//((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerSophia());
-			((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
-			((CTestScene*)scence)->deleteMiniJason();
-			((CTestScene*)scence)->ChangePlayerType();
+				Sophia* sophia = ((Sophia*)(((CTestScene*)scence)->GetPlayer()));
+				if (saveData == NULL)
+				{
+					saveData = new SaveData();
+					scence->SetSaveData(saveData);
+				}
+				saveData->sophiaX = sophia->GetPosition().x;
+				saveData->sophiaY = sophia->GetPosition().y;
+				saveData->sophiaSection = ((CTestScene*)scence)->GetCurrentSection();
+				DebugOut("[INFO] Save Data last section = %d, %f, %f\n", saveData->sophiaSection, saveData->sophiaX, saveData->sophiaY);
 
-		}
-		else
-		{
-			return;
-		}
 
+				((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
+				((CTestScene*)scence)->addMiniJason();
+				((CTestScene*)scence)->ChangePlayerType();
+
+			}
+			else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
+				&& ((MiniJason*)(((CTestScene*)scence)->GetPlayer()))->IsCollisionWithSophia())
+			{
+				//((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
+
+				//((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerSophia());
+				((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
+				((CTestScene*)scence)->deleteMiniJason();
+				((CTestScene*)scence)->ChangePlayerType();
+
+				if (saveData != NULL)
+				{
+					delete saveData;
+					scence->SetSaveData(NULL);
+				}
+			}
+			else
+			{
+				if (saveData != NULL)
+				{
+					delete saveData;
+					scence->SetSaveData(NULL);
+				}
+				return;
+			}
+
+		}		
 	}
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->OnKeyDown(KeyCode);

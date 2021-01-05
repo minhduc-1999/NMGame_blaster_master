@@ -15,21 +15,14 @@ class Eyeball :
 {
 private:
 	DWORD startTime;
-	vector<Bullet*> eyeballBulls;
 public:
-	~Eyeball()
-	{
-		for (Bullet* p : eyeballBulls)
-			delete p;
-		eyeballBulls.clear();
-	}
 	float startX;
 	float startY;
 	Eyeball(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, float xMain, float yMain);
 	virtual void Render();
 	virtual void SetState(int state);
+	vector<LPDYNAMICOBJECT> Fire(float xMain, float yMain);
 };
 
 #endif // !_EYEBALL_H

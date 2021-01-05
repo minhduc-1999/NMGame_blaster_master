@@ -20,6 +20,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	isCollisionWithSophia = false;
 	isCollisionWithLadder = false;
 	isCollisionWithEnemy = false;
+	canGoOvw = true;
 	CalcNowCollisions(coObjects, curCoEvents);
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
@@ -36,6 +37,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isCollisionWithEnemy = true;
 			break;
 		default:
+			canGoOvw = true;
 			break;
 		}
 	}
@@ -136,18 +138,26 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					
 				}
 				break;
-			default:
+			case 79:
+				if (e->nx != 0)
+					x += dx;
+				if (e->ny != 0)
+					y += dy;
 				break;
+			case 17:
+				CGate * gate = dynamic_cast<CGate*>(e->obj);
+				if (gate != 0)
+				{
+					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
+						gate->GetDesTelePos());
+					for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+					return;
+					//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
+				}
 			};
 
 
-			CGate* gate = dynamic_cast<CGate*>(e->obj);
-			if (gate != 0)
-			{
-				CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
-					gate->GetDesTelePos());
-				break;
-			}
+			
 
 		}
 
@@ -398,6 +408,11 @@ void MiniJason::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_DOWN:
+		if (canGoOvw)
+		{
+			CGame::GetInstance()->SwitchScene(3, 1);
+			return;
+		}
 		if (GetState() != MINIJASON_STATE_CLIMB)
 		{
 			if (GetIsDown() == false)

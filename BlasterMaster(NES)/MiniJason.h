@@ -32,6 +32,7 @@
 
 class MiniJason : public CDynamicGameObject
 {
+	bool canGoOvw = false;
 	bool isDown = false;
 	bool isJumping = false;
 	bool isCollisionWithSophia = false;

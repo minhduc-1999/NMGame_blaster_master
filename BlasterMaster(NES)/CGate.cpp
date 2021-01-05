@@ -28,10 +28,10 @@ Rect CGate::GetBound()
 {
 	Rect bound;
 
-	bound.left = x - width / 2 + 1;
-	bound.right = bound.left + width - 2;
-	bound.top = y - height / 2 + 1;
-	bound.bottom = bound.top + height - 2;
+	bound.left = x - width / 2;
+	bound.right = bound.left + width;
+	bound.top = y - height / 2;
+	bound.bottom = bound.top + height;
 
 	return bound;
 }

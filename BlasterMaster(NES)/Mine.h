@@ -1,4 +1,3 @@
-#pragma once
 #include "DynamicGameObject.h"
 
 #define MINE_GRAVITY	0.02f
@@ -12,11 +11,12 @@
 
 class Mine : public CDynamicGameObject
 {
+private:
+	DWORD startTime;
 public:
 	Mine(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void SetState(int state);
+	vector<LPDYNAMICOBJECT> Fire();
 };
-
-#pragma once

@@ -173,6 +173,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="FrameWork\SaveData">
+      <UniqueIdentifier>{beb66843-7fbe-41ff-8ab9-e1c154ed9d31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -300,6 +303,15 @@
     </ClInclude>
     <ClInclude Include="AreaSectionTransition.h">
       <Filter>FrameWork\Section\Transition</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveData.h">
+      <Filter>FrameWork\SaveData</Filter>
+    </ClInclude>
+    <ClInclude Include="SectionOvw.h">
+      <Filter>FrameWork\Section</Filter>
+    </ClInclude>
+    <ClInclude Include="SectionArea.h">
+      <Filter>FrameWork\Section</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -434,6 +446,12 @@
     </ClCompile>
     <ClCompile Include="AreaSectionTransition.cpp">
       <Filter>FrameWork\Section\Transition</Filter>
+    </ClCompile>
+    <ClCompile Include="SectionOvw.cpp">
+      <Filter>FrameWork\Section</Filter>
+    </ClCompile>
+    <ClCompile Include="SectionArea.cpp">
+      <Filter>FrameWork\Section</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
