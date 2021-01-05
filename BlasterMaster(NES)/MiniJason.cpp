@@ -150,17 +150,11 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 						gate->GetDesTelePos());
-					for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 					return;
 					//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
 				}
 			};
-
-
-			
-
 		}
-
 	}
 
 	// clean up collision events

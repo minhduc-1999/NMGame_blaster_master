@@ -20,11 +20,14 @@ void SectionArea::Load(SaveData* data)
 			{
 				grids[gridPos[i]]->AddDynamicObj(obj);
 			}
-			LPANIMATION_SET ani_setMINIJASON = animation_sets->Get(2);
-			mainPlayer = new MiniJason(defaultPos.x, defaultPos.y);
-			mainPlayer->SetTeam(0);
-			mainPlayer->SetType(2);
-			mainPlayer->SetAnimationSet(ani_setMINIJASON);
+			if (mainPlayer == NULL)
+			{
+				LPANIMATION_SET ani_setMINIJASON = animation_sets->Get(2);
+				mainPlayer = new MiniJason(defaultPos.x, defaultPos.y);
+				mainPlayer->SetTeam(0);
+				mainPlayer->SetType(2);
+				mainPlayer->SetAnimationSet(ani_setMINIJASON);
+			}
 			DebugOut("[INFO] Loaded save data %d\n");
 		}
 	}
