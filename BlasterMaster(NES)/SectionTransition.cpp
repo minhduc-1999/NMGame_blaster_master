@@ -9,7 +9,7 @@ void SectionTransition::DoAfterSetsection()
 {
 	sectionDes->SetMainPlayer(sectionSrc->GetPlayer());
 	sectionSrc->Unload();
-	sectionDes->Load();
+	sectionDes->Load(saveData);
 }
 
 void SectionTransition::Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlPos)
@@ -28,4 +28,10 @@ void SectionTransition::Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlP
 		return;
 	}
 	DoAfterSetsection();
+}
+
+void SectionTransition::Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlPos, SaveData* data)
+{
+	Setsection(src, des, tlPos);
+	saveData = data;
 }

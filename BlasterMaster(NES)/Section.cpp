@@ -342,6 +342,31 @@ void Section::Load()
 	DebugOut("[INFO] Done loading SECTION resources %s\n", secFilePath);
 }
 
+void Section::Load(SaveData* data)
+{
+	Load();
+	if (data != NULL)
+	{
+		if (data->sophiaSection == id)
+		{
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(1);
+			LPDYNAMICOBJECT obj;
+			obj = new Sophia(data->sophiaX, data->sophiaY);
+			obj->SetAnimationSet(ani_set);
+			obj->SetTeam(0);
+			obj->SetType(1);
+			vector<int> gridPos = GetBoundGrid(obj->GetBound());
+			for (int i = 0; i < gridPos.size(); i++)
+			{
+				grids[gridPos[i]]->AddDynamicObj(obj);
+			}
+			DebugOut("[INFO] Loaded save data %d\n");
+		}
+
+	}
+}
+
 void Section::Update(DWORD dt)
 {
 	vector<LPGAMEOBJECT> coObjs;

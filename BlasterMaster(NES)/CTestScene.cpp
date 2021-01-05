@@ -229,7 +229,7 @@ void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
 	CGame::GetInstance()->DisableKeyboard(true);
 	if (section_id == -1)
 		return;
-	transition->Setsection(sections[current_section], sections[section_id], telePos);
+	transition->Setsection(sections[current_section], sections[section_id], telePos, saveData);
 	isSwitchingSection = true;
 }
 
@@ -240,9 +240,25 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 		if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA
 			&& ((Sophia*)(((CTestScene*)scence)->GetPlayer()))->GetIsJumping() == false)
 		{
+		
+			//save sophia state
+			Sophia* sophia = ((Sophia*)(((CTestScene*)scence)->GetPlayer()));
+			SaveData* saveData = ((CTestScene*)scence)->GetSaveData();
+			if (saveData == NULL)
+			{
+				saveData = new SaveData();
+				((CTestScene*)scence)->SetSaveData(saveData);
+			}
+			saveData->sophiaX = sophia->GetPosition().x;
+			saveData->sophiaY = sophia->GetPosition().y;
+			saveData->sophiaSection = ((CTestScene*)scence)->GetCurrentSection();
+			DebugOut("[INFO] Save Data last section = %d, %f, %f\n", saveData->sophiaSection, saveData->sophiaX, saveData->sophiaY);
+			
+
 			((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
 			((CTestScene*)scence)->addMiniJason();
 			((CTestScene*)scence)->ChangePlayerType();
+			
 		}
 		else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
 			&& ((MiniJason*)(((CTestScene*)scence)->GetPlayer()))->IsCollisionWithSophia())

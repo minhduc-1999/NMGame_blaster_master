@@ -3,6 +3,7 @@
 #include "Grid.h"
 #include "Bullet.h"
 #include "HPBar.h"
+#include "SaveData.h"
 class Section
 {
 private:
@@ -28,6 +29,7 @@ public:
 	CDynamicGameObject* GetPlayer() { return mainPlayer; }
 	Section(int id, string path) { this->id = id, this->secFilePath = path; }
 	virtual void Load();
+	virtual void Load(SaveData* data);
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
