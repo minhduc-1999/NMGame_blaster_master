@@ -324,7 +324,8 @@ void CTestScene::Load()
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
 		}
 	}
-
+	Sound::getInstance()->loadSound("Resource\\Sound\\lvl2.wav", "lvl2");
+	Sound::getInstance()->play("lvl2", true, 0);
 	f.close();
 
 	//CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));

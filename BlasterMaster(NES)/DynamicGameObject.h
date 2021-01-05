@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Sound.h"
 class CDynamicGameObject :
 	public CGameObject
 {
@@ -10,6 +11,7 @@ protected:
 	bool isUpdated, isRendered;
 	DWORD dt;
 	LPANIMATION_SET animation_set;
+	Sound* sound;
 public:
 	CDynamicGameObject(float x, float y);
 

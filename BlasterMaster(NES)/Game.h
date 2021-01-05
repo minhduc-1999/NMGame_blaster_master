@@ -17,8 +17,8 @@ using namespace std;
 class CGame
 {
 	static CGame* __instance;
-	HWND hwnd;
-
+	HWND hwnd = NULL;
+	static HWND mHwnd;
 	LPDIRECT3D9 d3d = NULL;
 	LPDIRECT3DDEVICE9 d3ddev = NULL;
 
@@ -60,6 +60,8 @@ public:
 	int GetBackBufferHeight() { return backbufferHeight; }
 
 	static CGame* GetInstance();
+	static HWND getCurrentHWND();
+	static void SetCurrentHWND(HWND hWnd);
 
 	void InitKeyboard();
 	void SetKeyHandler(LPKEYEVENTHANDLER handler) { keyHandler = handler; }

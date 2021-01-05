@@ -274,6 +274,14 @@
     <Text Include="Resource\Config\OverWorld\ovw_sec8.txt" />
     <Text Include="Resource\Config\scene-test.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\Sound\Hitted.wav" />
+    <Media Include="Resource\Sound\Jump.wav" />
+    <Media Include="Resource\Sound\lvl2.wav" />
+    <Media Include="Resource\Sound\SonicBoom.wav" />
+    <Media Include="Resource\Sound\SophiaDed.wav" />
+    <Media Include="Resource\Sound\SophiaFire.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

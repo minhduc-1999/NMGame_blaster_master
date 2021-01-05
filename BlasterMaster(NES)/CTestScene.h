@@ -10,6 +10,7 @@
 #include "Boss.h"
 #include "SectionTransition.h"
 #include "HPBar.h"
+#include "Sound.h"
 
 
 #define PLAYER_SOPHIA 0

@@ -10,6 +10,7 @@ CDynamicGameObject::CDynamicGameObject(float x, float y) :CGameObject(x, y)
 	SetSize(16, 16);
 	isUpdated = false;
 	isRendered = false;
+	sound = new Sound();
 }
 
 

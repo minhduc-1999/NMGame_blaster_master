@@ -173,6 +173,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Resources\Sound">
+      <UniqueIdentifier>{cc816183-1e1e-418b-ab35-e28f63fdecfe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -547,5 +550,25 @@
     <Text Include="Resource\Config\OverWorld\ovw_sec8.txt">
       <Filter>Resources\Config\overworld</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\Sound\lvl2.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Hitted.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Jump.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\SonicBoom.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\SophiaDed.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\SophiaFire.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
   </ItemGroup>
 </Project>

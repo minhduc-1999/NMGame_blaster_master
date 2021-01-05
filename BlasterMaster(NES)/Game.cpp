@@ -4,6 +4,8 @@
 #include "Textures.h"
 
 CGame* CGame::__instance = NULL;
+HWND CGame::mHwnd = NULL;
+
 
 
 void CGame::Init(HWND hWnd)
@@ -16,7 +18,7 @@ void CGame::Init(HWND hWnd)
 	}
 
 	this->hwnd = hWnd;
-
+	SetCurrentHWND(hWnd);
 	D3DPRESENT_PARAMETERS d3dpp;
 	ZeroMemory(&d3dpp, sizeof(d3dpp));
 
@@ -107,6 +109,16 @@ CGame* CGame::GetInstance()
 	if (__instance == NULL)
 		__instance = new CGame();
 	return __instance;
+}
+
+HWND CGame::getCurrentHWND()
+{
+	return mHwnd;
+}
+
+void CGame::SetCurrentHWND(HWND hWnd)
+{
+	mHwnd = hWnd;
 }
 
 void CGame::InitKeyboard()
