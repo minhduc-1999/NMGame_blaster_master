@@ -34,52 +34,63 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else
 	{
 		float min_tx, min_ty, ntx, nty;
-
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
 
-		// block 
-		x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + nty * 0.4f;
-
-		if (ntx != 0)
-		{
-			if (GetNX() == 1)
-			{
-				SetState(SOPHIA_STATE_IDLE_RIGHT);
-			}
-			else
-			{
-				SetState(SOPHIA_STATE_IDLE_LEFT);
-			}
-		}
-
-		if (nty != 0)
-		{
-			//SetIsJumping(false);
-			vy = 0;
-		}
-
-		for (UINT i = 0; i < coEvents.size(); i++)
-		{
-			if (coEvents[i]->ny < 0)
-			{
-				SetIsJumping(false);
-				vy = 0;
-			}
-		}
-		//TODO: Collision logic with dynamic object (bots)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			// if e->obj is Gate 
+			int coObjType = e->obj->GetType();
+			switch (coObjType)
+			{
+			case 13:
+				if (e->nx != 0)
+					x += dx;
+				if (e->ny != 0)
+					y += dy;
+				break;
+			case 18:	//Ladder
+				x += dx;
+				if (e->ny != 0)
+				{
+					y += dy;
+				}
+				break;
+			case 15:
+				if (e->nx != 0)
+				{
+					x += e->t * dx + e->nx * 0.4f;
+					if (e->nx == 1)
+					{
+						SetState(SOPHIA_STATE_IDLE_LEFT);
+					}
+					else
+					{
+						SetState(SOPHIA_STATE_IDLE_RIGHT);
+					}
+				}
+				else if (e->ny != 0)
+				{
+					y += e->t * dy + e->ny * 0.4f;
+					if (e->ny == -1)
+					{
+						SetIsJumping(false);
+					}
+					vy = 0;
+				}
+				break;
+			default:
+				break;
+			};
+
+
 			CGate* gate = dynamic_cast<CGate*>(e->obj);
 			if (gate != 0)
 			{
 				CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 					gate->GetDesTelePos());
 				break;
-				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
 			}
+
 		}
 	}
 

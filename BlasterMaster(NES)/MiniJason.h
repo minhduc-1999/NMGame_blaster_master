@@ -9,6 +9,7 @@
 
 #define MINIJASON_RUN_SPEED						0.06f
 #define MINIJASON_DOWN_RUN_SPEED				0.03f
+#define MINIJASON_CLIMB_SPEED_Y					0.03f
 #define MINIJASON_JUMP_SPEED_Y					0.29f
 #define MINIJASON_GRAVITY						0.02f
 
@@ -33,14 +34,15 @@ class MiniJason : public CDynamicGameObject
 {
 	bool isDown = false;
 	bool isJumping = false;
-	Rect SophiaBound;
+	bool isCollisionWithSophia = false;
+	bool isCollisionWithLadder = false;
 public:
 	MiniJason(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
 
-	bool IsCollisionWithSophia();
+	bool IsCollisionWithSophia(){ return isCollisionWithSophia; }
 
 	bool GetIsDown() { return isDown; };
 	void SetIsDown(bool _isDown) { isDown = _isDown; };

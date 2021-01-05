@@ -16,6 +16,7 @@
 #include "Boss.h"
 #include "Jason.h"
 #include "MiniJason.h"
+#include "CLadder.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -215,6 +216,10 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		//static obj
 	case OBJECT_TYPE_BRICK:
 		obj = new Brick(x, y);
+		obj->SetType(object_type);
+		break;
+	case OBJECT_TYPE_LADDER:
+		obj = new CLadder(x, y);
 		obj->SetType(object_type);
 		break;
 	case OBJECT_TYPE_GATE: case 80:
