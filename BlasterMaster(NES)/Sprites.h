@@ -14,7 +14,7 @@ class CSprite
 public:
 	CSprite(int id, int left, int top, int right, int bottom,
 		LPDIRECT3DTEXTURE9 texture);
-	void Draw(float x, float y, int dir);
+	void Draw(float x, float y, int dir, int alpha);
 };
 
 typedef CSprite* LPSPRITE;
@@ -65,6 +65,9 @@ public:
 	void Render(float x, float y, int dir);
 	void RenderFrame(int frameID, float x, float y, int dir);
 	void RenderStartByFrame(int frameID, float x, float y, int dir);
+	void Render(float x, float y, int dir, int alpha);
+	void RenderFrame(int frameID, float x, float y, int dir, int alpha);
+	void RenderStartByFrame(int frameID, float x, float y, int dir, int alpha);
 };
 
 typedef CAnimation* LPANIMATION;

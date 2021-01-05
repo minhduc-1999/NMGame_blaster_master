@@ -65,5 +65,5 @@ void CGameObject::RenderBoundingBox()
 	rect.right = bound.right - bound.left;
 	rect.bottom = bound.bottom - bound.top;
 
-	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, -1);
+	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, -1,255);
 }

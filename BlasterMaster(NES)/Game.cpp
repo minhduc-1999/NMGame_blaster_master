@@ -65,7 +65,7 @@ void CGame::Init(HWND hWnd)
 	camera = new Camera(screen_width, screen_height);
 }
 
-void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir)
+void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir, int alpha)
 {
 	D3DXVECTOR2 camPos = GetCamPos();
 	int viewPortY = y - camPos.y;
@@ -80,7 +80,15 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	if (dir == -1)
 	{
 		D3DXVECTOR3 p(viewPortX, viewPortY, 0);
-		spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_XRGB(255, 255, 255));
+		if (alpha ==254)
+		{
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 163, 26));
+		}
+		else
+		{
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+		}
+		
 	}
 	else
 	{
@@ -94,7 +102,15 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 
 		// thực hiện việc chuyển đổi.
 		spriteHander->SetTransform(&matScale);
-		spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_XRGB(255, 255, 255));
+		if (alpha == 254)
+		{
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 163, 26));
+		}
+		else
+		{
+		spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+
+		}
 
 		//reset transform
 		D3DXMatrixScaling(&matScale, 1.0f, 1.0f, .0f);

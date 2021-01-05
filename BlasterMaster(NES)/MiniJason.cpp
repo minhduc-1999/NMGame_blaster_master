@@ -4,9 +4,12 @@
 #include "CGate.h"
 #include "CLadder.h"
 
+DWORD lastTimeAlphaMiniJason;
+
 MiniJason::MiniJason(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(MINIJASON_WIDTH, MINIJASON_HEIGHT);
+	lastTimeAlphaMiniJason = GetTickCount();
 }
 
 void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -16,6 +19,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector< LPCOLLISIONEVENT> curCoEvents;
 	isCollisionWithSophia = false;
 	isCollisionWithLadder = false;
+	isCollisionWithEnemy = false;
 	CalcNowCollisions(coObjects, curCoEvents);
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
@@ -27,6 +31,9 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			break;
 		case 18:
 			isCollisionWithLadder = true;
+			break;
+		case 13:
+			isCollisionWithEnemy = true;
 			break;
 		default:
 			break;
@@ -96,7 +103,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			case 15:
 				if (e->nx != 0)
 				{
-					x += e->t * dx + e->nx * 0.4f;
+					x += e->t * dx + e->nx * 0.8f;
 					if (nx == -1)
 					{
 						SetState(MINIJASON_STATE_IDLE_LEFT);
@@ -110,6 +117,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					y += e->t * dy + e->ny * 0.4f;
 					vy = 0;
+						
 					if (e->ny == -1)
 					{
 						SetIsJumping(false);
@@ -125,6 +133,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							}
 						}
 					}
+					
 				}
 				break;
 			default:
@@ -151,12 +160,33 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void MiniJason::Render()
 {
 	int ani = MINIJASON_ANI_IDLE;
+
+	if (isCollisionWithEnemy)
+	{
+		DWORD now = GetTickCount();
+		if (GetTickCount() - lastTimeAlphaMiniJason >= 50)
+		{
+			lastTimeAlphaMiniJason = now;
+			if (alpha == 255)
+			{
+				alpha = 254;
+			}
+			else
+			{
+				alpha = 255;
+			}
+		}
+	}
+	else
+	{
+		alpha = 255;
+	}
 	if (GetState() == MINIJASON_STATE_CLIMB)
 	{
 		ani = MINIJASON_ANI_CLIMB;
 		if (vy == 0)
 		{
-			animation_set->at(ani)->RenderFrame(0, x, y, nx);
+			animation_set->at(ani)->RenderFrame(0, x, y, nx, alpha);
 			return;
 		}
 	}
@@ -165,7 +195,7 @@ void MiniJason::Render()
 		if (GetIsJumping())
 		{
 			ani = MINIJASON_ANI_JUMP;
-			animation_set->at(ani)->Render(x, y, nx);
+			animation_set->at(ani)->Render(x, y, nx, alpha);
 		}
 		else
 		{
@@ -175,7 +205,7 @@ void MiniJason::Render()
 				{
 				case MINIJASON_STATE_IDLE_RIGHT: case MINIJASON_STATE_IDLE_LEFT:
 					ani = MINIJASON_ANI_DOWN_RUN;
-					animation_set->at(ani)->RenderFrame(0, x, y, nx);
+					animation_set->at(ani)->RenderFrame(0, x, y, nx, alpha);
 					return;
 					break;
 				case MINIJASON_STATE_RUN_RIGHT: case MINIJASON_STATE_RUN_LEFT:
@@ -189,7 +219,7 @@ void MiniJason::Render()
 				{
 				case MINIJASON_STATE_IDLE_RIGHT:case MINIJASON_STATE_IDLE_LEFT:
 					ani = MINIJASON_ANI_IDLE;
-					animation_set->at(ani)->Render(x, y, nx);
+					animation_set->at(ani)->Render(x, y, nx, alpha);
 					break;
 				case MINIJASON_STATE_RUN_RIGHT:case MINIJASON_STATE_RUN_LEFT:
 					ani = MINIJASON_ANI_RUN;
@@ -199,7 +229,7 @@ void MiniJason::Render()
 		}
 	}
 	
-	animation_set->at(ani)->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx, alpha);
 }
 
 void MiniJason::SetState(int state)

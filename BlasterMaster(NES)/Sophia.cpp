@@ -5,18 +5,36 @@
 int lastHeight = 0;
 int currentWalkingColumn = 0;
 DWORD lastTime;
-
+DWORD lastTimeAlpha;
 
 Sophia::Sophia(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(SOPHIA_WIDTH, SOPHIA_HEIGHT);
 	heightLevel = SOPHIA_HEIGHT_HIGH;
 	lastTime = GetTickCount();
+	lastTimeAlpha = GetTickCount();
 };
 
 void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
+	vector< LPCOLLISIONEVENT> curCoEvents;
+	CalcNowCollisions(coObjects, curCoEvents);
+	isCollisionWithEnemy = false;
+	for (int i = 0; i < curCoEvents.size(); i++)
+	{
+		LPGAMEOBJECT temp = curCoEvents[i]->obj;
+		switch (temp->GetType())
+		{
+		case 13:
+			isCollisionWithEnemy = true;
+			break;
+		default:
+			break;
+		}
+	}
+	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
+
 	if (vx != 0)
 	{
 		DWORD now = GetTickCount();
@@ -62,7 +80,7 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			int coObjType = e->obj->GetType();
 			switch (coObjType)
 			{
-			case 13:
+			case 13:case 5:
 				if (e->nx != 0)
 					x += dx;
 				if (e->ny != 0)
@@ -86,7 +104,7 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						SetState(SOPHIA_STATE_IDLE_RIGHT);
 					}
-					x += e->t * dx + e->nx * 0.4f;
+					x += e->t * dx + e->nx * 0.8f;
 				}
 				if (e->ny != 0)
 				{
@@ -122,6 +140,51 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Sophia::Render()
 {
 	int ani = -1;
+	if (isCollisionWithEnemy)
+	{
+		DWORD now = GetTickCount();
+		if (GetTickCount() - lastTimeAlpha >= 50)
+		{
+			lastTimeAlpha = now;
+			if (alpha == 255)
+			{
+				alpha = 254;
+			}
+			else
+			{
+				alpha = 255;
+			}
+		}
+	}
+	else
+	{
+		alpha = 255;
+	}
+	
+	/*if (alpha == 255)
+	{
+		alpha = 0;
+	}
+	else
+	{
+		alpha = 255;
+	}*/
+
+	/*if (isCollisionWithEnemy)
+	{
+		if (alpha == 255)
+		{
+			alpha = 0;
+		}
+		else
+		{
+			alpha = 255;
+		}
+	}
+	else
+	{
+		alpha = 255;
+	}*/
 
 	if (GetIsJumping())
 	{
@@ -139,7 +202,7 @@ void Sophia::Render()
 				{
 					ani = SOPHIA_ANI_UP_RUN_LOW;
 				}
-				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx);
+				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				return;
 				break;
 			case SOPHIA_STATE_JUMP_RIGHT:case SOPHIA_STATE_JUMP_LEFT:
@@ -151,7 +214,7 @@ void Sophia::Render()
 				{
 					ani = SOPHIA_ANI_UP_RUN_LOW;
 				}
-				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx);
+				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				return;
 				break;
 			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
@@ -164,7 +227,7 @@ void Sophia::Render()
 				{
 					currentWalkingColumn++;
 				}*/
-				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
+				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				return;
 				break;
 			}
@@ -183,7 +246,7 @@ void Sophia::Render()
 				{
 					ani = SOPHIA_ANI_JUMP_DOWN;
 				}
-				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx);
+				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				return;
 				break;
 			case SOPHIA_STATE_JUMP_RIGHT:case SOPHIA_STATE_JUMP_LEFT:
@@ -195,7 +258,7 @@ void Sophia::Render()
 				{
 					ani = SOPHIA_ANI_JUMP_DOWN;
 				}
-				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx);
+				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				return;
 				break;
 			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
@@ -215,12 +278,12 @@ void Sophia::Render()
 				{
 					currentWalkingColumn++;
 				}*/
-				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
+				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				return;
 				break;
 			case SOPHIA_STATE_TURN_RUN:
 				ani = SOPHIA_ANI_TURN_JUMP;
-				animation_set->at(ani)->Render(x, y - 8, nx);
+				animation_set->at(ani)->Render(x, y - 8, nx, alpha);
 				if (animation_set->at(ani)->IsCompleted())
 				{
 					if (nx == -1)
@@ -242,7 +305,7 @@ void Sophia::Render()
 		if (state == SOPHIA_STATE_TRANSFORM)
 		{
 			ani = SOPHIA_ANI_TRANSFORM;
-			animation_set->at(ani)->Render(x, y - 8, -nx);
+			animation_set->at(ani)->Render(x, y - 8, -nx, alpha);
 			if (animation_set->at(ani)->IsCompleted())
 			{
 				SetIsUp(false);
@@ -269,11 +332,11 @@ void Sophia::Render()
 				if (animation_set->at(ani)->IsCompleted())
 				{
 					ani = SOPHIA_ANI_UP_RUN_HIGH;
-					animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx);
+					animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				}
 				else
 				{
-					animation_set->at(ani)->Render(x, y - 8, nx);
+					animation_set->at(ani)->Render(x, y - 8, nx, alpha);
 				}
 				//ani = SOPHIA_ANI_UP_RUN_HIGH;
 				//animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y, nx);
@@ -291,7 +354,7 @@ void Sophia::Render()
 					animation_set->at(ani)->Render(x, y, nx);
 				}*/
 				ani = SOPHIA_ANI_UP_RUN_HIGH;
-				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx);
+				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				return;
 				break;
 			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
@@ -330,7 +393,7 @@ void Sophia::Render()
 					currentWalkingColumn++;
 				}*/
 
-				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
+				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				return;
 				break;
 				/*case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:
@@ -350,11 +413,11 @@ void Sophia::Render()
 				if (animation_set->at(ani)->IsCompleted())
 				{
 					ani = SOPHIA_ANI_RUN_HIGH;
-					animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx);
+					animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				}
 				else
 				{
-					animation_set->at(ani)->Render(x, y - 8, nx);
+					animation_set->at(ani)->Render(x, y - 8, nx, alpha);
 				}
 				//ani = SOPHIA_ANI_RUN_HIGH;
 				//animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y, nx);
@@ -364,7 +427,7 @@ void Sophia::Render()
 				ani = SOPHIA_ANI_DOWN;
 				if (!animation_set->at(ani)->IsCompleted())
 				{
-					animation_set->at(ani)->Render(x, y - 8, nx);
+					animation_set->at(ani)->Render(x, y - 8, nx, alpha);
 					//ani = SOPHIA_ANI_RUN_HIGH;
 					//animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y, nx);
 				}
@@ -406,12 +469,12 @@ void Sophia::Render()
 					currentWalkingColumn++;
 				}*/
 
-				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
+				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				return;
 				break;
 			case SOPHIA_STATE_TURN_RUN:
 				ani = SOPHIA_ANI_TURN_RUN;
-				animation_set->at(ani)->Render(x, y - 8, nx);
+				animation_set->at(ani)->Render(x, y - 8, nx, alpha);
 				if (animation_set->at(ani)->IsCompleted())
 				{
 					if (nx == -1)

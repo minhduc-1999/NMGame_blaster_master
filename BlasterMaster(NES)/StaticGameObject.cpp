@@ -13,5 +13,5 @@ void CStaticGameObject::AddSprite(LPSPRITE src)
 
 void CStaticGameObject::Render()
 {
-	_tile.at(0)->Draw(x, y, -1);
+	_tile.at(0)->Draw(x, y, -1, 255);
 }

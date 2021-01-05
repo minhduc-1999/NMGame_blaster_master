@@ -36,6 +36,8 @@ class MiniJason : public CDynamicGameObject
 	bool isJumping = false;
 	bool isCollisionWithSophia = false;
 	bool isCollisionWithLadder = false;
+	int alpha = 255;
+	bool isCollisionWithEnemy = false;
 public:
 	MiniJason(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

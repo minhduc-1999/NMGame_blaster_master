@@ -46,6 +46,8 @@ class Sophia : public CDynamicGameObject
 	int heightLevel = SOPHIA_HEIGHT_HIGH;
 	bool isUp = false;
 	bool isJumping = false;
+	int alpha = 255;
+	bool isCollisionWithEnemy = false;
 public:
 	Sophia(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

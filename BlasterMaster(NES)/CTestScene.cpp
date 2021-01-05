@@ -201,7 +201,7 @@ void CTestScene::Render()
 	LPDIRECT3DTEXTURE9 texfg = CTextureManager::GetInstance()->Get(TEXTURE_FOREGROUND);
 	float bgX = cam.left + (cam.right - cam.left) / 2.0f;
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
-	//CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1);
+	CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 	//Render object
 	if (!isSwitchingSection)
 	{
@@ -209,7 +209,7 @@ void CTestScene::Render()
 	}
 	mainPlayer->Render();
 	//render foreground
-	//CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1);
+	CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 	//render hpbar
 	hpBar->Render();
 }
