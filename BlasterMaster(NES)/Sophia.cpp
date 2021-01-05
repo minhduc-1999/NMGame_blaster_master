@@ -4,18 +4,35 @@
 #include "Brick.h"
 int lastHeight = 0;
 int currentWalkingColumn = 0;
+DWORD lastTime;
 
 
 Sophia::Sophia(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(SOPHIA_WIDTH, SOPHIA_HEIGHT);
 	heightLevel = SOPHIA_HEIGHT_HIGH;
+	lastTime = GetTickCount();
 };
 
 void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
-
+	if (vx != 0)
+	{
+		DWORD now = GetTickCount();
+		if (now - lastTime >= 20)
+		{
+			lastTime = now;
+			if (currentWalkingColumn == 3)
+			{
+				currentWalkingColumn = 0;
+			}
+			else
+			{
+				currentWalkingColumn++;
+			}
+		}
+	}
 	vy += SOPHIA_GRAVITY;
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -34,52 +51,66 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else
 	{
 		float min_tx, min_ty, ntx, nty;
-
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
-
-		// block 
-		x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + nty * 0.4f;
-
-		if (ntx != 0)
-		{
-			if (GetNX() == 1)
-			{
-				SetState(SOPHIA_STATE_IDLE_RIGHT);
-			}
-			else
-			{
-				SetState(SOPHIA_STATE_IDLE_LEFT);
-			}
-		}
-
-		if (nty != 0)
-		{
-			//SetIsJumping(false);
-			vy = 0;
-		}
-
-		for (UINT i = 0; i < coEvents.size(); i++)
-		{
-			if (coEvents[i]->ny < 0)
-			{
-				SetIsJumping(false);
-				vy = 0;
-			}
-		}
-		//TODO: Collision logic with dynamic object (bots)
+		if (ntx == 0)
+			x += dx;
+		if (nty == 0)
+			y += dy;
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			// if e->obj is Gate 
+			int coObjType = e->obj->GetType();
+			switch (coObjType)
+			{
+			case 13:
+				if (e->nx != 0)
+					x += dx;
+				if (e->ny != 0)
+					y += dy;
+				break;
+			case 18:	//Ladder
+				x += dx;
+				if (e->ny != 0)
+				{
+					y += dy;
+				}
+				break;
+			case 15:	//brick
+				if (e->nx != 0)
+				{
+					if (nx == -1)
+					{
+						SetState(SOPHIA_STATE_IDLE_LEFT);
+					}
+					else
+					{
+						SetState(SOPHIA_STATE_IDLE_RIGHT);
+					}
+					x += e->t * dx + e->nx * 0.4f;
+				}
+				if (e->ny != 0)
+				{
+					vy = 0;
+					if (e->ny == -1)
+					{
+						SetIsJumping(false);
+					}
+					y += e->t * dy + e->ny * 0.4f;
+				}
+				break;
+			default:
+				break;
+			};
+
+
 			CGate* gate = dynamic_cast<CGate*>(e->obj);
 			if (gate != 0)
 			{
 				CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 					gate->GetDesTelePos());
 				break;
-				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
 			}
+
 		}
 	}
 
@@ -125,14 +156,14 @@ void Sophia::Render()
 				break;
 			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
 				ani = SOPHIA_ANI_UP_JUMP;
-				if (currentWalkingColumn == 3)
+				/*if (currentWalkingColumn == 3)
 				{
 					currentWalkingColumn = 0;
 				}
 				else
 				{
 					currentWalkingColumn++;
-				}
+				}*/
 				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
@@ -176,14 +207,14 @@ void Sophia::Render()
 				{
 					ani = SOPHIA_ANI_JUMP_DOWN;
 				}
-				if (currentWalkingColumn == 3)
+				/*if (currentWalkingColumn == 3)
 				{
 					currentWalkingColumn = 0;
 				}
 				else
 				{
 					currentWalkingColumn++;
-				}
+				}*/
 				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
@@ -290,14 +321,14 @@ void Sophia::Render()
 					}
 				}
 
-				if (currentWalkingColumn == 3)
+				/*if (currentWalkingColumn == 3)
 				{
 					currentWalkingColumn = 0;
 				}
 				else
 				{
 					currentWalkingColumn++;
-				}
+				}*/
 
 				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
@@ -347,7 +378,7 @@ void Sophia::Render()
 					}
 					else if (heightLevel == SOPHIA_HEIGHT_LOW)
 					{
-						lastHeight = 2;
+						lastHeight = 3;
 						ani = SOPHIA_ANI_RUN_LOW;
 						heightLevel--;
 					}
@@ -366,14 +397,14 @@ void Sophia::Render()
 					}
 				}
 
-				if (currentWalkingColumn == 3)
+				/*if (currentWalkingColumn == 3)
 				{
 					currentWalkingColumn = 0;
 				}
 				else
 				{
 					currentWalkingColumn++;
-				}
+				}*/
 
 				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;

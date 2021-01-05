@@ -16,6 +16,7 @@
 #include "Boss.h"
 #include "Jason.h"
 #include "MiniJason.h"
+#include "CLadder.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -56,7 +57,14 @@ void Section::AddMiniJason()
 	LPANIMATION_SET ani_setSOPHIA = animation_sets->Get(OBJECT_TYPE_SOPHIA);
 	LPANIMATION_SET ani_setMINIJASON = animation_sets->Get(OBJECT_TYPE_MINI_JASON);
 	Sophia* sophia = new Sophia(mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
-	sophia->SetState(SOPHIA_STATE_IDLE_RIGHT);
+	if (mainPlayer->GetNX() == 1)
+	{
+		sophia->SetState(SOPHIA_STATE_IDLE_RIGHT);
+	}
+	else
+	{
+		sophia->SetState(SOPHIA_STATE_IDLE_LEFT);
+	}
 	sophia->SetAnimationSet(ani_setSOPHIA);
 	sophia->SetTeam(0);
 	sophia->SetType(OBJECT_TYPE_SOPHIA);
@@ -215,6 +223,10 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		//static obj
 	case OBJECT_TYPE_BRICK:
 		obj = new Brick(x, y);
+		obj->SetType(object_type);
+		break;
+	case OBJECT_TYPE_LADDER:
+		obj = new CLadder(x, y);
 		obj->SetType(object_type);
 		break;
 	case OBJECT_TYPE_GATE: case 80:
