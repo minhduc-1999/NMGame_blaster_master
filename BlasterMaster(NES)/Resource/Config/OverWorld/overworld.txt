@@ -35,8 +35,8 @@
 33	Resource/Config/OverWorld/ovw_sec33.txt
 34	Resource/Config/OverWorld/ovw_sec34.txt
 35	Resource/Config/OverWorld/ovw_sec35.txt
-[SETTINGS]
-start	1
+#[SETTINGS]
+#start	1
 #id	file_path	transparent_color_r g b
 [TEXTURES]
 0	enemy.png	0	0	255

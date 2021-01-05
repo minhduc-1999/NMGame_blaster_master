@@ -12,10 +12,10 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom,
 	this->texture = texture;
 }
 
-void CSprite::Draw(float x, float y, int dir)
+void CSprite::Draw(float x, float y, int dir, int alpha)
 {
 	CGame* game = CGame::GetInstance();
-	game->Draw(x, y, texture, left, top, right, bottom, dir);
+	game->Draw(x, y, texture, left, top, right, bottom, dir, alpha);
 }
 
 //class CSpriteManager
@@ -77,7 +77,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 	frames.push_back(frame);
 }
 
-void CAnimation::Render(float x, float y, int dir)
+void CAnimation::Render(float x, float y, int dir, int alpha)
 {
 	DWORD now = GetTickCount();
 	if (currentFrame == -1)
@@ -98,34 +98,44 @@ void CAnimation::Render(float x, float y, int dir)
 	}
 	if (currentFrame == frames.size() - 1)
 		_isCompleted = true;
-	frames[currentFrame]->GetSprite()->Draw(x, y, dir);
+	frames[currentFrame]->GetSprite()->Draw(x, y, dir,alpha);
+}
+
+void CAnimation::Render(float x, float y, int dir)
+{
+	Render(x, y, dir, 255);
+}
+
+void CAnimation::RenderFrame(int frameID, float x, float y, int dir, int alpha)
+{
+	currentFrame = frameID;
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			lastFrameTime = now;
+			if (currentFrame == frames.size())
+				currentFrame = 0;
+		}
+	}
+	if (currentFrame == frames.size() - 1)
+		_isCompleted = true;
+	frames[currentFrame]->GetSprite()->Draw(x, y, dir, alpha);
 }
 
 void CAnimation::RenderFrame(int frameID, float x, float y, int dir)
 {
-	currentFrame = frameID;
-	DWORD now = GetTickCount();
-	if (currentFrame == -1)
-	{
-		currentFrame = 0;
-		lastFrameTime = now;
-	}
-	else
-	{
-		DWORD t = frames[currentFrame]->GetTime();
-		if (now - lastFrameTime > t)
-		{
-			lastFrameTime = now;
-			if (currentFrame == frames.size())
-				currentFrame = 0;
-		}
-	}
-	if (currentFrame == frames.size() - 1)
-		_isCompleted = true;
-	frames[currentFrame]->GetSprite()->Draw(x, y, dir);
+	RenderFrame(frameID, x, y, dir, 255);
 }
 
-void CAnimation::RenderStartByFrame(int frameID, float x, float y, int dir)
+void CAnimation::RenderStartByFrame(int frameID, float x, float y, int dir, int alpha)
 {
 	currentFrame = frameID;
 	DWORD now = GetTickCount();
@@ -147,7 +157,12 @@ void CAnimation::RenderStartByFrame(int frameID, float x, float y, int dir)
 	}
 	if (currentFrame == frames.size() - 1)
 		_isCompleted = true;
-	frames[currentFrame]->GetSprite()->Draw(x, y, dir);
+	frames[currentFrame]->GetSprite()->Draw(x, y, dir, alpha);
+}
+
+void CAnimation::RenderStartByFrame(int frameID, float x, float y, int dir)
+{
+	RenderStartByFrame(frameID, x, y, dir, 255);
 }
 
 //class CAnimationManager

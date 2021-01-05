@@ -36,20 +36,33 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 	while (i < dynamicObjs.size())
 	{
 		LPDYNAMICOBJECT temp = dynamicObjs[i];
-		if (temp->GetType() == 6)
+		
+		temp->Update(dt, coObjects);
+
+		if (temp->GetIsShooting())
 		{
-			Floater2* floater = dynamic_cast<Floater2*>(temp);
-			floater->Update(dt, coObjects, xMain, yMain);
+			vector<LPDYNAMICOBJECT> bullet;
+			if (temp->GetType() == 14 || temp->GetType() == 6)
+			{
+				bullet = temp->Fire(xMain, yMain);
+			}
+			else
+			{
+				bullet = temp->Fire();
+			}
+			if (!bullet.empty())
+			{
+				dynamicObjs.insert(dynamicObjs.end(), bullet.begin(), bullet.end());
+			}
+			temp->ResetShooting();
 		}
-		else if (temp->GetType() == 14)
+
+		if (temp->GetIsDestroyed())
 		{
-			Eyeball* eyeball = dynamic_cast<Eyeball*>(temp);
-			eyeball->Update(dt, coObjects, xMain, yMain);
+			dynamicObjs.erase(dynamicObjs.begin() + i);
+			continue;
 		}
-		else
-		{
-			temp->Update(dt, coObjects);
-		}
+
 		if (!CheckIfBound(this->bound, temp->GetBound()))
 		{
 			res->push_back(temp);
@@ -58,6 +71,15 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 		}
 		i++;
 	}
+	/*for (int i = 0; i < bulletObjs.size(); i++)
+	{
+		bulletObjs[i]->Update(dt, coObjects);
+		if (bulletObjs[i]->GetIsDestroyed())
+		{
+			delete bulletObjs[i];
+			bulletObjs.erase(bulletObjs.begin() + i);
+		}
+	}*/
 	/*for (int i = 0; i < dynamicObjs.size(); i++)
 	{
 		LPDYNAMICOBJECT temp = dynamicObjs[i];
@@ -89,6 +111,10 @@ void Grid::Render()
 	{
 		dynamicObjs[i]->Render();
 	}
+	/*for (int i = 0; i < bulletObjs.size(); i++)
+	{
+		bulletObjs[i]->Render();
+	}*/
 }
 
 void Grid::Clear()

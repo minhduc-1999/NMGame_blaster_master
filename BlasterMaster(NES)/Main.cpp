@@ -180,7 +180,8 @@ int Run()
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
-			//game->ProcessKeyboard();
+			if(!game->IsDisableKeyboard())
+				game->ProcessKeyboard();
 
 			Update(dt);
 			Render();

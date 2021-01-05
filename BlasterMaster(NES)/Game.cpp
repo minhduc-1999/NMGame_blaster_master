@@ -67,7 +67,7 @@ void CGame::Init(HWND hWnd)
 	camera = new Camera(screen_width, screen_height);
 }
 
-void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir)
+void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir, int alpha)
 {
 	D3DXVECTOR2 camPos = GetCamPos();
 	int viewPortY = y - camPos.y;
@@ -82,7 +82,15 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	if (dir == -1)
 	{
 		D3DXVECTOR3 p(viewPortX, viewPortY, 0);
-		spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_XRGB(255, 255, 255));
+		if (alpha ==254)
+		{
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 163, 26));
+		}
+		else
+		{
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+		}
+		
 	}
 	else
 	{
@@ -96,7 +104,15 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 
 		// thực hiện việc chuyển đổi.
 		spriteHander->SetTransform(&matScale);
-		spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_XRGB(255, 255, 255));
+		if (alpha == 254)
+		{
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 163, 26));
+		}
+		else
+		{
+		spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+
+		}
 
 		//reset transform
 		D3DXMatrixScaling(&matScale, 1.0f, 1.0f, .0f);
@@ -372,13 +388,22 @@ void CGame::SweptAABB(
 #define GAME_FILE_SECTION_SETTINGS 1
 #define GAME_FILE_SECTION_SCENES 2
 
+#define GAME_SCENES_TYPE_AREA 1
+#define GAME_SCENES_TYPE_OVW 2
+
+
 void CGame::_ParseSection_SETTINGS(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 2) return;
+	if (tokens.size() < 3) return;
 	if (tokens[0] == "start")
+	{
 		current_scene = atoi(tokens[1].c_str());
+		int section = atoi(tokens[2].c_str());
+		if (scenes[current_scene]->GetType() == GAME_SCENES_TYPE_AREA)
+			((CTestScene*)scenes[current_scene])->SetCurrentSection(section);
+	}
 	else
 		DebugOut("[ERROR] Unknown game setting %s\n", tokens[0]);
 }
@@ -428,14 +453,16 @@ void CGame::Load(LPCSTR gameFile)
 
 	DebugOut("[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
 
-	SwitchScene(current_scene);
+	SwitchScene(current_scene, -1);
 }
 
-void CGame::SwitchScene(int scene_id)
+void CGame::SwitchScene(int scene_id, int section)
 {
 	DebugOut("[INFO] Switching to scene %d\n", scene_id);
 
 	scenes[current_scene]->Unload();
+
+	SaveData* data = scenes[current_scene]->GetSaveData();
 
 	CTextureManager::GetInstance()->Clear();
 	CSpriteManager::GetInstance()->Clear();
@@ -443,6 +470,12 @@ void CGame::SwitchScene(int scene_id)
 
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
+	s->SetSaveData(data);
+	if (section != -1)
+	{
+		if (s->GetType() == GAME_SCENES_TYPE_AREA || s->GetType() == GAME_SCENES_TYPE_OVW)
+			((CTestScene*)s)->SetCurrentSection(section);
+	}
 	s->Load();
 	SetKeyHandler(s->GetKeyEventHandler());
 }

@@ -53,67 +53,71 @@ void Dome::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float min_tx, min_ty, ntx, nty;
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
-
-		// block 
-		x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + nty * 0.4f;
-
-		if (ntx != 0)
+		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			if (GetNY() == 1)
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			int coObjType = e->obj->GetType();
+			switch (coObjType)
 			{
-				SetState(DOME_STATE_WALKING_UP);
-			}
-			else
-			{
-				SetState(DOME_STATE_WALKING_DOWN);
-			}
+			case 15:	//brick
+				if (e->nx != 0)
+				{
+					if (ny == -1)
+					{
+						SetState(DOME_STATE_WALKING_DOWN);
+					}
+					else
+					{
+						SetState(DOME_STATE_WALKING_UP);
+					}
+					x += e->t * dx + e->nx * 0.4f;
+				}
+				if (e->ny != 0)
+				{
+					if (nx == -1)
+					{
+						SetState(DOME_STATE_WALKING_LEFT);
+					}
+					else
+					{
+						SetState(DOME_STATE_WALKING_RIGHT);
+					}
+					y += e->t * dy + e->ny * 0.4f;
+				}
+				break;
+			default:
+				break;
+			};
+
 		}
+		//// block 
+		//x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		//y += min_ty * dy + nty * 0.4f;
 
-		if (nty != 0)
-		{
-			if (GetNX() == 1)
-			{
-				SetState(DOME_STATE_WALKING_RIGHT);
-
-			}
-			else
-			{
-				SetState(DOME_STATE_WALKING_LEFT);
-			}
-		}
-
-		//for (UINT i = 0; i < coEventsResult.size(); i++)
+		//if (ntx != 0)
 		//{
-		//	LPCOLLISIONEVENT e = coEventsResult[i];
-
-		//	if (dynamic_cast<Brick*>(e->obj)) // if e->obj is Goomba 
+		//	if (GetNY() == 1)
 		//	{
-		//		if (GetState() == DOME_STATE_WALKING_LEFT || GetState() == DOME_STATE_WALKING_RIGHT)
-		//		{
-		//			if (GetNY() == 1)
-		//			{
-		//				SetState(DOME_STATE_WALKING_DOWN);
-		//			}
-		//			else
-		//			{
-		//				SetState(DOME_STATE_WALKING_UP);
-		//			}
-		//		}
-		//		else if (GetState() == DOME_STATE_WALKING_UP || GetState() == DOME_STATE_WALKING_DOWN)
-		//		{
-		//			if (GetNX() == 1)
-		//			{
-		//				SetState(DOME_STATE_WALKING_LEFT);
-		//			}
-		//			else
-		//			{
-		//				SetState(DOME_STATE_WALKING_RIGHT);
-		//			}
-		//		}
+		//		SetState(DOME_STATE_WALKING_UP);
+		//	}
+		//	else
+		//	{
+		//		SetState(DOME_STATE_WALKING_DOWN);
 		//	}
 		//}
-		//TODO: Collision logic with dynamic object (bots)
+
+		//if (nty != 0)
+		//{
+		//	if (GetNX() == 1)
+		//	{
+		//		SetState(DOME_STATE_WALKING_RIGHT);
+
+		//	}
+		//	else
+		//	{
+		//		SetState(DOME_STATE_WALKING_LEFT);
+		//	}
+		//}
 	}
 
 	// clean up collision events
@@ -190,21 +194,25 @@ void Dome::SetState(int state)
 	{
 	case DOME_STATE_WALKING_LEFT:
 		vx = -DOME_WALKING_SPEED;
-		vy = ny * DOME_GRAVITY;
+		vy = 0;
+		//vy = ny * DOME_GRAVITY;
 		nx = -1;
 		break;
 	case DOME_STATE_WALKING_RIGHT:
 		vx = DOME_WALKING_SPEED;
-		vy = ny * DOME_GRAVITY;
+		vy = 0;
+		//vy = ny * DOME_GRAVITY;
 		nx = 1;
 		break;
 	case DOME_STATE_WALKING_UP:
-		vx = nx * DOME_GRAVITY;
+		//vx = nx * DOME_GRAVITY;
+		vx = 0;
 		vy = -DOME_WALKING_SPEED;
 		ny = 1;
 		break;
 	case DOME_STATE_WALKING_DOWN:
-		vx = nx * DOME_GRAVITY;
+		//vx = nx * DOME_GRAVITY;
+		vx = 0;
 		vy = DOME_WALKING_SPEED;
 		ny = -1;
 		break;

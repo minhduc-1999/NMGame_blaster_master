@@ -9,7 +9,7 @@ void SectionTransition::DoAfterSetsection()
 {
 	sectionDes->SetMainPlayer(sectionSrc->GetPlayer());
 	sectionSrc->Unload();
-	sectionDes->Load();
+	sectionDes->Load(saveData);
 }
 
 void SectionTransition::Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlPos)
@@ -20,7 +20,7 @@ void SectionTransition::Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlP
 	if (telePos.x == -1 && telePos.y == -1)
 	{
 		_isFinish = true;
-		sectionDes->Load();
+		sectionDes->Load(saveData);
 		CGame::GetInstance()->UpdateCamera(
 			sectionDes->GetPlayer()->GetPosition(),
 			sectionDes->GetSectionMapPos(),
@@ -28,4 +28,10 @@ void SectionTransition::Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlP
 		return;
 	}
 	DoAfterSetsection();
+}
+
+void SectionTransition::Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlPos, SaveData* data)
+{
+	saveData = data;
+	Setsection(src, des, tlPos);
 }

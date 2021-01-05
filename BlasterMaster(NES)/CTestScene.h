@@ -38,6 +38,9 @@ public:
 	virtual void SwitchSection(int section_id, D3DXVECTOR2 telePos);
 	void	SetHPBarState(int state) { this->hpBar->SetState(state); }
 
+	void SetCurrentSection(int cur) { current_section = cur; }
+	int GetCurrentSection() { return current_section; }
+
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);

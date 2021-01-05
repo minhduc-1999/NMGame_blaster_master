@@ -3,6 +3,7 @@
 #include <d3dx9.h>
 #include "KeyEventHandler.h"
 #include <string>
+#include "SaveData.h"
 
 using namespace std;
 
@@ -11,7 +12,9 @@ class CScene
 protected:
 	CKeyEventHandler* key_handler;
 	int id;
+	int type;
 	string sceneFilePath;
+	SaveData* saveData;
 public:
 	CScene() {}
 	CScene(int id, string filePath);
@@ -23,7 +26,14 @@ public:
 	virtual void Render() = 0;
 
 	virtual void SwitchSection(int section_id, D3DXVECTOR2 telePos) = 0;
+	SaveData* GetSaveData() {
+		return saveData;
+	}
 
+	void SetSaveData(SaveData* data) { this->saveData = data; }
+
+	void SetType(int type) { this->type = type; }
+	int GetType() { return type; }
 };
 typedef CScene* LPSCENE;
 

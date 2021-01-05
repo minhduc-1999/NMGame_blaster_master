@@ -172,7 +172,10 @@
     <ClInclude Include="MiniJason.h" />
     <ClInclude Include="Orb.h" />
     <ClInclude Include="OvwSectionTransition.h" />
+    <ClInclude Include="SaveData.h" />
     <ClInclude Include="Section.h" />
+    <ClInclude Include="SectionArea.h" />
+    <ClInclude Include="SectionOvw.h" />
     <ClInclude Include="SectionTransition.h" />
     <ClInclude Include="Sophia.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -217,6 +220,8 @@
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="OvwSectionTransition.cpp" />
     <ClCompile Include="Section.cpp" />
+    <ClCompile Include="SectionArea.cpp" />
+    <ClCompile Include="SectionOvw.cpp" />
     <ClCompile Include="SectionTransition.cpp" />
     <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

@@ -7,7 +7,7 @@
 #define SOPHIA_HEIGHT 18
 
 #define SOPHIA_HEIGHT_HIGH	0
-#define SOPHIA_HEIGHT_LOW	2
+#define SOPHIA_HEIGHT_LOW	3
 
 #define SOPHIA_RUN_SPEED						0.05f
 #define SOPHIA_JUMP_SPEED_Y						0.29f
@@ -46,6 +46,8 @@ class Sophia : public CDynamicGameObject
 	int heightLevel = SOPHIA_HEIGHT_HIGH;
 	bool isUp = false;
 	bool isJumping = false;
+	int alpha = 255;
+	bool isCollisionWithEnemy = false;
 public:
 	Sophia(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
