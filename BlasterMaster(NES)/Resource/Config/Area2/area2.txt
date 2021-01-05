@@ -16,7 +16,7 @@
 14	Resource/Config/Area2/area2_secN.txt
 15	Resource/Config/Area2/area2_secO.txt
 [SETTINGS]
-start	6
+start	1
 #id	file_path	transparent_color_r g b
 [TEXTURES]
 0	enemy.png	0	0	255

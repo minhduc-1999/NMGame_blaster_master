@@ -57,7 +57,14 @@ void Section::AddMiniJason()
 	LPANIMATION_SET ani_setSOPHIA = animation_sets->Get(OBJECT_TYPE_SOPHIA);
 	LPANIMATION_SET ani_setMINIJASON = animation_sets->Get(OBJECT_TYPE_MINI_JASON);
 	Sophia* sophia = new Sophia(mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
-	sophia->SetState(SOPHIA_STATE_IDLE_RIGHT);
+	if (mainPlayer->GetNX() == 1)
+	{
+		sophia->SetState(SOPHIA_STATE_IDLE_RIGHT);
+	}
+	else
+	{
+		sophia->SetState(SOPHIA_STATE_IDLE_LEFT);
+	}
 	sophia->SetAnimationSet(ani_setSOPHIA);
 	sophia->SetTeam(0);
 	sophia->SetType(OBJECT_TYPE_SOPHIA);

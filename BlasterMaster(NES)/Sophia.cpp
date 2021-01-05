@@ -52,7 +52,10 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		float min_tx, min_ty, ntx, nty;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
-
+		if (ntx == 0)
+			x += dx;
+		if (nty == 0)
+			y += dy;
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
@@ -72,11 +75,10 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					y += dy;
 				}
 				break;
-			case 15:
+			case 15:	//brick
 				if (e->nx != 0)
 				{
-					x += e->t * dx + e->nx * 0.4f;
-					if (e->nx == 1)
+					if (nx == -1)
 					{
 						SetState(SOPHIA_STATE_IDLE_LEFT);
 					}
@@ -84,15 +86,16 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						SetState(SOPHIA_STATE_IDLE_RIGHT);
 					}
+					x += e->t * dx + e->nx * 0.4f;
 				}
-				else if (e->ny != 0)
+				if (e->ny != 0)
 				{
-					y += e->t * dy + e->ny * 0.4f;
+					vy = 0;
 					if (e->ny == -1)
 					{
 						SetIsJumping(false);
 					}
-					vy = 0;
+					y += e->t * dy + e->ny * 0.4f;
 				}
 				break;
 			default:
