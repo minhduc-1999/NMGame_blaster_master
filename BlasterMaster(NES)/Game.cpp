@@ -360,13 +360,22 @@ void CGame::SweptAABB(
 #define GAME_FILE_SECTION_SETTINGS 1
 #define GAME_FILE_SECTION_SCENES 2
 
+#define GAME_SCENES_TYPE_AREA 1
+#define GAME_SCENES_TYPE_OVW 2
+
+
 void CGame::_ParseSection_SETTINGS(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 2) return;
+	if (tokens.size() < 3) return;
 	if (tokens[0] == "start")
+	{
 		current_scene = atoi(tokens[1].c_str());
+		int section = atoi(tokens[2].c_str());
+		if (scenes[current_scene]->GetType() == GAME_SCENES_TYPE_AREA)
+			((CTestScene*)scenes[current_scene])->SetCurrentSection(section);
+	}
 	else
 		DebugOut("[ERROR] Unknown game setting %s\n", tokens[0]);
 }
@@ -425,12 +434,15 @@ void CGame::SwitchScene(int scene_id)
 
 	scenes[current_scene]->Unload();
 
+	SaveData* data = scenes[current_scene]->GetSaveData();
+
 	CTextureManager::GetInstance()->Clear();
 	CSpriteManager::GetInstance()->Clear();
 	CAnimationManager::GetInstance()->Clear();
 
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
+	s->SetSaveData(data);
 	s->Load();
 	SetKeyHandler(s->GetKeyEventHandler());
 }

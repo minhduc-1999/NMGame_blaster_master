@@ -10,7 +10,6 @@
 #include "Boss.h"
 #include "SectionTransition.h"
 #include "HPBar.h"
-#include "SaveData.h"
 
 
 #define PLAYER_SOPHIA 0
@@ -28,7 +27,6 @@ protected:
 	unordered_map<int, LPSECTION> sections;
 	int current_section;
 	bool isSwitchingSection;
-	SaveData* saveData;
 public:
 	CTestScene(int id, string filePath, int type);
 
@@ -39,11 +37,7 @@ public:
 	virtual void SwitchSection(int section_id, D3DXVECTOR2 telePos);
 	void	SetHPBarState(int state) { this->hpBar->SetState(state); }
 
-	SaveData* GetSaveData() {
-		return saveData;
-	}
-
-	void SetSaveData(SaveData* data) { this->saveData = data; }
+	void SetCurrentSection(int cur) { current_section = cur; }
 	int GetCurrentSection() { return current_section; }
 
 	void _ParseSection_TEXTURES(string line);

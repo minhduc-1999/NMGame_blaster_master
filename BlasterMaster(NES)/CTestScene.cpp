@@ -19,7 +19,8 @@ CTestScene::CTestScene(int id, string filePath, int type) :
 {
 	key_handler = new CTestSceneKeyHandler(this);
 	isSwitchingSection = false;
-	switch (type)
+	this->type = type;
+	switch (this->type)
 	{
 	case 1:
 		this->transition = new AreaSectionTransition();
@@ -174,7 +175,7 @@ void CTestScene::Update(DWORD dt)
 	{
 		if (!transition->IsFinish())
 		{
-			transition->Update(dt); 
+			transition->Update(dt);
 		}
 		else
 		{
@@ -220,7 +221,7 @@ void CTestScene::Render()
 */
 void CTestScene::Unload()
 {
-	
+
 }
 
 void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
@@ -235,50 +236,63 @@ void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
 
 void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 {
-	if (KeyCode == DIK_C)
+	if (scence->GetType() == 1)
 	{
-		if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA
-			&& ((Sophia*)(((CTestScene*)scence)->GetPlayer()))->GetIsJumping() == false)
+		if (KeyCode == DIK_C)
 		{
-		
-			//save sophia state
-			Sophia* sophia = ((Sophia*)(((CTestScene*)scence)->GetPlayer()));
-			SaveData* saveData = ((CTestScene*)scence)->GetSaveData();
-			if (saveData == NULL)
+			SaveData* saveData = scence->GetSaveData();
+			if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA
+				&& ((Sophia*)(((CTestScene*)scence)->GetPlayer()))->GetIsJumping() == false)
 			{
-				saveData = new SaveData();
-				((CTestScene*)scence)->SetSaveData(saveData);
+				//save sophia state
+
+				Sophia* sophia = ((Sophia*)(((CTestScene*)scence)->GetPlayer()));
+				if (saveData == NULL)
+				{
+					saveData = new SaveData();
+					scence->SetSaveData(saveData);
+				}
+				saveData->sophiaX = sophia->GetPosition().x;
+				saveData->sophiaY = sophia->GetPosition().y;
+				saveData->sophiaSection = ((CTestScene*)scence)->GetCurrentSection();
+				DebugOut("[INFO] Save Data last section = %d, %f, %f\n", saveData->sophiaSection, saveData->sophiaX, saveData->sophiaY);
+
+
+				((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
+				((CTestScene*)scence)->addMiniJason();
+				((CTestScene*)scence)->ChangePlayerType();
+
 			}
-			saveData->sophiaX = sophia->GetPosition().x;
-			saveData->sophiaY = sophia->GetPosition().y;
-			saveData->sophiaSection = ((CTestScene*)scence)->GetCurrentSection();
-			DebugOut("[INFO] Save Data last section = %d, %f, %f\n", saveData->sophiaSection, saveData->sophiaX, saveData->sophiaY);
-			
+			else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
+				&& ((MiniJason*)(((CTestScene*)scence)->GetPlayer()))->IsCollisionWithSophia())
+			{
+				//((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
 
-			((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
-			((CTestScene*)scence)->addMiniJason();
-			((CTestScene*)scence)->ChangePlayerType();
-			
+				//((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerSophia());
+				((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
+				((CTestScene*)scence)->deleteMiniJason();
+				((CTestScene*)scence)->ChangePlayerType();
+
+				if (saveData != NULL)
+				{
+					delete saveData;
+					scence->SetSaveData(NULL);
+				}
+			}
+			else
+			{
+				if (saveData != NULL)
+				{
+					delete saveData;
+					scence->SetSaveData(NULL);
+				}
+				return;
+			}
+
 		}
-		else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
-			&& ((MiniJason*)(((CTestScene*)scence)->GetPlayer()))->IsCollisionWithSophia())
-		{
-			//((CTestScene*)scence)->GetPlayerSophia()->OnKeyDown(DIK_C);
-
-			//((CTestScene*)scence)->SetPlayer(((CTestScene*)scence)->GetPlayerSophia());
-			((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
-			((CTestScene*)scence)->deleteMiniJason();
-			((CTestScene*)scence)->ChangePlayerType();
-
-		}
-		else
-		{
-			return;
-		}
-
+		CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
+		currentPlayer->OnKeyDown(KeyCode);
 	}
-	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
-	currentPlayer->OnKeyDown(KeyCode);
 }
 
 void CTestSceneKeyHandler::KeyState(BYTE* states)
