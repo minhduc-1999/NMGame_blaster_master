@@ -10,6 +10,8 @@ protected:
 	bool isUpdated, isRendered;
 	DWORD dt;
 	LPANIMATION_SET animation_set;
+	bool isShooting;
+	bool isDestroyed;
 public:
 	CDynamicGameObject(float x, float y);
 
@@ -38,6 +40,11 @@ public:
 	virtual void KeyState(BYTE* states) {};
 	virtual void OnKeyDown(int KeyCode) {};
 	virtual void OnKeyUp(int KeyCode) {};
+	virtual void ResetShooting();
+	virtual bool GetIsShooting();
+	virtual vector<CDynamicGameObject*> Fire();
+	virtual vector<CDynamicGameObject*> Fire(float xMain, float yMain);
+	virtual bool GetIsDestroyed();
 };
 typedef CDynamicGameObject* LPDYNAMICOBJECT;
 

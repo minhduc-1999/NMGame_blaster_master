@@ -1,11 +1,12 @@
 #include "Bullet.h"
 
-Bullet::Bullet(float x, float y, int type, int n) : CDynamicGameObject(x, y)
+Bullet::Bullet(float x, float y, int t, int n) : CDynamicGameObject(x, y)
 {
 	startFiringTime = GetTickCount();
 	isDestroyed = false;
+	type = t;
 
-	if (type == SOPHIA_BULLET_HORIZONTAL)
+	if (t == SOPHIA_BULLET_HORIZONTAL)
 	{
 		SetSize(6, 6);
 
@@ -17,7 +18,7 @@ Bullet::Bullet(float x, float y, int type, int n) : CDynamicGameObject(x, y)
 		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_SOPHIA_HOR);
 		this->SetAnimationSet(ani_set);
 	}
-	else if (type == SOPHIA_BULLET_VERTICAL)
+	else if (t == SOPHIA_BULLET_VERTICAL)
 	{
 		SetSize(8, 26);
 
@@ -29,7 +30,7 @@ Bullet::Bullet(float x, float y, int type, int n) : CDynamicGameObject(x, y)
 		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_SOPHIA_VER);
 		this->SetAnimationSet(ani_set);
 	}
-	else if (type == CANNON_BULLET_HORIZONTAL)
+	else if (t == CANNON_BULLET_HORIZONTAL)
 	{
 		SetSize(8, 8);
 
@@ -41,7 +42,7 @@ Bullet::Bullet(float x, float y, int type, int n) : CDynamicGameObject(x, y)
 		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
 		this->SetAnimationSet(ani_set);
 	}
-	else if (type == CANNON_BULLET_VERTICAL)
+	else if (t == CANNON_BULLET_VERTICAL)
 	{
 		SetSize(8, 8);
 
@@ -53,7 +54,7 @@ Bullet::Bullet(float x, float y, int type, int n) : CDynamicGameObject(x, y)
 		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
 		this->SetAnimationSet(ani_set);
 	}
-	else if (type == FLOATER_BULLET)
+	else if (t == FLOATER_BULLET)
 	{
 		SetSize(6, 6);
 
@@ -63,13 +64,81 @@ Bullet::Bullet(float x, float y, int type, int n) : CDynamicGameObject(x, y)
 		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_FLOATER);
 		this->SetAnimationSet(ani_set);
 	}
-	else if (type == EYEBALL_BULLET)
+	else if (t == EYEBALL_BULLET)
 	{
 		SetSize(8, 8);
 
 		nx = 1;
 		vx = 0.08f;
 		vy = 0.08f;
+
+		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
+		this->SetAnimationSet(ani_set);
+	}
+	else if (t == SKULL_BULLET)
+	{
+		SetSize(10, 10);
+
+		nx = 1;
+		vx = 0;
+		vy = 0.15f;
+
+		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_BLACK);
+		this->SetAnimationSet(ani_set);
+	}
+	else if (t == MINE_BULLET_FIRST)
+	{
+		startY = y;
+		isFalling = false;
+		SetSize(8, 8);
+
+		nx = 1;
+		vx = -0.04f;
+		vy = -0.15f;
+
+		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
+		this->SetAnimationSet(ani_set);
+	}
+	else if (t == MINE_BULLET_SECOND)
+	{
+		startY = y;
+		isFalling = false;
+		SetSize(8, 8);
+
+		nx = 1;
+		vx = -0.02f;
+		vy = -0.15f;
+
+		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
+		this->SetAnimationSet(ani_set);
+	}
+	else if (t == MINE_BULLET_THIRD)
+	{
+		startY = y;
+		isFalling = false;
+		SetSize(8, 8);
+
+		nx = 1;
+		vx = 0.02f;
+		vy = -0.15f;
+
+		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
+		this->SetAnimationSet(ani_set);
+	}
+	else if (t == MINE_BULLET_FOUTH)
+	{
+		startY = y;
+		isFalling = false;
+		SetSize(8, 8);
+
+		nx = 1;
+		vx = 0.04f;
+		vy = -0.15f;
 
 		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
@@ -88,18 +157,58 @@ void Bullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	CalcPotentialCollisions(coObjects, coEvents);
 
-	if (coEvents.size() == 0)
+	if (type == MINE_BULLET_FIRST || type == MINE_BULLET_SECOND || type == MINE_BULLET_THIRD || type == MINE_BULLET_FOUTH)
 	{
+		if (startY - y >= 20 && !isFalling)
+		{
+			vy = -vy;
+			isFalling = true;
+		}
 		x += dx;
 		y += dy;
 	}
 	else
 	{
-		isDestroyed = true;
+		if (coEvents.size() == 0)
+		{
+			x += dx;
+			y += dy;
+		}
+		else
+		{
+			if (type == SKULL_BULLET)
+			{
+				float min_tx, min_ty, ntx, nty;
+
+				FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
+
+				// block 
+				x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+				y += min_ty * dy + nty * 0.4f;
+
+				if (nty != 0)
+				{
+					vy = 0;
+					vx = 0.15f;
+				}
+			}
+			else
+			{
+				isDestroyed = true;
+			}
+		}
 	}
 
-	if (GetTickCount() - startFiringTime >= 1000)
-		isDestroyed = true;
+	if (type == SKULL_BULLET)
+	{
+		if (GetTickCount() - startFiringTime >= 2000)
+			isDestroyed = true;
+	}
+	else
+	{
+		if (GetTickCount() - startFiringTime >= 1000)
+			isDestroyed = true;
+	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];

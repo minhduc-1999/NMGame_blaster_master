@@ -1,9 +1,10 @@
 #ifndef _SKULL_H
 #define _SKULL_H
 #include "DynamicGameObject.h"
+#include "Bullet.h"
 
 
-#define SKULL_FLYING_SPEED			0.08f
+#define SKULL_FLYING_SPEED			0.12f
 
 #define SKULL_STATE_FLYING_LEFT		0
 #define SKULL_STATE_FLYING_RIGHT	1
@@ -17,11 +18,16 @@
 
 class Skull : public CDynamicGameObject
 {
+private:
+	float startX;
+	float startY;
+	DWORD startTime;
 public:
 	Skull(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
+	vector<LPDYNAMICOBJECT> Fire();
 };
 #endif // !_SKULL_H
 

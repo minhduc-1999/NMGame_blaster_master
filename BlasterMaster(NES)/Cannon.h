@@ -16,18 +16,12 @@ class Cannon :
 {
 private:
 	DWORD startTime;
-	vector<Bullet*> cannonBulls;
 	bool hor;
 public:
 	Cannon(float x, float y);
-	~Cannon() 
-	{
-		for (Bullet* p : cannonBulls)
-			delete p;
-		cannonBulls.clear();
-	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
+	vector<LPDYNAMICOBJECT> Fire();
 	virtual void SetState(int state);
 };
 #endif

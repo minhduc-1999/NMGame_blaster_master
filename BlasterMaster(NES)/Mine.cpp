@@ -1,9 +1,11 @@
 #include <cmath>
 #include "Mine.h"
+#include "Bullet.h"
 
 Mine::Mine(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(15, 8);
+	startTime = GetTickCount();
 }
 
 void Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -18,6 +20,12 @@ void Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	coEvents.clear();
 
 	CalcPotentialCollisions(coObjects, coEvents);
+
+	if (GetTickCount() - startTime >= 2000)
+	{
+		isShooting = true;
+		isDestroyed = true;
+	}
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -92,4 +100,16 @@ void Mine::SetState(int state)
 	case MINE_STATE_DIE:
 		break;
 	}
+}
+
+vector<LPDYNAMICOBJECT> Mine::Fire()
+{
+	vector<LPDYNAMICOBJECT> mineBulls;
+
+	mineBulls.push_back(new Bullet(x, y, MINE_BULLET_FIRST, 1));
+	mineBulls.push_back(new Bullet(x, y, MINE_BULLET_SECOND, 1));
+	mineBulls.push_back(new Bullet(x, y, MINE_BULLET_THIRD, 1));
+	mineBulls.push_back(new Bullet(x, y, MINE_BULLET_FOUTH, 1));
+
+	return mineBulls;
 }

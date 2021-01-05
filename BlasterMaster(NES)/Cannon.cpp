@@ -22,29 +22,10 @@ void Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (startTime > 600)
 	{
-		if (hor)
-		{
-			Bullet* bulletR = new Bullet(x + 7, y, CANNON_BULLET_HORIZONTAL, 1);
-			Bullet* bulletL = new Bullet(x - 7, y, CANNON_BULLET_HORIZONTAL, -1);
-
-			cannonBulls.push_back(bulletR);
-			cannonBulls.push_back(bulletL);
-		}
-		else
-		{
-			Bullet* bulletU = new Bullet(x, y - 7, CANNON_BULLET_VERTICAL, -1);
-			Bullet* bulletD = new Bullet(x, y + 7, CANNON_BULLET_VERTICAL, 1);
-
-			cannonBulls.push_back(bulletU);
-			cannonBulls.push_back(bulletD);
-		}
-
+		isShooting = true;
 		startTime = 0;
 		hor = !hor;
 	}
-
-	for (int i = 0; i < cannonBulls.size(); i++)
-		cannonBulls[i]->Update(dt, coObjects);
 
 	if (coEvents.size() == 0)
 	{
@@ -83,21 +64,33 @@ void Cannon::Render()
 	}
 
 	animation_set->at(ani)->Render(x, y, nx);
-
-	for (int i = 0; i < cannonBulls.size(); i++)
-	{
-		if (cannonBulls[i]->GetIsDestroyed())
-		{
-			delete cannonBulls[i];
-			cannonBulls.erase(cannonBulls.begin() + i);
-		}
-		else
-			cannonBulls[i]->Render();
-	}
 }
 
 void Cannon::SetState(int state)
 {
 	CDynamicGameObject::SetState(state);
 	nx = 1;
+}
+
+vector<LPDYNAMICOBJECT> Cannon::Fire()
+{
+	vector<LPDYNAMICOBJECT> cannonBulls;
+	if (hor)
+	{
+		Bullet* bulletR = new Bullet(x + 7, y, CANNON_BULLET_HORIZONTAL, 1);
+		Bullet* bulletL = new Bullet(x - 7, y, CANNON_BULLET_HORIZONTAL, -1);
+
+		cannonBulls.push_back(bulletR);
+		cannonBulls.push_back(bulletL);
+	}
+	else
+	{
+		Bullet* bulletU = new Bullet(x, y - 7, CANNON_BULLET_VERTICAL, -1);
+		Bullet* bulletD = new Bullet(x, y + 7, CANNON_BULLET_VERTICAL, 1);
+
+		cannonBulls.push_back(bulletU);
+		cannonBulls.push_back(bulletD);
+	}
+
+	return cannonBulls;
 }

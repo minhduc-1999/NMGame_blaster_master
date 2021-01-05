@@ -18,19 +18,12 @@
 class Floater2 : public CDynamicGameObject
 {
 private:
-    vector<Bullet*> floaterBulls;
     DWORD startTime;
 public:
     Floater2(float x, float y);
-    ~Floater2()
-    {
-        for (Bullet* p : floaterBulls)
-            delete p;
-        floaterBulls.clear();
-    }
     void SetState(int state);
     void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, float xMain, float yMain);
     void Render();
+    vector<LPDYNAMICOBJECT> Fire(float xMain, float yMain);
     int FindMain(float xF, float yF, float xMain, float yMain);
 };

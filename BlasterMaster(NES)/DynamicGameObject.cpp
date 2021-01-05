@@ -10,6 +10,8 @@ CDynamicGameObject::CDynamicGameObject(float x, float y) :CGameObject(x, y)
 	SetSize(16, 16);
 	isUpdated = false;
 	isRendered = false;
+	isShooting = false;
+	isDestroyed = false;
 }
 
 
@@ -23,13 +25,38 @@ int CDynamicGameObject::GetState()
 	return this->state;
 }
 
+void CDynamicGameObject::ResetShooting()
+{
+	isShooting = !isShooting;
+}
 
+bool CDynamicGameObject::GetIsShooting()
+{
+	return this->isShooting;
+}
+
+bool CDynamicGameObject::GetIsDestroyed()
+{
+	return this->isDestroyed;
+}
 
 void CDynamicGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->dt = dt;
 	dx = vx * dt;
 	dy = vy * dt;
+}
+
+vector<CDynamicGameObject*> CDynamicGameObject::Fire()
+{
+	vector<CDynamicGameObject*> temp;
+	return temp;
+}
+
+vector<CDynamicGameObject*> CDynamicGameObject::Fire(float xMain, float yMain)
+{
+	vector<CDynamicGameObject*> temp;
+	return temp;
 }
 
 LPCOLLISIONEVENT CDynamicGameObject::SweptAABBEx(LPGAMEOBJECT coO)
