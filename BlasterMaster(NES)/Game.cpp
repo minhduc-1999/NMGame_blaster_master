@@ -425,10 +425,10 @@ void CGame::Load(LPCSTR gameFile)
 
 	DebugOut("[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
 
-	SwitchScene(current_scene);
+	SwitchScene(current_scene, -1);
 }
 
-void CGame::SwitchScene(int scene_id)
+void CGame::SwitchScene(int scene_id, int section)
 {
 	DebugOut("[INFO] Switching to scene %d\n", scene_id);
 
@@ -443,6 +443,11 @@ void CGame::SwitchScene(int scene_id)
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
 	s->SetSaveData(data);
+	if (section != -1)
+	{
+		if (s->GetType() == GAME_SCENES_TYPE_AREA || s->GetType() == GAME_SCENES_TYPE_OVW)
+			((CTestScene*)s)->SetCurrentSection(section);
+	}
 	s->Load();
 	SetKeyHandler(s->GetKeyEventHandler());
 }

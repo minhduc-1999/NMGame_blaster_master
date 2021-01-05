@@ -357,46 +357,6 @@ void Section::Load()
 	DebugOut("[INFO] Done loading SECTION resources %s\n", secFilePath);
 }
 
-void Section::Load(SaveData* data)
-{
-	Load();
-	if (data != NULL)
-	{
-		if (data->sophiaSection == id)
-		{
-			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-			LPANIMATION_SET ani_set = animation_sets->Get(1);
-			LPDYNAMICOBJECT obj;
-			obj = new Sophia(data->sophiaX, data->sophiaY);
-			obj->SetAnimationSet(ani_set);
-			obj->SetTeam(0);
-			obj->SetType(1);
-			vector<int> gridPos = GetBoundGrid(obj->GetBound());
-			for (int i = 0; i < gridPos.size(); i++)
-			{
-				grids[gridPos[i]]->AddDynamicObj(obj);
-			}
-			DebugOut("[INFO] Loaded save data %d\n");
-		}
-	}
-	if (mainPlayer != NULL)
-	{
-		//D3DXVECTOR2 pos = mainPlayer->GetPosition();
-		//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
-		DebugOut("[ERROR] main object was created before!\n");
-		return;
-	}
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	LPANIMATION_SET ani_set = animation_sets->Get(1);
-	mainPlayer = new Sophia(defaultPos.x, defaultPos.y);
-	mainPlayer->SetAnimationSet(ani_set);
-	mainPlayer->SetTeam(0);
-	mainPlayer->SetType(1);
-	DebugOut("[INFO] Player object created!\n");
-	//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
-
-}
-
 void Section::Update(DWORD dt)
 {
 	vector<LPGAMEOBJECT> coObjs;

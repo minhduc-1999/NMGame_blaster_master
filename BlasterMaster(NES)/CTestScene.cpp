@@ -11,6 +11,8 @@
 #include "CLadder.h"
 #include "OvwSectionTransition.h"
 #include "AreaSectionTransition.h"
+#include "SectionArea.h"
+#include "SectionOvw.h"
 
 using namespace std;
 
@@ -140,8 +142,13 @@ void CTestScene::_ParseSection_SECTION(string line)
 	if (tokens.size() < 2) return;
 	int id = atoi(tokens[0].c_str());
 	string path = tokens[1];
-	LPSECTION section = new Section(id, path);
-	sections[id] = section;
+	LPSECTION section = NULL;
+	if (this->type == 1)
+		section = new SectionArea(id, path);
+	else if (this->type == 2)
+		section = new SectionOvw(id, path);
+	if(section != NULL)
+		sections[id] = section;
 }
 
 void CTestScene::_ParseSection_SETTINGS(string line)
@@ -289,10 +296,10 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				return;
 			}
 
-		}
-		CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
-		currentPlayer->OnKeyDown(KeyCode);
+		}		
 	}
+	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
+	currentPlayer->OnKeyDown(KeyCode);
 }
 
 void CTestSceneKeyHandler::KeyState(BYTE* states)

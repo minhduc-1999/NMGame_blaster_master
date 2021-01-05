@@ -202,7 +202,7 @@ void Jason::OnKeyDown(int KeyCode)
 	case DIK_Q:
 		if (canGoArea)
 		{
-			CGame::GetInstance()->SwitchScene(2);
+			CGame::GetInstance()->SwitchScene(2, 1);
 			return;
 		}
 		break;

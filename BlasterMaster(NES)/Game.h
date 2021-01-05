@@ -99,7 +99,7 @@ public:
 
 	void Load(LPCSTR gameFile);
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
-	void SwitchScene(int scene_id);
+	void SwitchScene(int scene_id, int section);
 	void SwitchSection(int section_id, D3DXVECTOR2 tlPos);
 	void UpdateSwitchSectionCamera(DWORD dt, int nx, int ny, D3DXVECTOR2 desPos, D3DXVECTOR2 desMapPos, D3DXVECTOR2 desMapDimen) { camera->UpdateSwitchSection(dt, nx, ny, desPos, desMapPos, desMapDimen); }
 };

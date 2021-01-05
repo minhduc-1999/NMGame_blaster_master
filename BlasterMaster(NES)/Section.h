@@ -6,7 +6,7 @@
 #include "SaveData.h"
 class Section
 {
-private:
+protected:
 	int id;
 	D3DXVECTOR2 defaultPos;
 	string secFilePath;
@@ -32,7 +32,7 @@ public:
 	CDynamicGameObject* GetPlayer() { return mainPlayer; }
 	Section(int id, string path) { this->id = id, this->secFilePath = path; }
 	virtual void Load();
-	virtual void Load(SaveData* data);
+	virtual void Load(SaveData* data) = 0;
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();

@@ -16,6 +16,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector< LPCOLLISIONEVENT> curCoEvents;
 	isCollisionWithSophia = false;
 	isCollisionWithLadder = false;
+	canGoOvw = true;
 	CalcNowCollisions(coObjects, curCoEvents);
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
@@ -29,6 +30,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isCollisionWithLadder = true;
 			break;
 		default:
+			canGoOvw = true;
 			break;
 		}
 	}
@@ -378,7 +380,7 @@ void MiniJason::OnKeyDown(int KeyCode)
 	case DIK_DOWN:
 		if (canGoOvw)
 		{
-			CGame::GetInstance()->SwitchScene(3);
+			CGame::GetInstance()->SwitchScene(3, 1);
 			return;
 		}
 		if (GetState() != MINIJASON_STATE_CLIMB)
