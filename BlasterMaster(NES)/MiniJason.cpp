@@ -4,8 +4,6 @@
 #include "CGate.h"
 #include "CLadder.h"
 
-int currentRunningColumn = 0;
-
 MiniJason::MiniJason(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(MINIJASON_WIDTH, MINIJASON_HEIGHT);
@@ -174,21 +172,11 @@ void MiniJason::Render()
 				{
 				case MINIJASON_STATE_IDLE_RIGHT: case MINIJASON_STATE_IDLE_LEFT:
 					ani = MINIJASON_ANI_DOWN_RUN;
-					animation_set->at(ani)->RenderFrame(currentRunningColumn, x, y, nx);
+					animation_set->at(ani)->RenderFrame(0, x, y, nx);
 					return;
 					break;
 				case MINIJASON_STATE_RUN_RIGHT: case MINIJASON_STATE_RUN_LEFT:
 					ani = MINIJASON_ANI_DOWN_RUN;
-					if (currentRunningColumn == 1)
-					{
-						currentRunningColumn = 0;
-					}
-					else
-					{
-						currentRunningColumn = 1;
-					}
-					animation_set->at(ani)->RenderStartByFrame(currentRunningColumn, x, y, nx);
-					return;
 					break;
 				}
 			}
@@ -202,16 +190,6 @@ void MiniJason::Render()
 					break;
 				case MINIJASON_STATE_RUN_RIGHT:case MINIJASON_STATE_RUN_LEFT:
 					ani = MINIJASON_ANI_RUN;
-					if (currentRunningColumn == 1)
-					{
-						currentRunningColumn = 0;
-					}
-					else
-					{
-						currentRunningColumn = 1;
-					}
-					animation_set->at(ani)->RenderStartByFrame(currentRunningColumn, x, y, nx);
-					return;
 					break;
 				}
 			}

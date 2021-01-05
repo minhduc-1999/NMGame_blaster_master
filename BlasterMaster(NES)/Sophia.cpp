@@ -4,18 +4,35 @@
 #include "Brick.h"
 int lastHeight = 0;
 int currentWalkingColumn = 0;
+DWORD lastTime;
 
 
 Sophia::Sophia(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(SOPHIA_WIDTH, SOPHIA_HEIGHT);
 	heightLevel = SOPHIA_HEIGHT_HIGH;
+	lastTime = GetTickCount();
 };
 
 void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
-
+	if (vx != 0)
+	{
+		DWORD now = GetTickCount();
+		if (now - lastTime >= 20)
+		{
+			lastTime = now;
+			if (currentWalkingColumn == 3)
+			{
+				currentWalkingColumn = 0;
+			}
+			else
+			{
+				currentWalkingColumn++;
+			}
+		}
+	}
 	vy += SOPHIA_GRAVITY;
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -136,14 +153,14 @@ void Sophia::Render()
 				break;
 			case SOPHIA_STATE_RUN_RIGHT:case SOPHIA_STATE_RUN_LEFT:
 				ani = SOPHIA_ANI_UP_JUMP;
-				if (currentWalkingColumn == 3)
+				/*if (currentWalkingColumn == 3)
 				{
 					currentWalkingColumn = 0;
 				}
 				else
 				{
 					currentWalkingColumn++;
-				}
+				}*/
 				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
@@ -187,14 +204,14 @@ void Sophia::Render()
 				{
 					ani = SOPHIA_ANI_JUMP_DOWN;
 				}
-				if (currentWalkingColumn == 3)
+				/*if (currentWalkingColumn == 3)
 				{
 					currentWalkingColumn = 0;
 				}
 				else
 				{
 					currentWalkingColumn++;
-				}
+				}*/
 				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
 				break;
@@ -301,14 +318,14 @@ void Sophia::Render()
 					}
 				}
 
-				if (currentWalkingColumn == 3)
+				/*if (currentWalkingColumn == 3)
 				{
 					currentWalkingColumn = 0;
 				}
 				else
 				{
 					currentWalkingColumn++;
-				}
+				}*/
 
 				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
@@ -358,7 +375,7 @@ void Sophia::Render()
 					}
 					else if (heightLevel == SOPHIA_HEIGHT_LOW)
 					{
-						lastHeight = 2;
+						lastHeight = 3;
 						ani = SOPHIA_ANI_RUN_LOW;
 						heightLevel--;
 					}
@@ -377,14 +394,14 @@ void Sophia::Render()
 					}
 				}
 
-				if (currentWalkingColumn == 3)
+				/*if (currentWalkingColumn == 3)
 				{
 					currentWalkingColumn = 0;
 				}
 				else
 				{
 					currentWalkingColumn++;
-				}
+				}*/
 
 				animation_set->at(ani)->RenderStartByFrame(currentWalkingColumn, x, y - 8, nx);
 				return;
