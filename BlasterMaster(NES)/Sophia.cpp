@@ -15,9 +15,8 @@ Sophia::Sophia(float x, float y) :CDynamicGameObject(x, y)
 	lastTimeAlpha = GetTickCount();
 	sound->getInstance()->loadSound("Resource\\Sound\\SophiaFire.wav", "SophiaFire");
 	sound->getInstance()->loadSound("Resource\\Sound\\Jump.wav", "Jump");
-	sound->getInstance()->loadSound("Resource\\Sound\\Hitted.wav", "Hitted");
+	sound->getInstance()->loadSound("Resource\\Sound\\Hit.wav", "Hit");
 	sound->getInstance()->loadSound("Resource\\Sound\\SophiaDed.wav", "SophiaDed");
-	sound->getInstance()->loadSound("Resource\\Sound\\SonicBoom.wav", "SonicBoom");
 };
 
 void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -33,6 +32,7 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 		case 13:
 			isCollisionWithEnemy = true;
+			sound->getInstance()->play("Hit", false, 1);
 			break;
 		default:
 			break;

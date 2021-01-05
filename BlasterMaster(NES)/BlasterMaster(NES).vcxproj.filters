@@ -573,9 +573,6 @@
     <Media Include="Resource\Sound\lvl2.wav">
       <Filter>Resources\Sound</Filter>
     </Media>
-    <Media Include="Resource\Sound\Hitted.wav">
-      <Filter>Resources\Sound</Filter>
-    </Media>
     <Media Include="Resource\Sound\Jump.wav">
       <Filter>Resources\Sound</Filter>
     </Media>
@@ -586,6 +583,9 @@
       <Filter>Resources\Sound</Filter>
     </Media>
     <Media Include="Resource\Sound\SophiaFire.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Hit.wav">
       <Filter>Resources\Sound</Filter>
     </Media>
   </ItemGroup>

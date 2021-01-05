@@ -280,7 +280,7 @@
     <Text Include="Resource\Config\scene-test.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Resource\Sound\Hitted.wav" />
+    <Media Include="Resource\Sound\Hit.wav" />
     <Media Include="Resource\Sound\Jump.wav" />
     <Media Include="Resource\Sound\lvl2.wav" />
     <Media Include="Resource\Sound\SonicBoom.wav" />
