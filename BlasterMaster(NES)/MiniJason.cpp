@@ -27,6 +27,24 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		switch (temp->GetType())
 		{
+		case 17:
+		{
+			CGate* gate = dynamic_cast<CGate*>(temp);
+			if (gate != 0)
+			{
+				if (this->nx == gate->GetDirectionX())
+				{
+					//if (abs(this->y - gate->GetDesTelePos().y) < 2)
+					//{
+						CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
+							gate->GetDesTelePos());
+						return;
+					//}					
+				}
+				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
+			}
+			break;
+		}
 		case 1:
 			isCollisionWithSophia = true;
 			break;
@@ -65,33 +83,35 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		float min_tx, min_ty, ntx, nty;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
-		if (ntx == 0)
+		/*if (ntx == 0)
 			x += dx;
 		if (nty == 0)
-			y += dy;
+			y += dy;*/
+		x += min_tx * dx + ntx * 0.4f;
+		y += min_ty * dy + nty * 0.4f;
+
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int coObjType = e->obj->GetType();
+			if (coObjType != 15)
+			{
+				if (e->nx != 0)
+				{
+					x += (1 - e->t) * dx - e->nx * 0.4f;
+				}
+				else
+				{
+					y += (1 - e->t) * dy - e->ny * 0.4f;
+				}
+			}
 			switch (coObjType)
 			{
-			case 1:
-				if (e->nx != 0)
-					x += dx;
-				if (e->ny != 0)
-					y += dy;
-				break;
-			case 13:
-				if (e->nx != 0)
-					x += dx;
-				if (e->ny != 0)
-					y += dy;
-				break;
 			case 18:	//Ladder
 				x += dx;
 				if (e->ny != 0)
 				{
-					if (e->ny == -1 
+					if (e->ny == -1
 						&& dynamic_cast<CLadder*>(e->obj)->GetPosition().y == 168.0)
 					{
 						y += e->t * dy + e->ny * 0.4f;
@@ -105,7 +125,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			case 15:
 				if (e->nx != 0)
 				{
-					x += e->t * dx + e->nx * 0.8f;
+					//x += e->t * dx + e->nx * 0.4f;
 					if (nx == -1)
 					{
 						SetState(MINIJASON_STATE_IDLE_LEFT);
@@ -117,7 +137,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 				if (e->ny != 0)
 				{
-					y += e->t * dy + e->ny * 0.4f;
+					//y += e->t * dy + e->ny * 0.4f;
 					vy = 0;
 						
 					if (e->ny == -1)
@@ -138,27 +158,13 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					
 				}
 				break;
-			case 79:
-				if (e->nx != 0)
-					x += dx;
-				if (e->ny != 0)
-					y += dy;
-				break;
-			case 17:
-				CGate * gate = dynamic_cast<CGate*>(e->obj);
-				if (gate != 0)
-				{
-					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
-						gate->GetDesTelePos());
-					return;
-					//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
-				}
 			};
 		}
 	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
 }
 
 void MiniJason::Render()
@@ -232,7 +238,7 @@ void MiniJason::Render()
 			}
 		}
 	}
-	
+
 	animation_set->at(ani)->Render(x, y, nx, alpha);
 }
 
@@ -343,7 +349,7 @@ void MiniJason::KeyState(BYTE* states)
 			vx = 0;
 			vy = MINIJASON_CLIMB_SPEED_Y;
 		}
-		else if (y <= 169 && y >= 143 && x <= 1600 && x >= 1584  && GetState() != MINIJASON_STATE_CLIMB) // standing on top of ladder
+		else if (y <= 169 && y >= 143 && x <= 1600 && x >= 1584 && GetState() != MINIJASON_STATE_CLIMB) // standing on top of ladder
 		{
 			y += 2;
 			SetState(MINIJASON_STATE_CLIMB);

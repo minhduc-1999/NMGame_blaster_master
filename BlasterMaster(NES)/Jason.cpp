@@ -18,13 +18,27 @@ void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		switch (temp->GetType())
 		{
+		case 17:
+		{
+			CGate* gate = dynamic_cast<CGate*>(temp);
+			if (gate != 0)
+			{
+				if (this->nx == gate->GetDirectionX() || this->ny == gate->GetDirectionY())
+				{
+					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
+						gate->GetDesTelePos());
+					return;
+				}
+				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
+			}
+			break;
+		}
 		case 80:
 			canGoArea = true;
 			DebugOut("[Collide with new gate]\n");
 			break;
 		default:
-			canGoArea = false;
-			hasExplored = true;
+			canGoArea = true;
 			break;
 		}
 	}
@@ -51,43 +65,31 @@ void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
 
 		// block 
-		//x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		//y += min_ty * dy + nty * 0.4f;
+		x += min_tx * dx + ntx * 0.4f;
+		y += min_ty * dy + nty * 0.4f;
 
 		//TODO: Collision logic with dynamic object (bots)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int objType = e->obj->GetType();
-			if (objType == 17)
-			{
-
-				CGate* gate = dynamic_cast<CGate*>(e->obj);
-				if (gate != 0)
-				{
-					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
-						gate->GetDesTelePos());
-					break;
-					//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
-				}
-			}
-			else if (objType == 80)
+			if (objType != 15)
 			{
 				if (e->nx != 0)
 				{
-					x += dx;
+					x += (1- e->t) * dx - e->nx * 0.4f;		
 				}
 				else
 				{
-					y += dy;
+					y += (1 - e->t) * dy - e->ny * 0.4f;
 				}
 			}
 		}
 
 	}
 
-// clean up collision events
-for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	// clean up collision events
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void Jason::Render()

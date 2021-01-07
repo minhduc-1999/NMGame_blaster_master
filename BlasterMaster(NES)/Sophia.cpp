@@ -22,24 +22,6 @@ Sophia::Sophia(float x, float y) :CDynamicGameObject(x, y)
 void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
-	vector< LPCOLLISIONEVENT> curCoEvents;
-	CalcNowCollisions(coObjects, curCoEvents);
-	isCollisionWithEnemy = false;
-	for (int i = 0; i < curCoEvents.size(); i++)
-	{
-		LPGAMEOBJECT temp = curCoEvents[i]->obj;
-		switch (temp->GetType())
-		{
-		case 13:
-			isCollisionWithEnemy = true;
-			sound->getInstance()->play("Hit", false, 1);
-			break;
-		default:
-			break;
-		}
-	}
-	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
-
 	if (vx != 0)
 	{
 		DWORD now = GetTickCount();
@@ -56,6 +38,43 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
+
+	//check now collision
+	vector< LPCOLLISIONEVENT> curCoEvents;
+	CalcNowCollisions(coObjects, curCoEvents);
+	for (int i = 0; i < curCoEvents.size(); i++)
+	{
+		LPGAMEOBJECT temp = curCoEvents[i]->obj;
+		switch (temp->GetType())
+		{
+		case 13:
+			isCollisionWithEnemy = true;
+			sound->getInstance()->play("Hit", false, 1);
+			break;
+		case 17:
+		{
+			CGate* gate = dynamic_cast<CGate*>(temp);
+			if (gate != 0)
+			{
+				if (this->nx == gate->GetDirectionX())
+				{
+					//if (abs(this->y - gate->GetDesTelePos().y) < 2)
+					//{
+						CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
+							gate->GetDesTelePos());
+						return;
+					//}
+				}
+				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
+
 	vy += SOPHIA_GRAVITY;
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -75,29 +94,30 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		float min_tx, min_ty, ntx, nty;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
-		if (ntx == 0)
+		/*if (ntx == 0)
 			x += dx;
 		if (nty == 0)
-			y += dy;
+			y += dy;*/
+		x += min_tx * dx + ntx * 0.4f;
+		y += min_ty * dy + nty * 0.4f;
+
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int coObjType = e->obj->GetType();
+			if (coObjType != 15)
+			{
+				if (e->nx != 0)
+				{
+					x += (1 - e->t) * dx - e->nx * 0.4f;
+				}
+				else
+				{
+					y += (1 - e->t) * dy - e->ny * 0.4f;
+				}
+			}
 			switch (coObjType)
 			{
-			case 13:case 5:
-				if (e->nx != 0)
-					x += dx;
-				if (e->ny != 0)
-					y += dy;
-				break;
-			case 18:	//Ladder
-				x += dx;
-				if (e->ny != 0)
-				{
-					y += dy;
-				}
-				break;
 			case 15:	//brick
 				if (e->nx != 0)
 				{
@@ -109,7 +129,7 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						SetState(SOPHIA_STATE_IDLE_RIGHT);
 					}
-					x += e->t * dx + e->nx * 0.8f;
+					//x += e->t * dx + e->nx * 0.4f;
 				}
 				if (e->ny != 0)
 				{
@@ -118,22 +138,12 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						SetIsJumping(false);
 					}
-					y += e->t * dy + e->ny * 0.4f;
+					//y += e->t * dy + e->ny * 0.4f;
 				}
 				break;
 			default:
 				break;
 			};
-
-
-			CGate* gate = dynamic_cast<CGate*>(e->obj);
-			if (gate != 0)
-			{
-				CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
-					gate->GetDesTelePos());
-				break;
-			}
-
 		}
 	}
 

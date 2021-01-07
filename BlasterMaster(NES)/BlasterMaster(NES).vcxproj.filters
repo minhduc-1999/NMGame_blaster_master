@@ -316,6 +316,9 @@
     <ClInclude Include="SectionArea.h">
       <Filter>FrameWork\Section</Filter>
     </ClInclude>
+    <ClInclude Include="SceneGate.h">
+      <Filter>Object\StaticObject\Gate</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -455,6 +458,9 @@
     </ClCompile>
     <ClCompile Include="SectionArea.cpp">
       <Filter>FrameWork\Section</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGate.cpp">
+      <Filter>Object\StaticObject\Gate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -25,7 +25,6 @@
 class Jason : public CDynamicGameObject
 {
 	bool canGoArea = false;
-	bool hasExplored = false;
 public:
 	Jason(float x, float y);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

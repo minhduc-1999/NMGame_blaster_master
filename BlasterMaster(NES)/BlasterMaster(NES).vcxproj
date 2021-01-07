@@ -163,6 +163,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="SceneGate.h" />
     <ClInclude Include="HPBar.h" />
     <ClInclude Include="Insect.h" />
     <ClInclude Include="Jason.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="MiniJason.cpp" />
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="OvwSectionTransition.cpp" />
+    <ClCompile Include="SceneGate.cpp" />
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="SectionArea.cpp" />
     <ClCompile Include="SectionOvw.cpp" />

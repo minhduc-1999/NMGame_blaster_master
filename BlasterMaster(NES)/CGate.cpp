@@ -1,10 +1,22 @@
 #include "CGate.h"
-
+#define MAX_DELTA_POS 32
 CGate::CGate(float x, float y, int sectionId, D3DXVECTOR2 tele, int width, int height) :CStaticGameObject(x, y)
 {
     SetSize(width, height);
 	desTelePos = tele;
 	nextSectionID = sectionId;
+	if (tele.x - x > MAX_DELTA_POS)
+		nx = 1;
+	else if (x - tele.x > MAX_DELTA_POS)
+		nx = -1;
+	else
+		nx = 0;
+	if (tele.y - y > MAX_DELTA_POS)
+		ny = 1;
+	else if (y - tele.y > MAX_DELTA_POS)
+		ny = -1;
+	else
+		ny = 0;
 }
 
 void CGate::Render()
@@ -29,9 +41,9 @@ Rect CGate::GetBound()
 	Rect bound;
 
 	bound.left = x - width / 2 - 1;
-	bound.right = bound.left + width;
-	bound.top = y - height / 2;
-	bound.bottom = bound.top + height - 1;
+	bound.right = bound.left + width + 2;
+	bound.top = y - height / 2 - 1;
+	bound.bottom = bound.top + height + 2;
 
 	return bound;
 }

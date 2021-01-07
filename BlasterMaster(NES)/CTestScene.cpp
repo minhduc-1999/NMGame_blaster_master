@@ -48,7 +48,6 @@ CTestScene::CTestScene(int id, string filePath, int type) :
 #define SCENE_SECTION_ANIMATIONS 4
 #define SCENE_SECTION_ANIMATION_SETS	5
 #define SCENE_SECTION_SECTION	6
-#define SCENE_SECTION_SETTING	7
 
 #define TEXTURE_BACKGROUND 40
 #define TEXTURE_FOREGROUND 50
@@ -149,17 +148,6 @@ void CTestScene::_ParseSection_SECTION(string line)
 		section = new SectionOvw(id, path);
 	if(section != NULL)
 		sections[id] = section;
-}
-
-void CTestScene::_ParseSection_SETTINGS(string line)
-{
-	vector<string> tokens = split(line);
-
-	if (tokens.size() < 2) return;
-	if (tokens[0] == "start")
-		current_section = atoi(tokens[1].c_str());
-	else
-		DebugOut("[ERROR] Unknown scene setting %s\n", tokens[0]);
 }
 
 //Update render
@@ -342,9 +330,6 @@ void CTestScene::Load()
 		if (line == "[SECTIONS]") {
 			section = SCENE_SECTION_SECTION; continue;
 		}
-		if (line == "[SETTINGS]") {
-			section = SCENE_SECTION_SETTING; continue;
-		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		//
@@ -352,7 +337,6 @@ void CTestScene::Load()
 		//
 		switch (section)
 		{
-		case SCENE_SECTION_SETTING: _ParseSection_SETTINGS(line); break;
 		case SCENE_SECTION_SECTION:
 			_ParseSection_SECTION(line); break;
 		case SCENE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;

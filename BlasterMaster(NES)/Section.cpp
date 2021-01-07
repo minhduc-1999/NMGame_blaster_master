@@ -236,7 +236,26 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		obj = new CLadder(x, y);
 		obj->SetType(object_type);
 		break;
-	case OBJECT_TYPE_GATE: case 80:
+	case 80:
+	{
+		int section = atoi(tokens[tokens.size() - 3].c_str());
+		float telex = stof(tokens[tokens.size() - 2].c_str());
+		float teley = stof(tokens[tokens.size() - 1].c_str());
+		int size_w = atoi(tokens[tokens.size() - 5].c_str());
+		int size_h = atoi(tokens[tokens.size() - 4].c_str());
+		D3DXVECTOR2 telePos = D3DXVECTOR2(telex, teley);
+		obj = new CGate(x, y, section, telePos, size_w, size_h);
+		obj->SetType(object_type);
+		for (int i = 4; i <= tokens.size() - 6; i++)
+		{
+			int spriteID = atoi(tokens[i].c_str());
+			obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
+		}
+		grids[grid]->AddStaticObj(obj);
+		return;
+		break;
+	}
+	case OBJECT_TYPE_GATE:
 	{
 		int section = atoi(tokens[tokens.size() - 3].c_str());
 		float telex = stof(tokens[tokens.size() - 2].c_str());
