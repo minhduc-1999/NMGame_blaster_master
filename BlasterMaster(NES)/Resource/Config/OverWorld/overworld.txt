@@ -35,8 +35,6 @@
 33	Resource/Config/OverWorld/ovw_sec33.txt
 34	Resource/Config/OverWorld/ovw_sec34.txt
 35	Resource/Config/OverWorld/ovw_sec35.txt
-#[SETTINGS]
-#start	1
 #id	file_path	transparent_color_r g b
 [TEXTURES]
 0	enemy.png	0	0	255
@@ -45,7 +43,7 @@
 40	Resource/Background/overworld_bg.png	0	0	255
 50	Resource/Foreground/overworld_fg.png	0	0	255
 60	Items.png	0	0	255
-70	Resource\StatusBar\StatusBar.png	0	0	255
+70	Resource/StatusBar/StatusBar.png	0	0	255
 -100	Resource/Background/bbox.png	0	0	255
 # id	left	top	right	bottom	texture_id
 [SPRITES]

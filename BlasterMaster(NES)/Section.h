@@ -27,7 +27,6 @@ protected:
 	void _ParseSection_MAP(string line);
 	void _ParseSection_GRID(string line);
 	void _ParseSection_DEFAULT(string line);
-
 public:
 	CDynamicGameObject* GetPlayer() { return mainPlayer; }
 	Section(int id, string path) { this->id = id, this->secFilePath = path; }

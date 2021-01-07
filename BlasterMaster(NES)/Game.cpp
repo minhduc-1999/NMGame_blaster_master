@@ -401,7 +401,7 @@ void CGame::_ParseSection_SETTINGS(string line)
 	{
 		current_scene = atoi(tokens[1].c_str());
 		int section = atoi(tokens[2].c_str());
-		if (scenes[current_scene]->GetType() == GAME_SCENES_TYPE_AREA)
+		if (scenes[current_scene]->GetType() == GAME_SCENES_TYPE_AREA || scenes[current_scene]->GetType() == GAME_SCENES_TYPE_OVW)
 			((CTestScene*)scenes[current_scene])->SetCurrentSection(section);
 	}
 	else

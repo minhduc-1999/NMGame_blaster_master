@@ -15,8 +15,6 @@
 13	Resource/Config/Area2/area2_secM.txt
 14	Resource/Config/Area2/area2_secN.txt
 15	Resource/Config/Area2/area2_secO.txt
-#[SETTINGS]
-#start	1
 #id	file_path	transparent_color_r g b
 [TEXTURES]
 0	enemy.png	0	0	255
@@ -27,6 +25,7 @@
 50	Resource/Foreground/area2_fg.png	0	0	255
 60	Items.png	0	0	255
 70	Resource\StatusBar\StatusBar.png	0	0	255
+-100	Resource/Background/bbox.png	0	0	255
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 #=========TILE=============

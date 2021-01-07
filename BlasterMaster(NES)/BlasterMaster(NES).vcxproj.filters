@@ -568,6 +568,102 @@
     <Text Include="Resource\Config\OverWorld\ovw_sec8.txt">
       <Filter>Resources\Config\overworld</Filter>
     </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec3.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec4.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec5.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec6.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec7.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec9.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec11.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec12.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec14.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec15.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec17.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec19.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec10.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec13.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec16.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec18.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec20.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec21.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec22.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec23.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec24.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec25.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec26.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec27.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec28.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec29.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec30.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec31.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec32.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec33.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec34.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\OverWorld\ovw_sec35.txt">
+      <Filter>Resources\Config\overworld</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sound\lvl2.wav">

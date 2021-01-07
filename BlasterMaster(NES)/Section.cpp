@@ -236,7 +236,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		obj = new CLadder(x, y);
 		obj->SetType(object_type);
 		break;
-	case OBJECT_TYPE_GATE: case 80: case 79:
+	case OBJECT_TYPE_GATE: case 80:
 	{
 		int section = atoi(tokens[tokens.size() - 3].c_str());
 		float telex = stof(tokens[tokens.size() - 2].c_str());

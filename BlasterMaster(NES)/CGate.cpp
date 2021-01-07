@@ -21,7 +21,7 @@ void CGate::Render()
 			int index = (i % row) * col + j % col; 
 			_tile.at(index)->Draw(x, y, -1);
 		}*/
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 Rect CGate::GetBound()
@@ -31,7 +31,7 @@ Rect CGate::GetBound()
 	bound.left = x - width / 2 - 1;
 	bound.right = bound.left + width;
 	bound.top = y - height / 2;
-	bound.bottom = bound.top + height;
+	bound.bottom = bound.top + height - 1;
 
 	return bound;
 }
