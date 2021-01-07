@@ -42,6 +42,7 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//check now collision
 	vector< LPCOLLISIONEVENT> curCoEvents;
 	CalcNowCollisions(coObjects, curCoEvents);
+	isCollisionWithEnemy = false;
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
@@ -94,10 +95,6 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		float min_tx, min_ty, ntx, nty;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
-		/*if (ntx == 0)
-			x += dx;
-		if (nty == 0)
-			y += dy;*/
 		x += min_tx * dx + ntx * 0.4f;
 		y += min_ty * dy + nty * 0.4f;
 
@@ -175,31 +172,6 @@ void Sophia::Render()
 	{
 		alpha = 255;
 	}
-	
-	/*if (alpha == 255)
-	{
-		alpha = 0;
-	}
-	else
-	{
-		alpha = 255;
-	}*/
-
-	/*if (isCollisionWithEnemy)
-	{
-		if (alpha == 255)
-		{
-			alpha = 0;
-		}
-		else
-		{
-			alpha = 255;
-		}
-	}
-	else
-	{
-		alpha = 255;
-	}*/
 
 	if (GetIsJumping())
 	{
@@ -612,6 +584,9 @@ void Sophia::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
+	case DIK_P:
+		SetState(SOPHIA_STATE_DIE);
+		break;
 	case DIK_X:
 		if (GetIsJumping() == false)
 		{
