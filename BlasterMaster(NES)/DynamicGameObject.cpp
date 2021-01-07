@@ -12,7 +12,6 @@ CDynamicGameObject::CDynamicGameObject(float x, float y) :CGameObject(x, y)
 	isRendered = false;
 	isShooting = false;
 	isDestroyed = false;
-	sound = new Sound();
 }
 
 

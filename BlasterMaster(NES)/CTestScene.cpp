@@ -48,6 +48,7 @@ CTestScene::CTestScene(int id, string filePath, int type) :
 #define SCENE_SECTION_ANIMATIONS 4
 #define SCENE_SECTION_ANIMATION_SETS	5
 #define SCENE_SECTION_SECTION	6
+#define SCENE_SECTION_SOUND	7
 
 #define TEXTURE_BACKGROUND 40
 #define TEXTURE_FOREGROUND 50
@@ -148,6 +149,18 @@ void CTestScene::_ParseSection_SECTION(string line)
 		section = new SectionOvw(id, path);
 	if(section != NULL)
 		sections[id] = section;
+}
+
+void CTestScene::_ParseSection_SOUND(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return; // skip invalid lines
+
+	string name = tokens[0];
+	string path = tokens[1];
+	
+	Sound::getInstance()->loadSound(path.c_str(), name);
 }
 
 //Update render
@@ -330,6 +343,9 @@ void CTestScene::Load()
 		if (line == "[SECTIONS]") {
 			section = SCENE_SECTION_SECTION; continue;
 		}
+		if (line == "[SOUNDS]") {
+			section = SCENE_SECTION_SOUND; continue;
+		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		//
@@ -343,14 +359,13 @@ void CTestScene::Load()
 		case SCENE_SECTION_SPRITES: _ParseSection_SPRITES(line); break;
 		case SCENE_SECTION_ANIMATIONS:
 			_ParseSection_ANIMATIONS(line); break;
+		case SCENE_SECTION_SOUND:
+			_ParseSection_SOUND(line); break;
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
 		}
 	}
-	Sound::getInstance()->loadSound("Resource\\Sound\\lvl2.wav", "lvl2");
-	//Sound::getInstance()->play("lvl2", true, 0);
+	Sound::getInstance()->play("lvl2", true, 0);
 	f.close();
-
-	//CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 
 	DebugOut("[INFO] Loading section file : %s has been loaded successfully\n", sceneFilePath);
 

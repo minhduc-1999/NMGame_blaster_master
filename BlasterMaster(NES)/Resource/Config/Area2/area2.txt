@@ -27,6 +27,14 @@
 70	Resource\StatusBar\StatusBar.png	0	0	255
 -100	Resource/Background/bbox.png	0	0	255
 # id	left	top	right	bottom	texture_id
+#sound
+# id	path
+[SOUNDS]
+SophiaFire	Resource\Sound\SophiaFire.wav
+Jump	Resource\Sound\Jump.wav
+Hit	Resource\Sound\Hit.wav
+SophiaDed	Resource\Sound\SophiaDed.wav
+lvl2	Resource\Sound\lvl2.wav
 [SPRITES]
 #=========TILE=============
 1	1	1	17	17	30

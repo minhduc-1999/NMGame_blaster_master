@@ -40,8 +40,8 @@ public:
 	void mute();
 	void unMute();
 	void cleanUp();
-	Sound() {};
 private:
+	Sound() {};
 	Sound(HWND hWnd);
 	static Sound* instance;
 	IDirectSound8* pDevice;

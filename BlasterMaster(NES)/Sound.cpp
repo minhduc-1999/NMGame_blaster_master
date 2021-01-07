@@ -7,7 +7,6 @@ Sound* Sound::getInstance()
 {
 	if (instance == nullptr)
 		instance = new Sound(CGame::getCurrentHWND());
-
 	return instance;
 }
 

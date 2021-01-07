@@ -13,10 +13,10 @@ Sophia::Sophia(float x, float y) :CDynamicGameObject(x, y)
 	heightLevel = SOPHIA_HEIGHT_HIGH;
 	lastTime = GetTickCount();
 	lastTimeAlpha = GetTickCount();
-	sound->getInstance()->loadSound("Resource\\Sound\\SophiaFire.wav", "SophiaFire");
-	sound->getInstance()->loadSound("Resource\\Sound\\Jump.wav", "Jump");
-	sound->getInstance()->loadSound("Resource\\Sound\\Hit.wav", "Hit");
-	sound->getInstance()->loadSound("Resource\\Sound\\SophiaDed.wav", "SophiaDed");
+	/*Sound::getInstance()->loadSound("Resource\\Sound\\SophiaFire.wav", "SophiaFire");
+	Sound::getInstance()->loadSound("Resource\\Sound\\Jump.wav", "Jump");
+	Sound::getInstance()->loadSound("Resource\\Sound\\Hit.wav", "Hit");
+	Sound::getInstance()->loadSound("Resource\\Sound\\SophiaDed.wav", "SophiaDed");*/
 };
 
 void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -49,7 +49,7 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 		case 13:
 			isCollisionWithEnemy = true;
-			sound->getInstance()->play("Hit", false, 1);
+			Sound::getInstance()->play("Hit", false, 1);
 			break;
 		case 17:
 		{
@@ -616,7 +616,7 @@ void Sophia::OnKeyDown(int KeyCode)
 		if (GetIsJumping() == false)
 		{
 			SetIsJumping(true);
-			sound->getInstance()->play("Jump", false, 1);
+			Sound::getInstance()->play("Jump", false, 1);
 			if (GetNX() == 1)
 			{
 				SetState(SOPHIA_STATE_JUMP_RIGHT);
@@ -630,7 +630,7 @@ void Sophia::OnKeyDown(int KeyCode)
 	case DIK_Z:
 		if (GetIsUp())
 		{
-			sound->getInstance()->play("SophiaFire", false, 1);
+			Sound::getInstance()->play("SophiaFire", false, 1);
 
 			if (GetNX() == 1)
 				SetState(SOPHIA_STATE_FIRING_UP_RIGHT);
@@ -640,7 +640,7 @@ void Sophia::OnKeyDown(int KeyCode)
 		}
 		else
 		{
-			sound->getInstance()->play("SophiaFire", false, 1);
+			Sound::getInstance()->play("SophiaFire", false, 1);
 			if (GetNX() == 1)
 				SetState(SOPHIA_STATE_FIRING_RIGHT);
 			else

@@ -46,7 +46,7 @@ public:
 	void _ParseSection_ANIMATIONS(string line);
 	void _ParseSection_ANIMATION_SETS(string line);
 	void _ParseSection_SECTION(string line);
-	void _ParseSection_SETTINGS(string line);
+	void _ParseSection_SOUND(string line);
 
 	CDynamicGameObject* GetPlayer() { return mainPlayer; }
 	MiniJason* GetPlayerJason() { return miniJason; }

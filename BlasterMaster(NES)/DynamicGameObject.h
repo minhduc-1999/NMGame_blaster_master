@@ -13,7 +13,6 @@ protected:
 	LPANIMATION_SET animation_set;
 	bool isShooting;
 	bool isDestroyed;
-	Sound* sound;
 public:
 	CDynamicGameObject(float x, float y);
 
