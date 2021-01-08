@@ -65,7 +65,7 @@ vector<string> split(string line, string delimeter)
 //}
 
 
-//check if b2 is bounded by b1
+//check if b1 is collide with b2
 bool CheckIfBound(Rect b1, Rect b2)
 {
 	if (b2.left > b1.right || b2.top > b1.bottom

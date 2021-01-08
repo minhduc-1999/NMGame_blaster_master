@@ -1,5 +1,6 @@
 #include "Jason.h"
 #include "CGate.h"
+#include "SceneGate.h"
 
 Jason::Jason(float x, float y) :CDynamicGameObject(x, y)
 {
@@ -11,8 +12,9 @@ void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 	vector< LPCOLLISIONEVENT> curCoEvents;
-
 	CalcNowCollisions(coObjects, curCoEvents);
+	if (curCoEvents.size() == 0)
+		canGoArea = true;
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
@@ -34,8 +36,13 @@ void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			break;
 		}
 		case 80:
-			canGoArea = true;
-			DebugOut("[Collide with new gate]\n");
+			if (canGoArea)
+			{
+				SceneGate* gate = dynamic_cast<SceneGate*>(temp);
+				if (gate != 0)
+					CGame::GetInstance()->SwitchScene(gate->GetDesScene(), gate->GetNextSectionID());
+				return;
+			}
 			break;
 		default:
 			canGoArea = true;
@@ -201,13 +208,6 @@ void Jason::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
-	case DIK_Q:
-		if (canGoArea)
-		{
-			CGame::GetInstance()->SwitchScene(2, 1);
-			return;
-		}
-		break;
 		/*case DIK_Z:
 			if (GetIsUp())
 			{

@@ -147,7 +147,7 @@ void CTestScene::_ParseSection_SECTION(string line)
 		section = new SectionArea(id, path);
 	else if (this->type == 2)
 		section = new SectionOvw(id, path);
-	if(section != NULL)
+	if (section != NULL)
 		sections[id] = section;
 }
 
@@ -159,7 +159,7 @@ void CTestScene::_ParseSection_SOUND(string line)
 
 	string name = tokens[0];
 	string path = tokens[1];
-	
+
 	Sound::getInstance()->loadSound(path.c_str(), name);
 }
 
@@ -211,15 +211,18 @@ void CTestScene::Render()
 	LPDIRECT3DTEXTURE9 texfg = CTextureManager::GetInstance()->Get(TEXTURE_FOREGROUND);
 	float bgX = cam.left + (cam.right - cam.left) / 2.0f;
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
-	CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
+	//CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 	//Render object
 	if (!isSwitchingSection)
 	{
 		sections[current_section]->Render();
 	}
-	mainPlayer->Render();
+	else
+		if (mainPlayer != NULL)
+			mainPlayer->Render();
+	//mainPlayer->Render();
 	//render foreground
-	CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
+	//CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 	//render hpbar
 	hpBar->Render();
 }
@@ -297,7 +300,7 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				return;
 			}
 
-		}		
+		}
 	}
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->OnKeyDown(KeyCode);
@@ -364,7 +367,7 @@ void CTestScene::Load()
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
 		}
 	}
-	Sound::getInstance()->play("lvl2", true, 0);
+	//Sound::getInstance()->play("lvl2", true, 0);
 	f.close();
 
 	DebugOut("[INFO] Loading section file : %s has been loaded successfully\n", sceneFilePath);

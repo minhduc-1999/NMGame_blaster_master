@@ -108,7 +108,7 @@ LPCOLLISIONEVENT CDynamicGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 LPCOLLISIONEVENT CDynamicGameObject::SweptCollistion(LPGAMEOBJECT coO)
 {
 	CCollisionEvent* e = NULL;
-	if (CheckIfBound(coO->GetBound(), this->GetBound()))
+	if (CheckIfBound(this->GetBound(), coO->GetBound()))
 	{
 		e = new CCollisionEvent(0, 0, 0, coO);
 	}
@@ -175,7 +175,7 @@ void CDynamicGameObject::FilterCollision(
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
 		CGate* gate = dynamic_cast<CGate*>(c->obj);
-		
+
 		if (c->t < min_tx && c->nx != 0) {
 			min_tx = c->t; nx = c->nx; min_ix = i;
 		}
