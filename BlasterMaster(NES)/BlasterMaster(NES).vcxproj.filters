@@ -690,5 +690,47 @@
     <Media Include="Resource\Sound\Hit.wav">
       <Filter>Resources\Sound</Filter>
     </Media>
+    <Media Include="Resource\Sound\Boss.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Canon.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Dome.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Fly.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\JasonDed.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\JasonFire.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\JasonGunBoom.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\JasonHit.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Jumper.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Mine.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\MiniJasonFire.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Skull.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Tele.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Worm.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
   </ItemGroup>
 </Project>

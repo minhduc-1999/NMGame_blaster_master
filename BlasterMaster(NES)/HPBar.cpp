@@ -3,8 +3,6 @@
 
 HPBar::HPBar() :CDynamicGameObject(x, y)
 {
-	shp = SOPHIA_MAX_HP;
-	jhp = JASON_MAX_HP;
 	hp = 8;
 	SetSize(45, 233);
 
@@ -13,10 +11,10 @@ HPBar::HPBar() :CDynamicGameObject(x, y)
 	this->SetAnimationSet(ani_set);
 }
 
-int HPBar::Update(DWORD dt, float x, float y)
+void HPBar::Update(DWORD dt, float x, float y, int curHP)
 {
 	this->SetPosition(x, y);
-	
+	hp = curHP;
 	CDynamicGameObject::Update(dt);
 	return 0;
 }
@@ -64,45 +62,4 @@ void HPBar::Render()
 void HPBar::SetState(int bar)
 {
 	CDynamicGameObject::SetState(bar);
-	switch (bar)
-	{
-	case SOPHIA_HPBAR:
-		hp = (shp+1)/2;
-		curBar = 0;
-		break;
-	case JASON_HPBAR:
-		hp = jhp;
-		curBar = 1;
-		break;
-	case HP_UP:
-		if (curBar == 0)
-		{
-			shp += 2;
-			hp = shp;
-			this->SetState(SOPHIA_HPBAR);
-		}
-		else
-		{
-			jhp++;
-			hp = jhp;
-			this->SetState(JASON_HPBAR);
-		}
-		break;
-	case HP_DOWN:
-		if (curBar == 0)
-		{
-			shp--;
-			hp = (shp+1)/2;
-			this->SetState(SOPHIA_HPBAR);
-		}
-		else
-		{
-			jhp--;
-			hp=jhp;
-			this->SetState(JASON_HPBAR);
-		}
-		break;
-	default:
-		break;
-	}
 }
