@@ -13,6 +13,7 @@ Sophia::Sophia(float x, float y) :CDynamicGameObject(x, y)
 	heightLevel = SOPHIA_HEIGHT_HIGH;
 	lastTime = GetTickCount64();
 	lastTimeAlpha = GetTickCount64();
+	HP = 16;
 };
 
 int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -42,11 +43,17 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
+		DWORD now = GetTickCount64();
 		switch (temp->GetType())
 		{
 		case 13:case 5:
 			isCollisionWithEnemy = true;
-			Sound::getInstance()->play("Hit", false, 1);
+			if (GetTickCount64() - TouchTime >= 500)
+			{
+				TouchTime = now;
+				SetHP(HPDown(HP, 1));
+				Sound::getInstance()->play("Hit", false, 1);
+			}
 			break;
 		case 17:
 		{
@@ -139,7 +146,11 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			};
 		}
 	}
-
+	if (HP <= 0)
+	{
+		Sound::getInstance()->play("SophiaDed", true, 0);
+		SetState(SOPHIA_STATE_DIE);
+	}
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	DebugOut("[SOPHIA]\t%f\t%f\n", x, y);
@@ -530,6 +541,8 @@ void Sophia::SetState(int state)
 		break;
 	case SOPHIA_STATE_DIE:
 		vx = 0;
+		vy = 0;
+		Sound::getInstance()->stop("Hit");
 		break;
 	}
 }

@@ -163,6 +163,12 @@ void CDynamicGameObject::CalcPotentialCollisions(
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
 
+int CDynamicGameObject::HPDown(int hp, int dmg)
+{
+	hp=hp-dmg;
+	return hp;
+}
+
 void CDynamicGameObject::FilterCollision(
 	vector<LPCOLLISIONEVENT>& coEvents,
 	vector<LPCOLLISIONEVENT>& coEventsResult,

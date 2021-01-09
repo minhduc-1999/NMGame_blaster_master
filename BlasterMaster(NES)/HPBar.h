@@ -2,12 +2,9 @@
 #define _HPBar_H
 #include "DynamicGameObject.h"
 
-#define	JASON_MAX_HP				8
-#define	SOPHIA_MAX_HP				16
-#define SOPHIA_HPBAR				99
-#define JASON_HPBAR					100
-#define HP_UP						98
-#define	HP_DOWN						97
+#define SOPHIA_HPBAR				11
+#define JASON_HPBAR					22
+#define DEAD						33
 
 #define HP_BAR_0					8
 #define HP_BAR_1					7

@@ -13,6 +13,7 @@ protected:
 	LPANIMATION_SET animation_set;
 	bool isShooting;
 	bool isDestroyed;
+	DWORD TouchTime;
 public:
 	CDynamicGameObject(float x, float y);
 
@@ -21,7 +22,7 @@ public:
 
 	int GetHP() { return HP; };
 	void SetHP(int hp) { HP = hp; };
-
+	int HPDown(int hp, int dmg);
 	virtual void SetState(int state);
 	int GetState();
 

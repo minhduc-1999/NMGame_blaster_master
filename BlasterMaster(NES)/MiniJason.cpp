@@ -11,6 +11,7 @@ MiniJason::MiniJason(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(MINIJASON_WIDTH, MINIJASON_HEIGHT);
 	lastTimeAlphaMiniJason = GetTickCount64();
+	HP = 16;
 }
 
 int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

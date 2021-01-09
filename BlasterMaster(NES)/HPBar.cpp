@@ -14,9 +14,8 @@ HPBar::HPBar() :CDynamicGameObject(x, y)
 void HPBar::Update(DWORD dt, float x, float y, int curHP)
 {
 	this->SetPosition(x, y);
-	hp = curHP;
+	hp = (curHP+1)/2;
 	CDynamicGameObject::Update(dt);
-	return 0;
 }
 
 void HPBar::Render()
@@ -24,6 +23,8 @@ void HPBar::Render()
 	int ani = HP_BAR_FULL;
 	if (hp > 8)
 		hp = 8;
+	if (hp < 0)
+		hp = 0;
 	switch (hp)
 	{
 	case 8:
@@ -62,4 +63,10 @@ void HPBar::Render()
 void HPBar::SetState(int bar)
 {
 	CDynamicGameObject::SetState(bar);
+	switch (state)
+	{
+	case JASON_HPBAR:
+		break;
+	}
+
 }

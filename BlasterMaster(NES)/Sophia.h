@@ -12,6 +12,7 @@
 #define SOPHIA_RUN_SPEED						0.05f
 #define SOPHIA_JUMP_SPEED_Y						0.29f
 #define SOPHIA_GRAVITY							0.02f
+#define SOPHIA_MAX_HP					16
 
 //define STATE
 #define SOPHIA_STATE_IDLE_RIGHT			000
@@ -50,6 +51,7 @@ class Sophia : public CDynamicGameObject
 	bool isJumping = false;
 	int alpha = 255;
 	bool isCollisionWithEnemy = false;
+	int SubHP;
 public:
 	Sophia(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
