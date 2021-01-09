@@ -283,6 +283,7 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
 				((CTestScene*)scence)->addMiniJason();
 				((CTestScene*)scence)->ChangePlayerType();
+				Sound::getInstance()->play("Open", false, 1);
 			}
 			else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
 				&& ((MiniJason*)(((CTestScene*)scence)->GetPlayer()))->IsCollisionWithSophia())
@@ -293,10 +294,9 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
 				((CTestScene*)scence)->deleteMiniJason();
 				((CTestScene*)scence)->ChangePlayerType();
-
+				Sound::getInstance()->play("Open", false, 1);
 				if (saveData != NULL)
 				{
-
 					((CTestScene*)scence)->GetPlayer()->SetHP(saveData->sophiaHP);
 					delete saveData;
 					scence->SetSaveData(NULL);
