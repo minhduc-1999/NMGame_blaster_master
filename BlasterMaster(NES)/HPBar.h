@@ -2,10 +2,6 @@
 #define _HPBar_H
 #include "DynamicGameObject.h"
 
-#define SOPHIA_HPBAR				11
-#define JASON_HPBAR					22
-#define DEAD						33
-
 #define HP_BAR_0					8
 #define HP_BAR_1					7
 #define	HP_BAR_2					6
@@ -24,7 +20,6 @@ public:
 	HPBar();
 	void Update(DWORD dt, float x, float y, int curHP);
 	void Render();
-	void SetState(int bar);
 };
 #endif
 

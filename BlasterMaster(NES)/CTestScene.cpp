@@ -283,7 +283,6 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
 				((CTestScene*)scence)->addMiniJason();
 				((CTestScene*)scence)->ChangePlayerType();
-				((CTestScene*)scence)->SetHPBarState(JASON_HPBAR);
 			}
 			else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
 				&& ((MiniJason*)(((CTestScene*)scence)->GetPlayer()))->IsCollisionWithSophia())

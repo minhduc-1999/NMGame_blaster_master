@@ -34,6 +34,9 @@ SophiaFire	Resource\Sound\SophiaFire.wav
 Jump	Resource\Sound\Jump.wav
 Hit	Resource\Sound\Hit.wav
 SophiaDed	Resource\Sound\SophiaDed.wav
+JHit	Resource\Sound\JasonHit.wav
+JasonFire	Resource\Sound\MiniJasonFire.wav
+JasonDed	Resource\Sound\JasonDed.wav
 lvl2	Resource\Sound\lvl2.wav
 [SPRITES]
 #=========TILE=============

@@ -60,13 +60,4 @@ void HPBar::Render()
 
 	animation_set->at(ani)->Render(x, y, -1);
 }
-void HPBar::SetState(int bar)
-{
-	CDynamicGameObject::SetState(bar);
-	switch (state)
-	{
-	case JASON_HPBAR:
-		break;
-	}
 
-}
