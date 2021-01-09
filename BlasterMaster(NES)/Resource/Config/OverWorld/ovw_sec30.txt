@@ -4,6 +4,8 @@
 [GRID]
 #grid_width	grid_height
 256	160
+[DEFAULT]
+70	373
 #object type: 1 = sophia, 2 = minijason, 3 = jason, 4 = worm, 5 = dome, 6 = floater2
 #object type: 7 = insect, 8 = jumper2, 9 = orb, 10 = skull, 11 = mine, 12 = teleporter, 13 = cannon
 #object type: 14 = eyeball, 15 = brick, 16 = spike, 17 = Gate, 18 = ladder, 19 = magma
@@ -87,7 +89,7 @@
 84	456	360	1	83
 15	488	360	1	97
 15	24	376	0	110
-80	72	376	0	74	16	16	-1	-1	-1
+80	72	376	0	74	16	16	2	7	2440	726
 84	120	376	0	83
 84	184	376	0	83
 84	248	376	0	83
@@ -321,4 +323,4 @@
 15	456	744	5	97
 15	472	744	5	98
 15	488	744	5	97
-17	488	632	0	109	16	16	32	560	623
+17	488	632	5	109	16	16	32	560	623

@@ -8,6 +8,8 @@ Jason::Jason(float x, float y) :CDynamicGameObject(x, y)
 	SetSize(JASON_WIDTH, JASON_HEIGHT);
 	ny = 1;
 	lastShot = GetTickCount64();
+	canGoArea = false;
+	canShoot = true;
 }
 
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -51,7 +53,6 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			break;
 		default:
-			canGoArea = true;
 			break;
 		}
 	}

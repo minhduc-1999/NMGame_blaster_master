@@ -28,8 +28,8 @@
 class Jason : public CDynamicGameObject
 {
 	DWORD lastShot;
-	bool canGoArea = false;
-	bool canShoot = true;
+	bool canGoArea;
+	bool canShoot;
 public:
 	bool CanShoot() { return canShoot; }
 	Jason(float x, float y);

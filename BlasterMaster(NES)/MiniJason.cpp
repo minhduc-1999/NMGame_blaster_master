@@ -205,7 +205,7 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	DebugOut("[MINIJASON]\tx: %f, y: %f\n", x, y);
+	//DebugOut("[MINIJASON]\tx: %f, y: %f\n", x, y);
 	return 0;
  }
 
