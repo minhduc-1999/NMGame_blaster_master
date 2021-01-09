@@ -171,6 +171,23 @@ void MiniJason::Render()
 {
 	int ani = MINIJASON_ANI_IDLE;
 
+	if (GetState() == MINIJASON_STATE_DIE)
+	{
+		ani = MINIJASON_ANI_DIE;
+		if (!animation_set->at(MINIJASON_ANI_DIE)->IsCompleted())
+		{
+			animation_set->at(MINIJASON_ANI_DIE)->Render(x, y, nx, 255);
+			return;
+		}
+		else
+		{
+			animation_set->at(MINIJASON_ANI_DIE)->ResetAnim();
+			SetState(MINIJASON_STATE_IDLE_RIGHT);
+			//CGame::GetInstance()->SwitchScene(3, 1);
+			return;
+		}
+	}
+
 	if (isCollisionWithEnemy)
 	{
 		DWORD now = GetTickCount();
@@ -292,6 +309,9 @@ void MiniJason::SetState(int state)
 		x = 1592.0;
 		vy = 0;
 		break;
+	case MINIJASON_STATE_DIE:
+		vx = 0;
+		break;
 	}
 }
 
@@ -300,7 +320,7 @@ void MiniJason::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 
-	if (GetState() == -1) return; //die
+	if (GetState() == MINIJASON_STATE_DIE) return; //die
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		if (GetState() != MINIJASON_STATE_CLIMB)
@@ -383,6 +403,11 @@ void MiniJason::KeyState(BYTE* states)
 		{
 			SetState(MINIJASON_STATE_CLIMB);
 		}
+	}
+
+	if (game->IsKeyDown(DIK_O))
+	{
+		SetState(MINIJASON_STATE_DIE);
 	}
 }
 

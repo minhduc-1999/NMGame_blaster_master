@@ -22,6 +22,7 @@
 #define MINIJASON_STATE_JUMP_LEFT		005
 #define MINIJASON_STATE_TRANSFORM		006
 #define MINIJASON_STATE_CLIMB			007
+#define MINIJASON_STATE_DIE				8
 
 //define ANI
 #define MINIJASON_ANI_IDLE				00
@@ -29,6 +30,7 @@
 #define MINIJASON_ANI_JUMP				02
 #define MINIJASON_ANI_DOWN_RUN			03
 #define MINIJASON_ANI_CLIMB				04
+#define MINIJASON_ANI_DIE				05
 
 class MiniJason : public CDynamicGameObject
 {

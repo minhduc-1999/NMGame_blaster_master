@@ -48,7 +48,7 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		switch (temp->GetType())
 		{
-		case 13:
+		case 13:case 5:
 			isCollisionWithEnemy = true;
 			Sound::getInstance()->play("Hit", false, 1);
 			break;
@@ -152,6 +152,23 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Sophia::Render()
 {
 	int ani = -1;
+	if (GetState() == SOPHIA_STATE_DIE)
+	{
+		ani = SOPHIA_ANI_DIE;
+		if (!animation_set->at(SOPHIA_ANI_DIE)->IsCompleted())
+		{
+			animation_set->at(SOPHIA_ANI_DIE)->Render(x, y - 8, -1, 255);
+			return;
+		}
+		else
+		{
+			animation_set->at(SOPHIA_ANI_DIE)->ResetAnim();
+			SetState(SOPHIA_STATE_IDLE_RIGHT);
+			//CGame::GetInstance()->SwitchScene(2, 1);
+			return;
+		}
+	}
+
 	if (isCollisionWithEnemy)
 	{
 		DWORD now = GetTickCount();
@@ -189,7 +206,7 @@ void Sophia::Render()
 				{
 					ani = SOPHIA_ANI_UP_RUN_LOW;
 				}
-				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx, alpha);
+				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 25, nx, alpha);
 				return;
 				break;
 			case SOPHIA_STATE_JUMP_RIGHT:case SOPHIA_STATE_JUMP_LEFT:
@@ -514,6 +531,9 @@ void Sophia::SetState(int state)
 	case SOPHIA_STATE_TRANSFORM:
 		vx = 0;
 		break;
+	case SOPHIA_STATE_DIE:
+		vx = 0;
+		break;
 	}
 }
 
@@ -522,7 +542,7 @@ void Sophia::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 
-	if (GetState() == -1) return; //die
+	if (GetState() == SOPHIA_STATE_DIE) return; //die
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		if (GetIsUp())
@@ -578,15 +598,17 @@ void Sophia::KeyState(BYTE* states)
 			SetIsUp(true);
 		}
 	}
+
+	if (game->IsKeyDown(DIK_O))
+	{
+		SetState(SOPHIA_STATE_DIE);
+	}
 }
 
 void Sophia::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
-	case DIK_P:
-		SetState(SOPHIA_STATE_DIE);
-		break;
 	case DIK_X:
 		if (GetIsJumping() == false)
 		{
