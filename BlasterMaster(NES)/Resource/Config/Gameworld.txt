@@ -6,4 +6,4 @@
 3	Resource/Config/OverWorld/overworld.txt	2
 #token	scenes	section
 [SETTINGS]
-start	2	1
+start	3	1

@@ -1,6 +1,6 @@
 #ifndef _MINIJASON_H
 #define _MINIJASON_H
-#include "DynamicGameObject.h"
+#include "MainPlayer.h"
 
 #define MINIJASON_WIDTH			10
 #define MINIJASON_HEIGHT		17
@@ -32,15 +32,12 @@
 #define MINIJASON_ANI_CLIMB				04
 #define MINIJASON_ANI_DIE				05
 
-class MiniJason : public CDynamicGameObject
+class MiniJason : public MainPlayer
 {
 	bool canGoOvw = false;
 	bool isDown = false;
-	bool isJumping = false;
 	bool isCollisionWithSophia = false;
 	bool canClimb = false;
-	int alpha = 255;
-	bool isCollisionWithEnemy = false;
 public:
 	MiniJason(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

@@ -5,12 +5,12 @@
 #include "CLadder.h"
 #include "SceneGate.h"
 
-DWORD lastTimeAlphaMiniJason;
 
-MiniJason::MiniJason(float x, float y) :CDynamicGameObject(x, y)
+MiniJason::MiniJason(float x, float y) :MainPlayer(x, y)
 {
 	SetSize(MINIJASON_WIDTH, MINIJASON_HEIGHT);
-	lastTimeAlphaMiniJason = GetTickCount64();
+
+	TouchTime = GetTickCount64();
 	HP = 16;
 }
 
@@ -28,6 +28,10 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		DWORD now = GetTickCount64();
+		if (temp->GetTeam() != this->team)
+		{
+			isCollisionWithEnemy = true;
+		}
 		switch (temp->GetType())
 		{
 		case 80:
@@ -69,6 +73,7 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		case 18:
 			canClimb = true;
 			break;
+
 		case 13:
 			isCollisionWithEnemy = true;
 			if (GetTickCount64() - TouchTime >= 500)
@@ -233,9 +238,9 @@ void MiniJason::Render()
 	if (isCollisionWithEnemy)
 	{
 		DWORD now = GetTickCount64();
-		if (GetTickCount64() - lastTimeAlphaMiniJason >= 50)
+		if (now - TouchTime >= 50)
 		{
-			lastTimeAlphaMiniJason = now;
+			TouchTime = now;
 			if (alpha == 255)
 			{
 				alpha = 254;

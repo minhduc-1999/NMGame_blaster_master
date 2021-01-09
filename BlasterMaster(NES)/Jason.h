@@ -1,5 +1,5 @@
 #pragma once
-#include "DynamicGameObject.h"
+#include "MainPlayer.h"
 #include "BaseBullet.h"
 
 #define JASON_WIDTH			24
@@ -25,11 +25,9 @@
 
 #define JASON_SHOOTING_DELAY	200
 #define JASON_UNSTOPABLE	2000
-class Jason : public CDynamicGameObject
+class Jason : public MainPlayer
 {
-	DWORD lastShot;
 	bool canGoArea;
-	bool canShoot;
 public:
 	bool CanShoot() { return canShoot; }
 	Jason(float x, float y);

@@ -164,6 +164,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="MainPlayer.h" />
     <ClInclude Include="JasonBullet.h" />
     <ClInclude Include="SceneGate.h" />
     <ClInclude Include="HPBar.h" />

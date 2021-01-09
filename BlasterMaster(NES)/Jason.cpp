@@ -3,7 +3,7 @@
 #include "SceneGate.h"
 #include "JasonBullet.h"
 
-Jason::Jason(float x, float y) :CDynamicGameObject(x, y)
+Jason::Jason(float x, float y) :MainPlayer(x, y)
 {
 	SetSize(JASON_WIDTH, JASON_HEIGHT);
 	ny = 1;
@@ -15,6 +15,7 @@ Jason::Jason(float x, float y) :CDynamicGameObject(x, y)
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
+	isCollisionWithEnemy = false;
 	vector< LPCOLLISIONEVENT> curCoEvents;
 	CalcNowCollisions(coObjects, curCoEvents);
 	if (curCoEvents.size() == 0)
@@ -22,6 +23,10 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
+		if (temp->GetTeam() != this->team)
+		{
+			isCollisionWithEnemy = true;
+		}
 		switch (temp->GetType())
 		{
 		case 17:
@@ -45,7 +50,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				SceneGate* gate = dynamic_cast<SceneGate*>(temp);
 				if (gate != 0)
 				{
-					DebugOut("[To Area]\tx: %f, y: %f, scene: %d, section: %d\n", gate->GetDesTelePos().x, 
+					DebugOut("[To Area]\tx: %f, y: %f, scene: %d, section: %d\n", gate->GetDesTelePos().x,
 						gate->GetDesTelePos().y, gate->GetDesScene(), gate->GetNextSectionID());
 					CGame::GetInstance()->SwitchScene(gate->GetDesScene(), gate->GetNextSectionID(), gate->GetDesTelePos());
 					return 1;
@@ -91,7 +96,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->nx != 0)
 				{
-					x += (1- e->t) * dx - e->nx * 0.4f;		
+					x += (1 - e->t) * dx - e->nx * 0.4f;
 				}
 				else
 				{
@@ -112,7 +117,26 @@ void Jason::Render()
 {
 	int origin = -1;
 	int ani = JASON_ANI_IDLE_BOTTOM;
-
+	if (isCollisionWithEnemy)
+	{
+		DWORD now = GetTickCount64();
+		if (now - TouchTime >= 50)
+		{
+			TouchTime = now;
+			if (alpha == 255)
+			{
+				alpha = 254;
+			}
+			else
+			{
+				alpha = 255;
+			}
+		}
+	}
+	else
+	{
+		alpha = 255;
+	}
 	if (GetState() == JASON_STATE_DIE)
 	{
 		ani = JASON_ANI_DIE;
@@ -165,7 +189,7 @@ void Jason::Render()
 		ani = JASON_ANI_DIE;
 		break;
 	}
-	animation_set->at(ani)->Render(x, y, origin);
+	animation_set->at(ani)->Render(x, y, origin, alpha);
 }
 
 void Jason::SetState(int state)
@@ -179,24 +203,24 @@ void Jason::SetState(int state)
 		break;
 	case JASON_STATE_RUN_LEFT:
 		vx = -JASON_SPEED;
-		vy = 0;
+		//vy = 0;
 		nx = -1;
 		ny = 0;
 		break;
 	case JASON_STATE_RUN_RIGHT:
 		vx = JASON_SPEED;
-		vy = 0;
+		//vy = 0;
 		nx = 1;
 		ny = 0;
 		break;
 	case JASON_STATE_RUN_TOP:
-		vx = 0;
+		//vx = 0;
 		vy = -JASON_SPEED;
 		nx = 0;
 		ny = -1;
 		break;
 	case JASON_STATE_RUN_BOTTOM:
-		vx = 0;
+		//vx = 0;
 		vy = JASON_SPEED;
 		nx = 0;
 		ny = 1;
@@ -213,25 +237,26 @@ void Jason::KeyState(BYTE* states)
 	CGame* game = CGame::GetInstance();
 
 	if (GetState() == -1) return; //die
+	SetState(JASON_STATE_IDLE);
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		SetState(JASON_STATE_RUN_RIGHT);
+
 	}
-	else if (game->IsKeyDown(DIK_LEFT))
+	if (game->IsKeyDown(DIK_LEFT))
 	{
 		SetState(JASON_STATE_RUN_LEFT);
+
 	}
-	else if (game->IsKeyDown(DIK_UP))
+	if (game->IsKeyDown(DIK_UP))
 	{
 		SetState(JASON_STATE_RUN_TOP);
+
 	}
-	else if (game->IsKeyDown(DIK_DOWN))
+	if (game->IsKeyDown(DIK_DOWN))
 	{
 		SetState(JASON_STATE_RUN_BOTTOM);
-	}
-	else
-	{
-		SetState(JASON_STATE_IDLE);
+
 	}
 }
 
@@ -239,18 +264,18 @@ void Jason::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
-		case DIK_Z:
+	case DIK_Z:
+	{
+		if (GetTickCount64() - lastShot >= JASON_SHOOTING_DELAY)
 		{
-			if (GetTickCount64() - lastShot >= JASON_SHOOTING_DELAY)
-			{
-				canShoot = true;
-				lastShot = GetTickCount64();
-			}
-				
-			else
-				canShoot = false;
-			break;
-		}	
+			canShoot = true;
+			lastShot = GetTickCount64();
+		}
+
+		else
+			canShoot = false;
+		break;
+	}
 	default:
 		break;
 	}
@@ -258,7 +283,7 @@ void Jason::OnKeyDown(int KeyCode)
 
 void Jason::OnKeyUp(int KeyCode)
 {
-	
+
 }
 
 BaseBullet* Jason::Shoot()
