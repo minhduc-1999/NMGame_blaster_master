@@ -18,7 +18,7 @@ class Jumper2 :
 public:
     Jumper2(float x, float y);
     void SetState(int state);
-    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+    int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     bool IsJumping();
     int jump;
     void Render();

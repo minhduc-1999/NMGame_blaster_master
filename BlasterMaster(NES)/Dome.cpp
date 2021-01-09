@@ -5,7 +5,7 @@ Dome::Dome(float x, float y) :CDynamicGameObject(x, y)
 	SetSize(DOME_WIDTH, DOME_HEIGHT);
 }
 
-void Dome::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Dome::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 
@@ -122,6 +122,7 @@ void Dome::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	return 0;
 }
 
 void Dome::Render()

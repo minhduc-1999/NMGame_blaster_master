@@ -8,7 +8,7 @@ Jason::Jason(float x, float y) :CDynamicGameObject(x, y)
 	ny = 1;
 }
 
-void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 	vector< LPCOLLISIONEVENT> curCoEvents;
@@ -29,7 +29,7 @@ void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 						gate->GetDesTelePos());
-					return;
+					return 0;
 				}
 				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
 			}
@@ -40,8 +40,12 @@ void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				SceneGate* gate = dynamic_cast<SceneGate*>(temp);
 				if (gate != 0)
-					CGame::GetInstance()->SwitchScene(gate->GetDesScene(), gate->GetNextSectionID());
-				return;
+				{
+					DebugOut("[To Area]\tx: %f, y: %f, scene: %d, section: %d\n", gate->GetDesTelePos().x, 
+						gate->GetDesTelePos().y, gate->GetDesScene(), gate->GetNextSectionID());
+					CGame::GetInstance()->SwitchScene(gate->GetDesScene(), gate->GetNextSectionID(), gate->GetDesTelePos());
+					return 1;
+				}
 			}
 			break;
 		default:
@@ -97,6 +101,8 @@ void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	//DebugOut("[JASON]\tx: %f, y: %f\n", x, y);
+	return 0;
 }
 
 void Jason::Render()

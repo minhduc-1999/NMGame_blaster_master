@@ -10,10 +10,10 @@ DWORD lastTimeAlphaMiniJason;
 MiniJason::MiniJason(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(MINIJASON_WIDTH, MINIJASON_HEIGHT);
-	lastTimeAlphaMiniJason = GetTickCount();
+	lastTimeAlphaMiniJason = GetTickCount64();
 }
 
-void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 
@@ -33,8 +33,12 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{ 
 				SceneGate* gate = dynamic_cast<SceneGate*>(temp);
 				if (gate != 0)
-				CGame::GetInstance()->SwitchScene(gate->GetDesScene(), gate->GetNextSectionID());
-				return;
+				{
+					DebugOut("[To OVW]\tx: %f, y: %f, scene: %d, section: %d\n", gate->GetDesTelePos().x,
+						gate->GetDesTelePos().y, gate->GetDesScene(), gate->GetNextSectionID());
+					CGame::GetInstance()->SwitchScene(gate->GetDesScene(), gate->GetNextSectionID(), gate->GetDesTelePos());
+					return 1;
+				}
 			}
 			//canGoOvw = true;
 			//DebugOut("[INFO]\tcan go over world\n");
@@ -50,7 +54,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					//{
 					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 						gate->GetDesTelePos());
-					return;
+					return 0;
 					//}					
 				}
 				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
@@ -180,7 +184,6 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							}
 						}
 					}
-
 				}
 				break;
 			};
@@ -189,8 +192,9 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
-}
+	DebugOut("[MINIJASON]\tx: %f, y: %f\n", x, y);
+	return 0;
+ }
 
 void MiniJason::Render()
 {
@@ -198,8 +202,8 @@ void MiniJason::Render()
 
 	if (isCollisionWithEnemy)
 	{
-		DWORD now = GetTickCount();
-		if (GetTickCount() - lastTimeAlphaMiniJason >= 50)
+		DWORD now = GetTickCount64();
+		if (GetTickCount64() - lastTimeAlphaMiniJason >= 50)
 		{
 			lastTimeAlphaMiniJason = now;
 			if (alpha == 255)

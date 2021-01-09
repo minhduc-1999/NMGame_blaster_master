@@ -26,7 +26,12 @@ public:
 	int GetState();
 
 	virtual void Render() = 0;
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+
+	//if return 0: update successfully
+	//if return -1: update fail because last update isn't rendered
+	//if return 1: switch scene
+
+	virtual int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);

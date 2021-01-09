@@ -11,20 +11,16 @@ Sophia::Sophia(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(SOPHIA_WIDTH, SOPHIA_HEIGHT);
 	heightLevel = SOPHIA_HEIGHT_HIGH;
-	lastTime = GetTickCount();
-	lastTimeAlpha = GetTickCount();
-	/*Sound::getInstance()->loadSound("Resource\\Sound\\SophiaFire.wav", "SophiaFire");
-	Sound::getInstance()->loadSound("Resource\\Sound\\Jump.wav", "Jump");
-	Sound::getInstance()->loadSound("Resource\\Sound\\Hit.wav", "Hit");
-	Sound::getInstance()->loadSound("Resource\\Sound\\SophiaDed.wav", "SophiaDed");*/
+	lastTime = GetTickCount64();
+	lastTimeAlpha = GetTickCount64();
 };
 
-void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 	if (vx != 0)
 	{
-		DWORD now = GetTickCount();
+		DWORD now = GetTickCount64();
 		if (now - lastTime >= 20)
 		{
 			lastTime = now;
@@ -62,7 +58,7 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					//{
 						CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 							gate->GetDesTelePos());
-						return;
+						return 0;
 					//}
 				}
 				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
@@ -149,7 +145,8 @@ void Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	//DebugOut("[UPDATE SOPHIA]\t%f\t%f\n", x, y);
+	DebugOut("[SOPHIA]\t%f\t%f\n", x, y);
+	return 0;
 }
 
 void Sophia::Render()
@@ -157,8 +154,8 @@ void Sophia::Render()
 	int ani = -1;
 	if (isCollisionWithEnemy)
 	{
-		DWORD now = GetTickCount();
-		if (GetTickCount() - lastTimeAlpha >= 50)
+		DWORD now = GetTickCount64();
+		if (GetTickCount64() - lastTimeAlpha >= 50)
 		{
 			lastTimeAlpha = now;
 			if (alpha == 255)

@@ -1,6 +1,6 @@
 #include "SectionOvw.h"
 #include "Jason.h"
-void SectionOvw::Load(SaveData* data)
+void SectionOvw::Load(SaveData* data, D3DXVECTOR2 mainPos)
 {
 	Section::Load();
 	if (mainPlayer != NULL)
@@ -12,10 +12,14 @@ void SectionOvw::Load(SaveData* data)
 	}
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	LPANIMATION_SET ani_set = animation_sets->Get(3);
-	mainPlayer = new Jason(defaultPos.x, defaultPos.y);
+	if (mainPos.x == -1 && mainPos.y == -1)
+		mainPlayer = new Jason(defaultPos.x, defaultPos.y);
+	else
+		mainPlayer = new Jason(mainPos.x, mainPos.y);
 	mainPlayer->SetAnimationSet(ani_set);
 	mainPlayer->SetTeam(0);
 	mainPlayer->SetType(1);
+	mainPlayer->SetState(JASON_STATE_DIE);
 	DebugOut("[INFO] Jason Created!\n");
-	//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
+	DebugOut("[OVW-INFO] Main Pos:\t%f\t%f\n", mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
 }

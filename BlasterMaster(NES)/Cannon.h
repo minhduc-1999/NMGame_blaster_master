@@ -19,7 +19,7 @@ private:
 	bool hor;
 public:
 	Cannon(float x, float y);
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	vector<LPDYNAMICOBJECT> Fire();
 	virtual void SetState(int state);

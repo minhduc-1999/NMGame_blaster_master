@@ -40,11 +40,12 @@ bool CDynamicGameObject::GetIsDestroyed()
 	return this->isDestroyed;
 }
 
-void CDynamicGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int CDynamicGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->dt = dt;
 	dx = vx * dt;
 	dy = vy * dt;
+	return 0;
 }
 
 vector<CDynamicGameObject*> CDynamicGameObject::Fire()

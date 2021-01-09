@@ -10,7 +10,7 @@ Eyeball::Eyeball(float x, float y) : CDynamicGameObject(x, y)
 	startTime = 0;
 }
 
-void Eyeball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Eyeball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 
@@ -65,6 +65,7 @@ void Eyeball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		//TODO: Collision logic with dynamic object (bots)
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	return 0;
 }
 
 void Eyeball::Render()

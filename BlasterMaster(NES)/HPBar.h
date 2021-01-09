@@ -26,7 +26,7 @@ public:
 	int hp,jhp,shp,bar;
 	bool curBar;
 	HPBar();
-	void Update(DWORD dt, float x, float y);
+	int Update(DWORD dt, float x, float y);
 	void Render();
 	void SetState(int bar);
 };

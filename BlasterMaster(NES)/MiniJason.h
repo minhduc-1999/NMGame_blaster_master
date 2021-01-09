@@ -41,7 +41,7 @@ class MiniJason : public CDynamicGameObject
 	bool isCollisionWithEnemy = false;
 public:
 	MiniJason(float x, float y);
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
 

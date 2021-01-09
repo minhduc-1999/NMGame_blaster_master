@@ -27,7 +27,7 @@ class Jason : public CDynamicGameObject
 	bool canGoArea = false;
 public:
 	Jason(float x, float y);
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
 	Rect GetBound();

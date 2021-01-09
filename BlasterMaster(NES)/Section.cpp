@@ -384,7 +384,7 @@ void Section::Load()
 	DebugOut("[INFO] Done loading SECTION resources %s\n", secFilePath);
 }
 
-void Section::Update(DWORD dt)
+int Section::Update(DWORD dt)
 {
 	vector<LPGAMEOBJECT> coObjs;
 	Rect camPos = CGame::GetInstance()->GetCamBound();
@@ -417,7 +417,7 @@ void Section::Update(DWORD dt)
 			delete changeGridObjs;
 		}
 	}
-	mainPlayer->Update(dt, &coObjs);
+	return mainPlayer->Update(dt, &coObjs);
 
 	/*for (int i = 0; i < coObjs.size(); i++)
 	{
@@ -426,7 +426,7 @@ void Section::Update(DWORD dt)
 		{
 			temp = 1;
 		}
-	}*/
+	}
 	if (bulletObjs.empty())
 	{
 		canFire = true;
@@ -471,7 +471,7 @@ void Section::Update(DWORD dt)
 			delete bulletObjs[i];
 			bulletObjs.erase(bulletObjs.begin() + i);
 		}
-	}
+	}*/
 }
 
 void Section::Render()

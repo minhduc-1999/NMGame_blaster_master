@@ -31,8 +31,8 @@ public:
 	CDynamicGameObject* GetPlayer() { return mainPlayer; }
 	Section(int id, string path) { this->id = id, this->secFilePath = path; }
 	virtual void Load();
-	virtual void Load(SaveData* data) = 0;
-	virtual void Update(DWORD dt);
+	virtual void Load(SaveData* data, D3DXVECTOR2 mainPos) = 0;
+	virtual int Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
 	int GetId() { return this->id; }

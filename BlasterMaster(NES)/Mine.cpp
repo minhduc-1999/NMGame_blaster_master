@@ -8,10 +8,10 @@ Mine::Mine(float x, float y) :CDynamicGameObject(x, y)
 	startTime = GetTickCount();
 }
 
-void Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
-		return;
+		return -1;
 	CDynamicGameObject::Update(dt);
 	vy += MINE_GRAVITY;
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -46,18 +46,18 @@ void Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			// if e->obj is Gate 
-			if (dynamic_cast<CDynamicGameObject*>(e->obj))
-			{
-				CDynamicGameObject* obj = dynamic_cast<CDynamicGameObject*>(e->obj);
-				if (this->team == obj->GetTeam())
-				{
-					x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-					y += (1 - min_ty) * dy - nty * 0.4f;
-					for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-					return;
-				}
-			}
+			//// if e->obj is Gate 
+			//if (dynamic_cast<CDynamicGameObject*>(e->obj))
+			//{
+			//	CDynamicGameObject* obj = dynamic_cast<CDynamicGameObject*>(e->obj);
+			//	if (this->team == obj->GetTeam())
+			//	{
+			//		x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+			//		y += (1 - min_ty) * dy - nty * 0.4f;
+			//		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+			//		return;
+			//	}
+			//}
 		}
 
 		if (nty != 0)
@@ -72,6 +72,7 @@ void Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	isUpdated = true;
 	isRendered = false;
+	return 0;
 }
 
 void Mine::Render()

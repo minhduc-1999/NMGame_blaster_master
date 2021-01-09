@@ -3,5 +3,6 @@
 class AreaSectionTransition : public SectionTransition
 {
 public:
+	AreaSectionTransition() : SectionTransition() {}
 	virtual void Update(DWORD dt);
 };

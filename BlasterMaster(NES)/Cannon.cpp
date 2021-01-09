@@ -8,7 +8,7 @@ Cannon::Cannon(float x, float y) : CDynamicGameObject(x, y)
 	hor = false;
 }
 
-void Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 
@@ -52,6 +52,7 @@ void Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	return 0;
 }
 
 void Cannon::Render()

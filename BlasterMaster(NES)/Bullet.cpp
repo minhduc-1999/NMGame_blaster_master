@@ -146,7 +146,7 @@ Bullet::Bullet(float x, float y, int t, int n) : CDynamicGameObject(x, y)
 	}
 }
 
-void Bullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Bullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 
@@ -212,6 +212,7 @@ void Bullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	return 0;
 }
 
 void Bullet::Render()

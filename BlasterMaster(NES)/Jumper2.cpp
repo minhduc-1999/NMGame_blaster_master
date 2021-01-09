@@ -9,10 +9,10 @@ bool Jumper2::IsJumping()
 	if (vy < 0) return false;
 	return true;
 }
-void Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
-		return;
+		return -1;
 	CDynamicGameObject::Update(dt);
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -39,18 +39,18 @@ void Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			// if e->obj is Gate 
-			if (dynamic_cast<CDynamicGameObject*>(e->obj))
-			{
-				x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-				y += (1 - min_ty) * dy - nty * 0.4f;
-				/*CDynamicGameObject* obj = dynamic_cast<CDynamicGameObject*>(e->obj);
-				if (this->team == obj->GetTeam())
-				{*/					
-					for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-					return;
-				//}
-			}
+			//// if e->obj is Gate 
+			//if (dynamic_cast<CDynamicGameObject*>(e->obj))
+			//{
+			//	x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+			//	y += (1 - min_ty) * dy - nty * 0.4f;
+			//	/*CDynamicGameObject* obj = dynamic_cast<CDynamicGameObject*>(e->obj);
+			//	if (this->team == obj->GetTeam())
+			//	{*/					
+			//		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+			//		return;
+			//	//}
+			//}
 		}
 
 		if (ntx != 0)
@@ -87,6 +87,7 @@ void Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	isUpdated = true;
 	isRendered = false;
+	return 0;
 }
 
 void Jumper2::Render()

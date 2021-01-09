@@ -45,10 +45,10 @@ Boss::Boss(float x, float y, int hand_ani_set_id, int arm_ani_set_id) :CDynamicG
 	lastTime = GetTickCount();
 }
 
-void Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
-		return;
+		return -1;
 	DWORD now = GetTickCount();
 	if (now - lastTime >= 3000)
 	{
@@ -85,17 +85,7 @@ void Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			// if e->obj is Gate 
-			if (dynamic_cast<CDynamicGameObject*>(e->obj))
-			{
-				CDynamicGameObject* obj = dynamic_cast<CDynamicGameObject*>(e->obj);
-				if (this->team == obj->GetTeam())
-				{
-					x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-					y += (1 - min_ty) * dy - nty * 0.4f;
-					for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-					return;
-				}
-			}
+			
 		}
 
 		if (ntx != 0)
@@ -139,6 +129,7 @@ void Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	isUpdated = true;
 	isRendered = false;
+	return 0;
 }
 
 void Boss::Render()
