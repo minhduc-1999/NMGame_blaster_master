@@ -18,11 +18,12 @@ Orb			9xxxx
 Skull			10xxxx
 Mine			11xxxx
 
-**area2 overworld
+** overworld
 Teleporter		12xxxx
 Cannon			13xxxx
 Eyeball			14xxxx
 
+jason_bullet		20xxxx
 *xxxx from 0001 to 9999
 
 [OBJECTS ID TYPE]
@@ -53,7 +54,12 @@ Eyeball			14
 
 #static obj
 brick			15
-arrow			16
+spike			16
 Gate			17
 Ladder			18
 Magma			19
+
+Bullet			20
+
+SceneGate 		80
+brokenable-brick	81

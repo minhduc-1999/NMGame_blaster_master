@@ -79,7 +79,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 
 void CAnimation::Render(float x, float y, int dir, int alpha)
 {
-	DWORD now = GetTickCount();
+	DWORD now = GetTickCount64();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;
@@ -109,7 +109,7 @@ void CAnimation::Render(float x, float y, int dir)
 void CAnimation::RenderFrame(int frameID, float x, float y, int dir, int alpha)
 {
 	currentFrame = frameID;
-	DWORD now = GetTickCount();
+	DWORD now = GetTickCount64();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;
@@ -138,7 +138,7 @@ void CAnimation::RenderFrame(int frameID, float x, float y, int dir)
 void CAnimation::RenderStartByFrame(int frameID, float x, float y, int dir, int alpha)
 {
 	currentFrame = frameID;
-	DWORD now = GetTickCount();
+	DWORD now = GetTickCount64();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;

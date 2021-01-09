@@ -1,11 +1,13 @@
 #include "Jason.h"
 #include "CGate.h"
 #include "SceneGate.h"
+#include "JasonBullet.h"
 
 Jason::Jason(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(JASON_WIDTH, JASON_HEIGHT);
 	ny = 1;
+	lastShot = GetTickCount64();
 }
 
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -236,22 +238,18 @@ void Jason::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
-		/*case DIK_Z:
-			if (GetIsUp())
+		case DIK_Z:
+		{
+			if (GetTickCount64() - lastShot >= JASON_SHOOTING_DELAY)
 			{
-				if (GetNX() == 1)
-					SetState(SOPHIA_STATE_FIRING_UP_RIGHT);
-				else
-					SetState(SOPHIA_STATE_FIRING_UP_LEFT);
+				canShoot = true;
+				lastShot = GetTickCount64();
 			}
+				
 			else
-			{
-				if (GetNX() == 1)
-					SetState(SOPHIA_STATE_FIRING_RIGHT);
-				else
-					SetState(SOPHIA_STATE_FIRING_LEFT);
-			}
-			break;*/
+				canShoot = false;
+			break;
+		}	
 	default:
 		break;
 	}
@@ -259,6 +257,17 @@ void Jason::OnKeyDown(int KeyCode)
 
 void Jason::OnKeyUp(int KeyCode)
 {
+	
+}
+
+BaseBullet* Jason::Shoot()
+{
+	JasonBullet* bullet = NULL;
+	if (canShoot)
+	{
+		bullet = new JasonBullet(x, y, 0, nx, ny);
+	}
+	return bullet;
 }
 
 Rect Jason::GetBound()

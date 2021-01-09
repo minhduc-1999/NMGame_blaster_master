@@ -99,6 +99,20 @@ void Section::DeleteMiniJason()
 	}
 }
 
+void Section::AddDynamicObject(LPDYNAMICOBJECT obj)
+{
+	if (obj == NULL)
+		return;
+	vector<int> boundGrid = GetBoundGrid(obj->GetBound());
+	for (int i = 0; i < boundGrid.size(); i++)
+	{
+		if (grids.find(boundGrid[i]) != grids.end())
+		{
+			grids[boundGrid[i]]->AddDynamicObj(obj);
+		}
+	}
+}
+
 void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 {
 	vector<string> tokens = split(line);

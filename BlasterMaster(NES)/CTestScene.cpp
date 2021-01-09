@@ -13,6 +13,7 @@
 #include "AreaSectionTransition.h"
 #include "SectionArea.h"
 #include "SectionOvw.h"
+#include "Jason.h"
 
 using namespace std;
 
@@ -205,7 +206,7 @@ void CTestScene::Render()
 	LPDIRECT3DTEXTURE9 texfg = CTextureManager::GetInstance()->Get(TEXTURE_FOREGROUND);
 	float bgX = cam.left + (cam.right - cam.left) / 2.0f;
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
-	CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
+	//CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 	//Render object
 	if (!isSwitchingSection)
 	{
@@ -215,7 +216,7 @@ void CTestScene::Render()
 		if (mainPlayer != NULL)
 			mainPlayer->Render();
 	//render foreground
-	CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
+	//CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 	//render hpbar
 	hpBar->Render();
 }
@@ -310,6 +311,17 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 			}
 
 		}
+	}
+	else if(scence->GetType() == 2)
+	{
+		Jason* currentPlayer = (Jason*)(((CTestScene*)scence)->GetPlayer());
+		currentPlayer->OnKeyDown(KeyCode);
+		if (KeyCode == DIK_Z)
+		{
+			if (currentPlayer->CanShoot())
+				((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
+		}
+			
 	}
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->OnKeyDown(KeyCode);
