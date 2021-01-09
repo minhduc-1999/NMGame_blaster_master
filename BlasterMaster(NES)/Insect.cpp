@@ -43,36 +43,48 @@ void Insect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			// if e->obj is Gate 
-			if (dynamic_cast<CDynamicGameObject*>(e->obj))
+			int coObjType = e->obj->GetType();
+			if (coObjType != 15 && coObjType != 17)
 			{
-				CDynamicGameObject* obj = dynamic_cast<CDynamicGameObject*>(e->obj);
-				if (this->team == obj->GetTeam())
+				if (e->nx != 0)
 				{
-					x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-					y += (1 - min_ty) * dy - nty * 0.4f;
-					for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-					return;
+					x += (1 - e->t) * dx - e->nx * 0.4f;
+				}
+				else
+				{
+					y += (1 - e->t) * dy - e->ny * 0.4f;
 				}
 			}
-		}
-		if (ntx != 0)
-		{
-			if (GetNX() == 1)
+			switch (coObjType)
 			{
-				SetState(INSECT_STATE_FLYDOWN_RIGHT);
+			case 15: case 17:	//brick and gate
+				if (e->nx != 0)
+				{
+					if (GetNX() == 1)
+					{
+						SetState(INSECT_STATE_FLYDOWN_RIGHT);
 
-			}
-			else
-			{
-				SetState(INSECT_STATE_FLYDOWN_LEFT);
-			}
-		}
-
-		if (nty != 0)
-		{
-			vy = -INSECT_FLYING_SPEED*10;
-			vx = INSECT_FLYING_SPEED*5;
+					}
+					else
+					{
+						SetState(INSECT_STATE_FLYDOWN_LEFT);
+					}
+				}
+				if (e->ny != 0)
+				{
+					vy = -INSECT_FLYING_SPEED * 10;
+					vx = INSECT_FLYING_SPEED * 5;
+				}
+				break;
+			case 20: //enemy bullet
+				if (e->obj->GetTeam() == 0)
+				{
+					SetState(INSECT_STATE_DIE);
+				}
+				break;
+			default:
+				break;
+			};
 
 		}
 
@@ -87,6 +99,23 @@ void Insect::Render()
 	if (isRendered)
 		return;
 	int ani = INSECT_ANI_FLYING;
+
+	if (GetState() == INSECT_STATE_DIE)
+	{
+		ani = INSECT_ANI_DIE;
+		if (!animation_set->at(INSECT_ANI_DIE)->IsCompleted())
+		{
+			animation_set->at(INSECT_ANI_DIE)->Render(x, y, nx, 255);
+			return;
+		}
+		else
+		{
+			animation_set->at(INSECT_ANI_DIE)->ResetAnim();
+			isDestroyed = true;
+			return;
+		}
+	}
+
 	switch (state)
 	{
 	case INSECT_STATE_FLYDOWN_LEFT:
@@ -116,6 +145,11 @@ void Insect::SetState(int state)
 		vx = 0;
 		vy = INSECT_FLYING_SPEED;
 		nx = -1;
+		break;
+	case INSECT_STATE_DIE:
+		SetSize(0, 0);
+		vx = 0;
+		vy = 0;
 		break;
 	default:
 		break;

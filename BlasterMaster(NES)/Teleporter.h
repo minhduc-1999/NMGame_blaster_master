@@ -8,9 +8,11 @@
 
 #define TELEPORTER_STATE_GRAY		0
 #define TELEPORTER_STATE_GREEN		1
+#define TELEPORTER_STATE_DIE		2
 
 #define TELEPORTER_ANI_GREEN		0
 #define TELEPORTER_ANI_GRAY			1
+#define TELEPORTER_ANI_DIE			2
 
 
 class Teleporter : public CDynamicGameObject

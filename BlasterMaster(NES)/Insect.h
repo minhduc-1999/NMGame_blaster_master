@@ -9,8 +9,10 @@
 #define INSECT_STATE_FLYDOWN_LEFT	200
 #define INSECT_STATE_FLYUP_RIGHT	300
 #define INSECT_STATE_FLYUP_LEFT 	400
+#define INSECT_STATE_DIE         	500
 
 #define INSECT_ANI_FLYING	0
+#define INSECT_ANI_DIE  	1
 
 class Insect :
     public CDynamicGameObject

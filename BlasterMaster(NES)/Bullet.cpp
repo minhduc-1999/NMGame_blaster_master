@@ -4,7 +4,8 @@ Bullet::Bullet(float x, float y, int t, int n) : CDynamicGameObject(x, y)
 {
 	startFiringTime = GetTickCount();
 	isDestroyed = false;
-	type = t;
+	bulletType = t;
+	SetType(20);
 
 	if (t == SOPHIA_BULLET_HORIZONTAL)
 	{
@@ -157,7 +158,7 @@ void Bullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	CalcPotentialCollisions(coObjects, coEvents);
 
-	if (type == MINE_BULLET_FIRST || type == MINE_BULLET_SECOND || type == MINE_BULLET_THIRD || type == MINE_BULLET_FOUTH)
+	if (bulletType == MINE_BULLET_FIRST || bulletType == MINE_BULLET_SECOND || bulletType == MINE_BULLET_THIRD || bulletType == MINE_BULLET_FOUTH)
 	{
 		if (startY - y >= 20 && !isFalling)
 		{
@@ -176,7 +177,7 @@ void Bullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 		{
-			if (type == SKULL_BULLET)
+			if (bulletType == SKULL_BULLET)
 			{
 				float min_tx, min_ty, ntx, nty;
 
@@ -199,7 +200,7 @@ void Bullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	if (type == SKULL_BULLET)
+	if (bulletType == SKULL_BULLET)
 	{
 		if (GetTickCount() - startFiringTime >= 2000)
 			isDestroyed = true;

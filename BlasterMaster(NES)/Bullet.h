@@ -26,7 +26,7 @@
 class Bullet :
 	public CDynamicGameObject
 {
-	int type;
+	int bulletType;
 	//bool isDestroyed;
 	DWORD startFiringTime;
 	float startY;

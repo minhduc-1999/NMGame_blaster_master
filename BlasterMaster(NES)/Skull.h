@@ -10,9 +10,11 @@
 #define SKULL_STATE_FLYING_RIGHT	1
 #define SKULL_STATE_FIRE_LEFT		2
 #define SKULL_STATE_FIRE_RIGHT		3
+#define SKULL_STATE_DIE				4
 
 #define SKULL_ANI_FLYING			0
 #define SKULL_ANI_FIRE				1
+#define SKULL_ANI_DIE				2
 
 
 

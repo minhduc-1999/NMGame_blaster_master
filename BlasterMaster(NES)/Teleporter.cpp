@@ -11,6 +11,43 @@ void Teleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CDynamicGameObject::Update(dt);
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
+
+	CalcPotentialCollisions(coObjects, coEvents);
+	// No collision occured, proceed normally
+	if (coEvents.size() == 0)
+	{
+		
+	}
+	else
+	{
+		float min_tx, min_ty, ntx, nty;
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
+
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			int coObjType = e->obj->GetType();
+			
+			switch (coObjType)
+			{
+			case 20: //enemy bullet
+				if (e->obj->GetTeam() == 0)
+				{
+					SetState(TELEPORTER_STATE_DIE);
+				}
+				break;
+			default:
+				break;
+			};
+
+		}
+	}
+
+	// clean up collision events
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+
 	delay--;
 	if (delay < 0)
 		if (state == TELEPORTER_STATE_GREEN)
@@ -36,6 +73,23 @@ void Teleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Teleporter::Render()
 {
 	int ani = TELEPORTER_ANI_GRAY;
+	
+	if (GetState() == TELEPORTER_STATE_DIE)
+	{
+		ani = TELEPORTER_ANI_DIE;
+		if (!animation_set->at(TELEPORTER_ANI_DIE)->IsCompleted())
+		{
+			animation_set->at(TELEPORTER_ANI_DIE)->Render(x, y, nx, 255);
+			return;
+		}
+		else
+		{
+			animation_set->at(TELEPORTER_ANI_DIE)->ResetAnim();
+			isDestroyed = true;
+			return;
+		}
+	}
+
 
 	if (state == TELEPORTER_STATE_GRAY)
 	{
@@ -62,6 +116,11 @@ void Teleporter::SetState(int state)
 	case TELEPORTER_STATE_GREEN:
 		isTele = true;
 		swap = 0;
+		break;
+	case TELEPORTER_STATE_DIE:
+		SetSize(0, 0);
+		vx = 0;
+		vy = 0;
 		break;
 	}
 }

@@ -10,6 +10,7 @@ Dome::Dome(float x, float y) :CDynamicGameObject(x, y)
 void Dome::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
+
 	SetBottomRect(RectType);
 
 	bool isCollision = false;
@@ -123,6 +124,12 @@ void Dome::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						}
 					}
 					break;
+				case 20: //enemy bullet
+					if (e->obj->GetTeam() == 0)
+					{
+						SetState(DOME_STATE_DIE);
+					}
+					break;
 				default:
 					break;
 				};
@@ -143,6 +150,22 @@ void Dome::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Dome::Render()
 {
 	int ani = DOME_ANI_WALKING_LEFT_RIGHT_UP;
+
+	if (GetState() == DOME_STATE_DIE)
+	{
+		ani = DOME_ANI_DIE;
+		if (!animation_set->at(DOME_ANI_DIE)->IsCompleted())
+		{
+			animation_set->at(DOME_ANI_DIE)->Render(x, y, nx, 255);
+			return;
+		}
+		else
+		{
+			animation_set->at(DOME_ANI_DIE)->ResetAnim();
+			isDestroyed = true;
+			return;
+		}
+	}
 
 	switch (state)
 	{
@@ -272,6 +295,11 @@ void Dome::SetState(int state)
 		vy = DOME_GRAVITY;
 		ny = 1;
 		nx = 1;
+		break;
+	case DOME_STATE_DIE:
+		SetSize(0, 0);
+		vx = 0;
+		vy = 0;
 		break;
 	}
 }

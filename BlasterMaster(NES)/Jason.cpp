@@ -96,6 +96,24 @@ void Jason::Render()
 {
 	int origin = -1;
 	int ani = JASON_ANI_IDLE_BOTTOM;
+
+	if (GetState() == JASON_STATE_DIE)
+	{
+		ani = JASON_ANI_DIE;
+		if (!animation_set->at(JASON_ANI_DIE)->IsCompleted())
+		{
+			animation_set->at(JASON_ANI_DIE)->Render(x, y, nx, 255);
+			return;
+		}
+		else
+		{
+			animation_set->at(JASON_ANI_DIE)->ResetAnim();
+			SetState(JASON_STATE_IDLE);
+			//CGame::GetInstance()->SwitchScene(3, 1);
+			return;
+		}
+	}
+
 	switch (state)
 	{
 	case JASON_STATE_IDLE:
@@ -166,6 +184,10 @@ void Jason::SetState(int state)
 		vy = JASON_SPEED;
 		nx = 0;
 		ny = 1;
+		break;
+	case JASON_STATE_DIE:
+		vx = 0;
+		vy = 0;
 		break;
 	}
 }

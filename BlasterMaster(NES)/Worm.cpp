@@ -29,28 +29,55 @@ void Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
 
-		// block 
-		x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+		x += min_tx * dx + ntx * 0.4f;
 		y += min_ty * dy + nty * 0.4f;
 
-		if (ntx != 0)
+		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			if (GetNX() == 1)
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			int coObjType = e->obj->GetType();
+			if (coObjType != 15 && coObjType != 17)
 			{
-				SetState(WORM_STATE_WALKING_LEFT);
-
+				if (e->nx != 0)
+				{
+					x += (1 - e->t) * dx - e->nx * 0.4f;
+				}
+				else
+				{
+					y += (1 - e->t) * dy - e->ny * 0.4f;
+				}
 			}
-			else
+			switch (coObjType)
 			{
-				SetState(WORM_STATE_WALKING_RIGHT);
-			}
-		}
+			case 15: case 17:	//brick and gate
+				if (e->nx != 0)
+				{
+					if (GetNX() == 1)
+					{
+						SetState(WORM_STATE_WALKING_LEFT);
 
-		if (nty != 0)
-		{
-			vy = 0;
-		}
+					}
+					else
+					{
+						SetState(WORM_STATE_WALKING_RIGHT);
+					}
+				}
+				if (e->ny != 0)
+				{
+					vy = 0;
+				}
+				break;
+			case 20: //enemy bullet
+				if (e->obj->GetTeam() == 0)
+				{
+					SetState(WORM_STATE_DIE);
+				}
+				break;
+			default:
+				break;
+			};
 
+		}
 		//TODO: Collision logic with dynamic object (bots)
 	}
 
@@ -61,6 +88,22 @@ void Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Worm::Render()
 {
 	int ani = WORM_ANI_WALKING;
+
+	if (GetState() == WORM_STATE_DIE)
+	{
+		ani = WORM_ANI_DIE;
+		if (!animation_set->at(WORM_ANI_DIE)->IsCompleted())
+		{
+			animation_set->at(WORM_ANI_DIE)->Render(x, y, nx, 255);
+			return;
+		}
+		else
+		{
+			animation_set->at(WORM_ANI_DIE)->ResetAnim();
+			isDestroyed = true;
+			return;
+		}
+	}
 	
 	switch (state)
 	{
@@ -88,6 +131,7 @@ void Worm::SetState(int state)
 		nx = 1;
 		break;
 	case WORM_STATE_DIE:
+		SetSize(0, 0);
 		vx = 0;
 		vy = 0;
 		break;

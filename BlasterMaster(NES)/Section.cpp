@@ -14,6 +14,7 @@
 #include "Eyeball.h"
 #include "HPBar.h"
 #include "Boss.h"
+#include "Worm.h"
 #include "Dome.h"
 #include "Jason.h"
 #include "MiniJason.h"
@@ -163,6 +164,10 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	case OBJECT_TYPE_FLOATER2:
 		obj = new	Floater2(x, y);
 		obj->SetState(FLOATER2_STATE_FLYING_LEFT);
+		break;
+	case OBJECT_TYPE_WORM:
+		obj = new Worm(x, y);
+		obj->SetState(WORM_STATE_WALKING_LEFT);
 		break;
 	case OBJECT_TYPE_DOME:
 		obj = new Dome(x, y);

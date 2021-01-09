@@ -61,6 +61,17 @@ void Cannon::Render()
 	if (state == CANNON_STATE_DIE)
 	{
 		ani = CANNON_ANI_DIE;
+		if (!animation_set->at(CANNON_ANI_DIE)->IsCompleted())
+		{
+			animation_set->at(CANNON_ANI_DIE)->Render(x, y, nx, 255);
+			return;
+		}
+		else
+		{
+			animation_set->at(CANNON_ANI_DIE)->ResetAnim();
+			isDestroyed = true;
+			return;
+		}
 	}
 
 	animation_set->at(ani)->Render(x, y, nx);
@@ -69,6 +80,12 @@ void Cannon::Render()
 void Cannon::SetState(int state)
 {
 	CDynamicGameObject::SetState(state);
+	if (state == CANNON_STATE_DIE)
+	{
+		SetSize(0, 0);
+		vx = 0;
+		vy = 0;
+	}
 	nx = 1;
 }
 

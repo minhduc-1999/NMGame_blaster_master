@@ -9,9 +9,11 @@
 #define ORB_STATE_ROLLING_RIGHT	200
 #define ORB_STATE_RUNNING_LEFT  300
 #define ORB_STATE_RUNNING_RIGHT 400
+#define ORB_STATE_DIE           500
 
 
 #define ORB_ANI_ROLL             0
+#define ORB_ANI_DIE             1
 
 class Orb :
     public CDynamicGameObject

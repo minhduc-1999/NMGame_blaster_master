@@ -57,23 +57,30 @@ void Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			// if e->obj is Gate
-			if (dynamic_cast<CDynamicGameObject*>(e->obj))
+			int coObjType = e->obj->GetType();
+			if (coObjType != 15 && coObjType != 17)
 			{
-				CDynamicGameObject* obj = dynamic_cast<CDynamicGameObject*>(e->obj);
-				if (this->team == obj->GetTeam())
+				if (e->nx != 0)
 				{
-					x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-					y += (1 - min_ty) * dy - nty * 0.4f;
-					for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-					return;
+					x += (1 - e->t) * dx - e->nx * 0.4f;
+				}
+				else
+				{
+					y += (1 - e->t) * dy - e->ny * 0.4f;
 				}
 			}
-		}
+			switch (coObjType)
+			{
+			case 20: //enemy bullet
+				if (e->obj->GetTeam() == 0)
+				{
+					SetState(SKULL_STATE_DIE);
+				}
+				break;
+			default:
+				break;
+			};
 
-		if (ntx != 0)
-		{
-			
 		}
 
 	/*	if (nty != 0)
@@ -102,6 +109,23 @@ void Skull::Render()
 	if (isRendered)
 		return;
 	int ani = SKULL_ANI_FLYING;
+
+	if (GetState() == SKULL_STATE_DIE)
+	{
+		ani = SKULL_ANI_DIE;
+		if (!animation_set->at(SKULL_ANI_DIE)->IsCompleted())
+		{
+			animation_set->at(SKULL_ANI_DIE)->Render(x, y, nx, 255);
+			return;
+		}
+		else
+		{
+			animation_set->at(SKULL_ANI_DIE)->ResetAnim();
+			isDestroyed = true;
+			return;
+		}
+	}
+
 	switch (state)
 	{
 	case SKULL_STATE_FLYING_LEFT:
@@ -141,6 +165,11 @@ void Skull::SetState(int state)
 		break;
 	case SKULL_STATE_FIRE_RIGHT:
 		nx = 1;
+		break;
+	case SKULL_STATE_DIE:
+		SetSize(0, 0);
+		vx = 0;
+		vy = 0;
 		break;
 	default:
 		break;

@@ -9,8 +9,10 @@
 #define JUMPER2_STATE_WALKING_LEFT	200
 #define JUMPER2_STATE_JUMPING_RIGHT 300
 #define JUMPER2_STATE_JUMPING_LEFT  400
+#define JUMPER2_STATE_DIE           500
 
 #define JUMPER2_ANI_WALK    		0
+#define JUMPER2_ANI_DIE    		    1
 
 class Jumper2 :
     public CDynamicGameObject
