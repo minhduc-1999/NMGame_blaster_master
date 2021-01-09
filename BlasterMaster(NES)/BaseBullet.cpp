@@ -4,4 +4,5 @@ BaseBullet::BaseBullet(float x, float y, int team, int nx, int ny) : CDynamicGam
 {
 	startFiringTime = GetTickCount64();
 	this->team = team;
+	SetType(20);
 }

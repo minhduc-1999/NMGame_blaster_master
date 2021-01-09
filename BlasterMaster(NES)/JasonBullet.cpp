@@ -3,6 +3,7 @@
 JasonBullet::JasonBullet(float x, float y, int team, int nx, int ny) : BaseBullet(x, y, team, nx, ny)
 {
 	this->startFiringTime = GetTickCount64();
+	this->damage = JASON_BULLET_DAMAGE;
 	this->SetSize(10, 8);
 	this->SetAnimationSet(JASON_BULLET_ANISET);
 	if (nx != 0)
