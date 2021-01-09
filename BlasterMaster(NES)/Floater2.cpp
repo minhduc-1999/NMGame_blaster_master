@@ -8,10 +8,10 @@ Floater2::Floater2(float x, float y) :CDynamicGameObject(x, y)
 	startTime = 0;
 }
 
-void Floater2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Floater2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
-		return;
+		return -1;
 	CDynamicGameObject::Update(dt);
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -103,6 +103,7 @@ void Floater2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	isUpdated = true;
 	isRendered = false;
+	return 0;
 }
 
 void Floater2::Render()

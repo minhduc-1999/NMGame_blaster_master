@@ -453,16 +453,16 @@ void CGame::Load(LPCSTR gameFile)
 
 	DebugOut("[INFO] Loading game file : %s has been loaded successfully\n", gameFile);
 
-	SwitchScene(current_scene, -1);
+	SwitchScene(current_scene, -1, D3DXVECTOR2(-1, -1));
 }
 
-void CGame::SwitchScene(int scene_id, int section)
+void CGame::SwitchScene(int scene_id, int section, D3DXVECTOR2 tlPos)
 {
 	DebugOut("[INFO] Switching to scene %d\n", scene_id);
 
-	scenes[current_scene]->Unload();
-
 	SaveData* data = scenes[current_scene]->GetSaveData();
+
+	scenes[current_scene]->Unload();
 
 	CTextureManager::GetInstance()->Clear();
 	CSpriteManager::GetInstance()->Clear();
@@ -476,7 +476,7 @@ void CGame::SwitchScene(int scene_id, int section)
 		if (s->GetType() == GAME_SCENES_TYPE_AREA || s->GetType() == GAME_SCENES_TYPE_OVW)
 			((CTestScene*)s)->SetCurrentSection(section);
 	}
-	s->Load();
+	s->Load(tlPos);
 	SetKeyHandler(s->GetKeyEventHandler());
 }
 

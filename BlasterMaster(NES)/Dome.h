@@ -33,7 +33,7 @@ public:
     Dome(float x, float y);
     int GetNY() { return ny; }
     void SetState(int state);
-    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+    int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
     void SetBottomRect(int rectPos);
 };

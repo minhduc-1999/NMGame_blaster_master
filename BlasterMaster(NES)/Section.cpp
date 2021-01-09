@@ -19,6 +19,7 @@
 #include "Jason.h"
 #include "MiniJason.h"
 #include "CLadder.h"
+#include "SceneGate.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -235,23 +236,24 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		//static obj
 	case OBJECT_TYPE_BRICK:
 		obj = new Brick(x, y);
-		obj->SetType(object_type);
+		//obj->SetType(object_type);
 		break;
 	case OBJECT_TYPE_LADDER:
 		obj = new CLadder(x, y);
-		obj->SetType(object_type);
+		//obj->SetType(object_type);
 		break;
 	case 80:
 	{
+		int scene = atoi(tokens[tokens.size() - 4].c_str());
 		int section = atoi(tokens[tokens.size() - 3].c_str());
 		float telex = stof(tokens[tokens.size() - 2].c_str());
 		float teley = stof(tokens[tokens.size() - 1].c_str());
-		int size_w = atoi(tokens[tokens.size() - 5].c_str());
-		int size_h = atoi(tokens[tokens.size() - 4].c_str());
+		int size_w = atoi(tokens[tokens.size() - 6].c_str());
+		int size_h = atoi(tokens[tokens.size() - 5].c_str());
 		D3DXVECTOR2 telePos = D3DXVECTOR2(telex, teley);
-		obj = new CGate(x, y, section, telePos, size_w, size_h);
+		obj = new SceneGate(x, y, scene, section, telePos, size_w, size_h);
 		obj->SetType(object_type);
-		for (int i = 4; i <= tokens.size() - 6; i++)
+		for (int i = 4; i <= tokens.size() - 7; i++)
 		{
 			int spriteID = atoi(tokens[i].c_str());
 			obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
@@ -286,6 +288,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 
 	// General object setup
 	int spriteID = atoi(tokens[4].c_str());
+	obj->SetType(object_type);
 	obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
 	grids[grid]->AddStaticObj(obj);
 	//DebugOut("[STATIC OBJ POSITION]\t%d\t%f\t%f\n", object_type, x, y); 
@@ -333,7 +336,7 @@ void Section::_ParseSection_GRID(string line)
 
 void Section::_ParseSection_DEFAULT(string line)
 {
-	vector<string> tokens = split(line);
+ 	vector<string> tokens = split(line);
 
 	if (tokens.size() != 2) return; // skip invalid lines - map must have 4 value
 	defaultPos = D3DXVECTOR2(atof(tokens[0].c_str()), atof(tokens[1].c_str()));
@@ -386,7 +389,7 @@ void Section::Load()
 	DebugOut("[INFO] Done loading SECTION resources %s\n", secFilePath);
 }
 
-void Section::Update(DWORD dt)
+int Section::Update(DWORD dt)
 {
 	vector<LPGAMEOBJECT> coObjs;
 	Rect camPos = CGame::GetInstance()->GetCamBound();
@@ -419,7 +422,7 @@ void Section::Update(DWORD dt)
 			delete changeGridObjs;
 		}
 	}
-	mainPlayer->Update(dt, &coObjs);
+	return mainPlayer->Update(dt, &coObjs);
 
 	/*for (int i = 0; i < coObjs.size(); i++)
 	{
@@ -428,7 +431,7 @@ void Section::Update(DWORD dt)
 		{
 			temp = 1;
 		}
-	}*/
+	}
 	if (bulletObjs.empty())
 	{
 		canFire = true;
@@ -473,7 +476,7 @@ void Section::Update(DWORD dt)
 			delete bulletObjs[i];
 			bulletObjs.erase(bulletObjs.begin() + i);
 		}
-	}
+	}*/
 }
 
 void Section::Render()
@@ -488,10 +491,10 @@ void Section::Render()
 			grids.at(grid[i])->Render();
 		}
 	}
-	//render main
-	mainPlayer->Render();
 	for (int i = 0; i < bulletObjs.size(); i++)
 		bulletObjs[i]->Render();
+	//render main
+	mainPlayer->Render();
 }
 
 void Section::Unload()

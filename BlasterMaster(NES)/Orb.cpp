@@ -6,10 +6,10 @@ Orb::Orb(float x, float y) :CDynamicGameObject(x, y)
 }
 
 
-void Orb::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Orb::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
-		return;
+		return -1;
 	CDynamicGameObject::Update(dt);
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -94,6 +94,7 @@ void Orb::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	isUpdated = true;
 	isRendered = false;
+	return 0;
 }
 
 void Orb::Render()

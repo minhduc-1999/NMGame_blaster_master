@@ -20,9 +20,9 @@ public:
 	CScene(int id, string filePath);
 
 	CKeyEventHandler* GetKeyEventHandler() { return key_handler; }
-	virtual void Load() = 0;
+	virtual void Load(D3DXVECTOR2 tlPos) = 0;
 	virtual void Unload() = 0;
-	virtual void Update(DWORD dt) = 0;
+	virtual int Update(DWORD dt) = 0;
 	virtual void Render() = 0;
 
 	virtual void SwitchSection(int section_id, D3DXVECTOR2 telePos) = 0;

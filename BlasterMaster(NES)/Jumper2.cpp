@@ -9,10 +9,10 @@ bool Jumper2::IsJumping()
 	if (vy < 0) return false;
 	return true;
 }
-void Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
-		return;
+		return -1;
 	CDynamicGameObject::Update(dt);
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -101,6 +101,7 @@ void Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	isUpdated = true;
 	isRendered = false;
+	return 0;
 }
 
 void Jumper2::Render()

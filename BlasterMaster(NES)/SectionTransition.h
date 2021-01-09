@@ -12,12 +12,11 @@ protected:
 	bool _isFinish;
 	SaveData* saveData;
 public:
-	SectionTransition() { _isFinish = false; }
+	SectionTransition();
 	void Reset() { _isFinish = false; }
-	virtual bool IsFinish() { return _isFinish; }
+	bool IsFinish() { return _isFinish; }
 	int GetNextSectionId() { return sectionDes->GetId(); }
 	virtual void Update(DWORD dt) = 0;
-	virtual void DoAfterSetsection();
 	void Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlPos);
 	void Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlPos, SaveData* data);
 };

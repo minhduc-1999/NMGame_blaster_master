@@ -3,30 +3,46 @@
 #include "CGate.h"
 #include "CGate.h"
 #include "CLadder.h"
+#include "SceneGate.h"
 
 DWORD lastTimeAlphaMiniJason;
 
 MiniJason::MiniJason(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(MINIJASON_WIDTH, MINIJASON_HEIGHT);
-	lastTimeAlphaMiniJason = GetTickCount();
+	lastTimeAlphaMiniJason = GetTickCount64();
 }
 
-void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 
 	vector< LPCOLLISIONEVENT> curCoEvents;
 	isCollisionWithSophia = false;
-	isCollisionWithLadder = false;
 	isCollisionWithEnemy = false;
-	canGoOvw = true;
+	//canGoOvw = false;
+	canClimb = false;
 	CalcNowCollisions(coObjects, curCoEvents);
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		switch (temp->GetType())
 		{
+		case 80:
+			if (canGoOvw)
+			{ 
+				SceneGate* gate = dynamic_cast<SceneGate*>(temp);
+				if (gate != 0)
+				{
+					DebugOut("[To OVW]\tx: %f, y: %f, scene: %d, section: %d\n", gate->GetDesTelePos().x,
+						gate->GetDesTelePos().y, gate->GetDesScene(), gate->GetNextSectionID());
+					CGame::GetInstance()->SwitchScene(gate->GetDesScene(), gate->GetNextSectionID(), gate->GetDesTelePos());
+					return 1;
+				}
+			}
+			//canGoOvw = true;
+			//DebugOut("[INFO]\tcan go over world\n");
+			break;
 		case 17:
 		{
 			CGate* gate = dynamic_cast<CGate*>(temp);
@@ -36,9 +52,9 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					//if (abs(this->y - gate->GetDesTelePos().y) < 2)
 					//{
-						CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
-							gate->GetDesTelePos());
-						return;
+					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
+						gate->GetDesTelePos());
+					return 0;
 					//}					
 				}
 				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
@@ -49,13 +65,12 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isCollisionWithSophia = true;
 			break;
 		case 18:
-			isCollisionWithLadder = true;
+			canClimb = true;
 			break;
 		case 13:
 			isCollisionWithEnemy = true;
 			break;
 		default:
-			canGoOvw = true;
 			break;
 		}
 	}
@@ -94,7 +109,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int coObjType = e->obj->GetType();
-			if (coObjType != 15)
+			if (coObjType != 15 && coObjType != 18)
 			{
 				if (e->nx != 0)
 				{
@@ -108,7 +123,19 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			switch (coObjType)
 			{
 			case 18:	//Ladder
-				x += dx;
+			{
+				if (nx != 0)
+				{
+					x += (1 - e->t) * dx - e->nx * 0.4f;
+				}
+				if (e->ny != 0)
+				{
+					if (canClimb && state == MINIJASON_STATE_CLIMB)
+					{
+						y += e->t * dy - e->ny * 0.4f;
+					}
+				}
+				/*x += dx;
 				if (e->ny != 0)
 				{
 					if (e->ny == -1
@@ -120,8 +147,10 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						y += dy;
 					}
-				}
+				}*/
+
 				break;
+			}
 			case 15:
 				if (e->nx != 0)
 				{
@@ -139,7 +168,7 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					//y += e->t * dy + e->ny * 0.4f;
 					vy = 0;
-						
+
 					if (e->ny == -1)
 					{
 						SetIsJumping(false);
@@ -155,7 +184,6 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							}
 						}
 					}
-					
 				}
 				break;
 			};
@@ -164,8 +192,9 @@ void MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
-}
+	DebugOut("[MINIJASON]\tx: %f, y: %f\n", x, y);
+	return 0;
+ }
 
 void MiniJason::Render()
 {
@@ -190,8 +219,8 @@ void MiniJason::Render()
 
 	if (isCollisionWithEnemy)
 	{
-		DWORD now = GetTickCount();
-		if (GetTickCount() - lastTimeAlphaMiniJason >= 50)
+		DWORD now = GetTickCount64();
+		if (GetTickCount64() - lastTimeAlphaMiniJason >= 50)
 		{
 			lastTimeAlphaMiniJason = now;
 			if (alpha == 255)
@@ -337,7 +366,7 @@ void MiniJason::KeyState(BYTE* states)
 	}
 	else if (game->IsKeyDown(DIK_UP))
 	{
-		if (isCollisionWithLadder && GetIsDown() == false)
+		if (canClimb && GetIsDown() == false)
 		{
 			if (GetState() != MINIJASON_STATE_CLIMB)
 			{
@@ -364,7 +393,7 @@ void MiniJason::KeyState(BYTE* states)
 	}
 	else if (game->IsKeyDown(DIK_DOWN))
 	{
-		if (isCollisionWithLadder && GetState() == MINIJASON_STATE_CLIMB)
+		if (canClimb && GetState() == MINIJASON_STATE_CLIMB)
 		{
 			vx = 0;
 			vy = MINIJASON_CLIMB_SPEED_Y;
@@ -413,6 +442,10 @@ void MiniJason::KeyState(BYTE* states)
 
 void MiniJason::OnKeyDown(int KeyCode)
 {
+	if (KeyCode == DIK_DOWN)
+		canGoOvw = true;
+	else
+		canGoOvw = false;
 	switch (KeyCode)
 	{
 	case DIK_X:
@@ -433,11 +466,11 @@ void MiniJason::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_DOWN:
-		if (canGoOvw)
+		/*if (canGoOvw)
 		{
 			CGame::GetInstance()->SwitchScene(3, 1);
 			return;
-		}
+		}*/
 		if (GetState() != MINIJASON_STATE_CLIMB)
 		{
 			if (GetIsDown() == false)

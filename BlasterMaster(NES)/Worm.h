@@ -18,6 +18,6 @@ class Worm : public CDynamicGameObject
 public:
     Worm(float x, float y);
     void SetState(int state);
-    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+    int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
 };

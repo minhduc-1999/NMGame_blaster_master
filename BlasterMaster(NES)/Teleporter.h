@@ -21,7 +21,7 @@ public:
 	Teleporter(float x, float y);
 	bool isTele = false;
 	int swap, delay;
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
 };

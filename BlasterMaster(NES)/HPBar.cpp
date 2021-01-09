@@ -13,11 +13,12 @@ HPBar::HPBar() :CDynamicGameObject(x, y)
 	this->SetAnimationSet(ani_set);
 }
 
-void HPBar::Update(DWORD dt, float x, float y)
+int HPBar::Update(DWORD dt, float x, float y)
 {
 	this->SetPosition(x, y);
 	
 	CDynamicGameObject::Update(dt);
+	return 0;
 }
 
 void HPBar::Render()

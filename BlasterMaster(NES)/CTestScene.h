@@ -31,8 +31,8 @@ protected:
 public:
 	CTestScene(int id, string filePath, int type);
 
-	virtual void Load();
-	virtual void Update(DWORD dt);
+	virtual void Load(D3DXVECTOR2 tlPos);
+	virtual int Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
 	virtual void SwitchSection(int section_id, D3DXVECTOR2 telePos);

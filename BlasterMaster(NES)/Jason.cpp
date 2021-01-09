@@ -1,5 +1,6 @@
 #include "Jason.h"
 #include "CGate.h"
+#include "SceneGate.h"
 
 Jason::Jason(float x, float y) :CDynamicGameObject(x, y)
 {
@@ -7,12 +8,13 @@ Jason::Jason(float x, float y) :CDynamicGameObject(x, y)
 	ny = 1;
 }
 
-void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 	vector< LPCOLLISIONEVENT> curCoEvents;
-
 	CalcNowCollisions(coObjects, curCoEvents);
+	if (curCoEvents.size() == 0)
+		canGoArea = true;
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
@@ -27,15 +29,24 @@ void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 						gate->GetDesTelePos());
-					return;
+					return 0;
 				}
 				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
 			}
 			break;
 		}
 		case 80:
-			canGoArea = true;
-			DebugOut("[Collide with new gate]\n");
+			if (canGoArea)
+			{
+				SceneGate* gate = dynamic_cast<SceneGate*>(temp);
+				if (gate != 0)
+				{
+					DebugOut("[To Area]\tx: %f, y: %f, scene: %d, section: %d\n", gate->GetDesTelePos().x, 
+						gate->GetDesTelePos().y, gate->GetDesScene(), gate->GetNextSectionID());
+					CGame::GetInstance()->SwitchScene(gate->GetDesScene(), gate->GetNextSectionID(), gate->GetDesTelePos());
+					return 1;
+				}
+			}
 			break;
 		default:
 			canGoArea = true;
@@ -90,6 +101,8 @@ void Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	//DebugOut("[JASON]\tx: %f, y: %f\n", x, y);
+	return 0;
 }
 
 void Jason::Render()
@@ -223,13 +236,6 @@ void Jason::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
-	case DIK_Q:
-		if (canGoArea)
-		{
-			CGame::GetInstance()->SwitchScene(2, 1);
-			return;
-		}
-		break;
 		/*case DIK_Z:
 			if (GetIsUp())
 			{

@@ -22,19 +22,12 @@ CTestScene::CTestScene(int id, string filePath, int type) :
 	key_handler = new CTestSceneKeyHandler(this);
 	isSwitchingSection = false;
 	this->type = type;
-	switch (this->type)
-	{
-	case 1:
-		this->transition = new AreaSectionTransition();
-		break;
-	case 2:
-		this->transition = new OvwSectionTransition();
-		break;
-	case 3:
-		break;
-	default:
-		break;
-	}
+	transition = NULL;
+	miniJason = NULL;
+	sophia = NULL;
+	current_section = -1;
+	mainPlayer = NULL;
+	hpBar = NULL;
 }
 
 /*
@@ -147,7 +140,7 @@ void CTestScene::_ParseSection_SECTION(string line)
 		section = new SectionArea(id, path);
 	else if (this->type == 2)
 		section = new SectionOvw(id, path);
-	if(section != NULL)
+	if (section != NULL)
 		sections[id] = section;
 }
 
@@ -159,18 +152,19 @@ void CTestScene::_ParseSection_SOUND(string line)
 
 	string name = tokens[0];
 	string path = tokens[1];
-	
+
 	Sound::getInstance()->loadSound(path.c_str(), name);
 }
 
 //Update render
-void CTestScene::Update(DWORD dt)
+int CTestScene::Update(DWORD dt)
 {
 	if (isSwitchingSection == false)
 	{
 		//CGame::GetInstance()->ProcessKeyboard();
-		sections[current_section]->Update(dt);
-
+		int result = sections[current_section]->Update(dt);
+		if (result == 1)
+			return result;
 		//update camera
 		D3DXVECTOR2 mainPos = mainPlayer->GetPosition();
 		D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();
@@ -200,7 +194,7 @@ void CTestScene::Update(DWORD dt)
 			CGame::GetInstance()->UpdateCamera(mainPos, mapPos, mapDimen);
 		}
 	}
-
+	return 0;
 }
 
 void CTestScene::Render()
@@ -217,7 +211,9 @@ void CTestScene::Render()
 	{
 		sections[current_section]->Render();
 	}
-	mainPlayer->Render();
+	else
+		if (mainPlayer != NULL)
+			mainPlayer->Render();
 	//render foreground
 	CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 	//render hpbar
@@ -229,7 +225,23 @@ void CTestScene::Render()
 */
 void CTestScene::Unload()
 {
-
+	for (auto it = sections.begin(); it != sections.end(); ++it)
+	{
+		it->second->Unload();
+		delete it->second;
+	}
+	sections.clear();
+	if(mainPlayer != NULL)
+		delete mainPlayer;
+	if (sophia != NULL)
+		delete sophia;
+	if (miniJason != NULL)
+		delete miniJason;
+	if (transition != NULL)
+		delete transition;
+	if (hpBar != NULL)
+		delete hpBar;
+		
 }
 
 void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)
@@ -297,7 +309,7 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				return;
 			}
 
-		}		
+		}
 	}
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->OnKeyDown(KeyCode);
@@ -317,7 +329,7 @@ void CTestSceneKeyHandler::OnKeyUp(int KeyCode)
 	currentPlayer->OnKeyUp(KeyCode);
 }
 
-void CTestScene::Load()
+void CTestScene::Load(D3DXVECTOR2 tlPos)
 {
 	DebugOut("[INFO] Start loading scene resources from : %s \n", sceneFilePath);
 
@@ -364,12 +376,27 @@ void CTestScene::Load()
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
 		}
 	}
-	Sound::getInstance()->play("lvl2", true, 0);
+	//Sound::getInstance()->play("lvl2", true, 0);
 	f.close();
+	switch (this->type)
+	{
+	case 1:
+		this->transition = new AreaSectionTransition();
+		break;
+	case 2:
+		this->transition = new OvwSectionTransition();
+		break;
+	case 3:
+		break;
+	default:
+		break;
+	}
 
 	DebugOut("[INFO] Loading section file : %s has been loaded successfully\n", sceneFilePath);
 
-	SwitchSection(current_section, D3DXVECTOR2(-1, -1));
+	//SwitchSection(current_section, D3DXVECTOR2(-1, -1));
+	SwitchSection(current_section, tlPos);
+	this->mainPlayer = sections[current_section]->GetPlayer();
 	hpBar = new HPBar();
 }
 

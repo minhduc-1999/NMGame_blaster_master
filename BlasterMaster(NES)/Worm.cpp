@@ -5,7 +5,7 @@ Worm::Worm(float x, float y) :CDynamicGameObject(x, y)
 	SetSize(WORM_WIDTH, WORM_HEIGHT);
 }
 
-void Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
 	vy += WORM_GRAVITY;
@@ -83,6 +83,7 @@ void Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	return 0;
 }
 
 void Worm::Render()

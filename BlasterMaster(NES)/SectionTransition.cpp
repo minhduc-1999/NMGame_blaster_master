@@ -4,12 +4,13 @@
 
 #define SWITCH_SECTION_SPEED 0.07f
 
-
-void SectionTransition::DoAfterSetsection()
+SectionTransition::SectionTransition()
 {
-	sectionDes->SetMainPlayer(sectionSrc->GetPlayer());
-	sectionSrc->Unload();
-	sectionDes->Load(saveData);
+	_isFinish = false;
+	sectionDes = NULL;
+	sectionSrc = NULL;
+	telePos = D3DXVECTOR2(-1, -1);
+	saveData = NULL;
 }
 
 void SectionTransition::Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlPos)
@@ -20,14 +21,17 @@ void SectionTransition::Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlP
 	if (telePos.x == -1 && telePos.y == -1)
 	{
 		_isFinish = true;
-		sectionDes->Load(saveData);
+		sectionDes->Load(saveData, tlPos);
 		CGame::GetInstance()->UpdateCamera(
 			sectionDes->GetPlayer()->GetPosition(),
 			sectionDes->GetSectionMapPos(),
 			sectionDes->GetSectionMapDimension());
 		return;
 	}
-	DoAfterSetsection();
+	//DoAfterSetsection();
+	sectionDes->SetMainPlayer(sectionSrc->GetPlayer());
+	sectionSrc->Unload();
+	sectionDes->Load(saveData, tlPos);
 }
 
 void SectionTransition::Setsection(LPSECTION src, LPSECTION des, D3DXVECTOR2 tlPos, SaveData* data)

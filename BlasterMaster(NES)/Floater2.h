@@ -22,7 +22,7 @@ private:
 public:
     Floater2(float x, float y);
     void SetState(int state);
-    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+    int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
     vector<LPDYNAMICOBJECT> Fire(float xMain, float yMain);
     int FindMain(float xF, float yF, float xMain, float yMain);

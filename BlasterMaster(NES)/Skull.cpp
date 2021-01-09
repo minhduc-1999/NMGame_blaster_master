@@ -12,10 +12,10 @@ Skull::Skull(float x, float y) :CDynamicGameObject(x, y)
 }
 
 
-void Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
-		return;
+		return -1;
 	CDynamicGameObject::Update(dt);
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -102,6 +102,7 @@ void Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	isRendered = false;
 	isUpdated = true;
+	return 0;
 }
 
 void Skull::Render()

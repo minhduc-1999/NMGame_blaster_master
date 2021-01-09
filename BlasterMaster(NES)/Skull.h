@@ -26,7 +26,7 @@ private:
 	DWORD startTime;
 public:
 	Skull(float x, float y);
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
 	vector<LPDYNAMICOBJECT> Fire();

@@ -33,7 +33,7 @@ class Bullet :
 	bool isFalling;
 public:
 	Bullet(float x, float y, int type, int n);
-	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void SetState(int state);
 	//virtual bool GetIsDestroyed() { return isDestroyed; }

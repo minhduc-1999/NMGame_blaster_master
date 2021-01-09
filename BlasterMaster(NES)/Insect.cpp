@@ -4,10 +4,10 @@ Insect::Insect(float x, float y) :CDynamicGameObject(x, y)
 	SetSize(18,	18);
 	vy = INSECT_FLYING_SPEED;
 }
-void Insect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Insect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
-		return;
+		return -1;
 	CDynamicGameObject::Update(dt);
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -92,6 +92,7 @@ void Insect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	isUpdated = true;
 	isRendered = false;
+	return 0;
 }
 
 void Insect::Render()

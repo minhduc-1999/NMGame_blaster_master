@@ -7,6 +7,22 @@ void OvwSectionTransition::Update(DWORD dt)
 	//DebugOut("[Trans Update]\t%s", player);
 	int nx = player->GetNX();
 	int ny = player->GetNY();
+	D3DXVECTOR2 pos = player->GetPosition();
+
+	if (ny == 0)
+	{
+		if ((nx == 1 && pos.x >= telePos.x) || (nx == -1 && pos.x <= telePos.x))
+		{
+			_isFinish = true;
+		}
+	}
+	else
+	{
+		if ((ny == 1 && pos.y >= telePos.y) || (ny == -1 && pos.y <= telePos.y))
+		{
+			_isFinish = true;
+		}
+	}
 	//DebugOut("[nx player trans]\tDir: %d, dt: %d\n", nx, dt);
 	if (ny == 0)
 	{
@@ -28,22 +44,8 @@ void OvwSectionTransition::Update(DWORD dt)
 	}
 
 	player->Update(dt);
-	D3DXVECTOR2 pos = player->GetPosition();
 	//DebugOut("[Pos player trans]\tx: %f, y: %f\n", pos.x, pos.y);
 	CGame::GetInstance()->UpdateSwitchSectionCamera(dt, nx, ny, telePos, sectionDes->GetSectionMapPos(), sectionDes->GetSectionMapDimension());
-	if (ny == 0)
-	{
-		if ((nx == 1 && pos.x >= telePos.x) || (nx == -1 && pos.x <= telePos.x))
-		{
-			_isFinish = true;
-		}
-	}
-	else
-	{
-		if ((ny == 1 && pos.y >= telePos.y) || (ny == -1 && pos.y <= telePos.y))
-		{
-			_isFinish = true;
-		}
-	}
+	
 
 }

@@ -1,7 +1,7 @@
 #include "SectionArea.h"
 #include "MiniJason.h"
 
-void SectionArea::Load(SaveData* data)
+void SectionArea::Load(SaveData* data, D3DXVECTOR2 mainPos)
 {
 	Section::Load();
 	if (data != NULL)
@@ -23,27 +23,40 @@ void SectionArea::Load(SaveData* data)
 			if (mainPlayer == NULL)
 			{
 				LPANIMATION_SET ani_setMINIJASON = animation_sets->Get(2);
-				mainPlayer = new MiniJason(defaultPos.x, defaultPos.y);
+				if(mainPos.x == -1 && mainPos.y == -1)
+					mainPlayer = new MiniJason(defaultPos.x, defaultPos.y);
+				else
+					mainPlayer = new MiniJason(mainPos.x, mainPos.y);
 				mainPlayer->SetTeam(0);
 				mainPlayer->SetType(2);
+				mainPlayer->SetState(MINIJASON_STATE_IDLE_LEFT);
 				mainPlayer->SetAnimationSet(ani_setMINIJASON);
+				DebugOut("[AREA-INFO] create minijason\n");
+				DebugOut("[AREA-INFO] Main Pos:\t%f\t%f\n", mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
 			}
-			DebugOut("[INFO] Loaded save data %d\n");
+			DebugOut("[AREA-INFO] Loaded save data\n");
 		}
 	}
-	if (mainPlayer != NULL)
+	else
 	{
-		//D3DXVECTOR2 pos = mainPlayer->GetPosition();
-		//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
-		DebugOut("[ERROR] main object was created before in area!\n");
-		return;
+		if (mainPlayer != NULL)
+		{
+			//D3DXVECTOR2 pos = mainPlayer->GetPosition();
+			//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
+			DebugOut("[ERROR] main object was created before in area! && no save data\n");
+			return;
+		}
+		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+		LPANIMATION_SET ani_set = animation_sets->Get(1);
+		if (mainPos.x == -1 && mainPos.y == -1)
+			mainPlayer = new Sophia(defaultPos.x, defaultPos.y);
+		else
+			mainPlayer = new Sophia(mainPos.x, mainPos.y);
+		mainPlayer->SetAnimationSet(ani_set);
+		mainPlayer->SetTeam(0);
+		mainPlayer->SetType(1);
+		mainPlayer->SetState(SOPHIA_STATE_IDLE_RIGHT);
+		DebugOut("[AREA-INFO] sophia created!\n");
+		DebugOut("[AREA-INFO] Main Pos:\t%f\t%f\n", mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
 	}
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	LPANIMATION_SET ani_set = animation_sets->Get(1);
-	mainPlayer = new Sophia(defaultPos.x, defaultPos.y);
-	mainPlayer->SetAnimationSet(ani_set);
-	mainPlayer->SetTeam(0);
-	mainPlayer->SetType(1);
-	DebugOut("[INFO] sophia created!\n");
-	//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
 }

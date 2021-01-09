@@ -29,6 +29,6 @@ class Hand : public CDynamicGameObject
 public:
     Hand(float x, float y,int _index, bool _isLeftHand);
     void SetState(int state);
-    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, D3DXVECTOR2 bossPosition);
+    int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, D3DXVECTOR2 bossPosition);
     void Render();
 };

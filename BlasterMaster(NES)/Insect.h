@@ -21,7 +21,7 @@ public:
     Insect(float x, float y);
     int jump;
     void SetState(int state);
-    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+    int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
 };
 

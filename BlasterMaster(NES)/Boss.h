@@ -20,6 +20,6 @@ class Boss : public CDynamicGameObject
 public:
     Boss(float x, float y, int hand_ani_set_id, int arm_ani_set_id);
     void SetState(int state);
-    void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+    int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
 };

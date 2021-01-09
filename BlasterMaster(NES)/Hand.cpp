@@ -27,10 +27,10 @@ Hand::Hand(float x, float y, int _index, bool _isLeftHand) :CDynamicGameObject(x
 	ny = 1;
 }
 
-void Hand::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, D3DXVECTOR2 _bossPosition)
+int Hand::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, D3DXVECTOR2 _bossPosition)
 {
 	if (isUpdated)
-		return;
+		return -1;
 	CDynamicGameObject::Update(dt);
 
 	x += (_bossPosition.x - bossPosition.x);
@@ -160,6 +160,7 @@ void Hand::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, D3DXVECTOR2 _bossPo
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	isUpdated = true;
 	isRendered = false;
+	return 0;
 }
 
 void Hand::Render()

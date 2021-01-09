@@ -8,10 +8,10 @@ Mine::Mine(float x, float y) :CDynamicGameObject(x, y)
 	startTime = GetTickCount();
 }
 
-void Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
-		return;
+		return -1;
 	CDynamicGameObject::Update(dt);
 	vy += MINE_GRAVITY;
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -85,6 +85,7 @@ void Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	isUpdated = true;
 	isRendered = false;
+	return 0;
 }
 
 void Mine::Render()
