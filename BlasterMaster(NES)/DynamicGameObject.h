@@ -33,6 +33,7 @@ public:
 
 	virtual int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
+	void SetAnimationSet(int ani_set);
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	LPCOLLISIONEVENT SweptCollistion(LPGAMEOBJECT coO);

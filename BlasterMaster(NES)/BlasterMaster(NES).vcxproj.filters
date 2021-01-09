@@ -179,6 +179,9 @@
     <Filter Include="FrameWork\SaveData">
       <UniqueIdentifier>{beb66843-7fbe-41ff-8ab9-e1c154ed9d31}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Bullet\JasonBullet">
+      <UniqueIdentifier>{025bbc3e-848b-4d85-aea9-c057f8db7a45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -318,6 +321,12 @@
     </ClInclude>
     <ClInclude Include="SceneGate.h">
       <Filter>Object\StaticObject\Gate</Filter>
+    </ClInclude>
+    <ClInclude Include="JasonBullet.h">
+      <Filter>Object\DynamicObject\Bullet\JasonBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseBullet.h">
+      <Filter>Object\DynamicObject\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -461,6 +470,12 @@
     </ClCompile>
     <ClCompile Include="SceneGate.cpp">
       <Filter>Object\StaticObject\Gate</Filter>
+    </ClCompile>
+    <ClCompile Include="JasonBullet.cpp">
+      <Filter>Object\DynamicObject\Bullet\JasonBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseBullet.cpp">
+      <Filter>Object\DynamicObject\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

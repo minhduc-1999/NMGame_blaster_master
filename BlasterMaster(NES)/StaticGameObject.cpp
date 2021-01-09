@@ -4,6 +4,7 @@ CStaticGameObject::CStaticGameObject(float x, float y): CGameObject(x, y)
 {
 	width = TILE_WIDTH;
 	height = TILE_HEIGHT;
+	team = -1;
 }
 
 void CStaticGameObject::AddSprite(LPSPRITE src)
