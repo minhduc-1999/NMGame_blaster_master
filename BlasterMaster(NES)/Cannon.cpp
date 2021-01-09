@@ -37,14 +37,28 @@ int Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
 
-		// block 
-		//x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		//y += min_ty * dy + nty * 0.4f;
-
-
-		if (nty != 0)
+		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			vy = 0;
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			int coObjType = e->obj->GetType();
+			switch (coObjType)
+			{
+			case 15: case 17:	//brick and gate
+				if (e->ny != 0)
+				{
+					vy = 0;
+				}
+				break;
+			case 20: //enemy bullet
+				if (e->obj->GetTeam() == 0)
+				{
+					SetState(CANNON_STATE_DIE);
+				}
+				break;
+			default:
+				break;
+			};
+
 		}
 
 		//TODO: Collision logic with dynamic object (bots)
