@@ -182,6 +182,12 @@
     <Filter Include="Object\DynamicObject\Bullet\JasonBullet">
       <UniqueIdentifier>{025bbc3e-848b-4d85-aea9-c057f8db7a45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Bullet\SophiaBullet">
+      <UniqueIdentifier>{d10be47b-fde7-4e0a-883a-eca8294066d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Bullet\MiniJasonBullet">
+      <UniqueIdentifier>{dd4afb15-250c-40bb-95f6-9e304078e7d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -331,6 +337,12 @@
     <ClInclude Include="MainPlayer.h">
       <Filter>Object\DynamicObject\Player</Filter>
     </ClInclude>
+    <ClInclude Include="SophiaBullet.h">
+      <Filter>Object\DynamicObject\Bullet\SophiaBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniJasonBullet.h">
+      <Filter>Object\DynamicObject\Bullet\MiniJasonBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -479,6 +491,12 @@
     </ClCompile>
     <ClCompile Include="BaseBullet.cpp">
       <Filter>Object\DynamicObject\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SophiaBullet.cpp">
+      <Filter>Object\DynamicObject\Bullet\SophiaBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniJasonBullet.cpp">
+      <Filter>Object\DynamicObject\Bullet\MiniJasonBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -314,6 +314,21 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 			}
 
 		}
+		if (KeyCode == DIK_Z)
+		{
+			if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA)
+			{
+				Sophia* currentPlayer = (Sophia*)(((CTestScene*)scence)->GetPlayer());
+				if (currentPlayer->CanShoot())
+					((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
+			}
+			else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON)
+			{
+				MiniJason* currentPlayer = (MiniJason*)(((CTestScene*)scence)->GetPlayer());
+				if (currentPlayer->CanShoot())
+					((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
+			}
+		}
 	}
 	else if(scence->GetType() == 2)
 	{

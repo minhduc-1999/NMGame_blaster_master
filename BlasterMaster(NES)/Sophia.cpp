@@ -2,6 +2,7 @@
 #include "CGate.h"
 #include "Jumper2.h"
 #include "Brick.h"
+#include "SophiaBullet.h"
 
 Sophia::Sophia(float x, float y) :MainPlayer(x, y)
 {
@@ -634,24 +635,13 @@ void Sophia::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_Z:
-		if (GetIsUp())
+		if (GetTickCount64() - lastShot >= 300)
 		{
-			Sound::getInstance()->play("SophiaFire", false, 1);
-
-			if (GetNX() == 1)
-				SetState(SOPHIA_STATE_FIRING_UP_RIGHT);
-			else
-				SetState(SOPHIA_STATE_FIRING_UP_LEFT);
-
+			canShoot = true;
+			lastShot = GetTickCount64();
 		}
 		else
-		{
-			Sound::getInstance()->play("SophiaFire", false, 1);
-			if (GetNX() == 1)
-				SetState(SOPHIA_STATE_FIRING_RIGHT);
-			else
-				SetState(SOPHIA_STATE_FIRING_LEFT);
-		}
+			canShoot = false;
 		break;
 	case DIK_C:
 		SetState(SOPHIA_STATE_TRANSFORM);
@@ -677,4 +667,21 @@ void Sophia::OnKeyUp(int KeyCode)
 		}
 		break;
 	}
+}
+
+BaseBullet* Sophia::Shoot()
+{
+	SophiaBullet* bullet = NULL;
+	if (canShoot)
+	{
+		if (GetIsUp())
+		{
+			bullet = new SophiaBullet(x, y, 0, nx, 1);
+		}
+		else
+		{
+			bullet = new SophiaBullet(x, y, 0, nx, ny);
+		}
+	}
+	return bullet;
 }

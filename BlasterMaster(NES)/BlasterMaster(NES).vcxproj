@@ -166,6 +166,7 @@
     <ClInclude Include="Hand.h" />
     <ClInclude Include="MainPlayer.h" />
     <ClInclude Include="JasonBullet.h" />
+    <ClInclude Include="MiniJasonBullet.h" />
     <ClInclude Include="SceneGate.h" />
     <ClInclude Include="HPBar.h" />
     <ClInclude Include="Insect.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Skull.h" />
+    <ClInclude Include="SophiaBullet.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="StaticGameObject.h" />
@@ -223,6 +225,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mine.cpp" />
     <ClCompile Include="MiniJason.cpp" />
+    <ClCompile Include="MiniJasonBullet.cpp" />
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="OvwSectionTransition.cpp" />
     <ClCompile Include="SceneGate.cpp" />
@@ -234,6 +237,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Skull.cpp" />
+    <ClCompile Include="SophiaBullet.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="StaticGameObject.cpp" />

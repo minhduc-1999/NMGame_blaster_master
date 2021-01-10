@@ -1,6 +1,7 @@
 #ifndef _MINIJASON_H
 #define _MINIJASON_H
 #include "MainPlayer.h"
+#include "BaseBullet.h"
 
 #define MINIJASON_WIDTH			10
 #define MINIJASON_HEIGHT		17
@@ -55,5 +56,8 @@ public:
 	void KeyState(BYTE* states);
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
+
+	BaseBullet* Shoot();
+	bool CanShoot() { return canShoot; }
 };
 #endif

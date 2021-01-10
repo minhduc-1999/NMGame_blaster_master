@@ -4,6 +4,7 @@
 #include "CGate.h"
 #include "CLadder.h"
 #include "SceneGate.h"
+#include "MiniJasonBullet.h"
 
 
 MiniJason::MiniJason(float x, float y) :MainPlayer(x, y)
@@ -471,7 +472,15 @@ void MiniJason::OnKeyDown(int KeyCode)
 	{
 	case DIK_Z:
 	{
-		Sound::getInstance()->play("JasonFire", false, 1);
+		if (GetTickCount64() - lastShot >= 300)
+		{
+			canShoot = true;
+			Sound::getInstance()->play("JasonFire", false, 1);
+			lastShot = GetTickCount64();
+		}
+		else
+			canShoot = false;
+		break;
 	}
 	break;
 	case DIK_X:
@@ -527,4 +536,14 @@ void MiniJason::OnKeyDown(int KeyCode)
 
 void MiniJason::OnKeyUp(int KeyCode)
 {
+}
+
+BaseBullet* MiniJason::Shoot()
+{
+	MiniJasonBullet* bullet = NULL;
+	if (canShoot)
+	{
+		bullet = new MiniJasonBullet(x, y, 0, nx, ny);
+	}
+	return bullet;
 }

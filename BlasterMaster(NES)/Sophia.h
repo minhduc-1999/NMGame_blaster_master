@@ -2,6 +2,7 @@
 #define _SOPHIA_H
 
 #include "MainPlayer.h"
+#include "BaseBullet.h"
 
 #define SOPHIA_WIDTH 26
 #define SOPHIA_HEIGHT 18
@@ -63,6 +64,9 @@ public:
 	void KeyState(BYTE* states);
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
+
+	BaseBullet* Shoot();
+	bool CanShoot() { return canShoot; }
 };
 
 #endif
