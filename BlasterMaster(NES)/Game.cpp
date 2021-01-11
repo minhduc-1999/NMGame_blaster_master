@@ -2,6 +2,7 @@
 #include "CTestScene.h"
 #include <fstream>
 #include "Textures.h"
+#include "IntroScene.h"
 
 CGame* CGame::__instance = NULL;
 HWND CGame::mHwnd = NULL;
@@ -187,6 +188,91 @@ void CGame::DrawFlipY(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, in
 	}
 }
 
+void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir, D3DCOLOR color)
+{
+	D3DXVECTOR2 camPos = GetCamPos();
+	int viewPortY = y - camPos.y;
+	int viewPortX = x - camPos.x;
+	D3DXVECTOR3 pCenter((right - left) / 2, (bottom - top) / 2, 0);
+
+	RECT r;
+	r.left = left;
+	r.right = right;
+	r.top = top;
+	r.bottom = bottom;
+	if (dir == -1)
+	{
+		D3DXVECTOR3 p(viewPortX, viewPortY, 0);
+		spriteHander->Draw(texture, &r, &pCenter, &p, color);
+	}
+	else
+	{
+		// ma trận lưu thông tin về tỉ lệ
+		D3DXVECTOR3 p(-viewPortX, viewPortY, 0);
+
+		D3DXMATRIX matScale;
+
+		// khởi tạo ma trận phóng to theo trục Ox -1 lần, trục Oy 1 lần.
+		D3DXMatrixScaling(&matScale, -1.0f, 1.0f, .0f);
+
+		// thực hiện việc chuyển đổi.
+		spriteHander->SetTransform(&matScale);
+		spriteHander->Draw(texture, &r, &pCenter, &p, color);
+
+		//reset transform
+		D3DXMatrixScaling(&matScale, 1.0f, 1.0f, .0f);
+		spriteHander->SetTransform(&matScale);
+	}
+}
+
+void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir, D3DCOLOR color, float scaleX, float scaleY)
+{
+	D3DXVECTOR2 camPos = GetCamPos();
+	int viewPortY = y - camPos.y;
+	int viewPortX = x - camPos.x;
+	D3DXVECTOR3 pCenter((right - left) / 2, (bottom - top) / 2, 0);
+
+	RECT r;
+	r.left = left;
+	r.right = right;
+	r.top = top;
+	r.bottom = bottom;
+	
+	if (dir == -1)
+	{
+		D3DXVECTOR3 p(viewPortX, viewPortY, 0);
+
+		D3DXMATRIX matScale;
+		D3DXMatrixScaling(&matScale, scaleX, scaleY, .0f);
+
+		spriteHander->SetTransform(&matScale);
+		spriteHander->Draw(texture, &r, &pCenter, &p, color);
+
+		//reset transform
+		D3DXMatrixScaling(&matScale, 1.0f, 1.0f, .0f);
+		spriteHander->SetTransform(&matScale);
+	}
+	else
+	{
+		// ma trận lưu thông tin về tỉ lệ
+		D3DXVECTOR3 p(-viewPortX, viewPortY, 0);
+
+		D3DXMATRIX matScale;
+		// khởi tạo ma trận phóng to theo trục Ox -1 lần, trục Oy 1 lần.
+		D3DXMatrixScaling(&matScale, -scaleX, scaleY, .0f);
+
+		// thực hiện việc chuyển đổi.
+		spriteHander->SetTransform(&matScale);
+		spriteHander->Draw(texture, &r, &pCenter, &p, color);
+
+		//reset transform
+		D3DXMatrixScaling(&matScale, 1.0f, 1.0f, .0f);
+		spriteHander->SetTransform(&matScale);
+		
+		
+	}
+}
+
 CGame* CGame::GetInstance()
 {
 	if (__instance == NULL)
@@ -332,7 +418,8 @@ void CGame::Render()
 	if (d3ddev->BeginScene())
 	{
 		// Clear back buffer with a color
-		d3ddev->ColorFill(backbuffer, NULL, BACKGROUND_COLOR);
+		D3DCOLOR bg = scenes[current_scene]->GetBackground();
+		d3ddev->ColorFill(backbuffer, NULL, bg);
 
 		spriteHander->Begin(D3DXSPRITE_ALPHABLEND);
 
@@ -479,12 +566,27 @@ void CGame::_ParseSection_SCENES(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 3) return;
+	if (tokens.size() < 6) return;
 	int id = atoi(tokens[0].c_str());
 	string path = tokens[1];
 	int type = atoi(tokens[2].c_str());
-	LPSCENE scene = new CTestScene(id, path, type);
-	scenes[id] = scene;
+	int R = atoi(tokens[3].c_str());
+	int G = atoi(tokens[4].c_str());
+	int B = atoi(tokens[5].c_str());
+	LPSCENE scene = NULL;
+	switch (type)
+	{
+	case 1: case 2:
+		scene = new CTestScene(id, path, type, D3DXVECTOR3(R, G, B));
+		break;
+	case 3:
+		scene = new IntroScene(id, path, type, D3DXVECTOR3(R, G, B));
+		break;
+	default:
+		break;
+	}
+	if (scene != NULL)
+		scenes[id] = scene;
 }
 
 /*

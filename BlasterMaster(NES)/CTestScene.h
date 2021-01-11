@@ -29,7 +29,7 @@ protected:
 	int current_section;
 	bool isSwitchingSection;
 public:
-	CTestScene(int id, string filePath, int type);
+	CTestScene(int id, string filePath, int type, D3DXVECTOR3 bg);
 
 	virtual void Load(D3DXVECTOR2 tlPos);
 	virtual int Update(DWORD dt);

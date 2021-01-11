@@ -203,6 +203,12 @@
     <Filter Include="Object\DynamicObject\Bullet\SkullBullet">
       <UniqueIdentifier>{e83646d1-dcd3-401e-96b3-d082f74fbd67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\intro">
+      <UniqueIdentifier>{09d757de-0772-4da2-b35c-febac3f1cb15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Config\intro">
+      <UniqueIdentifier>{4bf91257-dd5f-4073-bb21-ef3b4862b6b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -372,6 +378,9 @@
     </ClInclude>
     <ClInclude Include="SkullBullet.h">
       <Filter>Object\DynamicObject\Bullet\SkullBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -543,6 +552,9 @@
     <ClCompile Include="SkullBullet.cpp">
       <Filter>Object\DynamicObject\Bullet\SkullBullet</Filter>
     </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="BlasterMaster.ico">
@@ -586,6 +598,18 @@
     </Image>
     <Image Include="Resource\Background\bbox.png">
       <Filter>Resources\Background</Filter>
+    </Image>
+    <Image Include="Resource\intro\intro1.png">
+      <Filter>Resources\intro</Filter>
+    </Image>
+    <Image Include="Resource\intro\title.jpg">
+      <Filter>Resources\intro</Filter>
+    </Image>
+    <Image Include="Resource\intro\intro2.png">
+      <Filter>Resources\intro</Filter>
+    </Image>
+    <Image Include="Resource\intro\intro3.png">
+      <Filter>Resources\intro</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -638,9 +662,6 @@
       <Filter>Resources\Config\area2</Filter>
     </Text>
     <Text Include="Resource\Config\Gameworld.txt">
-      <Filter>Resources\Config</Filter>
-    </Text>
-    <Text Include="Resource\Config\scene-test.txt">
       <Filter>Resources\Config</Filter>
     </Text>
     <Text Include="Resource\Config\OverWorld\overworld.txt">
@@ -750,6 +771,9 @@
     </Text>
     <Text Include="Resource\Config\OverWorld\ovw_sec35.txt">
       <Filter>Resources\Config\overworld</Filter>
+    </Text>
+    <Text Include="Resource\Config\intro\intro.txt">
+      <Filter>Resources\Config\intro</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

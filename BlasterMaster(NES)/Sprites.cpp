@@ -24,6 +24,12 @@ void CSprite::DrawFlipY(float x, float y, int dir, int alpha)
 	game->DrawFlipY(x, y, texture, left, top, right, bottom, dir, alpha);
 }
 
+void CSprite::Draw(float x, float y, int dir, D3DCOLOR color, float scaleX, float scaleY)
+{
+	CGame* game = CGame::GetInstance();
+	game->Draw(x, y, texture, left, top, right, bottom, dir, color, scaleX, scaleY);
+}
+
 //class CSpriteManager
 CSpriteManager* CSpriteManager::__instance = NULL;
 
@@ -60,6 +66,14 @@ CAnimationFrame::CAnimationFrame(LPSPRITE sprite, int time)
 {
 	this->sprite = sprite;
 	this->time = time;
+	this->color = NULL;
+}
+
+CAnimationFrame::CAnimationFrame(LPSPRITE sprite, int time, D3DCOLOR color)
+{
+	this->sprite = sprite;
+	this->time = time;
+	this->color = color;
 }
 
 DWORD CAnimationFrame::GetTime() {
@@ -80,6 +94,17 @@ void CAnimation::Add(int spriteId, DWORD time)
 
 	LPSPRITE sprite = CSpriteManager::GetInstance()->Get(spriteId);
 	LPANIMATION_FRAME frame = new CAnimationFrame(sprite, t);
+	frames.push_back(frame);
+}
+
+void CAnimation::AddWithColor(int spriteId, D3DCOLOR color, DWORD time)
+{
+	int t = time;
+	if (time == 0)
+		t = this->defaultTime;
+
+	LPSPRITE sprite = CSpriteManager::GetInstance()->Get(spriteId);
+	LPANIMATION_FRAME frame = new CAnimationFrame(sprite, color, t);
 	frames.push_back(frame);
 }
 
@@ -104,7 +129,7 @@ void CAnimation::Render(float x, float y, int dir, int alpha)
 	}
 	if (currentFrame == frames.size() - 1)
 		_isCompleted = true;
-	frames[currentFrame]->GetSprite()->Draw(x, y, dir,alpha);
+	frames[currentFrame]->GetSprite()->Draw(x, y, dir, alpha);
 }
 
 void CAnimation::RenderFlipY(float x, float y, int dir, int alpha)
@@ -134,6 +159,31 @@ void CAnimation::RenderFlipY(float x, float y, int dir, int alpha)
 void CAnimation::Render(float x, float y, int dir)
 {
 	Render(x, y, dir, 255);
+}
+
+void CAnimation::RenderWithColor(float x, float y, int dir, float scaleX, float scaleY)
+{
+	DWORD now = GetTickCount64();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size())
+				currentFrame = 0;
+		}
+	}
+	if (currentFrame == frames.size() - 1)
+		_isCompleted = true;
+	D3DCOLOR color = frames[currentFrame]->GetColor();
+	frames[currentFrame]->GetSprite()->Draw(x, y, dir, color, scaleX, scaleY);
 }
 
 void CAnimation::RenderFrame(int frameID, float x, float y, int dir, int alpha)

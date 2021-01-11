@@ -16,6 +16,8 @@ public:
 		LPDIRECT3DTEXTURE9 texture);
 	void Draw(float x, float y, int dir, int alpha);
 	void DrawFlipY(float x, float y, int dir, int alpha);
+	void Draw(float x, float y, int dir, D3DCOLOR color, float scaleX, float scaleY);
+
 };
 
 typedef CSprite* LPSPRITE;
@@ -36,10 +38,13 @@ class CAnimationFrame
 {
 	LPSPRITE sprite;
 	DWORD time;
+	D3DCOLOR color;
 public:
 	CAnimationFrame(LPSPRITE sprite, int time);
+	CAnimationFrame(LPSPRITE sprite, int time, D3DCOLOR color);
 	DWORD GetTime();
 	LPSPRITE GetSprite();
+	D3DCOLOR GetColor() { return color; }
 };
 
 typedef CAnimationFrame* LPANIMATION_FRAME;
@@ -63,8 +68,10 @@ public:
 	void SetIsCompleted() {_isCompleted = true; }
 	void ResetAnim() { currentFrame = -1; _isCompleted = false; }
 	void Add(int spriteId, DWORD time = 0);
+	void AddWithColor(int spriteId, D3DCOLOR color, DWORD time = 0);
 	void Render(float x, float y, int dir);
 	void RenderFlipY(float x, float y, int dir, int alpha);
+	void RenderWithColor(float x, float y, int dir, float scaleX = 1.0f, float scaleY = 1.0f);
 	void RenderFrame(int frameID, float x, float y, int dir);
 	void RenderStartByFrame(int frameID, float x, float y, int dir);
 	void Render(float x, float y, int dir, int alpha);

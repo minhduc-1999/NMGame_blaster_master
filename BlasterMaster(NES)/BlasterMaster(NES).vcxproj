@@ -167,6 +167,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="IntroScene.h" />
     <ClInclude Include="MainPlayer.h" />
     <ClInclude Include="JasonBullet.h" />
     <ClInclude Include="MineBullet.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="Hand.cpp" />
     <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="Insect.cpp" />
+    <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="Jason.cpp" />
     <ClCompile Include="JasonBullet.cpp" />
     <ClCompile Include="Jumper2.cpp" />
@@ -272,6 +274,10 @@
     <Image Include="Resource\Background\overworld_bg.png" />
     <Image Include="Resource\Foreground\area2_fg.png" />
     <Image Include="Resource\Foreground\overworld_fg.png" />
+    <Image Include="Resource\intro\intro1.png" />
+    <Image Include="Resource\intro\intro2.png" />
+    <Image Include="Resource\intro\intro3.png" />
+    <Image Include="Resource\intro\title.jpg" />
     <Image Include="Resource\tileset\overworld_tileset.png" />
     <Image Include="Resource\StatusBar\StatusBar.png" />
     <Image Include="Sophia.png" />
@@ -294,6 +300,7 @@
     <Text Include="Resource\Config\Area2\area2_secN.txt" />
     <Text Include="Resource\Config\Area2\area2_secO.txt" />
     <Text Include="Resource\Config\Gameworld.txt" />
+    <Text Include="Resource\Config\intro\intro.txt" />
     <Text Include="Resource\Config\OverWorld\overworld.txt" />
     <Text Include="Resource\Config\OverWorld\ovw_sec1.txt" />
     <Text Include="Resource\Config\OverWorld\ovw_sec10.txt" />
@@ -330,7 +337,6 @@
     <Text Include="Resource\Config\OverWorld\ovw_sec7.txt" />
     <Text Include="Resource\Config\OverWorld\ovw_sec8.txt" />
     <Text Include="Resource\Config\OverWorld\ovw_sec9.txt" />
-    <Text Include="Resource\Config\scene-test.txt" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sound\Boss.wav" />

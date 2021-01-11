@@ -17,12 +17,11 @@
 
 using namespace std;
 
-CTestScene::CTestScene(int id, string filePath, int type) :
-	CScene(id, filePath)
+CTestScene::CTestScene(int id, string filePath, int type, D3DXVECTOR3 bg) :
+	CScene(id, filePath, type, bg)
 {
 	key_handler = new CTestSceneKeyHandler(this);
 	isSwitchingSection = false;
-	this->type = type;
 	transition = NULL;
 	miniJason = NULL;
 	sophia = NULL;
@@ -35,14 +34,6 @@ CTestScene::CTestScene(int id, string filePath, int type) :
 	Load scene resources from scene file (textures, sprites, animations and objects)
 	See scene1.txt, scene2.txt for detail format specification
 */
-
-#define SCENE_SECTION_UNKNOWN -1
-#define SCENE_SECTION_TEXTURES 2
-#define SCENE_SECTION_SPRITES 3
-#define SCENE_SECTION_ANIMATIONS 4
-#define SCENE_SECTION_ANIMATION_SETS	5
-#define SCENE_SECTION_SECTION	6
-#define SCENE_SECTION_SOUND	7
 
 #define TEXTURE_BACKGROUND 40
 #define TEXTURE_FOREGROUND 50
