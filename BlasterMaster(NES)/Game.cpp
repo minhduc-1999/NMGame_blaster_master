@@ -120,6 +120,59 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	}
 }
 
+void CGame::DrawFlipY(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int dir, int alpha)
+{
+	D3DXVECTOR2 camPos = GetCamPos();
+	int viewPortY = y - camPos.y;
+	int viewPortX = x - camPos.x;
+	D3DXVECTOR3 pCenter((right - left) / 2, (bottom - top) / 2, 0);
+
+	RECT r;
+	r.left = left;
+	r.right = right;
+	r.top = top;
+	r.bottom = bottom;
+	if (dir == -1)
+	{
+		D3DXVECTOR3 p(viewPortX, viewPortY, 0);
+		if (alpha == 254)
+		{
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 163, 26));
+		}
+		else
+		{
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+		}
+
+	}
+	else
+	{
+		// ma trận lưu thông tin về tỉ lệ
+		D3DXVECTOR3 p(viewPortX, -viewPortY, 0);
+
+		D3DXMATRIX matScale;
+
+		// khởi tạo ma trận phóng to theo trục Ox -1 lần, trục Oy 1 lần.
+		D3DXMatrixScaling(&matScale, 1.0f, -1.0f, .0f);
+
+		// thực hiện việc chuyển đổi.
+		spriteHander->SetTransform(&matScale);
+		if (alpha == 254)
+		{
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 163, 26));
+		}
+		else
+		{
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+
+		}
+
+		//reset transform
+		D3DXMatrixScaling(&matScale, 1.0f, 1.0f, .0f);
+		spriteHander->SetTransform(&matScale);
+	}
+}
+
 CGame* CGame::GetInstance()
 {
 	if (__instance == NULL)

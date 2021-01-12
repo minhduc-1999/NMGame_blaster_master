@@ -1,4 +1,5 @@
 #include "DynamicGameObject.h"
+#include "BaseBullet.h"
 
 #define MINE_GRAVITY	0.02f
 

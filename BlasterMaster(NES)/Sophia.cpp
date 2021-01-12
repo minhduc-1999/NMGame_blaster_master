@@ -7,6 +7,7 @@
 Sophia::Sophia(float x, float y) :MainPlayer(x, y)
 {
 	SetSize(SOPHIA_WIDTH, SOPHIA_HEIGHT);
+	SetType(1);
 	heightLevel = SOPHIA_HEIGHT_HIGH;
 	lastFrameChange = GetTickCount64();
 	TouchTime = GetTickCount64();

@@ -10,6 +10,7 @@
 MiniJason::MiniJason(float x, float y) :MainPlayer(x, y)
 {
 	SetSize(MINIJASON_WIDTH, MINIJASON_HEIGHT);
+	SetType(2);
 
 	TouchTime = GetTickCount64();
 	HP = 16;

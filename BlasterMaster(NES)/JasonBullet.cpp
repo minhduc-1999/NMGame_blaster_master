@@ -4,34 +4,35 @@ JasonBullet::JasonBullet(float x, float y, int team, int nx, int ny) : BaseBulle
 {
 	this->startFiringTime = GetTickCount64();
 	this->damage = JASON_BULLET_DAMAGE;
-	this->SetSize(10, 8);
 	this->SetAnimationSet(JASON_BULLET_ANISET);
 	if (nx != 0)
 	{
+		this->SetSize(10, 8);
 		if (nx == 1)
 		{
 			SetState(JASON_BULLET_STATE_FLY_RIGHT);
-			SetPosition(x + 12, y);
+			SetPosition(x + 8, y);
 		}
 		else
 		{
 			SetState(JASON_BULLET_STATE_FLY_LEFT);
-			SetPosition(x - 12, y);
+			SetPosition(x - 8, y);
 		}
 			
 	}
 	else
 	{
+		this->SetSize(8, 10);
 		if (ny == 1)
 		{
 			SetState(JASON_BULLET_STATE_FLY_BOTTOM);
-			SetPosition(x, y);
+			SetPosition(x, y + 12);
 
 		}
 		else
 		{
 			SetState(JASON_BULLET_STATE_FLY_TOP);
-			SetPosition(x, y);
+			SetPosition(x, y - 12);
 		}
 	}
 	isUpdated = false;
@@ -126,7 +127,7 @@ void JasonBullet::Render()
 	if (isRendered)
 		return;
 	int origin = -1;
-	int ani = JASON_BULLET_ANI_FLY_LEFT;
+	int ani = JASON_BULLET_ANI_FLY_HOR;
 	switch (state)
 	{
 	case JASON_BULLET_STATE_DETROY:
@@ -139,13 +140,23 @@ void JasonBullet::Render()
 		origin = 1;
 		break;
 	case JASON_BULLET_STATE_FLY_BOTTOM:
+		ani = JASON_BULLET_ANI_FLY_VER;
 		origin = 1;
 		break;
 	case JASON_BULLET_STATE_FLY_TOP:
-		origin = 1;
+		ani = JASON_BULLET_ANI_FLY_VER;
+		origin = -1;
 		break;
 	}
-	animation_set->at(ani)->Render(x, y, origin);
+
+	if (state == JASON_BULLET_STATE_FLY_BOTTOM || state == JASON_BULLET_STATE_FLY_TOP)
+	{
+		animation_set->at(ani)->RenderFlipY(x, y, origin, 255);
+	}
+	else
+	{
+		animation_set->at(ani)->Render(x, y, origin);
+	}
 	if (state == JASON_BULLET_STATE_DETROY)
 		this->isDestroyed = true;
 	isUpdated = false;

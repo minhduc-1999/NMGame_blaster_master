@@ -169,6 +169,7 @@
     <ClInclude Include="Hand.h" />
     <ClInclude Include="MainPlayer.h" />
     <ClInclude Include="JasonBullet.h" />
+    <ClInclude Include="MineBullet.h" />
     <ClInclude Include="MiniJasonBullet.h" />
     <ClInclude Include="SceneGate.h" />
     <ClInclude Include="HPBar.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="SectionArea.h" />
     <ClInclude Include="SectionOvw.h" />
     <ClInclude Include="SectionTransition.h" />
+    <ClInclude Include="SkullBullet.h" />
     <ClInclude Include="Sophia.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
@@ -230,6 +232,7 @@
     <ClCompile Include="Jumper2.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mine.cpp" />
+    <ClCompile Include="MineBullet.cpp" />
     <ClCompile Include="MiniJason.cpp" />
     <ClCompile Include="MiniJasonBullet.cpp" />
     <ClCompile Include="Orb.cpp" />
@@ -239,6 +242,7 @@
     <ClCompile Include="SectionArea.cpp" />
     <ClCompile Include="SectionOvw.cpp" />
     <ClCompile Include="SectionTransition.cpp" />
+    <ClCompile Include="SkullBullet.cpp" />
     <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />

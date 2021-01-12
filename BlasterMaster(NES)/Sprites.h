@@ -15,6 +15,7 @@ public:
 	CSprite(int id, int left, int top, int right, int bottom,
 		LPDIRECT3DTEXTURE9 texture);
 	void Draw(float x, float y, int dir, int alpha);
+	void DrawFlipY(float x, float y, int dir, int alpha);
 };
 
 typedef CSprite* LPSPRITE;
@@ -63,6 +64,7 @@ public:
 	void ResetAnim() { currentFrame = -1; _isCompleted = false; }
 	void Add(int spriteId, DWORD time = 0);
 	void Render(float x, float y, int dir);
+	void RenderFlipY(float x, float y, int dir, int alpha);
 	void RenderFrame(int frameID, float x, float y, int dir);
 	void RenderStartByFrame(int frameID, float x, float y, int dir);
 	void Render(float x, float y, int dir, int alpha);

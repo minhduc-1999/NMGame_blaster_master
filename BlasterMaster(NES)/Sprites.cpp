@@ -18,6 +18,12 @@ void CSprite::Draw(float x, float y, int dir, int alpha)
 	game->Draw(x, y, texture, left, top, right, bottom, dir, alpha);
 }
 
+void CSprite::DrawFlipY(float x, float y, int dir, int alpha)
+{
+	CGame* game = CGame::GetInstance();
+	game->DrawFlipY(x, y, texture, left, top, right, bottom, dir, alpha);
+}
+
 //class CSpriteManager
 CSpriteManager* CSpriteManager::__instance = NULL;
 
@@ -99,6 +105,30 @@ void CAnimation::Render(float x, float y, int dir, int alpha)
 	if (currentFrame == frames.size() - 1)
 		_isCompleted = true;
 	frames[currentFrame]->GetSprite()->Draw(x, y, dir,alpha);
+}
+
+void CAnimation::RenderFlipY(float x, float y, int dir, int alpha)
+{
+	DWORD now = GetTickCount64();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size())
+				currentFrame = 0;
+		}
+	}
+	if (currentFrame == frames.size() - 1)
+		_isCompleted = true;
+	frames[currentFrame]->GetSprite()->DrawFlipY(x, y, dir, alpha);
 }
 
 void CAnimation::Render(float x, float y, int dir)

@@ -1,11 +1,12 @@
 #include <cmath>
 #include "Mine.h"
 #include "Bullet.h"
+#include "MineBullet.h"
 
 Mine::Mine(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(15, 8);
-	startTime = GetTickCount();
+	startTime = GetTickCount64();
 }
 
 int Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -21,10 +22,11 @@ int Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	CalcPotentialCollisions(coObjects, coEvents);
 
-	if (GetTickCount() - startTime >= 2000)
+	startTime += dt;
+	if (startTime > 600)
 	{
 		isShooting = true;
-		isDestroyed = true;
+		startTime = 0;
 	}
 
 	// No collision occured, proceed normally
@@ -66,10 +68,15 @@ int Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vy = 0;
 				}
 				break;
-			case 20: //enemy bullet
+			case 1: case 2:
+				SetState(MINE_STATE_DIE);
+				isShooting = true;
+				break;
+			case 20:
 				if (e->obj->GetTeam() == 0)
 				{
 					SetState(MINE_STATE_DIE);
+					isShooting = true;
 				}
 				break;
 			default:
@@ -94,7 +101,7 @@ void Mine::Render()
 		return;
 	int ani = MINE_ANI_ONGROUND;
 
-	if (GetState() == MINE_STATE_DIE)
+	if (state == MINE_STATE_DIE)
 	{
 		ani = MINE_ANI_DIE;
 		if (!animation_set->at(MINE_ANI_DIE)->IsCompleted())
@@ -139,10 +146,20 @@ vector<LPDYNAMICOBJECT> Mine::Fire()
 {
 	vector<LPDYNAMICOBJECT> mineBulls;
 
-	mineBulls.push_back(new Bullet(x, y, MINE_BULLET_FIRST, 1));
-	mineBulls.push_back(new Bullet(x, y, MINE_BULLET_SECOND, 1));
-	mineBulls.push_back(new Bullet(x, y, MINE_BULLET_THIRD, 1));
-	mineBulls.push_back(new Bullet(x, y, MINE_BULLET_FOUTH, 1));
+	MineBullet* bullet1 = new MineBullet(x, y, 1);
+	bullet1->SetSpeed(-0.04f, -0.15f);
+	mineBulls.push_back(bullet1);
+	/*MineBullet* bullet2 = new MineBullet(x, y, 1);
+	bullet2->SetSpeed(-0.04f, -0.15f);
+	mineBulls.push_back(bullet2);
+	MineBullet* bullet3 = new MineBullet(x, y, 1);
+	bullet3->SetSpeed(-0.04f, -0.15f);
+	mineBulls.push_back(bullet3);
+	MineBullet* bullet4 = new MineBullet(x, y, 1);
+	bullet4->SetSpeed(-0.04f, -0.15f);
+	mineBulls.push_back(bullet4);*/
+
+	isShooting = false;
 
 	return mineBulls;
 }

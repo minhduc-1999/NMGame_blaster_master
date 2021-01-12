@@ -1,7 +1,7 @@
 #ifndef _SKULL_H
 #define _SKULL_H
 #include "DynamicGameObject.h"
-#include "Bullet.h"
+#include "BaseBullet.h"
 
 
 #define SKULL_FLYING_SPEED			0.12f

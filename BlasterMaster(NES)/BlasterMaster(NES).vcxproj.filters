@@ -197,6 +197,12 @@
     <Filter Include="Object\DynamicObject\Bullet\FloaterBullet">
       <UniqueIdentifier>{73950619-43a6-423e-9f73-0cca95f533d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Bullet\MineBullet">
+      <UniqueIdentifier>{91755f94-fbda-45fc-9d28-695d6ea71543}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Bullet\SkullBullet">
+      <UniqueIdentifier>{e83646d1-dcd3-401e-96b3-d082f74fbd67}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -361,6 +367,12 @@
     <ClInclude Include="FloaterBullet.h">
       <Filter>Object\DynamicObject\Bullet\FloaterBullet</Filter>
     </ClInclude>
+    <ClInclude Include="MineBullet.h">
+      <Filter>Object\DynamicObject\Bullet\MineBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="SkullBullet.h">
+      <Filter>Object\DynamicObject\Bullet\SkullBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -524,6 +536,12 @@
     </ClCompile>
     <ClCompile Include="EyeballBullet.cpp">
       <Filter>Object\DynamicObject\Bullet\EyeballBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="MineBullet.cpp">
+      <Filter>Object\DynamicObject\Bullet\MineBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SkullBullet.cpp">
+      <Filter>Object\DynamicObject\Bullet\SkullBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

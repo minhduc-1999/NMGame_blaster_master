@@ -1,4 +1,5 @@
 #include "Skull.h"
+#include "SkullBullet.h"
 #include <cmath>
 
 Skull::Skull(float x, float y) :CDynamicGameObject(x, y)
@@ -181,8 +182,10 @@ vector<LPDYNAMICOBJECT> Skull::Fire()
 {
 	vector<LPDYNAMICOBJECT> skullBulls;
 
-	Bullet* bullet = new Bullet(x, y, SKULL_BULLET, 1);
+	SkullBullet* bullet = new SkullBullet(x, y, 1);
 	skullBulls.push_back(bullet);
+
+	isShooting = false;
 
 	return skullBulls;
 }
