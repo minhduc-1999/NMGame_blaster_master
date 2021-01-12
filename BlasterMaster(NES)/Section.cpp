@@ -99,6 +99,20 @@ void Section::DeleteMiniJason()
 	}
 }
 
+void Section::AddDynamicObject(LPDYNAMICOBJECT obj)
+{
+	if (obj == NULL)
+		return;
+	vector<int> boundGrid = GetBoundGrid(obj->GetBound());
+	for (int i = 0; i < boundGrid.size(); i++)
+	{
+		if (grids.find(boundGrid[i]) != grids.end())
+		{
+			grids[boundGrid[i]]->AddDynamicObj(obj);
+		}
+	}
+}
+
 void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 {
 	vector<string> tokens = split(line);
@@ -255,6 +269,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_LADDER:
 		obj = new CLadder(x, y);
+		obj->SetTeam(0);
 		//obj->SetType(object_type);
 		break;
 	case 80:
@@ -273,6 +288,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 			int spriteID = atoi(tokens[i].c_str());
 			obj->AddSprite(CSpriteManager::GetInstance()->Get(spriteID));
 		}
+		obj->SetTeam(0);
 		grids[grid]->AddStaticObj(obj);
 		return;
 		break;
@@ -287,6 +303,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		D3DXVECTOR2 telePos = D3DXVECTOR2(telex, teley);
 		obj = new CGate(x, y, section, telePos, size_w, size_h);
 		obj->SetType(object_type);
+		obj->SetTeam(0);
 		for (int i = 4; i <= tokens.size() - 6; i++)
 		{
 			int spriteID = atoi(tokens[i].c_str());

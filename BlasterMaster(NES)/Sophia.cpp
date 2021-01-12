@@ -2,17 +2,17 @@
 #include "CGate.h"
 #include "Jumper2.h"
 #include "Brick.h"
-int lastHeight = 0;
-int currentWalkingColumn = 0;
-DWORD lastTime;
-DWORD lastTimeAlpha;
 
-Sophia::Sophia(float x, float y) :CDynamicGameObject(x, y)
+Sophia::Sophia(float x, float y) :MainPlayer(x, y)
 {
 	SetSize(SOPHIA_WIDTH, SOPHIA_HEIGHT);
 	heightLevel = SOPHIA_HEIGHT_HIGH;
-	lastTime = GetTickCount64();
-	lastTimeAlpha = GetTickCount64();
+	lastFrameChange = GetTickCount64();
+	TouchTime = GetTickCount64();
+	HP = 16;
+	isUp = false;
+	currentWalkingColumn = 0;
+	lastHeight = 0;
 };
 
 int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -21,9 +21,9 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (vx != 0)
 	{
 		DWORD now = GetTickCount64();
-		if (now - lastTime >= 20)
+		if (now - lastFrameChange >= 20)
 		{
-			lastTime = now;
+			lastFrameChange = now;
 			if (currentWalkingColumn == 3)
 			{
 				currentWalkingColumn = 0;
@@ -42,11 +42,17 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
+		DWORD now = GetTickCount64();
 		switch (temp->GetType())
 		{
 		case 13:case 5:
 			isCollisionWithEnemy = true;
-			Sound::getInstance()->play("Hit", false, 1);
+			if (GetTickCount64() - TouchTime >= 500)
+			{
+				TouchTime = now;
+				SetHP(HPDown(HP, 1));
+				Sound::getInstance()->play("Hit", false, 1);
+			}
 			break;
 		case 17:
 		{
@@ -57,9 +63,9 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					//if (abs(this->y - gate->GetDesTelePos().y) < 2)
 					//{
-						CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
-							gate->GetDesTelePos());
-						return 0;
+					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
+						gate->GetDesTelePos());
+					return 0;
 					//}
 				}
 				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
@@ -139,10 +145,14 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			};
 		}
 	}
-
+	if (HP <= 0)
+	{
+		Sound::getInstance()->play("SophiaDed", true, 0);
+		SetState(SOPHIA_STATE_DIE);
+	}
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	DebugOut("[SOPHIA]\t%f\t%f\n", x, y);
+	//DebugOut("[SOPHIA]\t%f\t%f\n", x, y);
 	return 0;
 }
 
@@ -169,9 +179,9 @@ void Sophia::Render()
 	if (isCollisionWithEnemy)
 	{
 		DWORD now = GetTickCount64();
-		if (GetTickCount64() - lastTimeAlpha >= 50)
+		if (GetTickCount64() - TouchTime >= 50)
 		{
-			lastTimeAlpha = now;
+			TouchTime = now;
 			if (alpha == 255)
 			{
 				alpha = 254;
@@ -530,6 +540,8 @@ void Sophia::SetState(int state)
 		break;
 	case SOPHIA_STATE_DIE:
 		vx = 0;
+		vy = 0;
+		Sound::getInstance()->stop("Hit");
 		break;
 	}
 }

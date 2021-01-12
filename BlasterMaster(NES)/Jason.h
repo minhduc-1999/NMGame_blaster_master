@@ -1,5 +1,6 @@
 #pragma once
-#include "DynamicGameObject.h"
+#include "MainPlayer.h"
+#include "BaseBullet.h"
 
 #define JASON_WIDTH			24
 #define JASON_HEIGHT		32
@@ -21,11 +22,14 @@
 #define JASON_ANI_RUN_BOTTOM		05
 #define JASON_ANI_DIE				06
 
+
+#define JASON_SHOOTING_DELAY	200
 #define JASON_UNSTOPABLE	2000
-class Jason : public CDynamicGameObject
+class Jason : public MainPlayer
 {
-	bool canGoArea = false;
+	bool canGoArea;
 public:
+	bool CanShoot() { return canShoot; }
 	Jason(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -34,4 +38,5 @@ public:
 	void KeyState(BYTE* states);
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
+	BaseBullet* Shoot();
 };

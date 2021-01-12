@@ -13,6 +13,7 @@ protected:
 	LPANIMATION_SET animation_set;
 	bool isShooting;
 	bool isDestroyed;
+	DWORD TouchTime;
 public:
 	CDynamicGameObject(float x, float y);
 
@@ -21,7 +22,7 @@ public:
 
 	int GetHP() { return HP; };
 	void SetHP(int hp) { HP = hp; };
-
+	int HPDown(int hp, int dmg);
 	virtual void SetState(int state);
 	int GetState();
 
@@ -33,6 +34,7 @@ public:
 
 	virtual int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
+	void SetAnimationSet(int ani_set);
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	LPCOLLISIONEVENT SweptCollistion(LPGAMEOBJECT coO);

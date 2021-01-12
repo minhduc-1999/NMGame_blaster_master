@@ -48,6 +48,13 @@ int CDynamicGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	return 0;
 }
 
+void CDynamicGameObject::SetAnimationSet(int ani_set)
+{
+	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	LPANIMATION_SET ani = animation_sets->Get(ani_set);
+	animation_set = ani;
+}
+
 vector<CDynamicGameObject*> CDynamicGameObject::Fire()
 {
 	vector<CDynamicGameObject*> temp;
@@ -154,6 +161,12 @@ void CDynamicGameObject::CalcPotentialCollisions(
 	}
 
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
+}
+
+int CDynamicGameObject::HPDown(int hp, int dmg)
+{
+	hp=hp-dmg;
+	return hp;
 }
 
 void CDynamicGameObject::FilterCollision(

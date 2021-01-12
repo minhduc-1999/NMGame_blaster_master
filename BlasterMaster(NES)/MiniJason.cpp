@@ -5,12 +5,13 @@
 #include "CLadder.h"
 #include "SceneGate.h"
 
-DWORD lastTimeAlphaMiniJason;
 
-MiniJason::MiniJason(float x, float y) :CDynamicGameObject(x, y)
+MiniJason::MiniJason(float x, float y) :MainPlayer(x, y)
 {
 	SetSize(MINIJASON_WIDTH, MINIJASON_HEIGHT);
-	lastTimeAlphaMiniJason = GetTickCount64();
+
+	TouchTime = GetTickCount64();
+	HP = 16;
 }
 
 int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -26,6 +27,11 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
+		DWORD now = GetTickCount64();
+		if (temp->GetTeam() != this->team)
+		{
+			isCollisionWithEnemy = true;
+		}
 		switch (temp->GetType())
 		{
 		case 80:
@@ -67,8 +73,15 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		case 18:
 			canClimb = true;
 			break;
+
 		case 13:
 			isCollisionWithEnemy = true;
+			if (GetTickCount64() - TouchTime >= 500)
+			{
+				TouchTime = now;
+				SetHP(HPDown(HP, 2));
+				Sound::getInstance()->play("JHit", false, 1);
+			}
 			break;
 		default:
 			break;
@@ -189,10 +202,15 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			};
 		}
 	}
+	if (HP <= 0)
+	{
+		Sound::getInstance()->play("JasonDed", true, 0);
+		SetState(MINIJASON_STATE_DIE);
+	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	DebugOut("[MINIJASON]\tx: %f, y: %f\n", x, y);
+	//DebugOut("[MINIJASON]\tx: %f, y: %f\n", x, y);
 	return 0;
  }
 
@@ -220,9 +238,9 @@ void MiniJason::Render()
 	if (isCollisionWithEnemy)
 	{
 		DWORD now = GetTickCount64();
-		if (GetTickCount64() - lastTimeAlphaMiniJason >= 50)
+		if (now - TouchTime >= 50)
 		{
-			lastTimeAlphaMiniJason = now;
+			TouchTime = now;
 			if (alpha == 255)
 			{
 				alpha = 254;
@@ -340,6 +358,8 @@ void MiniJason::SetState(int state)
 		break;
 	case MINIJASON_STATE_DIE:
 		vx = 0;
+		vy = 0;
+		Sound::getInstance()->stop("Hit");
 		break;
 	}
 }
@@ -364,6 +384,7 @@ void MiniJason::KeyState(BYTE* states)
 			SetState(MINIJASON_STATE_RUN_LEFT);
 		}
 	}
+
 	else if (game->IsKeyDown(DIK_UP))
 	{
 		if (canClimb && GetIsDown() == false)
@@ -448,12 +469,18 @@ void MiniJason::OnKeyDown(int KeyCode)
 		canGoOvw = false;
 	switch (KeyCode)
 	{
+	case DIK_Z:
+	{
+		Sound::getInstance()->play("JasonFire", false, 1);
+	}
+	break;
 	case DIK_X:
 		if (GetIsDown() == false)
 		{
 			if (GetIsJumping() == false)
 			{
 				SetIsJumping(true);
+				Sound::getInstance()->play("Jump", false, 1);
 				if (GetNX() == 1)
 				{
 					SetState(MINIJASON_STATE_JUMP_RIGHT);

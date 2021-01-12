@@ -12,6 +12,10 @@ Eyeball::Eyeball(float x, float y) : CDynamicGameObject(x, y)
 
 int Eyeball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (state == EYEBALL_STATE_DIE)
+	{
+		return 0;
+	}
 	CDynamicGameObject::Update(dt);
 
 	vector<LPCOLLISIONEVENT> coEvents;

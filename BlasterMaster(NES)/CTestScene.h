@@ -40,6 +40,7 @@ public:
 
 	void SetCurrentSection(int cur) { current_section = cur; }
 	int GetCurrentSection() { return current_section; }
+	LPSECTION GetCurSection() { return sections.at(current_section); }
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);

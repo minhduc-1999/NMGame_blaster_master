@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BaseBullet.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="AreaSectionTransition.h" />
     <ClInclude Include="Brick.h" />
@@ -163,6 +164,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="MainPlayer.h" />
+    <ClInclude Include="JasonBullet.h" />
     <ClInclude Include="SceneGate.h" />
     <ClInclude Include="HPBar.h" />
     <ClInclude Include="Insect.h" />
@@ -193,6 +196,7 @@
     <ClInclude Include="Worm.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseBullet.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="AreaSectionTransition.cpp" />
     <ClCompile Include="Brick.cpp" />
@@ -214,6 +218,7 @@
     <ClCompile Include="HPBar.cpp" />
     <ClCompile Include="Insect.cpp" />
     <ClCompile Include="Jason.cpp" />
+    <ClCompile Include="JasonBullet.cpp" />
     <ClCompile Include="Jumper2.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mine.cpp" />
@@ -314,12 +319,26 @@
     <Text Include="Resource\Config\scene-test.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="Resource\Sound\Boss.wav" />
+    <Media Include="Resource\Sound\Canon.wav" />
+    <Media Include="Resource\Sound\Dome.wav" />
+    <Media Include="Resource\Sound\Fly.wav" />
     <Media Include="Resource\Sound\Hit.wav" />
+    <Media Include="Resource\Sound\JasonDed.wav" />
+    <Media Include="Resource\Sound\JasonFire.wav" />
+    <Media Include="Resource\Sound\JasonGunBoom.wav" />
+    <Media Include="Resource\Sound\JasonHit.wav" />
     <Media Include="Resource\Sound\Jump.wav" />
+    <Media Include="Resource\Sound\Jumper.wav" />
     <Media Include="Resource\Sound\lvl2.wav" />
+    <Media Include="Resource\Sound\Mine.wav" />
+    <Media Include="Resource\Sound\MiniJasonFire.wav" />
+    <Media Include="Resource\Sound\Skull.wav" />
     <Media Include="Resource\Sound\SonicBoom.wav" />
     <Media Include="Resource\Sound\SophiaDed.wav" />
     <Media Include="Resource\Sound\SophiaFire.wav" />
+    <Media Include="Resource\Sound\Tele.wav" />
+    <Media Include="Resource\Sound\Worm.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

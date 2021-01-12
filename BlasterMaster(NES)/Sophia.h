@@ -1,7 +1,7 @@
 #ifndef _SOPHIA_H
 #define _SOPHIA_H
 
-#include "DynamicGameObject.h"
+#include "MainPlayer.h"
 
 #define SOPHIA_WIDTH 26
 #define SOPHIA_HEIGHT 18
@@ -12,6 +12,7 @@
 #define SOPHIA_RUN_SPEED						0.05f
 #define SOPHIA_JUMP_SPEED_Y						0.29f
 #define SOPHIA_GRAVITY							0.02f
+#define SOPHIA_MAX_HP					16
 
 //define STATE
 #define SOPHIA_STATE_IDLE_RIGHT			000
@@ -43,13 +44,13 @@
 #define SOPHIA_ANI_TRANSFORM		11
 #define SOPHIA_ANI_DIE				12
 
-class Sophia : public CDynamicGameObject
+class Sophia : public MainPlayer
 {
 	int heightLevel = SOPHIA_HEIGHT_HIGH;
-	bool isUp = false;
-	bool isJumping = false;
-	int alpha = 255;
-	bool isCollisionWithEnemy = false;
+	bool isUp;
+	DWORD lastFrameChange;
+	int currentWalkingColumn;
+	int lastHeight;
 public:
 	Sophia(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -58,9 +59,6 @@ public:
 
 	bool GetIsUp() { return isUp; };
 	void SetIsUp(bool _isUp) { isUp = _isUp; };
-
-	bool GetIsJumping() { return isJumping; };
-	void SetIsJumping(bool _isJumping) { isJumping = _isJumping; };
 
 	void KeyState(BYTE* states);
 	void OnKeyDown(int KeyCode);

@@ -13,6 +13,7 @@
 #include "AreaSectionTransition.h"
 #include "SectionArea.h"
 #include "SectionOvw.h"
+#include "Jason.h"
 
 using namespace std;
 
@@ -171,7 +172,7 @@ int CTestScene::Update(DWORD dt)
 		D3DXVECTOR2 mapDimen = sections[current_section]->GetSectionMapDimension();
 		CGame::GetInstance()->UpdateCamera(mainPos, mapPos, mapDimen);
 		Rect camPos = CGame::GetInstance()->GetCamBound();
-		hpBar->Update(dt, camPos.left + 10, camPos.top + 170);
+		hpBar->Update(dt, camPos.left + 10, camPos.top + 170, mainPlayer->GetHP());
 	}
 	else
 	{
@@ -184,7 +185,6 @@ int CTestScene::Update(DWORD dt)
 			CGame::GetInstance()->DisableKeyboard(false);
 			isSwitchingSection = false;
 			transition->Reset();
-			//hpBar->SetState(HP_DOWN);
 			current_section = transition->GetNextSectionId();
 			sections[current_section]->Update(dt);
 			mainPlayer = sections[current_section]->GetPlayer();
@@ -271,17 +271,19 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				{
 					saveData = new SaveData();
 					scence->SetSaveData(saveData);
+					saveData->sophiaX = sophia->GetPosition().x;
+					saveData->sophiaY = sophia->GetPosition().y;
+					saveData->sophiaSection = ((CTestScene*)scence)->GetCurrentSection();
+					saveData->sophiaHP = sophia->GetHP();
+					DebugOut("[INFO] Save Data last section = %d, %f, %f\n", saveData->sophiaSection, saveData->sophiaX, saveData->sophiaY);
 				}
-				saveData->sophiaX = sophia->GetPosition().x;
-				saveData->sophiaY = sophia->GetPosition().y;
-				saveData->sophiaSection = ((CTestScene*)scence)->GetCurrentSection();
-				DebugOut("[INFO] Save Data last section = %d, %f, %f\n", saveData->sophiaSection, saveData->sophiaX, saveData->sophiaY);
-
+				
+				
 
 				((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
 				((CTestScene*)scence)->addMiniJason();
 				((CTestScene*)scence)->ChangePlayerType();
-
+				Sound::getInstance()->play("Open", false, 1);
 			}
 			else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON
 				&& ((MiniJason*)(((CTestScene*)scence)->GetPlayer()))->IsCollisionWithSophia())
@@ -292,17 +294,19 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
 				((CTestScene*)scence)->deleteMiniJason();
 				((CTestScene*)scence)->ChangePlayerType();
-
+				Sound::getInstance()->play("Open", false, 1);
 				if (saveData != NULL)
 				{
+					((CTestScene*)scence)->GetPlayer()->SetHP(saveData->sophiaHP);
 					delete saveData;
 					scence->SetSaveData(NULL);
 				}
 			}
 			else
 			{
-				if (saveData != NULL)
+				if (saveData != NULL && ((MiniJason*)((CTestScene*)scence)->GetPlayer())->IsCollisionWithSophia())
 				{
+					((CTestScene*)scence)->GetPlayer()->SetHP(saveData->sophiaHP);
 					delete saveData;
 					scence->SetSaveData(NULL);
 				}
@@ -310,6 +314,17 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 			}
 
 		}
+	}
+	else if(scence->GetType() == 2)
+	{
+		Jason* currentPlayer = (Jason*)(((CTestScene*)scence)->GetPlayer());
+		currentPlayer->OnKeyDown(KeyCode);
+		if (KeyCode == DIK_Z)
+		{
+			if (currentPlayer->CanShoot())
+				((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
+		}
+			
 	}
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->OnKeyDown(KeyCode);

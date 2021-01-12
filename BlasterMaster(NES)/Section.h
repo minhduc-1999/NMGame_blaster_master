@@ -43,5 +43,6 @@ public:
 	D3DXVECTOR2 GetDefaultPos() { return defaultPos; }
 	void AddMiniJason();
 	void DeleteMiniJason();
+	void AddDynamicObject(LPDYNAMICOBJECT obj);
 };
 typedef Section* LPSECTION;

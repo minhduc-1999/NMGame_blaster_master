@@ -2,13 +2,6 @@
 #define _HPBar_H
 #include "DynamicGameObject.h"
 
-#define	JASON_MAX_HP				8
-#define	SOPHIA_MAX_HP				16
-#define SOPHIA_HPBAR				99
-#define JASON_HPBAR					100
-#define HP_UP						98
-#define	HP_DOWN						97
-
 #define HP_BAR_0					8
 #define HP_BAR_1					7
 #define	HP_BAR_2					6
@@ -23,12 +16,10 @@
 class HPBar : public CDynamicGameObject
 {
 public:
-	int hp,jhp,shp,bar;
-	bool curBar;
+	int hp;
 	HPBar();
-	int Update(DWORD dt, float x, float y);
+	void Update(DWORD dt, float x, float y, int curHP);
 	void Render();
-	void SetState(int bar);
 };
 #endif
 
