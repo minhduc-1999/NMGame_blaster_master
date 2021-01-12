@@ -1,13 +1,16 @@
 #pragma once
 #include "Scene.h"
+#include "Panel.h"
 #include "Sprites.h"
+#include <unordered_map>
+using namespace std;
 
+#define SCENE_SECTION_DESC	8
 class EndGameScene : public CScene
 {
 private:
-	LPANIMATION_SET endGameSets;
 	int current_period;
-	DWORD start;
+	unordered_map<int, Panel*> panels;
 public:
 	EndGameScene(int id, string filePath, int type, D3DXVECTOR3 bg);
 	virtual void Load(D3DXVECTOR2 tlPos);
@@ -15,7 +18,7 @@ public:
 	virtual int Update(DWORD dt);
 	virtual void Render();
 	void NextIntro();
-	//virtual void _ParseSection_ANIMATIONS(string line);
+	void _ParseSection_DESCRIPTION(string line);
 };
 
 class EndGameKeyHandler : public CScenceKeyHandler

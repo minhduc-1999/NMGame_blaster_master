@@ -650,6 +650,7 @@ void CGame::SwitchScene(int scene_id, int section, D3DXVECTOR2 tlPos)
 	}
 	s->Load(tlPos);
 	SetKeyHandler(s->GetKeyEventHandler());
+	camera->SetPosition(D3DXVECTOR2(0, 0));
 }
 
 void CGame::SwitchSection(int section_id, D3DXVECTOR2 tlPos)

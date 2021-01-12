@@ -215,6 +215,9 @@
     <Filter Include="Resources\Config\endgame">
       <UniqueIdentifier>{f2bc38ee-bcf6-4c3c-9003-0e7c1b3289d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\EndGameObject">
+      <UniqueIdentifier>{ea867cad-6c5c-41c0-a166-040735473ebf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -391,6 +394,18 @@
     <ClInclude Include="EndGameScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="DescPanel.h">
+      <Filter>Object\EndGameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SlidePanel.h">
+      <Filter>Object\EndGameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Panel.h">
+      <Filter>Object\EndGameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MoviePanel.h">
+      <Filter>Object\EndGameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -566,6 +581,15 @@
     </ClCompile>
     <ClCompile Include="EndGameScene.cpp">
       <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="DescPanel.cpp">
+      <Filter>Object\EndGameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SlidePanel.cpp">
+      <Filter>Object\EndGameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MoviePanel.cpp">
+      <Filter>Object\EndGameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -791,6 +815,9 @@
       <Filter>Resources\Config\intro</Filter>
     </Text>
     <Text Include="Resource\Config\endgame\endgame.txt">
+      <Filter>Resources\Config\endgame</Filter>
+    </Text>
+    <Text Include="Resource\Config\endgame\description.txt">
       <Filter>Resources\Config\endgame</Filter>
     </Text>
   </ItemGroup>

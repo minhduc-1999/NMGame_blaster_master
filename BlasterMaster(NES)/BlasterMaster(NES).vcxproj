@@ -157,6 +157,7 @@
     <ClInclude Include="CLadder.h" />
     <ClInclude Include="CMagma.h" />
     <ClInclude Include="CTestScene.h" />
+    <ClInclude Include="DescPanel.h" />
     <ClInclude Include="Dome.h" />
     <ClInclude Include="DynamicGameObject.h" />
     <ClInclude Include="EndGameScene.h" />
@@ -173,6 +174,8 @@
     <ClInclude Include="JasonBullet.h" />
     <ClInclude Include="MineBullet.h" />
     <ClInclude Include="MiniJasonBullet.h" />
+    <ClInclude Include="MoviePanel.h" />
+    <ClInclude Include="Panel.h" />
     <ClInclude Include="SceneGate.h" />
     <ClInclude Include="HPBar.h" />
     <ClInclude Include="Insect.h" />
@@ -189,6 +192,7 @@
     <ClInclude Include="SectionOvw.h" />
     <ClInclude Include="SectionTransition.h" />
     <ClInclude Include="SkullBullet.h" />
+    <ClInclude Include="SlidePanel.h" />
     <ClInclude Include="Sophia.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
@@ -217,6 +221,7 @@
     <ClCompile Include="CLadder.cpp" />
     <ClCompile Include="CMagma.cpp" />
     <ClCompile Include="CTestScene.cpp" />
+    <ClCompile Include="DescPanel.cpp" />
     <ClCompile Include="Dome.cpp" />
     <ClCompile Include="DynamicGameObject.cpp" />
     <ClCompile Include="EndGameScene.cpp" />
@@ -239,6 +244,7 @@
     <ClCompile Include="MineBullet.cpp" />
     <ClCompile Include="MiniJason.cpp" />
     <ClCompile Include="MiniJasonBullet.cpp" />
+    <ClCompile Include="MoviePanel.cpp" />
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="OvwSectionTransition.cpp" />
     <ClCompile Include="SceneGate.cpp" />
@@ -247,6 +253,7 @@
     <ClCompile Include="SectionOvw.cpp" />
     <ClCompile Include="SectionTransition.cpp" />
     <ClCompile Include="SkullBullet.cpp" />
+    <ClCompile Include="SlidePanel.cpp" />
     <ClCompile Include="Sophia.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -302,6 +309,7 @@
     <Text Include="Resource\Config\Area2\area2_secM.txt" />
     <Text Include="Resource\Config\Area2\area2_secN.txt" />
     <Text Include="Resource\Config\Area2\area2_secO.txt" />
+    <Text Include="Resource\Config\endgame\description.txt" />
     <Text Include="Resource\Config\endgame\endgame.txt" />
     <Text Include="Resource\Config\Gameworld.txt" />
     <Text Include="Resource\Config\intro\intro.txt" />
