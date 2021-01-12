@@ -2,7 +2,7 @@
 #define _EYEBALL_H
 
 #include "DynamicGameObject.h"
-#include "Bullet.h"
+#include "BaseBullet.h"
 
 #define EYEBALL_STATE_ALIVE	0
 #define EYEBALL_STATE_DIE		1

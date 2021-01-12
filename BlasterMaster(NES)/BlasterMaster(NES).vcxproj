@@ -152,6 +152,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cannon.h" />
+    <ClInclude Include="CannonBullet.h" />
     <ClInclude Include="CGate.h" />
     <ClInclude Include="CLadder.h" />
     <ClInclude Include="CMagma.h" />
@@ -159,7 +160,9 @@
     <ClInclude Include="Dome.h" />
     <ClInclude Include="DynamicGameObject.h" />
     <ClInclude Include="Eyeball.h" />
+    <ClInclude Include="EyeballBullet.h" />
     <ClInclude Include="Floater2.h" />
+    <ClInclude Include="FloaterBullet.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Grid.h" />
@@ -205,6 +208,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cannon.cpp" />
+    <ClCompile Include="CannonBullet.cpp" />
     <ClCompile Include="CGate.cpp" />
     <ClCompile Include="CLadder.cpp" />
     <ClCompile Include="CMagma.cpp" />
@@ -212,7 +216,9 @@
     <ClCompile Include="Dome.cpp" />
     <ClCompile Include="DynamicGameObject.cpp" />
     <ClCompile Include="Eyeball.cpp" />
+    <ClCompile Include="EyeballBullet.cpp" />
     <ClCompile Include="Floater2.cpp" />
+    <ClCompile Include="FloaterBullet.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Grid.cpp" />

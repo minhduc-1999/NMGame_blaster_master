@@ -1,4 +1,5 @@
 #include "Cannon.h"
+#include "CannonBullet.h"
 
 Cannon::Cannon(float x, float y) : CDynamicGameObject(x, y)
 {
@@ -109,20 +110,21 @@ vector<LPDYNAMICOBJECT> Cannon::Fire()
 	vector<LPDYNAMICOBJECT> cannonBulls;
 	if (hor)
 	{
-		Bullet* bulletR = new Bullet(x + 7, y, CANNON_BULLET_HORIZONTAL, 1);
-		Bullet* bulletL = new Bullet(x - 7, y, CANNON_BULLET_HORIZONTAL, -1);
+		CannonBullet* bulletR = new CannonBullet(x, y, 1, 1, 0);
+		CannonBullet* bulletL = new CannonBullet(x, y, 1, -1, 0);
 
 		cannonBulls.push_back(bulletR);
 		cannonBulls.push_back(bulletL);
 	}
 	else
 	{
-		Bullet* bulletU = new Bullet(x, y - 7, CANNON_BULLET_VERTICAL, -1);
-		Bullet* bulletD = new Bullet(x, y + 7, CANNON_BULLET_VERTICAL, 1);
+		CannonBullet* bulletU = new CannonBullet(x, y, 1, 0, -1);
+		CannonBullet* bulletD = new CannonBullet(x, y, 1, 0, 1);
 
 		cannonBulls.push_back(bulletU);
 		cannonBulls.push_back(bulletD);
 	}
+	isShooting = false;
 
 	return cannonBulls;
 }

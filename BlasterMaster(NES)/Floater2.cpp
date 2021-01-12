@@ -1,4 +1,5 @@
 #include "Floater2.h"
+#include "FloaterBullet.h"
 
 Floater2::Floater2(float x, float y) :CDynamicGameObject(x, y)
 {
@@ -27,6 +28,7 @@ int Floater2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (startTime > 600)
 	{
 		isShooting = true;
+		SetState(FLOATER2_STATE_FIRING);
 		startTime = 0;
 	}
 
@@ -112,7 +114,7 @@ void Floater2::Render()
 		return;
 	int ani = FLOATER2_ANI_FLYING;
 
-	if (GetState() == FLOATER2_STATE_DIE)
+	if (state == FLOATER2_STATE_DIE)
 	{
 		ani = FLOATER2_ANI_DIE;
 		if (!animation_set->at(FLOATER2_ANI_DIE)->IsCompleted())
@@ -130,6 +132,8 @@ void Floater2::Render()
 
 	switch (state)
 	{
+	case FLOATER2_STATE_FIRING:
+		ani = FLOATER2_ANI_FIRE;
 	case FLOATER2_STATE_FLYING_RIGHT: case FLOATER2_STATE_FLYING_LEFT:
 		ani = FLOATER2_ANI_FLYING;
 		break;
@@ -147,6 +151,8 @@ void Floater2::SetState(int state)
 	CDynamicGameObject::SetState(state);
 	switch (state)
 	{
+	case FLOATER2_STATE_FIRING:
+		break;
 	case FLOATER2_STATE_FLYING_LEFT:
 		vx = -FLOATER2_FLYING_SPEED_X;
 		nx = -1;
@@ -167,27 +173,14 @@ vector<LPDYNAMICOBJECT> Floater2::Fire(float xMain, float yMain)
 {
 	vector<LPDYNAMICOBJECT> floaterBulls;
 
-	Bullet* bullet = new Bullet(x, y, FLOATER_BULLET, 1);
+	FloaterBullet* bullet = new FloaterBullet(x, y, 1);
 	float a = xMain - x;
 	float b = yMain - y;
-	bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 5, b / sqrt(pow(a, 2) + pow(b, 2)) / 5);
+	bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 3, b / sqrt(pow(a, 2) + pow(b, 2) / 3) / 5);
 	floaterBulls.push_back(bullet);
 
-	return floaterBulls;
-}
+	isShooting = false;
+	SetState(FLOATER2_STATE_FLYING_LEFT);
 
-int Floater2::FindMain(float xF, float yF, float xMain, float yMain)
-{
-	if (xF >= xMain)
-	{
-		if (yF >= yMain)
-			return 1;
-		return 2;
-	}
-	else
-	{
-		if (yF >= yMain)
-			return 3;
-		return 4;
-	}
+	return floaterBulls;
 }

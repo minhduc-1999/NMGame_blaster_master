@@ -1,7 +1,7 @@
 #ifndef _CANNON_H
 #define _CANNON_H
 #include "DynamicGameObject.h"
-#include "Bullet.h"
+#include "BaseBullet.h"
 
 #define CANNON_STATE_ALIVE		0
 #define CANNON_STATE_DIE		1

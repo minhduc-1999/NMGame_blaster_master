@@ -188,6 +188,15 @@
     <Filter Include="Object\DynamicObject\Bullet\MiniJasonBullet">
       <UniqueIdentifier>{dd4afb15-250c-40bb-95f6-9e304078e7d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Bullet\CannonBullet">
+      <UniqueIdentifier>{5be5ecea-56b5-4e97-8420-a4b619a57b7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Bullet\EyeballBullet">
+      <UniqueIdentifier>{e62d8586-eff9-4fc9-9baa-bcf227de7a87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Bullet\FloaterBullet">
+      <UniqueIdentifier>{73950619-43a6-423e-9f73-0cca95f533d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -343,6 +352,15 @@
     <ClInclude Include="MiniJasonBullet.h">
       <Filter>Object\DynamicObject\Bullet\MiniJasonBullet</Filter>
     </ClInclude>
+    <ClInclude Include="CannonBullet.h">
+      <Filter>Object\DynamicObject\Bullet\CannonBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="EyeballBullet.h">
+      <Filter>Object\DynamicObject\Bullet\EyeballBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="FloaterBullet.h">
+      <Filter>Object\DynamicObject\Bullet\FloaterBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -497,6 +515,15 @@
     </ClCompile>
     <ClCompile Include="MiniJasonBullet.cpp">
       <Filter>Object\DynamicObject\Bullet\MiniJasonBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CannonBullet.cpp">
+      <Filter>Object\DynamicObject\Bullet\CannonBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="FloaterBullet.cpp">
+      <Filter>Object\DynamicObject\Bullet\FloaterBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="EyeballBullet.cpp">
+      <Filter>Object\DynamicObject\Bullet\EyeballBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

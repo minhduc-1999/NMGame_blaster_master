@@ -54,7 +54,6 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 			{
 				dynamicObjs.insert(dynamicObjs.end(), bullet.begin(), bullet.end());
 			}
-			temp->ResetShooting();
 		}
 
 		if (temp->GetIsDestroyed())

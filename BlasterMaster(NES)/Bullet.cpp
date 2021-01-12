@@ -31,30 +31,6 @@ Bullet::Bullet(float x, float y, int t, int n) : CDynamicGameObject(x, y)
 		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_SOPHIA_VER);
 		this->SetAnimationSet(ani_set);
 	}
-	else if (t == CANNON_BULLET_HORIZONTAL)
-	{
-		SetSize(8, 8);
-
-		nx = 1;
-		vx = n * 0.12f;
-		vy = 0;
-
-		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
-		this->SetAnimationSet(ani_set);
-	}
-	else if (t == CANNON_BULLET_VERTICAL)
-	{
-		SetSize(8, 8);
-
-		nx = 1;
-		vx = 0;
-		vy = n * 0.12f;
-
-		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
-		this->SetAnimationSet(ani_set);
-	}
 	else if (t == FLOATER_BULLET)
 	{
 		SetSize(6, 6);
@@ -63,18 +39,6 @@ Bullet::Bullet(float x, float y, int t, int n) : CDynamicGameObject(x, y)
 
 		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_FLOATER);
-		this->SetAnimationSet(ani_set);
-	}
-	else if (t == EYEBALL_BULLET)
-	{
-		SetSize(8, 8);
-
-		nx = 1;
-		vx = 0.08f;
-		vy = 0.08f;
-
-		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
 		this->SetAnimationSet(ani_set);
 	}
 	else if (t == SKULL_BULLET)
@@ -100,7 +64,7 @@ Bullet::Bullet(float x, float y, int t, int n) : CDynamicGameObject(x, y)
 		vy = -0.15f;
 
 		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
+		LPANIMATION_SET ani_set = animation_sets->Get(21);
 		this->SetAnimationSet(ani_set);
 	}
 	else if (t == MINE_BULLET_SECOND)
@@ -114,7 +78,7 @@ Bullet::Bullet(float x, float y, int t, int n) : CDynamicGameObject(x, y)
 		vy = -0.15f;
 
 		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
+		LPANIMATION_SET ani_set = animation_sets->Get(21);
 		this->SetAnimationSet(ani_set);
 	}
 	else if (t == MINE_BULLET_THIRD)
@@ -128,7 +92,7 @@ Bullet::Bullet(float x, float y, int t, int n) : CDynamicGameObject(x, y)
 		vy = -0.15f;
 
 		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
+		LPANIMATION_SET ani_set = animation_sets->Get(21);
 		this->SetAnimationSet(ani_set);
 	}
 	else if (t == MINE_BULLET_FOUTH)
@@ -142,7 +106,7 @@ Bullet::Bullet(float x, float y, int t, int n) : CDynamicGameObject(x, y)
 		vy = -0.15f;
 
 		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-		LPANIMATION_SET ani_set = animation_sets->Get(BULLET_ANI_RED);
+		LPANIMATION_SET ani_set = animation_sets->Get(21);
 		this->SetAnimationSet(ani_set);
 	}
 }

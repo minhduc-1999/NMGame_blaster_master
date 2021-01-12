@@ -13,7 +13,8 @@
 #object	type:	50	=	hpbar
 [DYNAMIC_OBJECTS]
 #type	x	y	grid_id	ani_set_id
-5	840	2955	6	5
+6	840	2955	6	6
+13	540	2955	6	13
 [STATIC_OBJECTS]
 #type	x	y	grid_id	sprite_id1	...
 15	40	2840	0	128

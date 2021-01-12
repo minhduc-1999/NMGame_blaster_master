@@ -1,4 +1,5 @@
 #include "Eyeball.h"
+#include "EyeballBullet.h"
 
 Eyeball::Eyeball(float x, float y) : CDynamicGameObject(x, y)
 {
@@ -141,11 +142,13 @@ void Eyeball::SetState(int state)
 vector<LPDYNAMICOBJECT> Eyeball::Fire(float xMain, float yMain)
 {
 	vector<LPDYNAMICOBJECT> eyeballBulls;
-	Bullet* bullet = new Bullet(x + 7, y, EYEBALL_BULLET, 1);
+	EyeballBullet* bullet = new EyeballBullet(x, y, 1);
 	float a = xMain - x;
 	float b = yMain - y;
-	bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 5, b / sqrt(pow(a, 2) + pow(b, 2)) / 5);
+	bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 3, b / sqrt(pow(a, 2) + pow(b, 2)) / 3);
 	eyeballBulls.push_back(bullet);
+
+	isShooting = false;
 	
 	return eyeballBulls;
 }
