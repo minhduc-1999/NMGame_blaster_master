@@ -43,8 +43,17 @@
 40	Resource/Background/overworld_bg.png	0	0	255
 50	Resource/Foreground/overworld_fg.png	0	0	255
 60	Items.png	0	0	255
-70	Resource/StatusBar/StatusBar.png	0	0	255
+70	boss.png	0	0	255
+80	Resource/StatusBar/StatusBar.png	0	0	255
 -100	Resource/Background/bbox.png	0	0	255
+#sound
+# id	path
+[SOUNDS]
+SophiaFire	Resource\Sound\SophiaFire.wav
+Jump	Resource\Sound\Jump.wav
+Hit	Resource\Sound\Hit.wav
+SophiaDed	Resource\Sound\SophiaDed.wav
+lvl2	Resource\Sound\lvl2.wav
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 #=========TILE=============
@@ -151,16 +160,27 @@
 #======floater_bullet======
 230001	360	164	366	170	60
 
+#=======boss========
+# flying
+400001	149	439	209	504	70
+400002	84	510	144	575	70
+
+#=======bossHand====
+410001	190	1147	208	1179	70
+
+#=======bossArm====
+420001	188	1129	204	1146	70
+
 #======HPBar=======
-500001	1	0	11	95	70
-500002	12	0	22	95	70
-500003	23	0	33	95	70
-500004	34	0	44	95	70
-500005	45	0	55	95	70
-500006	56	0	66	95	70
-500007	67	0	77	95	70
-500008	78	0	88	95	70
-500009	89	0	99	95	70
+500001	1	0	11	95	80
+500002	12	0	22	95	80
+500003	23	0	33	95	80
+500004	34	0	44	95	80
+500005	45	0	55	95	80
+500006	56	0	66	95	80
+500007	67	0	77	95	80
+500008	78	0	88	95	80
+500009	89	0	99	95	80
 #...
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
@@ -186,6 +206,12 @@
 2200	220001	1000
 #======floater_bullet======
 2300	230001	1000
+#======boss=========
+4000	400001	25	400002	25
+#======bossHand=====
+4100	410001	200
+#======bossArm=====
+4200	420001	200
 #======HPbar=======
 5000	500001	200
 5001	500002	200
@@ -215,5 +241,11 @@
 23	2200
 #======floater_bullet======
 24	2300
+#======boss========
+40	4000
+#======bossHand====
+41	4100
+#======bossArm====
+42	4200
 #======hpbar=======
 50	5000	5001	5002	5003	5004	5005	5006	5007	5008
