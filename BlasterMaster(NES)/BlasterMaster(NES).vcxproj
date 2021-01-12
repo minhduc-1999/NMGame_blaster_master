@@ -159,6 +159,7 @@
     <ClInclude Include="CTestScene.h" />
     <ClInclude Include="Dome.h" />
     <ClInclude Include="DynamicGameObject.h" />
+    <ClInclude Include="EndGameScene.h" />
     <ClInclude Include="Eyeball.h" />
     <ClInclude Include="EyeballBullet.h" />
     <ClInclude Include="Floater2.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="CTestScene.cpp" />
     <ClCompile Include="Dome.cpp" />
     <ClCompile Include="DynamicGameObject.cpp" />
+    <ClCompile Include="EndGameScene.cpp" />
     <ClCompile Include="Eyeball.cpp" />
     <ClCompile Include="EyeballBullet.cpp" />
     <ClCompile Include="Floater2.cpp" />
@@ -272,6 +274,7 @@
     <Image Include="Resource\Background\area2_bg.png" />
     <Image Include="Resource\Background\bbox.png" />
     <Image Include="Resource\Background\overworld_bg.png" />
+    <Image Include="Resource\endgame\endgame.png" />
     <Image Include="Resource\Foreground\area2_fg.png" />
     <Image Include="Resource\Foreground\overworld_fg.png" />
     <Image Include="Resource\intro\intro1.png" />
@@ -299,6 +302,7 @@
     <Text Include="Resource\Config\Area2\area2_secM.txt" />
     <Text Include="Resource\Config\Area2\area2_secN.txt" />
     <Text Include="Resource\Config\Area2\area2_secO.txt" />
+    <Text Include="Resource\Config\endgame\endgame.txt" />
     <Text Include="Resource\Config\Gameworld.txt" />
     <Text Include="Resource\Config\intro\intro.txt" />
     <Text Include="Resource\Config\OverWorld\overworld.txt" />

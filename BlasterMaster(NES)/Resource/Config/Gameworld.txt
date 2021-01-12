@@ -1,12 +1,12 @@
 #scene list
 
-#id	path	type(1. area2	2. overworld	3.intro)	bg_R	bg_G	bg_B
-[SCENES]
+#id	path	type(1. area2	2. overworld	3.intro	4.endgame)	bg_R	bg_G	bg_B[SCENES]
 
 
 1	Resource/Config/intro/intro.txt	3	57	108	3
 2	Resource/Config/Area2/area2.txt	1	0	0	0
 3	Resource/Config/OverWorld/overworld.txt	2	0	0	0
+4	Resource/Config/endgame/endgame.txt	4	0	0	0
 #token	scenes	section
 [SETTINGS]
-start	3	1
+start	1	1

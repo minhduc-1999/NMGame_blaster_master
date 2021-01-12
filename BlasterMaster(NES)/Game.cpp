@@ -3,6 +3,7 @@
 #include <fstream>
 #include "Textures.h"
 #include "IntroScene.h"
+#include "EndGameScene.h"
 
 CGame* CGame::__instance = NULL;
 HWND CGame::mHwnd = NULL;
@@ -582,6 +583,8 @@ void CGame::_ParseSection_SCENES(string line)
 	case 3:
 		scene = new IntroScene(id, path, type, D3DXVECTOR3(R, G, B));
 		break;
+	case 4:
+		scene = new EndGameScene(id, path, type, D3DXVECTOR3(R, G, B));
 	default:
 		break;
 	}

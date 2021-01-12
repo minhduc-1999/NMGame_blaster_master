@@ -94,7 +94,7 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		x += dx;
 		y += dy;
-	}
+	} 
 	else
 	{
 		float min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby;
