@@ -125,106 +125,121 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	int grid = atof(tokens[3].c_str());
 	int ani_set_id = atoi(tokens[4].c_str());
 
-	int	bossHand_ani_set_id;
-	int bossArm_ani_set_id;
-
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 	CDynamicGameObject* obj = NULL;
-	switch (object_type)
+
+	if (object_type == OBJECT_TYPE_BOSS)
 	{
-		//dynamic obj
-	//case OBJECT_TYPE_SOPHIA:
-	//{
-	//	if (mainPlayer != NULL)
-	//	{
-	//		//D3DXVECTOR2 pos = mainPlayer->GetPosition();
-	//		//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
-	//		DebugOut("[ERROR] main object was created before!\n");
-	//		return;
-	//	}
-	//	obj = new Sophia(x, y);
-	//	mainPlayer = (Sophia*)obj;
-	//	obj->SetAnimationSet(ani_set);
-	//	obj->SetTeam(0);
-	//	obj->SetType(object_type);
-	//	DebugOut("[INFO] Player object created!\n");
-	//	return;
-	//	//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
-	//	break;
-	//}
-	//case OBJECT_TYPE_JASON:
-	//	if (mainPlayer != NULL)
-	//	{
-	//		//D3DXVECTOR2 pos = mainPlayer->GetPosition();
-	//		//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
-	//		DebugOut("[ERROR] main object was created before!\n");
-	//		return;
-	//	}
-	//	obj = new Jason(x, y);
-	//	mainPlayer = (Jason*)obj;
-	//	obj->SetAnimationSet(ani_set);
-	//	obj->SetTeam(0);
-	//	obj->SetType(object_type);
-	//	DebugOut("[INFO] Player object created!\n");
-	//	return;
-	//	break;
-	case OBJECT_TYPE_BOSS:
+		int	bossHand_ani_set_id;
+		int bossArm_ani_set_id;
+		Boss* boss;
+		vector<LPDYNAMICOBJECT> hands;
 		bossHand_ani_set_id = atoi(tokens[5].c_str());
 		bossArm_ani_set_id = atoi(tokens[6].c_str());
 		obj = new Boss(x, y, bossHand_ani_set_id, bossArm_ani_set_id);
+		boss = (Boss*)obj;
+		hands = boss->CreateHands();
+		obj->SetTeam(1);
+		obj->SetType(object_type);
+		obj->SetAnimationSet(ani_set);
 		obj->SetState(BOSS_STATE_FLYING);
-		//boss = (Boss*)obj;
-		break;
-	case OBJECT_TYPE_FLOATER2:
-		obj = new	Floater2(x, y);
-		obj->SetState(FLOATER2_STATE_FLYING_LEFT);
-		break;
-	case OBJECT_TYPE_WORM:
-		obj = new Worm(x, y);
-		obj->SetState(WORM_STATE_WALKING_LEFT);
-		break;
-	case OBJECT_TYPE_DOME:
-		obj = new Dome(x, y);
-		obj->SetState(DOME_STATE_DROP_DOWN);
-		break;
-	case OBJECT_TYPE_INSECT:
-		obj = new Insect(x, y);
-		obj->SetState(INSECT_STATE_FLYDOWN_RIGHT);
-		break;
-	case OBJECT_TYPE_JUMPER2:
-		obj = new Jumper2(x, y);
-		obj->SetState(JUMPER2_STATE_JUMPING_RIGHT);
-		break;
-	case OBJECT_TYPE_ORB:
-		obj = new Orb(x, y);
-		obj->SetState(ORB_STATE_ROLLING_LEFT);
-		break;
-	case OBJECT_TYPE_SKULL:
-		obj = new Skull(x, y);
-		obj->SetState(SKULL_STATE_FLYING_LEFT);
-		break;
-	case OBJECT_TYPE_MINE:
-		obj = new Mine(x, y);
-		obj->SetState(MINE_STATE_ONGROUND);
-		break;
-	case OBJECT_TYPE_TELEPORTER:
-		obj = new Teleporter(x, y);
-		obj->SetState(TELEPORTER_STATE_GRAY);
-		break;
-	case OBJECT_TYPE_CANNON:
-		obj = new Cannon(x, y);
-		obj->SetState(CANNON_STATE_ALIVE);
-		break;
-	case OBJECT_TYPE_EYEBALL:
-		obj = new Eyeball(x, y);
-		obj->SetState(EYEBALL_STATE_ALIVE);
-		break;
-	default:
-		DebugOut("[ERROR] Invalid object type: %d\n", object_type);
+		grids[grid]->AddDynamicObj(obj);
+		for (int i = 0; i < hands.size(); i++)
+		{
+			grids[grid]->AddDynamicObj(hands[i]);
+		}
 		return;
 	}
-
+	else
+	{
+		switch (object_type)
+		{
+			//dynamic obj
+		//case OBJECT_TYPE_SOPHIA:
+		//{
+		//	if (mainPlayer != NULL)
+		//	{
+		//		//D3DXVECTOR2 pos = mainPlayer->GetPosition();
+		//		//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
+		//		DebugOut("[ERROR] main object was created before!\n");
+		//		return;
+		//	}
+		//	obj = new Sophia(x, y);
+		//	mainPlayer = (Sophia*)obj;
+		//	obj->SetAnimationSet(ani_set);
+		//	obj->SetTeam(0);
+		//	obj->SetType(object_type);
+		//	DebugOut("[INFO] Player object created!\n");
+		//	return;
+		//	//DebugOut("[PLAYER POSITION]\t%f\t%f\n", x, y);
+		//	break;
+		//}
+		//case OBJECT_TYPE_JASON:
+		//	if (mainPlayer != NULL)
+		//	{
+		//		//D3DXVECTOR2 pos = mainPlayer->GetPosition();
+		//		//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
+		//		DebugOut("[ERROR] main object was created before!\n");
+		//		return;
+		//	}
+		//	obj = new Jason(x, y);
+		//	mainPlayer = (Jason*)obj;
+		//	obj->SetAnimationSet(ani_set);
+		//	obj->SetTeam(0);
+		//	obj->SetType(object_type);
+		//	DebugOut("[INFO] Player object created!\n");
+		//	return;
+		//	break;
+		case OBJECT_TYPE_FLOATER2:
+			obj = new	Floater2(x, y);
+			obj->SetState(FLOATER2_STATE_FLYING_LEFT);
+			break;
+		case OBJECT_TYPE_WORM:
+			obj = new Worm(x, y);
+			obj->SetState(WORM_STATE_WALKING_LEFT);
+			break;
+		case OBJECT_TYPE_DOME:
+			obj = new Dome(x, y);
+			obj->SetState(DOME_STATE_DROP_DOWN);
+			break;
+		case OBJECT_TYPE_INSECT:
+			obj = new Insect(x, y);
+			obj->SetState(INSECT_STATE_FLYDOWN_RIGHT);
+			break;
+		case OBJECT_TYPE_JUMPER2:
+			obj = new Jumper2(x, y);
+			obj->SetState(JUMPER2_STATE_JUMPING_RIGHT);
+			break;
+		case OBJECT_TYPE_ORB:
+			obj = new Orb(x, y);
+			obj->SetState(ORB_STATE_ROLLING_LEFT);
+			break;
+		case OBJECT_TYPE_SKULL:
+			obj = new Skull(x, y);
+			obj->SetState(SKULL_STATE_FLYING_LEFT);
+			break;
+		case OBJECT_TYPE_MINE:
+			obj = new Mine(x, y);
+			obj->SetState(MINE_STATE_ONGROUND);
+			break;
+		case OBJECT_TYPE_TELEPORTER:
+			obj = new Teleporter(x, y);
+			obj->SetState(TELEPORTER_STATE_GRAY);
+			break;
+		case OBJECT_TYPE_CANNON:
+			obj = new Cannon(x, y);
+			obj->SetState(CANNON_STATE_ALIVE);
+			break;
+		case OBJECT_TYPE_EYEBALL:
+			obj = new Eyeball(x, y);
+			obj->SetState(EYEBALL_STATE_ALIVE);
+			break;
+		default:
+			DebugOut("[ERROR] Invalid object type: %d\n", object_type);
+			return;
+		}
+	}
 
 	// General object setup
 	//obj->SetPosition(x, y);

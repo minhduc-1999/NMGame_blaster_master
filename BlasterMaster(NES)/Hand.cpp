@@ -7,12 +7,19 @@ Hand::Hand(float x, float y, int _index, bool _isLeftHand) :CDynamicGameObject(x
 	{
 		SetPosition(x - 20, y);
 		handPosition = D3DXVECTOR2(x - 20, y);
+		currentPointIndex = 0;
+		nextPointIndex = 1;
+		lastTime = GetTickCount();
 	}
 	else
 	{
 		SetPosition(x + 20, y);
 		handPosition = D3DXVECTOR2(x + 20, y);
+		currentPointIndex = 3;
+		nextPointIndex = 2;
+		lastTime = GetTickCount() + 500;
 	}
+	currentPosition = handPosition;
 	index = _index;
 	bossPosition = D3DXVECTOR2(x, y);
 	if (index != 5)
@@ -25,142 +32,216 @@ Hand::Hand(float x, float y, int _index, bool _isLeftHand) :CDynamicGameObject(x
 	}
 	nx = (isLeftHand)?1:-1;
 	ny = 1;
+	
+	vy = 0.08f;
 }
 
-int Hand::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, D3DXVECTOR2 _bossPosition)
+int Hand::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, D3DXVECTOR2 _bossPosition, int _nextPointIndex)
 {
+	if (state == HAND_STATE_DIE)
+	{
+		isUpdated = true;
+		isRendered = false;
+		return 0;
+	}
 	if (isUpdated)
 		return -1;
-	CDynamicGameObject::Update(dt);
+	
 
 	x += (_bossPosition.x - bossPosition.x);
 	y += (_bossPosition.y - bossPosition.y);
 	bossPosition = _bossPosition;
+	handPosition = GetPosition();
 
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult;
 	if (isLeftHand)
 	{
-		leftSide = _bossPosition.x - (20 + 15*index);
+		leftSide = _bossPosition.x - (20 + 10 * index);
 		rightSide = _bossPosition.x - 20;
 	}
 	else
 	{
 		leftSide = _bossPosition.x + 20;
-		rightSide = _bossPosition.x + (20 + 15 * index);
+		rightSide = _bossPosition.x + (20 + 10 * index);
 	}
+	topSide = _bossPosition.y - 10 * (index);
+	bottomSide = _bossPosition.y + 10 * (index);
 
-	topSide = _bossPosition.y - 18 *(index);
-	bottomSide = _bossPosition.y + 18* (index);
-
-	coEvents.clear();
-
-	CalcPotentialCollisions(coObjects, coEvents);
-
-	// No collision occured, proceed normally
-	//if (coEvents.size() == 0)
-	//{
-	//	x += dx;
-	//	y += dy;
-	//}
-	//else
-	//{
-	//	float min_tx, min_ty, ntx, nty;
-
-	//	FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
-
-	//	// block 
-	//	x += min_tx * dx + ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-	//	y += min_ty * dy + nty * 0.4f;
-
-	//	for (UINT i = 0; i < coEventsResult.size(); i++)
-	//	{
-	//		LPCOLLISIONEVENT e = coEventsResult[i];
-	//		// if e->obj is Gate 
-	//		if (dynamic_cast<CDynamicGameObject*>(e->obj))
-	//		{
-	//			CDynamicGameObject* obj = dynamic_cast<CDynamicGameObject*>(e->obj);
-	//			if (this->team == obj->GetTeam())
-	//			{
-	//				x += (1 - min_tx) * dx - ntx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-	//				y += (1 - min_ty) * dy - nty * 0.4f;
-	//				for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	//				return;
-	//			}
-	//		}
-	//	}
-	//	//TODO: Collision logic with dynamic object (bots)
-	//}
-
-	x += dx;
-	y += dy;
-	if (index != 5)
+	switch (nextPointIndex)
 	{
-		if (x < leftSide || x > rightSide)
-		{
-			x -= dx;
-			vx = 0;
-			vy = 0;
-		}
-		else if (y < topSide || y > bottomSide)
-		{
-			y -= dy;
-			vx = 0;
-			vy = 0;
-		}
+	case 0:
+		nextPosition.x = rightSide;
+		nextPosition.y = _bossPosition.y;
+		break;
+	case 1:
+		nextPosition.x = rightSide;
+		nextPosition.y = bottomSide;
+		break;
+	case 2:
+		nextPosition.x = leftSide;
+		nextPosition.y = bottomSide;
+		break;
+	case 3:
+		nextPosition.x = leftSide;
+		nextPosition.y = _bossPosition.y;
+		break;
+	case 4:
+		nextPosition.x = leftSide;
+		nextPosition.y = topSide;
+		break;
+	case 5:
+		nextPosition.x = rightSide;
+		nextPosition.y = topSide;
+		break;
+	default:
+		break;
 	}
-	else
+	switch (currentPointIndex)
 	{
-		if (x < leftSide || x > rightSide)
+	case 0:
+		currentPosition.x = rightSide;
+		currentPosition.y = _bossPosition.y;
+		break;
+	case 1:
+		currentPosition.x = rightSide;
+		currentPosition.y = bottomSide;
+		break;
+	case 2:
+		currentPosition.x = leftSide;
+		currentPosition.y = bottomSide;
+		break;
+	case 3:
+		currentPosition.x = leftSide;
+		currentPosition.y = _bossPosition.y;
+		break;
+	case 4:
+		currentPosition.x = leftSide;
+		currentPosition.y = topSide;
+		break;
+	case 5:
+		currentPosition.x = rightSide;
+		currentPosition.y = topSide;
+		break;
+	default:
+		break;
+	}
+	if (CalcD(handPosition, nextPosition) <= 5)
+	{
+		vx = 0;
+		vy = 0;
+		handPosition = nextPosition;
+		SetPosition(nextPosition.x, nextPosition.y);
+		if (GetTickCount() - lastTime >= 3000)
 		{
-			x -= dx;
-			if (lastTime == 0)
+			lastTime = GetTickCount();
+			currentPointIndex = nextPointIndex;
+			if (index == 5)
 			{
-				lastTime = GetTickCount();
+				if (isLeftHand)
+				{
+					while (nextPointIndex == currentPointIndex)
+					{
+						nextPointIndex = rand() % 5 + 1;
+					}
+				}
+				else
+				{
+					while (nextPointIndex == currentPointIndex || nextPointIndex == 3)
+					{
+						nextPointIndex = rand() % 6;
+					}
+				}
 			}
 			else
 			{
-				vx = 0;
-				vy = 0;
+				nextPointIndex = _nextPointIndex;
 			}
-			DWORD now = GetTickCount();
-			if (lastTime != 0 && now - lastTime >= 1500)
+			switch (nextPointIndex)
 			{
-				SetState((ny == 1) ? HAND_STATE_FLYING_UP : HAND_STATE_FLYING_DOWN);
-				lastTime = 0;
+			case 0:
+				nextPosition.x = rightSide;
+				nextPosition.y = _bossPosition.y;
+				break;
+			case 1:
+				nextPosition.x = rightSide;
+				nextPosition.y = bottomSide;
+				break;
+			case 2:
+				nextPosition.x = leftSide;
+				nextPosition.y = bottomSide;
+				break;
+			case 3:
+				nextPosition.x = leftSide;
+				nextPosition.y = _bossPosition.y;
+				break;
+			case 4:
+				nextPosition.x = leftSide;
+				nextPosition.y = topSide;
+				break;
+			case 5:
+				nextPosition.x = rightSide;
+				nextPosition.y = topSide;
+				break;
+			default:
+				break;
 			}
-			
-		}
-		else if (y < topSide || y > bottomSide)
-		{
-			y -= dy;
-			if (lastTime == 0)
+			switch (currentPointIndex)
 			{
-				lastTime = GetTickCount();
+			case 0:
+				currentPosition.x = rightSide;
+				currentPosition.y = _bossPosition.y;
+				break;
+			case 1:
+				currentPosition.x = rightSide;
+				currentPosition.y = bottomSide;
+				break;
+			case 2:
+				currentPosition.x = leftSide;
+				currentPosition.y = bottomSide;
+				break;
+			case 3:
+				currentPosition.x = leftSide;
+				currentPosition.y = _bossPosition.y;
+				break;
+			case 4:
+				currentPosition.x = leftSide;
+				currentPosition.y = topSide;
+				break;
+			case 5:
+				currentPosition.x = rightSide;
+				currentPosition.y = topSide;
+				break;
+			default:
+				break;
+			}
+			float a = nextPosition.x - currentPosition.x;
+			float b = nextPosition.y - currentPosition.y;
+			if (index != 5)
+			{
+				SetSpeed((a / sqrt(pow(a, 2) + pow(b, 2)) / 5) / (6 - index), (b / sqrt(pow(a, 2) + pow(b, 2)) / 5) / (6 - index));
 			}
 			else
 			{
-				vx = 0;
-				vy = 0;
+				SetSpeed((a / sqrt(pow(a, 2) + pow(b, 2)) / 5)/(1.5f), (b / sqrt(pow(a, 2) + pow(b, 2)) / 5)/(1.5f));
 			}
-			DWORD now = GetTickCount();
-			if (lastTime != 0 && now - lastTime >= 1500)
-			{
-				SetState((nx == 1) ? HAND_STATE_FLYING_LEFT : HAND_STATE_FLYING_RIGHT);
-				lastTime = 0;
-			}
-			
 		}
+		
 	}
 	
+	CDynamicGameObject::Update(dt);
+	x += dx;
+	y += dy;
+	
 
-	handPosition = GetPosition();
+	//handPosition = GetPosition();
 
-	// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	isUpdated = true;
 	isRendered = false;
 	return 0;
+}
+
+float Hand::CalcD(D3DXVECTOR2 a, D3DXVECTOR2 b)
+{
+	return sqrt(pow((a.x - b.x), 2) + pow((a.y - b.y), 2));
 }
 
 void Hand::Render()
@@ -171,7 +252,19 @@ void Hand::Render()
 
 	int dir = (isLeftHand)?1:-1;
 
-	animation_set->at(ani)->Render(x, y, dir);
+	if (state == HAND_STATE_DIE)
+	{
+		animation_set->at(ani)->Render(x, y, dir, 253);
+		if (GetTickCount64() - detroyTime >= 5000)
+		{
+			isDestroyed = true;
+		}
+	}
+	else
+	{
+		animation_set->at(ani)->Render(x, y, dir);
+	}
+	
 
 	isRendered = true;
 	isUpdated = false;
@@ -182,51 +275,12 @@ void Hand::SetState(int state)
 	CDynamicGameObject::SetState(state);
 	switch (state)
 	{
-	case HAND_STATE_FLYING_BIAS:
-		if (vx == 0)
-		{
-			ny = -ny;
-			if (ny == -1)
-			{
-				SetState(HAND_STATE_FLYING_UP);
-			}
-			else
-			{
-				SetState(HAND_STATE_FLYING_DOWN);
-			}
-		}
-		else
-		{
-			nx = -nx;
-			if (nx == -1)
-			{
-				SetState(HAND_STATE_FLYING_RIGHT);
-			}
-			else
-			{
-				SetState(HAND_STATE_FLYING_LEFT);
-			}
-		}
+	case HAND_STATE_FLYING:
 		break;
-	case HAND_STATE_FLYING_LEFT:
-		nx = -1;
-		vx = index * HAND_FLYING_SPEED_X * nx;
-		vy = 0;
-		break;
-	case HAND_STATE_FLYING_UP:
-		ny = -1;
-		vy = index * HAND_FLYING_SPEED_Y * ny;
+	case HAND_STATE_DIE:
 		vx = 0;
-		break;
-	case HAND_STATE_FLYING_RIGHT:
-		nx = 1;
-		vx = index * HAND_FLYING_SPEED_X * nx;
 		vy = 0;
-		break;
-	case HAND_STATE_FLYING_DOWN:
-		ny = 1;
-		vy = index * HAND_FLYING_SPEED_Y * ny;
-		vx = 0;
+		detroyTime = GetTickCount64();
 		break;
 	}
 }

@@ -86,6 +86,13 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 		{
 			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 163, 26));
 		}
+		else if (alpha == 253)
+		{
+			int red = rand() % 256;
+			int green = rand() % 256;
+			int blue = rand() % 256;
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, red, green, blue));
+		}
 		else
 		{
 			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
@@ -108,9 +115,16 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 		{
 			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 163, 26));
 		}
+		else if (alpha == 253)
+		{
+			int red = rand() % 256;
+			int green = rand() % 256;
+			int blue = rand() % 256;
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, red, green, blue));
+		}
 		else
 		{
-		spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 
 		}
 
