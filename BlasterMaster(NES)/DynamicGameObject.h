@@ -47,6 +47,17 @@ public:
 		float& min_ty,
 		float& nx,
 		float& ny);
+	void FilterCollision(
+		vector<LPCOLLISIONEVENT>& coEvents,
+		vector<LPCOLLISIONEVENT>& coEventsResult,
+		float& min_tx,
+		float& min_ty,
+		float& nx,
+		float& ny,
+		float& min_tbx,
+		float& min_tby,
+		float& nbx,
+		float& nby);
 
 	virtual void KeyState(BYTE* states) {};
 	virtual void OnKeyDown(int KeyCode) {};

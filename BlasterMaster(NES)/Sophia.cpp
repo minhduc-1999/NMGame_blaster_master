@@ -97,54 +97,71 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, ntx, nty;
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
-		x += min_tx * dx + ntx * 0.4f;
-		y += min_ty * dy + nty * 0.4f;
+		float min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby;
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby);
+		if (nbx != 0)
+			x += min_tbx * dx + nbx * 0.4f;
+		else
+			x += dx;
+			//x += min_tx * dx + ntx * 0.4f;
+		if (nby != 0)
+		{
+			y += min_tby * dy + nby * 0.4f;
+			if (nby == -1)
+			{
+				SetIsJumping(false);
+				vy = 0;
+			}
+			else
+				vy = SOPHIA_GRAVITY;
+			
+		}
+		else
+			y += dy;
+			//y += min_ty * dy + nty * 0.4f;
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int coObjType = e->obj->GetType();
-			if (coObjType != 15)
+			/*if (coObjType != 15)
 			{
-				if (e->nx != 0)
+				if (e->nx != 0 && nbx == 0)
 				{
 					x += (1 - e->t) * dx - e->nx * 0.4f;
 				}
-				else
+				else if (nby == 0)
 				{
 					y += (1 - e->t) * dy - e->ny * 0.4f;
 				}
-			}
-			switch (coObjType)
-			{
-			case 15:	//brick
-				if (e->nx != 0)
-				{
-					if (nx == -1)
-					{
-						SetState(SOPHIA_STATE_IDLE_LEFT);
-					}
-					else
-					{
-						SetState(SOPHIA_STATE_IDLE_RIGHT);
-					}
-					//x += e->t * dx + e->nx * 0.4f;
-				}
-				if (e->ny != 0)
-				{
-					vy = 0;
-					if (e->ny == -1)
-					{
-						SetIsJumping(false);
-					}
-					//y += e->t * dy + e->ny * 0.4f;
-				}
-				break;
-			default:
-				break;
-			};
+			}*/
+			//switch (coObjType)
+			//{
+			//case 15:	//brick
+			//	if (e->nx != 0)
+			//	{
+			//		if (nx == -1)
+			//		{
+			//			SetState(SOPHIA_STATE_IDLE_LEFT);
+			//		}
+			//		else
+			//		{
+			//			SetState(SOPHIA_STATE_IDLE_RIGHT);
+			//		}
+			//		//x += e->t * dx + e->nx * 0.4f;
+			//	}
+			//	if (e->ny != 0)
+			//	{
+			//		if (e->ny == -1)
+			//		{
+			//			
+			//		}
+			//		//y += e->t * dy + e->ny * 0.4f;
+			//	}
+			//	break;
+			//default:
+			//	break;
+			//};
 		}
 	}
 	if (HP <= 0)
