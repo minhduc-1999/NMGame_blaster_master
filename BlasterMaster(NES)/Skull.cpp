@@ -10,6 +10,7 @@ Skull::Skull(float x, float y) :CDynamicGameObject(x, y)
 	vx = -SKULL_FLYING_SPEED;
 	vy = 0;
 	startTime = 0;
+	shooted = true;
 }
 
 
@@ -30,8 +31,25 @@ int Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (startTime > 600)
 	{
 		isShooting = true;
-		startTime = 0;
+		if (nx == -1)
+			SetState(SKULL_STATE_FIRE_LEFT);
+		else
+			SetState(SKULL_STATE_FIRE_RIGHT);
 	}
+	else
+	{
+		if (nx == -1)
+			SetState(SKULL_STATE_FLYING_LEFT);
+		else
+			SetState(SKULL_STATE_FLYING_RIGHT);
+	}
+
+	if (startTime > 700)
+	{
+		startTime = 0;
+		shooted = false;
+	}
+	
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -40,7 +58,7 @@ int Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			vx = 0;
 			vy = -SKULL_FLYING_SPEED;
-			SetState(SKULL_STATE_FLYING_RIGHT);
+			nx = 1;
 		}
 		x += dx;
 		y += dy;
@@ -112,7 +130,7 @@ void Skull::Render()
 		return;
 	int ani = SKULL_ANI_FLYING;
 
-	if (GetState() == SKULL_STATE_DIE)
+	if (state == SKULL_STATE_DIE)
 	{
 		ani = SKULL_ANI_DIE;
 		if (!animation_set->at(SKULL_ANI_DIE)->IsCompleted())
@@ -141,8 +159,6 @@ void Skull::Render()
 		break;
 	case SKULL_STATE_FIRE_RIGHT:
 		ani = SKULL_ANI_FIRE;
-		break;
-	default:
 		break;
 	}
 
@@ -182,10 +198,14 @@ vector<LPDYNAMICOBJECT> Skull::Fire()
 {
 	vector<LPDYNAMICOBJECT> skullBulls;
 
-	SkullBullet* bullet = new SkullBullet(x, y, 1);
-	skullBulls.push_back(bullet);
+	if (!shooted)
+	{
+		SkullBullet* bullet = new SkullBullet(x, y, 1);
+		skullBulls.push_back(bullet);
 
-	isShooting = false;
-
+		isShooting = false;
+		shooted = true;
+	}
+	
 	return skullBulls;
 }

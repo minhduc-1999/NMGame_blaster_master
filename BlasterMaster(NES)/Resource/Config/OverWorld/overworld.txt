@@ -195,6 +195,9 @@ lvl2	Resource\Sound\lvl2.wav
 #fly vertical
 200005	399	13	407	23	60
 
+#======Boss_bullet======
+240001	58	62	67	71	60
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 #=========jason==========
@@ -216,6 +219,8 @@ lvl2	Resource\Sound\lvl2.wav
 2200	220001	1000
 #======floater_bullet======
 2300	230001	1000
+#======boss_bullet======
+2400	240001	1000
 #======boss=========
 4000	400001	25	400002	25
 #======bossHand=====
@@ -260,6 +265,8 @@ lvl2	Resource\Sound\lvl2.wav
 #======Jason_bullet===========
 20	2000	2001	2002
 24	2300
+#======Boss_bullet======
+25	2400
 #======boss========
 40	4000
 #======bossHand====

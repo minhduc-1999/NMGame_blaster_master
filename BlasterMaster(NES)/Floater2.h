@@ -20,6 +20,7 @@ class Floater2 : public CDynamicGameObject
 {
 private:
     DWORD startTime;
+    bool shooted;
 public:
     Floater2(float x, float y);
     void SetState(int state);

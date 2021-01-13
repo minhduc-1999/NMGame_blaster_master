@@ -3,6 +3,7 @@
 Hand::Hand(float x, float y, int _index, bool _isLeftHand) :CDynamicGameObject(x, y)
 {
 	isLeftHand = _isLeftHand;
+	SetTeam(1);
 	if (isLeftHand)
 	{
 		SetPosition(x - 20, y);

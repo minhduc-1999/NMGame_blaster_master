@@ -13,7 +13,7 @@
 
 #define JASON_BULLET_SPEED	0.5f
 #define JASON_BULLET_DAMAGE	2
-#define JASON_BULLET_ALIVE_TIME	200
+#define JASON_BULLET_ALIVE_TIME	400
 #define JASON_BULLET_ANISET	20
 class JasonBullet : public BaseBullet
 {

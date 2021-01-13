@@ -1,7 +1,6 @@
 #pragma once
 #include "DynamicGameObject.h"
 #include "Grid.h"
-#include "Bullet.h"
 #include "HPBar.h"
 #include "SaveData.h"
 class Section
@@ -17,7 +16,6 @@ protected:
 	int gridCol, gridRow;
 	float mapX, mapY, mapWidth, mapHeight;
 
-	vector<Bullet*> bulletObjs;
 	bool canFire;
 
 	unordered_map<int, LPGRID> grids;

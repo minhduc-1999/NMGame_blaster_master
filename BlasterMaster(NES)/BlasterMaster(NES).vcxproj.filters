@@ -218,6 +218,9 @@
     <Filter Include="Object\EndGameObject">
       <UniqueIdentifier>{ea867cad-6c5c-41c0-a166-040735473ebf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Bullet\BossBullet">
+      <UniqueIdentifier>{389fea27-7ffb-4026-bd5f-3571ce6a1bde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -328,9 +331,6 @@
     <ClInclude Include="Hand.h">
       <Filter>Object\DynamicObject\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Object\DynamicObject\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>FrameWork\Sound</Filter>
     </ClInclude>
@@ -405,6 +405,9 @@
     </ClInclude>
     <ClInclude Include="MoviePanel.h">
       <Filter>Object\EndGameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBullet.h">
+      <Filter>Object\DynamicObject\Bullet\BossBullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -522,9 +525,6 @@
     <ClCompile Include="Hand.cpp">
       <Filter>Object\DynamicObject\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Object\DynamicObject\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>FrameWork\Sound</Filter>
     </ClCompile>
@@ -590,6 +590,9 @@
     </ClCompile>
     <ClCompile Include="MoviePanel.cpp">
       <Filter>Object\EndGameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBullet.cpp">
+      <Filter>Object\DynamicObject\Bullet\BossBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

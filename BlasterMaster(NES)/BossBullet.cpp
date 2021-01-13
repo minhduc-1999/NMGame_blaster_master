@@ -1,31 +1,23 @@
-#include "SkullBullet.h"
+#include "BossBullet.h"
 
-SkullBullet::SkullBullet(float x, float y, int team, int nx, int ny) : BaseBullet(x, y, team, nx, ny)
+BossBullet::BossBullet(float x, float y, int team, int nx, int ny) : BaseBullet(x, y, team, nx, ny)
 {
-	damage = SKULL_BULLET_DAMAGE;
-	SetSize(10, 10);
-	SetAnimationSet(SKULL_BULLET_ANISET);
-	SetState(SKULL_BULLET_STATE_FIRING);
-	SetPosition(x, y + 5);
+	damage = BOSS_BULLET_DAMAGE;
+	SetSize(9, 9);
+	SetAnimationSet(BOSS_BULLET_ANISET);
+	SetState(BOSS_BULLET_STATE_FIRING);
+	SetPosition(x, y);
 
 	isUpdated = false;
 	isRendered = false;
 }
 
-int SkullBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int BossBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
 		return -1;
-	if (state == SKULL_BULLET_STATE_DESTROY)
+	if (state == BOSS_BULLET_STATE_DESTROY)
 		return 0;
-
-	if (GetTickCount64() - startFiringTime >= 1500)
-	{
-		SetState(SKULL_BULLET_STATE_DESTROY);
-		isRendered = false;
-		isUpdated = true;
-		return 0;
-	}
 
 	CDynamicGameObject::Update(dt, coObjects);
 
@@ -36,7 +28,7 @@ int SkullBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		if (temp->GetTeam() != this->team)
 		{
-			SetState(SKULL_BULLET_STATE_DESTROY);
+			SetState(BOSS_BULLET_STATE_DESTROY);
 			return 0;
 		}
 	}
@@ -66,15 +58,14 @@ int SkullBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + ntx * 0.4f;
 		y += min_ty * dy + nty * 0.4f;
 
-
-		//TODO: Collision logic with dynamic object (bots)
+		//TODO: Collision logic with dynamic object
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int objTeam = e->obj->GetTeam();
-			if (objTeam == 0)
+			if (objTeam != this->team)
 			{
-				SetState(SKULL_BULLET_STATE_DESTROY);
+				SetState(BOSS_BULLET_STATE_DESTROY);
 				break;
 			}
 			if (e->obj->GetType() != 15)
@@ -88,60 +79,48 @@ int SkullBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					y += (1 - e->t) * dy - e->ny * 0.4f;
 				}
 			}
-			if (e->obj->GetType() == 15 && e->ny != 0)
-			{
-				SetState(SKULL_BULLET_STATE_ONGROUND);
-			}
 		}
 
 	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	//DebugOut("[JASON-Bullet]\tx: %f, y: %f\n", x, y);
+	
 	isUpdated = true;
 	isRendered = false;
 
 	return 0;
 }
 
-void SkullBullet::Render()
+void BossBullet::Render()
 {
 	if (isRendered)
 		return;
-	int ani = SKULL_BULLET_ANI_FIRING;
-	switch (state)
-	{
-	case SKULL_BULLET_STATE_DESTROY:
-		ani = SKULL_BULLET_ANI_DESTROY;
-	case SKULL_BULLET_STATE_FIRING: case SKULL_BULLET_STATE_ONGROUND:
-		break;
-	}
+	animation_set->at(BOSS_BULLET_ANI_FIRING)->Render(x, y, 1);
 
-	animation_set->at(ani)->Render(x, y, 1);
-	if (state == SKULL_BULLET_STATE_DESTROY)
+	if (state == BOSS_BULLET_STATE_DESTROY)
 		isDestroyed = true;
-
 	isUpdated = false;
 	isRendered = true;
 }
 
-void SkullBullet::SetState(int state)
+void BossBullet::SetState(int state)
 {
 	CDynamicGameObject::SetState(state);
+
 	switch (state)
 	{
-	case SKULL_BULLET_STATE_FIRING:
-		vx = 0.04f;
-		vy = 0.23f;
-		break;
-	case SKULL_BULLET_STATE_ONGROUND:
-		vx = 0.2f;
-		vy = 0;
-		break;
-	case SKULL_BULLET_STATE_DESTROY:
+	case BOSS_BULLET_STATE_DESTROY:
 		vx = 0;
 		vy = 0;
 		break;
+	case BOSS_BULLET_STATE_FIRING:
+		break;
 	}
+}
+
+void BossBullet::SetSpeed(float spX, float spY)
+{
+	vx = spX;
+	vy = spY;
 }

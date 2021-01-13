@@ -1,6 +1,5 @@
 #include <cmath>
 #include "Mine.h"
-#include "Bullet.h"
 #include "MineBullet.h"
 
 Mine::Mine(float x, float y) :CDynamicGameObject(x, y)

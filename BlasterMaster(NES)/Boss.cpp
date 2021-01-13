@@ -1,8 +1,12 @@
 #include "Boss.h"
+#include "BossBullet.h"
 
 Boss::Boss(float x, float y, int hand_ani_set_id, int arm_ani_set_id) :CDynamicGameObject(x, y)
 {
 	SetSize(BOSS_WIDTH, BOSS_HEIGHT);
+	startTime = GetTickCount64();
+	countBullet = 0;
+	SetType(40);
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	LPANIMATION_SET ani_set = animation_sets->Get(hand_ani_set_id);
 	LPANIMATION_SET ani_set2 = animation_sets->Get(arm_ani_set_id);
@@ -82,6 +86,19 @@ int Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	coEvents.clear();
 
 	CalcPotentialCollisions(coObjects, coEvents);
+
+	startTime += dt;
+
+	if (startTime > 700 && countBullet < 4)
+	{
+		isShooting = true;
+		startTime = 600;
+	}
+	else if (countBullet == 4)
+	{
+		startTime = 0;
+		countBullet = 0;
+	}
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -226,4 +243,23 @@ void Boss::SetState(int state)
 		detroyTime = GetTickCount64();
 		break;
 	}
+}
+
+vector<LPDYNAMICOBJECT> Boss::Fire(float xMain, float yMain)
+{
+	vector<LPDYNAMICOBJECT> bossBulls;
+
+	if (countBullet <= 4)
+	{
+		BossBullet* bullet = new BossBullet(x, y, 1);
+		float a = xMain - x;
+		float b = yMain - y;
+		bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 4, b / sqrt(pow(a, 2) + pow(b, 2)) / 4);
+		bossBulls.push_back(bullet);
+
+		isShooting = false;
+		countBullet++;
+	}
+
+	return bossBulls;
 }

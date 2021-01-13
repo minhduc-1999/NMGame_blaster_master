@@ -24,6 +24,7 @@ private:
 	float startX;
 	float startY;
 	DWORD startTime;
+	bool shooted;
 public:
 	Skull(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

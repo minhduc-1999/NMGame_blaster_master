@@ -455,60 +455,6 @@ int Section::Update(DWORD dt)
 		}
 	}
 	return mainPlayer->Update(dt, &coObjs);
-
-	/*for (int i = 0; i < coObjs.size(); i++)
-	{
-		int temp = 0;
-		if (coObjs[i]->GetType() == OBJECT_TYPE_CANNON)
-		{
-			temp = 1;
-		}
-	}
-	if (bulletObjs.empty())
-	{
-		canFire = true;
-	}
-	else
-	{
-		if (GetTickCount() - bulletObjs.back()->GetStartFiringTime() >= 200)
-			canFire = true;
-		else
-			canFire = false;
-	}
-
-	if (canFire)
-	{
-		if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_RIGHT)
-		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 13, mainPlayer->GetPosition().y - 5, SOPHIA_BULLET_HORIZONTAL, -1);
-			bulletObjs.push_back(bullet);
-		}
-		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_LEFT)
-		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 13, mainPlayer->GetPosition().y - 5, SOPHIA_BULLET_HORIZONTAL, 1);
-			bulletObjs.push_back(bullet);
-		}
-		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_UP_RIGHT)
-		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x - 4, mainPlayer->GetPosition().y - 20, SOPHIA_BULLET_VERTICAL, -1);
-			bulletObjs.push_back(bullet);
-		}
-		else if (mainPlayer->GetState() == SOPHIA_STATE_FIRING_UP_LEFT)
-		{
-			Bullet* bullet = new Bullet(mainPlayer->GetPosition().x + 4, mainPlayer->GetPosition().y - 20, SOPHIA_BULLET_VERTICAL, 1);
-			bulletObjs.push_back(bullet);
-		}
-	}
-
-	for (int i = 0; i < bulletObjs.size(); i++)
-	{
-		bulletObjs[i]->Update(dt, &coObjs);
-		if (bulletObjs[i]->GetIsDestroyed())
-		{
-			delete bulletObjs[i];
-			bulletObjs.erase(bulletObjs.begin() + i);
-		}
-	}*/
 }
 
 void Section::Render()
@@ -523,8 +469,6 @@ void Section::Render()
 			grids.at(grid[i])->Render();
 		}
 	}
-	for (int i = 0; i < bulletObjs.size(); i++)
-		bulletObjs[i]->Render();
 	//render main
 	mainPlayer->Render();
 }
