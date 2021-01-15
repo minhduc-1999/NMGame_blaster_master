@@ -76,14 +76,6 @@ int Insect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vx = INSECT_FLYING_SPEED * 5;
 				}
 				break;
-			case 20: //enemy bullet
-				if (e->obj->GetTeam() == 0)
-				{
-					SetState(INSECT_STATE_DIE);
-				}
-				break;
-			default:
-				break;
 			};
 
 		}

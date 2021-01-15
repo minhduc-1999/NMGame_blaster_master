@@ -38,4 +38,5 @@ public:
     int Update(float xMain, float yMain,DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
     void SetBottomRect(int rectPos);
+    void SetIsDestroyed() { SetState(DOME_STATE_DIE); }
 };

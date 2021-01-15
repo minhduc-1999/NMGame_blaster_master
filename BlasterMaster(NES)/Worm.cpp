@@ -97,23 +97,19 @@ int Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else
 			y += dy;
 
-		for (UINT i = 0; i < coEventsResult.size(); i++)
+		/*for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int coObjType = e->obj->GetType();
 			switch (coObjType)
 			{
 			case 20: //enemy bullet
-				if (e->obj->GetTeam() == 0)
-				{
-					SetState(WORM_STATE_DIE);
-				}
 				break;
 			default:
 				break;
 			};
 
-		}
+		}*/
 
 		
 		//TODO: Collision logic with dynamic object (bots)

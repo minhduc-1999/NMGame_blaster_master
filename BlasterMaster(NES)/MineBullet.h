@@ -18,7 +18,6 @@ private:
 	bool isFalling;
 public:
 	MineBullet(float x, float y, int team, int nx = 0, int ny = 0);
-	MineBullet(float x, float y, int team, int number, int nx = 0, int ny = 0);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);

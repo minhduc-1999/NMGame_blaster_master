@@ -131,12 +131,6 @@ int Dome::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObj
 						}
 					}
 					break;
-				case 20: //enemy bullet
-					if (e->obj->GetTeam() == 0)
-					{
-						SetState(DOME_STATE_DIE);
-					}
-					break;
 				default:
 					break;
 				};

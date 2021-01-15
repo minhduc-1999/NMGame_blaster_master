@@ -22,6 +22,7 @@ int EyeballBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (GetTickCount64() - startFiringTime >= 800)
 	{
 		SetState(EYEBALL_BULLET_STATE_DESTROY);
+		isDestroyed = true;
 		return 0;
 	}
 

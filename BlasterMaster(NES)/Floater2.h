@@ -27,4 +27,5 @@ public:
     int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
     vector<LPDYNAMICOBJECT> Fire(float xMain, float yMain);
+    void SetIsDestroyed() { SetState(FLOATER2_STATE_DIE); }
 };
