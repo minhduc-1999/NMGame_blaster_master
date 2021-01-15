@@ -8,13 +8,54 @@ Worm::Worm(float x, float y) :CDynamicGameObject(x, y)
 int Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
-	vy += WORM_GRAVITY;
+
+	//check now collision
+	vector< LPCOLLISIONEVENT> curCoEvents;
+	CalcNowCollisions(coObjects, curCoEvents);
+	isCollisionWithMagma = false;
+	for (int i = 0; i < curCoEvents.size(); i++)
+	{
+		LPGAMEOBJECT temp = curCoEvents[i]->obj;
+		switch (temp->GetType())
+		{
+		case 19:
+			isCollisionWithMagma = true;
+			break;
+		default:
+			break;
+		}
+	}
+	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
+
+	if (state != WORM_STATE_GO_UP)
+	{
+		vy += WORM_GRAVITY;
+	}
+	else
+	{
+		vy = -WORM_GO_UP_SPEED;
+	}
+
+	if (!isCollisionWithMagma)
+	{
+		y -= 0.04f;
+		if (GetNX() == -1)
+		{
+			x -= 0.04f;
+			SetState(WORM_STATE_WALKING_LEFT);
+
+		}
+		else
+		{
+			x += 0.04f;
+			SetState(WORM_STATE_WALKING_RIGHT);
+		}
+	}
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-
 	CalcPotentialCollisions(coObjects, coEvents);
 
 	// No collision occured, proceed normally
@@ -25,48 +66,43 @@ int Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, ntx, nty;
+		float min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby;
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby);
 
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
+		if (nbx != 0)
+		{
+			x += min_tbx * dx + nbx * 0.4f;
+			if (isCollisionWithMagma)
+			{
+				SetState(WORM_STATE_GO_UP);
+			}
+			else if (nbx == -1)
+			{
+				SetState(WORM_STATE_WALKING_LEFT);
 
-		x += min_tx * dx + ntx * 0.4f;
-		y += min_ty * dy + nty * 0.4f;
+			}
+			else
+			{
+				SetState(WORM_STATE_WALKING_RIGHT);
+			}
+		}
+		else
+			x += dx;
+		//x += min_tx * dx + ntx * 0.4f;
+		if (nby != 0)
+		{
+			y += min_tby * dy + nby * 0.4f;
+			vy = 0;
+		}
+		else
+			y += dy;
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int coObjType = e->obj->GetType();
-			if (coObjType != 15 && coObjType != 17)
-			{
-				if (e->nx != 0)
-				{
-					x += (1 - e->t) * dx - e->nx * 0.4f;
-				}
-				else
-				{
-					y += (1 - e->t) * dy - e->ny * 0.4f;
-				}
-			}
 			switch (coObjType)
 			{
-			case 15: case 17:	//brick and gate
-				if (e->nx != 0)
-				{
-					if (GetNX() == 1)
-					{
-						SetState(WORM_STATE_WALKING_LEFT);
-
-					}
-					else
-					{
-						SetState(WORM_STATE_WALKING_RIGHT);
-					}
-				}
-				if (e->ny != 0)
-				{
-					vy = 0;
-				}
-				break;
 			case 20: //enemy bullet
 				if (e->obj->GetTeam() == 0)
 				{
@@ -78,6 +114,8 @@ int Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			};
 
 		}
+
+		
 		//TODO: Collision logic with dynamic object (bots)
 	}
 
@@ -130,6 +168,10 @@ void Worm::SetState(int state)
 	case WORM_STATE_WALKING_RIGHT:
 		vx = WORM_WALKING_SPEED;
 		nx = 1;
+		break;
+	case WORM_STATE_GO_UP:
+		vx = 0;
+		vy = -WORM_GO_UP_SPEED;
 		break;
 	case WORM_STATE_DIE:
 		SetSize(0, 0);

@@ -6,9 +6,17 @@ Dome::Dome(float x, float y) :CDynamicGameObject(x, y)
 	SetSize(DOME_WIDTH, DOME_HEIGHT);
 }
 
-int Dome::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Dome::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
+
+	if (!dropped)
+	{
+		if (abs(xMain - x) <= 40 && abs(yMain - y) <= 200)
+		{
+			SetState(DOME_STATE_DROP_DOWN);
+		}
+	}
 
 	SetBottomRect(RectType);
 
@@ -287,10 +295,19 @@ void Dome::SetState(int state)
 		ny = 1;
 		break;
 	case DOME_STATE_DROP_DOWN:
+		dropped = true;
 		SetBottomRect(RECT_TOP);
 		vx = 0;
 		vy = DOME_GRAVITY;
 		ny = 1;
+		nx = 1;
+		break;
+	case DOME_STATE_GO_UP:
+		dropped = false;
+		SetBottomRect(RECT_BOTTOM);
+		vx = 0;
+		vy = -DOME_GRAVITY;
+		ny = -1;
 		nx = 1;
 		break;
 	case DOME_STATE_DIE:

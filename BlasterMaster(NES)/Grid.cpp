@@ -37,7 +37,14 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 	{
 		LPDYNAMICOBJECT temp = dynamicObjs[i];
 		
-		temp->Update(dt, coObjects);
+		if (temp->GetType() == 5)
+		{
+			temp->Update(xMain, yMain, dt, coObjects);
+		}
+		else
+		{
+			temp->Update(dt, coObjects);
+		}
 
 		if (temp->GetIsShooting())
 		{

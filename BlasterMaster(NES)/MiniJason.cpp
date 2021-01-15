@@ -11,14 +11,17 @@ MiniJason::MiniJason(float x, float y) :MainPlayer(x, y)
 {
 	SetSize(MINIJASON_WIDTH, MINIJASON_HEIGHT);
 	SetType(2);
-
-	TouchTime = GetTickCount64();
 	HP = 16;
 }
 
 int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
+
+	if (!CanTouch && GetTickCount64() - TouchTime >= 500)
+	{
+		CanTouch = true;
+	}
 
 	vector< LPCOLLISIONEVENT> curCoEvents;
 	isCollisionWithSophia = false;
@@ -78,16 +81,21 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		case 13:
 			isCollisionWithEnemy = true;
-			if (GetTickCount64() - TouchTime >= 500)
-			{
-				TouchTime = now;
-				SetHP(HPDown(HP, 2));
-				Sound::getInstance()->play("JHit", false, 1);
-			}
 			break;
 		default:
 			break;
 		}
+	}
+	if (isCollisionWithEnemy)
+	{
+		if (CanTouch)
+		{
+			CanTouch = false;
+			TouchTime = GetTickCount64();
+			SetHP(HPDown(HP, 1));
+			Sound::getInstance()->play("Hit", false, 1);
+		}
+
 	}
 	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
 
@@ -239,18 +247,13 @@ void MiniJason::Render()
 
 	if (isCollisionWithEnemy)
 	{
-		DWORD now = GetTickCount64();
-		if (now - TouchTime >= 50)
+		if (alpha == 255)
 		{
-			TouchTime = now;
-			if (alpha == 255)
-			{
-				alpha = 254;
-			}
-			else
-			{
-				alpha = 255;
-			}
+			alpha = 254;
+		}
+		else
+		{
+			alpha = 255;
 		}
 	}
 	else

@@ -1,6 +1,7 @@
 #include "Section.h"
 #include <fstream>
 #include "Brick.h"
+#include "CMagma.h"
 #include "Sophia.h"
 #include "CGate.h"
 #include "Mine.h"
@@ -125,6 +126,8 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 	int grid = atof(tokens[3].c_str());
 	int ani_set_id = atoi(tokens[4].c_str());
 
+	int dome_state = 0;
+
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 	CDynamicGameObject* obj = NULL;
@@ -201,7 +204,8 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 			break;
 		case OBJECT_TYPE_DOME:
 			obj = new Dome(x, y);
-			obj->SetState(DOME_STATE_DROP_DOWN);
+			dome_state = atoi(tokens[5].c_str());
+			obj->SetState(dome_state);
 			break;
 		case OBJECT_TYPE_INSECT:
 			obj = new Insect(x, y);
@@ -313,6 +317,9 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		return;
 		break;
 	}
+	case OBJECT_TYPE_MAGMA:
+		obj = new CMagma(x, y);
+		break;
 	default:
 		DebugOut("[ERROR] Invalid object type: %d\n", object_type);
 		return;
