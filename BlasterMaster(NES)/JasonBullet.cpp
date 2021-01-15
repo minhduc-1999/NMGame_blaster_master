@@ -48,6 +48,7 @@ int JasonBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (GetTickCount64() - startFiringTime >= JASON_BULLET_ALIVE_TIME)
 	{
 		SetState(JASON_BULLET_STATE_DETROY);
+		isDestroyed = true;
 		return 0;
 	}
 	CDynamicGameObject::Update(dt);
@@ -56,8 +57,14 @@ int JasonBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
-		if (temp->GetTeam() != this->team)
+		int objTeam = temp->GetTeam();
+		if (objTeam != this->team)
 		{
+			if (objTeam == 1)
+			{
+				LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
+				dyn->SetIsDestroyed();
+			}
 			SetState(JASON_BULLET_STATE_DETROY);
 			return 0;
 		}
@@ -95,6 +102,11 @@ int JasonBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			int objTeam = e->obj->GetTeam();
 			if (objTeam != this->team)
 			{
+				if (objTeam == 1)
+				{
+					LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
+					dyn->SetIsDestroyed();
+				}
 				SetState(JASON_BULLET_STATE_DETROY);
 				break;
 			}

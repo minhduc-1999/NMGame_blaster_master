@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include "Floater2.h"
 #include "Eyeball.h"
+#include "Item.h"
 
 void Grid::AddStaticObj(LPSTATICOBJECT obj)
 {
@@ -37,7 +38,14 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 	{
 		LPDYNAMICOBJECT temp = dynamicObjs[i];
 		
-		temp->Update(dt, coObjects);
+		if (temp->GetType() == 5)
+		{
+			temp->Update(xMain, yMain, dt, coObjects);
+		}
+		else
+		{
+			temp->Update(dt, coObjects);
+		}
 
 		if (temp->GetIsShooting())
 		{
@@ -58,6 +66,16 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 
 		if (temp->GetIsDestroyed())
 		{
+			
+			if (temp->GetType() != 20)
+			{
+				int spawnItem = rand() % 2;
+				if (spawnItem == 0)
+				{
+					Item* itemHp = new Item(temp->GetPosition().x, temp->GetPosition().y);
+					dynamicObjs.push_back(itemHp);
+				}
+			}
 			dynamicObjs.erase(dynamicObjs.begin() + i);
 			continue;
 		}

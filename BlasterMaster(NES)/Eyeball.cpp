@@ -83,14 +83,6 @@ int Eyeball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vy = -vy;
 				}
 				break;
-			case 20: //enemy bullet
-				if (e->obj->GetTeam() == 0)
-				{
-					SetState(EYEBALL_STATE_DIE);
-				}
-				break;
-			default:
-				break;
 			};
 
 		}

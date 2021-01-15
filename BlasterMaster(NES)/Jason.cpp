@@ -15,6 +15,10 @@ Jason::Jason(float x, float y) :MainPlayer(x, y)
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CDynamicGameObject::Update(dt);
+	if (!CanTouch && GetTickCount64() - TouchTime >= 500)
+	{
+		CanTouch = true;
+	}
 	isCollisionWithEnemy = false;
 	vector< LPCOLLISIONEVENT> curCoEvents;
 	CalcNowCollisions(coObjects, curCoEvents);
@@ -60,6 +64,17 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		default:
 			break;
 		}
+	}
+	if (isCollisionWithEnemy)
+	{
+		if (CanTouch)
+		{
+			CanTouch = false;
+			TouchTime = GetTickCount64();
+			SetHP(HPDown(HP, 1));
+			Sound::getInstance()->play("Hit", false, 1);
+		}
+
 	}
 	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
 
@@ -119,18 +134,13 @@ void Jason::Render()
 	int ani = JASON_ANI_IDLE_BOTTOM;
 	if (isCollisionWithEnemy)
 	{
-		DWORD now = GetTickCount64();
-		if (now - TouchTime >= 50)
+		if (alpha == 255)
 		{
-			TouchTime = now;
-			if (alpha == 255)
-			{
-				alpha = 254;
-			}
-			else
-			{
-				alpha = 255;
-			}
+			alpha = 254;
+		}
+		else
+		{
+			alpha = 255;
 		}
 	}
 	else

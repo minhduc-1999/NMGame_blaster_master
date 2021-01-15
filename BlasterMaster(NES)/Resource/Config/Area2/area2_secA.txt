@@ -5,15 +5,24 @@
 #grid_width	grid_height
 128	224
 [DEFAULT]
-850	2957
-#object type: 1 = sophia, 2 = minijason, 3 = jason, 4 = worm, 5 = dome, 6 = floater2
+928	2864
+#object type: 1 = sophia, 2 = minijason, 3 = jason, 4 = worm, 5 = dome (400: drop_down, 500: go_up), 6 = floater2
 #object type: 7 = insect, 8 = jumper2, 9 = orb, 10 = skull, 11 = mine, 12 = teleporter, 13 = cannon
 #object type: 14 = eyeball, 15 = brick, 16 = spike, 17 = Gate, 18 = ladder, 19 = magma, 20 = enemy bullet , 90 = Enemy & Bullet die, 
 #object type: 80 = gatescene, 81 = brokenable-brick
-#object	type:	50	=	hpbar
+#object	type:	50	=	hpbar, 26 = item-hp
 [DYNAMIC_OBJECTS]
 #type	x	y	grid_id	ani_set_id
-6	830	2955	6	6
+4	160	2848	0	4
+4	224	2848	0	4
+5	304	2944	0	5	400
+5	320	2944	0	5	500
+4	480	2848	0	4
+6	608	2896	0	6
+4	864	2864	0	4
+6	864	2864	0	6
+4	928	2864	0	4
+6	928	2864	0	6
 [STATIC_OBJECTS]
 #type	x	y	grid_id	sprite_id1	...
 15	40	2840	0	128

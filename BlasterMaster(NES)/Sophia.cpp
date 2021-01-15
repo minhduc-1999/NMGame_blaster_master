@@ -10,7 +10,6 @@ Sophia::Sophia(float x, float y) :MainPlayer(x, y)
 	SetType(1);
 	heightLevel = SOPHIA_HEIGHT_HIGH;
 	lastFrameChange = GetTickCount64();
-	TouchTime = GetTickCount64();
 	HP = 16;
 	isUp = false;
 	currentWalkingColumn = 0;
@@ -36,6 +35,10 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
+	if (!CanTouch && GetTickCount64() - TouchTime >= 500)
+	{
+		CanTouch = true;
+	}
 
 	//check now collision
 	vector< LPCOLLISIONEVENT> curCoEvents;
@@ -44,18 +47,14 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
-		DWORD now = GetTickCount64();
+		//DWORD now = GetTickCount64();
+		if (temp->GetTeam() != GetTeam())
+		{
+			isCollisionWithEnemy = true;
+		}
+
 		switch (temp->GetType())
 		{
-		case 13:case 5:
-			isCollisionWithEnemy = true;
-			if (GetTickCount64() - TouchTime >= 500)
-			{
-				TouchTime = now;
-				SetHP(HPDown(HP, 1));
-				Sound::getInstance()->play("Hit", false, 1);
-			}
-			break;
 		case 17:
 		{
 			CGate* gate = dynamic_cast<CGate*>(temp);
@@ -77,6 +76,17 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		default:
 			break;
 		}
+	}
+	if (isCollisionWithEnemy)
+	{
+		if (CanTouch)
+		{
+			CanTouch = false;
+			TouchTime = GetTickCount64();
+			SetHP(HPDown(HP, 1));
+			Sound::getInstance()->play("Hit", false, 1);
+		}
+		
 	}
 	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
 
@@ -183,7 +193,7 @@ void Sophia::Render()
 		ani = SOPHIA_ANI_DIE;
 		if (!animation_set->at(SOPHIA_ANI_DIE)->IsCompleted())
 		{
-			animation_set->at(SOPHIA_ANI_DIE)->Render(x, y - 8, -1, 255);
+			animation_set->at(SOPHIA_ANI_DIE)->Render(x, y - 15, -1, 255);
 			return;
 		}
 		else
@@ -197,18 +207,13 @@ void Sophia::Render()
 
 	if (isCollisionWithEnemy)
 	{
-		DWORD now = GetTickCount64();
-		if (GetTickCount64() - TouchTime >= 50)
+		if (alpha == 255)
 		{
-			TouchTime = now;
-			if (alpha == 255)
-			{
-				alpha = 254;
-			}
-			else
-			{
-				alpha = 255;
-			}
+			alpha = 254;
+		}
+		else
+		{
+			alpha = 255;
 		}
 	}
 	else
@@ -232,7 +237,7 @@ void Sophia::Render()
 				{
 					ani = SOPHIA_ANI_UP_RUN_LOW;
 				}
-				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 25, nx, alpha);
+				animation_set->at(ani)->RenderFrame(currentWalkingColumn, x, y - 8, nx, alpha);
 				return;
 				break;
 			case SOPHIA_STATE_JUMP_RIGHT:case SOPHIA_STATE_JUMP_LEFT:

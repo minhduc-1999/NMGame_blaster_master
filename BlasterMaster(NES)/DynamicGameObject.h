@@ -14,6 +14,7 @@ protected:
 	bool isShooting;
 	bool isDestroyed;
 	DWORD TouchTime;
+	bool CanTouch;
 public:
 	CDynamicGameObject(float x, float y);
 
@@ -33,6 +34,7 @@ public:
 	//if return 1: switch scene
 
 	virtual int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	virtual int Update(float xMain, float yMain,DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
 	void SetAnimationSet(int ani_set);
 
@@ -67,6 +69,7 @@ public:
 	virtual vector<CDynamicGameObject*> Fire();
 	virtual vector<CDynamicGameObject*> Fire(float xMain, float yMain);
 	virtual bool GetIsDestroyed();
+	virtual void SetIsDestroyed() {}
 };
 typedef CDynamicGameObject* LPDYNAMICOBJECT;
 

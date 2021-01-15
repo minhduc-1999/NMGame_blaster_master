@@ -82,6 +82,24 @@ int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						break;
 					}
 				}
+				if (e->ny != 0)
+				{
+					for (UINT i = 0; i < coEvents.size(); i++)
+					{
+						if (coEvents[i]->ny < 0)
+						{
+							if (IsJumping()) {
+								jump--;
+								if (jump < 0)
+								{
+									vy = -vy;
+									vx = JUMPER2_WALKING_SPEED;
+								}
+							}
+						}
+					}
+				}
+				break;
 				//	if (e->ny != 0)
 				//	{
 				//		for (UINT i = 0; i < coEvents.size(); i++)

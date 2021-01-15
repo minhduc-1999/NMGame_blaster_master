@@ -88,19 +88,9 @@ int Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					y += (1 - e->t) * dy - e->ny * 0.4f;
 				}
 			}
-			switch (coObjType)
-			{
-			case 20: //enemy bullet
-				if (e->obj->GetTeam() == 0)
-				{
-					SetState(SKULL_STATE_DIE);
-				}
-				break;
-			default:
-				break;
-			};
-
 		}
+
+	}
 
 	/*	if (nty != 0)
 		{
@@ -117,7 +107,6 @@ int Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}*/
 
 		//TODO: Collision logic with dynamic object (bots)
-	}
 
 	isRendered = false;
 	isUpdated = true;

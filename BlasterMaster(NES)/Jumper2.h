@@ -23,5 +23,6 @@ public:
     bool IsJumping();
     int jump;
     void Render();
+    void SetIsDestroyed() { SetState(JUMPER2_STATE_DIE); }
 };
 

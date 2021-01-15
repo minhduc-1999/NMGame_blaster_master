@@ -23,5 +23,6 @@ public:
     void SetState(int state);
     int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
+    void SetIsDestroyed() { SetState(INSECT_STATE_DIE); }
 };
 

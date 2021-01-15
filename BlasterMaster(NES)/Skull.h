@@ -31,6 +31,7 @@ public:
 	void Render();
 	void SetState(int state);
 	vector<LPDYNAMICOBJECT> Fire();
+	void SetIsDestroyed() { SetState(SKULL_STATE_DIE); }
 };
 #endif // !_SKULL_H
 

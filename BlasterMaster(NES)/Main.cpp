@@ -182,7 +182,6 @@ int Run()
 			frameStart = now;
 			if(!game->IsDisableKeyboard())
 				game->ProcessKeyboard();
-
 			Update(dt);
 			Render();
 		}

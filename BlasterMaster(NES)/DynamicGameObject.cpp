@@ -12,6 +12,8 @@ CDynamicGameObject::CDynamicGameObject(float x, float y) :CGameObject(x, y)
 	isRendered = false;
 	isShooting = false;
 	isDestroyed = false;
+	CanTouch = true;
+	TouchTime = 0;
 }
 
 
@@ -41,6 +43,14 @@ bool CDynamicGameObject::GetIsDestroyed()
 }
 
 int CDynamicGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	this->dt = dt;
+	dx = vx * dt;
+	dy = vy * dt;
+	return 0;
+}
+
+int CDynamicGameObject::Update(float xMain, float yMain,DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->dt = dt;
 	dx = vx * dt;
@@ -115,6 +125,8 @@ LPCOLLISIONEVENT CDynamicGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 
 LPCOLLISIONEVENT CDynamicGameObject::SweptCollistion(LPGAMEOBJECT coO)
 {
+	if (this == coO)
+		return NULL;
 	CCollisionEvent* e = NULL;
 	if (CheckIfBound(this->GetBound(), coO->GetBound()))
 	{
@@ -228,13 +240,20 @@ void CDynamicGameObject::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vec
 		LPCOLLISIONEVENT c = coEvents[i];
 		if (c->obj->GetType() == 15)
 		{
-			if (c->t < min_tbx && c->nx != 0) {
-				min_tbx = c->t; nbx = c->nx; min_ibx = i;
-			}
-
 			if (c->t < min_tby && c->ny != 0) {
 				min_tby = c->t; nby = c->ny; min_iby = i;
 			}
+			if (c->t < min_tbx && c->nx != 0) {
+				if (GetType() == 4 && (c->obj->GetPosition().y - 8 > y))
+				{
+					break;
+				}
+				else
+				{
+					min_tbx = c->t; nbx = c->nx; min_ibx = i;
+				}
+			}
+
 		}
 		else
 		{
