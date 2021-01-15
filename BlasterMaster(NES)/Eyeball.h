@@ -23,6 +23,7 @@ public:
 	virtual void Render();
 	virtual void SetState(int state);
 	vector<LPDYNAMICOBJECT> Fire(float xMain, float yMain);
+	void SetIsDestroyed() { SetState(EYEBALL_STATE_DIE); }
 };
 
 #endif // !_EYEBALL_H

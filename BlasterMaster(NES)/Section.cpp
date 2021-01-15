@@ -54,6 +54,7 @@ using namespace std;
 #define OBJECT_TYPE_LADDER		18
 #define OBJECT_TYPE_MAGMA		19
 #define OBJECT_TYPE_BULLET		20
+#define OBJECT_TYPE_ITEM_HP		26
 #pragma endregion
 
 void Section::AddMiniJason()

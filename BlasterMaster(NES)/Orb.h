@@ -23,6 +23,7 @@ public:
     void SetState(int state);
     int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
+    void SetIsDestroyed() { SetState(ORB_STATE_DIE); }
 };
 #endif // !_ORB_H
 

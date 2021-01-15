@@ -84,14 +84,6 @@ int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 				break;
-			case 20: //enemy bullet
-				if (e->obj->GetTeam() == 0)
-				{
-					SetState(JUMPER2_STATE_DIE);
-				}
-				break;
-			default:
-				break;
 			};
 
 		}

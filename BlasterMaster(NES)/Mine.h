@@ -12,12 +12,11 @@
 
 class Mine : public CDynamicGameObject
 {
-private:
-	DWORD startTime;
 public:
 	Mine(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void SetState(int state);
 	vector<LPDYNAMICOBJECT> Fire();
+	void SetIsDestroyed() { SetState(MINE_STATE_DIE); isShooting = true; }
 };

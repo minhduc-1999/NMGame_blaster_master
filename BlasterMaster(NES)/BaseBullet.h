@@ -12,4 +12,5 @@ public:
 	void Render() = 0;
 	void SetState(int state) = 0;
 	int GetDamage() { return damage; }
+	void SetIsDestroyed() { }
 };

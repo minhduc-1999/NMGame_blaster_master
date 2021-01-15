@@ -50,12 +50,6 @@ int Cannon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vy = 0;
 				}
 				break;
-			case 20: //enemy bullet
-				if (e->obj->GetTeam() == 0)
-				{
-					SetState(CANNON_STATE_DIE);
-				}
-				break;
 			default:
 				break;
 			};

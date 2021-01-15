@@ -67,12 +67,6 @@ int Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vy = 0;
 				}
 				break;
-			case 20: //enemy bullet
-				if (e->obj->GetTeam() == 0)
-				{
-					SetState(WORM_STATE_DIE);
-				}
-				break;
 			default:
 				break;
 			};

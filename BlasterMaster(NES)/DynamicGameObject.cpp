@@ -115,6 +115,8 @@ LPCOLLISIONEVENT CDynamicGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 
 LPCOLLISIONEVENT CDynamicGameObject::SweptCollistion(LPGAMEOBJECT coO)
 {
+	if (this == coO)
+		return NULL;
 	CCollisionEvent* e = NULL;
 	if (CheckIfBound(this->GetBound(), coO->GetBound()))
 	{

@@ -23,5 +23,6 @@ public:
 	virtual void Render();
 	vector<LPDYNAMICOBJECT> Fire();
 	virtual void SetState(int state);
+	void SetIsDestroyed() { SetState(CANNON_STATE_DIE); }
 };
 #endif

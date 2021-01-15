@@ -67,6 +67,7 @@ public:
 	virtual vector<CDynamicGameObject*> Fire();
 	virtual vector<CDynamicGameObject*> Fire(float xMain, float yMain);
 	virtual bool GetIsDestroyed();
+	virtual void SetIsDestroyed() {}
 };
 typedef CDynamicGameObject* LPDYNAMICOBJECT;
 

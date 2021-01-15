@@ -221,6 +221,9 @@
     <Filter Include="Object\DynamicObject\Bullet\BossBullet">
       <UniqueIdentifier>{389fea27-7ffb-4026-bd5f-3571ce6a1bde}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Item">
+      <UniqueIdentifier>{eb6980e2-43b1-40c7-9a42-d4ade95f6d50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -409,6 +412,9 @@
     <ClInclude Include="BossBullet.h">
       <Filter>Object\DynamicObject\Bullet\BossBullet</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Object\DynamicObject\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -593,6 +599,9 @@
     </ClCompile>
     <ClCompile Include="BossBullet.cpp">
       <Filter>Object\DynamicObject\Bullet\BossBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Object\DynamicObject\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

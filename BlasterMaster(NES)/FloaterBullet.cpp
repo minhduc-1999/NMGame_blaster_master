@@ -22,6 +22,7 @@ int FloaterBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (GetTickCount64() - startFiringTime >= 800)
 	{
 		SetState(FLOATER_BULLET_STATE_DESTROY);
+		isDestroyed = true;
 		return 0;
 	}
 

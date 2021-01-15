@@ -46,6 +46,7 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (GetTickCount64() - startFiringTime >= 500)
 	{
 		SetState(SOPHIA_BULLET_STATE_DESTROY);
+		isDestroyed = true;
 		return 0;
 	}
 
@@ -58,6 +59,8 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		if (temp->GetTeam() != this->team)
 		{
+			LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
+			dyn->SetIsDestroyed();
 			SetState(SOPHIA_BULLET_STATE_DESTROY);
 			return 0;
 		}
@@ -95,6 +98,8 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			int objTeam = e->obj->GetTeam();
 			if (objTeam != this->team)
 			{
+				LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
+				dyn->SetIsDestroyed();
 				SetState(SOPHIA_BULLET_STATE_DESTROY);
 				break;
 			}
