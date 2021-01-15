@@ -187,7 +187,6 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Sophia::Render()
 {
-	RenderBoundingBox();
 	int ani = -1;
 	if (GetState() == SOPHIA_STATE_DIE)
 	{

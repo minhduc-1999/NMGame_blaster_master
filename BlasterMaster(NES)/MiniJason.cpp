@@ -32,7 +32,6 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (int i = 0; i < curCoEvents.size(); i++)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
-		DWORD now = GetTickCount64();
 		if (temp->GetTeam() != this->team)
 		{
 			isCollisionWithEnemy = true;
@@ -119,98 +118,47 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, ntx, nty;
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
-		/*if (ntx == 0)
-			x += dx;
-		if (nty == 0)
-			y += dy;*/
-		x += min_tx * dx + ntx * 0.4f;
-		y += min_ty * dy + nty * 0.4f;
-
-		for (UINT i = 0; i < coEventsResult.size(); i++)
+		float min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby;
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby);
+		if (nbx != 0)
 		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-			int coObjType = e->obj->GetType();
-			if (coObjType != 15 && coObjType != 18)
+			x += min_tbx * dx + nbx * 0.4f;
+			if (nx == -1)
 			{
-				if (e->nx != 0)
-				{
-					x += (1 - e->t) * dx - e->nx * 0.4f;
-				}
-				else
-				{
-					y += (1 - e->t) * dy - e->ny * 0.4f;
-				}
+				SetState(MINIJASON_STATE_IDLE_LEFT);
 			}
-			switch (coObjType)
+			else
 			{
-			case 18:	//Ladder
-			{
-				if (nx != 0)
-				{
-					x += (1 - e->t) * dx - e->nx * 0.4f;
-				}
-				if (e->ny != 0)
-				{
-					if (canClimb && state == MINIJASON_STATE_CLIMB)
-					{
-						y += e->t * dy - e->ny * 0.4f;
-					}
-				}
-				/*x += dx;
-				if (e->ny != 0)
-				{
-					if (e->ny == -1
-						&& dynamic_cast<CLadder*>(e->obj)->GetPosition().y == 168.0)
-					{
-						y += e->t * dy + e->ny * 0.4f;
-					}
-					else
-					{
-						y += dy;
-					}
-				}*/
-
-				break;
+				SetState(MINIJASON_STATE_IDLE_RIGHT);
 			}
-			case 15:
-				if (e->nx != 0)
+		}
+		else
+			x += dx;
+		//x += min_tx * dx + ntx * 0.4f;
+		if (nby != 0)
+		{
+			y += min_tby * dy + nby * 0.4f;
+			vy = 0;
+			if (nby == -1)
+			{
+				SetIsJumping(false);
+				if (GetState() == MINIJASON_STATE_CLIMB)
 				{
-					//x += e->t * dx + e->nx * 0.4f;
-					if (nx == -1)
-					{
-						SetState(MINIJASON_STATE_IDLE_LEFT);
-					}
-					else
+					if (nx == 1)
 					{
 						SetState(MINIJASON_STATE_IDLE_RIGHT);
 					}
-				}
-				if (e->ny != 0)
-				{
-					//y += e->t * dy + e->ny * 0.4f;
-					vy = 0;
-
-					if (e->ny == -1)
+					else
 					{
-						SetIsJumping(false);
-						if (GetState() == MINIJASON_STATE_CLIMB)
-						{
-							if (nx == 1)
-							{
-								SetState(MINIJASON_STATE_IDLE_RIGHT);
-							}
-							else
-							{
-								SetState(MINIJASON_STATE_IDLE_LEFT);
-							}
-						}
+						SetState(MINIJASON_STATE_IDLE_LEFT);
 					}
 				}
-				break;
-			};
+			}
+
 		}
+		else
+			y += dy;
+
 	}
 	if (HP <= 0)
 	{
