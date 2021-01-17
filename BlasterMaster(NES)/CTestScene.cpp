@@ -310,14 +310,35 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 			if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA)
 			{
 				Sophia* currentPlayer = (Sophia*)(((CTestScene*)scence)->GetPlayer());
+				currentPlayer->SetCurBullet(0);
 				if (currentPlayer->CanShoot())
-					((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
+				{
+					vector<LPDYNAMICOBJECT> bullets = currentPlayer->Shoot();
+					for (int i = 0; i < bullets.size(); i++)
+						((CTestScene*)scence)->GetCurSection()->AddDynamicObject(bullets[i]);
+				}
+					//((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
 			}
 			else if (((CTestScene*)scence)->GetPlayerType() == PLAYER_JASON)
 			{
 				MiniJason* currentPlayer = (MiniJason*)(((CTestScene*)scence)->GetPlayer());
 				if (currentPlayer->CanShoot())
 					((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
+			}
+		}
+		if (KeyCode == DIK_V)
+		{
+			if (((CTestScene*)scence)->GetPlayerType() == PLAYER_SOPHIA)
+			{
+				Sophia* currentPlayer = (Sophia*)(((CTestScene*)scence)->GetPlayer());
+				currentPlayer->SetCurBullet(1);
+				if (currentPlayer->CanShoot())
+				{
+					vector<LPDYNAMICOBJECT> bullets = currentPlayer->Shoot();
+					for (int i = 0; i < bullets.size(); i++)
+						((CTestScene*)scence)->GetCurSection()->AddDynamicObject(bullets[i]);
+				}
+					//((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
 			}
 		}
 	}

@@ -38,6 +38,7 @@ int SkullBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (temp->GetTeam() != this->team)
 		{
 			SetState(SKULL_BULLET_STATE_DESTROY);
+			isDestroyed = true;
 			return 0;
 		}
 	}
@@ -76,6 +77,7 @@ int SkullBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (objTeam == 0)
 			{
 				SetState(SKULL_BULLET_STATE_DESTROY);
+				isDestroyed = true;
 				break;
 			}
 			if (e->obj->GetType() != 15)

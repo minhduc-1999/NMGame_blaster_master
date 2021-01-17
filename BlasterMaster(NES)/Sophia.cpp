@@ -15,6 +15,7 @@ Sophia::Sophia(float x, float y) :MainPlayer(x, y)
 	isUp = false;
 	currentWalkingColumn = 0;
 	lastHeight = 0;
+	currentBullet = BULLET_NORMAL;
 };
 
 int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -628,6 +629,17 @@ void Sophia::OnKeyDown(int KeyCode)
 	case DIK_Z:
 		if (GetTickCount64() - lastShot >= 300)
 		{
+			currentBullet = BULLET_NORMAL;
+			canShoot = true;
+			lastShot = GetTickCount64();
+		}
+		else
+			canShoot = false;
+		break;
+	case DIK_V:
+		if (GetTickCount64() - lastShot >= 300)
+		{
+			currentBullet = BULLET_ROCKET;
 			canShoot = true;
 			lastShot = GetTickCount64();
 		}
@@ -660,19 +672,36 @@ void Sophia::OnKeyUp(int KeyCode)
 	}
 }
 
-BaseBullet* Sophia::Shoot()
+vector<LPDYNAMICOBJECT> Sophia::Shoot()
 {
-	SophiaBullet* bullet = NULL;
+	vector<LPDYNAMICOBJECT> bullets;
 	if (canShoot)
 	{
 		if (GetIsUp())
 		{
-			bullet = new SophiaBullet(x, y, 0, nx, 1);
+			SophiaBullet* bulletUp = new SophiaBullet(x, y, 0, 0, nx, 1);
+			bullets.push_back(bulletUp);
 		}
 		else
 		{
-			bullet = new SophiaBullet(x, y, 0, nx, ny);
+			if (currentBullet == BULLET_NORMAL)
+			{
+				SophiaBullet* bullet = new SophiaBullet(x, y, 0, 0, nx);
+				bullets.push_back(bullet);
+			}
+			else if (currentBullet == BULLET_ROCKET)
+			{
+				SophiaBullet* bullet1 = new SophiaBullet(x, y, 0, 1, nx);
+				bullet1->SetSpeed(nx * 0.5f, -0.2f);
+				bullets.push_back(bullet1);
+				SophiaBullet* bullet2 = new SophiaBullet(x, y, 0, 1, nx);
+				bullet2->SetSpeed(nx * 0.5f, 0);
+				bullets.push_back(bullet2);
+				SophiaBullet* bullet3 = new SophiaBullet(x, y, 0, 1, nx);
+				bullet3->SetSpeed(nx * 0.5f, 0.2f);
+				bullets.push_back(bullet3);
+			}
 		}
 	}
-	return bullet;
+	return bullets;
 }
