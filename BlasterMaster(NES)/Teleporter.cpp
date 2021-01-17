@@ -29,12 +29,12 @@ int Teleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int coObjType = e->obj->GetType();
-			
 			switch (coObjType)
 			{
 			case 20: //enemy bullet
 				if (e->obj->GetTeam() == 0)
 				{
+					if (GetState()== TELEPORTER_STATE_GREEN)
 					SetState(TELEPORTER_STATE_DIE);
 				}
 				break;
@@ -53,8 +53,31 @@ int Teleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (state == TELEPORTER_STATE_GREEN)
 		{
 			{
-				x = x + rand() % 20 - TELEPORTER_TELE_RANGE;
-				y = y + rand() % 20 - TELEPORTER_TELE_RANGE;
+				newx = x + rand() % 100 - TELEPORTER_TELE_RANGE;
+				newy = y + rand() % 100 - TELEPORTER_TELE_RANGE;
+				Rect nRect;
+				nRect.top = newy - height/2;
+				nRect.bottom = newy + height / 2;
+				nRect.left = newx - width / 2;
+				nRect.right = newx + width / 2;
+
+				Rect rect = CGame::GetInstance()->GetCamBound();
+				rect.left += 32;
+				rect.top += 32;
+				rect.right -= 32;
+				rect.bottom -= 32;
+
+				while (!(nRect.right<rect.right && nRect.left > rect.left && nRect.top > rect.top && nRect.bottom < rect.bottom))
+				{
+					newx = x + rand() % 100 - TELEPORTER_TELE_RANGE;
+					newy = y + rand() % 100 - TELEPORTER_TELE_RANGE;
+					nRect.top = newy - height / 2;
+					nRect.bottom = newy + height / 2;
+					nRect.left = newx - width / 2;
+					nRect.right = newx + width / 2;
+				}
+				x = newx;
+				y = newy;
 				delay = TELEPORTER_DELAY_TIME;
 				swap++;
 				if (swap > TELEPORTER_SWAP)
@@ -74,8 +97,8 @@ int Teleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Teleporter::Render()
 {
 	int ani = TELEPORTER_ANI_GRAY;
-	
-	if (GetState() == TELEPORTER_STATE_DIE)
+
+	if (state == TELEPORTER_ANI_DIE)
 	{
 		ani = TELEPORTER_ANI_DIE;
 		if (!animation_set->at(TELEPORTER_ANI_DIE)->IsCompleted())
@@ -90,7 +113,6 @@ void Teleporter::Render()
 			return;
 		}
 	}
-
 
 	if (state == TELEPORTER_STATE_GRAY)
 	{
