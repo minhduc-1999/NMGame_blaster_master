@@ -24,4 +24,7 @@ public:
 		return done;
 	}
 	void Finish() { done = true; timeDone = GetTickCount64(); }
+	virtual void KeyState(BYTE* states) {};
+	virtual void OnKeyDown(int KeyCode) {};
+	virtual void OnKeyUp(int KeyCode) {};
 };

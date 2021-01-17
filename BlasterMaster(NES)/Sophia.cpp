@@ -23,7 +23,7 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (state == SOPHIA_STATE_DIE)
 	{
-		CGame::GetInstance()->SwitchScene(4, 1, D3DXVECTOR2(-1, -1));
+		CGame::GetInstance()->Notify(0);
 		return 1;
 	}
 	CDynamicGameObject::Update(dt);
