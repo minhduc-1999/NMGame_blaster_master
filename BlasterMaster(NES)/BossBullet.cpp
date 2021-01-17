@@ -29,6 +29,7 @@ int BossBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (temp->GetTeam() != this->team)
 		{
 			SetState(BOSS_BULLET_STATE_DESTROY);
+			isDestroyed = true;
 			return 0;
 		}
 	}
@@ -66,6 +67,7 @@ int BossBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (objTeam != this->team)
 			{
 				SetState(BOSS_BULLET_STATE_DESTROY);
+				isDestroyed = true;
 				break;
 			}
 			if (e->obj->GetType() != 15)

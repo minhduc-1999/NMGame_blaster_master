@@ -1,21 +1,26 @@
 #include "SophiaBullet.h"
 
-SophiaBullet::SophiaBullet(float x, float y, int team, int nx, int ny) : BaseBullet(x, y, team, nx, ny)
+SophiaBullet::SophiaBullet(float x, float y, int team, int t, int nx, int ny) : BaseBullet(x, y, team, nx, ny)
 {
 	damage = SOPHIA_BULLET_DAMAGE;
-	SetAnimationSet(SOPHIA_BULLET_ANISET);
+	type = t;
+	if (type == 0)
+		SetAnimationSet(SOPHIA_BULLET_ANISET);
+	else if (type == 1)
+		SetAnimationSet(SOPHIA_BULLET_ROCKET_ANISET);
+
 	if (nx != 0)
 	{
 		SetSize(26, 8);
 		if (nx == 1)
 		{
 			SetState(SOPHIA_BULLET_STATE_RIGHT);
-			SetPosition(x + 13, y - 5);
+			SetPosition(x + 5, y - 5);
 		}
 		else
 		{
 			SetState(SOPHIA_BULLET_STATE_LEFT);
-			SetPosition(x - 13, y - 5);
+			SetPosition(x - 5, y - 5);
 		}
 
 	}
@@ -42,6 +47,12 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return -1;
 	if (state == SOPHIA_BULLET_STATE_DESTROY)
 		return 0;
+
+	if (GetTickCount64() - startFiringTime >= 200 && type == 1)
+	{
+		if (vy != 0)
+			vy = 0;
+	}
 
 	if (GetTickCount64() - startFiringTime >= 500)
 	{
@@ -183,4 +194,10 @@ void SophiaBullet::SetState(int state)
 		vy = -SOPHIA_BULLET_SPEED;
 		break;
 	}
+}
+
+void SophiaBullet::SetSpeed(float spX, float spY)
+{
+	vx = spX;
+	vy = spY;
 }

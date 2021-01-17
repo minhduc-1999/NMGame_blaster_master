@@ -3,6 +3,7 @@
 #include "Floater2.h"
 #include "Eyeball.h"
 #include "Item.h"
+#include "SophiaBullet.h"
 
 void Grid::AddStaticObj(LPSTATICOBJECT obj)
 {
@@ -159,4 +160,3 @@ void Grid::Clear()
 	staticObjs.clear();
 	dynamicObjs.clear();
 }
-
