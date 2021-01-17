@@ -5,13 +5,21 @@ SophiaBullet::SophiaBullet(float x, float y, int team, int t, int nx, int ny) : 
 	damage = SOPHIA_BULLET_DAMAGE;
 	type = t;
 	if (type == 0)
+	{
 		SetAnimationSet(SOPHIA_BULLET_ANISET);
+		if (nx != 0)
+			SetSize(8, 26);
+		if (ny != 0)
+			SetSize(26, 8);
+	}
 	else if (type == 1)
+	{
 		SetAnimationSet(SOPHIA_BULLET_ROCKET_ANISET);
+		SetSize(19, 8);
+	}
 
 	if (nx != 0)
 	{
-		SetSize(26, 8);
 		if (nx == 1)
 		{
 			SetState(SOPHIA_BULLET_STATE_RIGHT);
@@ -26,7 +34,6 @@ SophiaBullet::SophiaBullet(float x, float y, int team, int t, int nx, int ny) : 
 	}
 	if (ny != 0)
 	{
-		SetSize(8, 26);
 		SetState(SOPHIA_BULLET_STATE_UP);
 		if (nx == 1)
 		{

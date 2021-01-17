@@ -95,20 +95,27 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, ntx, nty;
+		float min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby;
 
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby);
 
 		// block 
-		x += min_tx * dx + ntx * 0.4f;
-		y += min_ty * dy + nty * 0.4f;
+		if (nbx != 0)
+			x += min_tbx * dx + nbx * 0.4f;
+		else
+			x += dx;
+		//x += min_tx * dx + ntx * 0.4f;
+		if (nby != 0)
+			y += min_tby * dy + nby * 0.4f;
+		else
+			y += dy;
 
 		//TODO: Collision logic with dynamic object (bots)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int objType = e->obj->GetType();
-			if (objType != 15)
+			/*if (objType != 15)
 			{
 				if (e->nx != 0)
 				{
@@ -118,7 +125,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					y += (1 - e->t) * dy - e->ny * 0.4f;
 				}
-			}
+			}*/
 		}
 
 	}

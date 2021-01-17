@@ -66,6 +66,7 @@ int JasonBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				dyn->SetIsDestroyed();
 			}
 			SetState(JASON_BULLET_STATE_DETROY);
+			isDestroyed = true;
 			return 0;
 		}
 	}
@@ -108,6 +109,7 @@ int JasonBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					dyn->SetIsDestroyed();
 				}
 				SetState(JASON_BULLET_STATE_DETROY);
+				isDestroyed = true;
 				break;
 			}
 			if (e->obj->GetType() != 15)

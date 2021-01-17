@@ -21,6 +21,7 @@
 #include "MiniJason.h"
 #include "CLadder.h"
 #include "SceneGate.h"
+#include "Rock.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -56,6 +57,7 @@ using namespace std;
 #define OBJECT_TYPE_MAGMA		19
 #define OBJECT_TYPE_BULLET		20
 #define OBJECT_TYPE_ITEM_HP		26
+#define OBJECT_TYPE_ROCK		60
 #pragma endregion
 
 void Section::AddMiniJason()
@@ -239,6 +241,9 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		case OBJECT_TYPE_EYEBALL:
 			obj = new Eyeball(x, y);
 			obj->SetState(EYEBALL_STATE_ALIVE);
+			break;
+		case OBJECT_TYPE_ROCK:
+			obj = new Rock(x, y);
 			break;
 		default:
 			DebugOut("[ERROR] Invalid object type: %d\n", object_type);

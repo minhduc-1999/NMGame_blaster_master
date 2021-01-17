@@ -45,6 +45,7 @@
 60	Items.png	0	0	255
 70	boss.png	0	0	255
 80	Resource/StatusBar/StatusBar.png	0	0	255
+90	Resource/tileset/overworld_tileset.png	255	255	255
 -100	Resource/Background/bbox.png	0	0	255
 #sound
 # id	path
@@ -186,6 +187,9 @@ lvl2	Resource\Sound\lvl2.wav
 500009	89	0	99	95	80
 #...
 
+#======rock======
+600001	170	102	186	118	90
+
 #======Enemy_Bullet_Die====
 900001	49	116	73	140	10
 900002	32	120	48	136	10
@@ -250,6 +254,8 @@ lvl2	Resource\Sound\lvl2.wav
 5006	500007	200 
 5007	500008	200
 5008	500009	200
+#======rock======
+6000	600001	1000
 
 #======Enemy_Bullet_Die====
 9000	900001	50	900002	50	900003	50	900004	50
@@ -292,3 +298,5 @@ lvl2	Resource\Sound\lvl2.wav
 42	4200
 #======hpbar=======
 50	5000	5001	5002	5003	5004	5005	5006	5007	5008
+#======rock======
+60	6000	9000

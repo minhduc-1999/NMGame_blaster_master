@@ -238,7 +238,7 @@ void CDynamicGameObject::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vec
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
-		if (c->obj->GetType() == 15)
+		if (c->obj->GetType() == 15 || c->obj->GetType() == 60)
 		{
 			if (c->t < min_tby && c->ny != 0) {
 				min_tby = c->t; nby = c->ny; min_iby = i;

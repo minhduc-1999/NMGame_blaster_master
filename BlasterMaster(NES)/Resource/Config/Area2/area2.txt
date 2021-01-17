@@ -25,6 +25,7 @@
 50	Resource/Foreground/area2_fg.png	0	0	255
 60	Items.png	0	0	255
 70	Resource\StatusBar\StatusBar.png	0	0	255
+90	Resource/tileset/overworld_tileset.png	255	255	255
 -100	Resource/Background/bbox.png	0	0	255
 # id	left	top	right	bottom	texture_id
 #sound
@@ -363,6 +364,9 @@ Open	Resource\Sound\Open.wav
 500008	78	0	88	95	70
 500009	89	0	99	95	70
 
+#======rock======
+600001	170	102	186	118	90
+
 #======Enemy_Bullet_Die====
 900001	49	116	73	140	10
 900002	32	120	48	136	10
@@ -443,6 +447,8 @@ Open	Resource\Sound\Open.wav
 5006	500007	200
 5007	500008	200
 5008	500009	200
+#======rock======
+6000	600001	1000
 #======Enemy_Bullet_Die====
 9000	900001	150	900002	150	900003	150	900004	100
 
@@ -488,3 +494,5 @@ Open	Resource\Sound\Open.wav
 27	2700	2001	9000
 #======hpbar=======
 50	5000	5001	5002	5003	5004	5005	5006	5007	5008
+#======rock======
+60	6000
