@@ -10,16 +10,24 @@ void SectionOvw::Load(SaveData* data, D3DXVECTOR2 mainPos)
 		DebugOut("[ERROR] main object was created before in ovw!\n");
 		return;
 	}
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	LPANIMATION_SET ani_set = animation_sets->Get(3);
 	if (mainPos.x == -1 && mainPos.y == -1)
 		mainPlayer = new Jason(defaultPos.x, defaultPos.y);
 	else
 		mainPlayer = new Jason(mainPos.x, mainPos.y);
+	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	LPANIMATION_SET ani_set = animation_sets->Get(3);
 	mainPlayer->SetAnimationSet(ani_set);
 	mainPlayer->SetTeam(0);
 	mainPlayer->SetType(1);
-	mainPlayer->SetState(JASON_STATE_DIE);
-	DebugOut("[INFO] Jason Created!\n");
-	DebugOut("[OVW-INFO] Main Pos:\t%f\t%f\n", mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
+	if (data == NULL)
+	{
+		mainPlayer->SetState(JASON_STATE_IDLE);
+		DebugOut("[INFO] Jason Created!\n");
+		DebugOut("[OVW-INFO] Main Pos:\t%f\t%f\n", mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
+	}
+	else
+	{
+		mainPlayer->SetHP(data->jasonHP);
+	}
+	
 }
