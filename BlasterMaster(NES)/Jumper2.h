@@ -1,7 +1,7 @@
 #pragma once
 #include "DynamicGameObject.h"
 
-#define JUMPER2_WALKING_SPEED		0.1f
+#define JUMPER2_WALKING_SPEED		0.05f
 #define JUMPER2_GRAVITY             0.2f
 #define JUMPER2_STATE_IDLE			0
 #define JUMPER2_STATE_WALKING_RIGHT	100
