@@ -19,6 +19,11 @@ Sophia::Sophia(float x, float y) :MainPlayer(x, y)
 
 int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (state == SOPHIA_STATE_DIE)
+	{
+		CGame::GetInstance()->SwitchScene(4, 1, D3DXVECTOR2(-1, -1));
+		return 1;
+	}
 	CDynamicGameObject::Update(dt);
 	if (vx != 0)
 	{
@@ -199,6 +204,7 @@ void Sophia::Render()
 		}
 		else
 		{
+			
 			animation_set->at(SOPHIA_ANI_DIE)->ResetAnim();
 			SetState(SOPHIA_STATE_IDLE_RIGHT);
 			//CGame::GetInstance()->SwitchScene(2, 1);
