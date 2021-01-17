@@ -10,6 +10,7 @@ Jason::Jason(float x, float y) :MainPlayer(x, y)
 	lastShot = GetTickCount64();
 	canGoArea = false;
 	canShoot = true;
+	HP = 16;
 }
 
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

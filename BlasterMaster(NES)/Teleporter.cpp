@@ -97,15 +97,22 @@ int Teleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Teleporter::Render()
 {
 	int ani = TELEPORTER_ANI_GRAY;
-	if (GetState() == TELEPORTER_STATE_DIE)
+
+	if (state == TELEPORTER_ANI_DIE)
 	{
+		ani = TELEPORTER_ANI_DIE;
+		if (!animation_set->at(TELEPORTER_ANI_DIE)->IsCompleted())
 		{
-			animation_set->at(TELEPORTER_ANI_GREEN)->ResetAnim();
+			animation_set->at(TELEPORTER_ANI_DIE)->Render(x, y, nx, 255);
+			return;
+		}
+		else
+		{
+			animation_set->at(TELEPORTER_ANI_DIE)->ResetAnim();
 			isDestroyed = true;
 			return;
 		}
 	}
-
 
 	if (state == TELEPORTER_STATE_GRAY)
 	{
