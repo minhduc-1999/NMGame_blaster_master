@@ -3,6 +3,7 @@
 #include "Jumper2.h"
 #include "Brick.h"
 #include "SophiaBullet.h"
+#include "Item.h"
 
 Sophia::Sophia(float x, float y) :MainPlayer(x, y)
 {
@@ -10,7 +11,7 @@ Sophia::Sophia(float x, float y) :MainPlayer(x, y)
 	SetType(1);
 	heightLevel = SOPHIA_HEIGHT_HIGH;
 	lastFrameChange = GetTickCount64();
-	HP = 16;
+	SetHPMAX(16);
 	isUp = false;
 	currentWalkingColumn = 0;
 	lastHeight = 0;
@@ -18,6 +19,7 @@ Sophia::Sophia(float x, float y) :MainPlayer(x, y)
 
 int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	DebugOut("[hp = %d]\n", HP);
 	CDynamicGameObject::Update(dt);
 	if (vx != 0)
 	{
@@ -53,6 +55,16 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isCollisionWithEnemy = true;
 		}
 
+		if (temp->GetType() == 26)
+		{
+			Item* itemHP = dynamic_cast<Item*>(temp);
+			if (!itemHP->GetIsDestroyed())
+			{
+				HPDown(-1);
+			}
+			itemHP->SetIsDestroyed();
+		}
+
 		switch (temp->GetType())
 		{
 		case 17:
@@ -83,7 +95,7 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			CanTouch = false;
 			TouchTime = GetTickCount64();
-			SetHP(HPDown(HP, 1));
+			HPDown(1);
 			Sound::getInstance()->play("Hit", false, 1);
 		}
 		
@@ -129,50 +141,6 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else
 			y += dy;
 			//y += min_ty * dy + nty * 0.4f;
-
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-			int coObjType = e->obj->GetType();
-			/*if (coObjType != 15)
-			{
-				if (e->nx != 0 && nbx == 0)
-				{
-					x += (1 - e->t) * dx - e->nx * 0.4f;
-				}
-				else if (nby == 0)
-				{
-					y += (1 - e->t) * dy - e->ny * 0.4f;
-				}
-			}*/
-			//switch (coObjType)
-			//{
-			//case 15:	//brick
-			//	if (e->nx != 0)
-			//	{
-			//		if (nx == -1)
-			//		{
-			//			SetState(SOPHIA_STATE_IDLE_LEFT);
-			//		}
-			//		else
-			//		{
-			//			SetState(SOPHIA_STATE_IDLE_RIGHT);
-			//		}
-			//		//x += e->t * dx + e->nx * 0.4f;
-			//	}
-			//	if (e->ny != 0)
-			//	{
-			//		if (e->ny == -1)
-			//		{
-			//			
-			//		}
-			//		//y += e->t * dy + e->ny * 0.4f;
-			//	}
-			//	break;
-			//default:
-			//	break;
-			//};
-		}
 	}
 	if (HP <= 0)
 	{

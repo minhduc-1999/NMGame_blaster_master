@@ -8,6 +8,7 @@ class Item
 {
 public:
 	Item(float x, float y);
-	int Update(DWORD dt, vector<LPGAMEOBJECT> coObjects);
+	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
+	void SetIsDestroyed() { isDestroyed = true; }
 };

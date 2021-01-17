@@ -5,13 +5,14 @@
 #include "CLadder.h"
 #include "SceneGate.h"
 #include "MiniJasonBullet.h"
+#include "Item.h"
 
 
 MiniJason::MiniJason(float x, float y) :MainPlayer(x, y)
 {
 	SetSize(MINIJASON_WIDTH, MINIJASON_HEIGHT);
 	SetType(2);
-	HP = 16;
+	SetHPMAX(16);
 }
 
 int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -36,6 +37,17 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			isCollisionWithEnemy = true;
 		}
+
+		if (temp->GetType() == 26)
+		{
+			Item* itemHP = dynamic_cast<Item*>(temp);
+			if (!itemHP->GetIsDestroyed())
+			{
+				HPDown(-1);
+			}
+			itemHP->SetIsDestroyed();
+		}
+
 		switch (temp->GetType())
 		{
 		case 80:
@@ -91,7 +103,7 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			CanTouch = false;
 			TouchTime = GetTickCount64();
-			SetHP(HPDown(HP, 1));
+			HPDown(1);
 			Sound::getInstance()->play("Hit", false, 1);
 		}
 
