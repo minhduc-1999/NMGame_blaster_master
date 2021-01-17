@@ -71,7 +71,7 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 			if (temp->GetType() != 20 && temp->GetType() != 26)
 			{
 				int spawnItem = rand() % 2;
-				if (true/*spawnItem == 0*/)
+				if (spawnItem == 0)
 				{
 					Item* itemHp = new Item(temp->GetPosition().x, temp->GetPosition().y);
 					dynamicObjs.push_back(itemHp);

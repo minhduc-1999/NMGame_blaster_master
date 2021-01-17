@@ -157,7 +157,7 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Sophia::Render()
 {
 	int ani = -1;
-	if (GetState() == SOPHIA_STATE_DIE)
+	if (GetState() == SOPHIA_STATE_DIE && isJumping == false)
 	{
 		ani = SOPHIA_ANI_DIE;
 		if (!animation_set->at(SOPHIA_ANI_DIE)->IsCompleted())
@@ -197,7 +197,7 @@ void Sophia::Render()
 			animation_set->at(SOPHIA_ANI_DOWN)->ResetAnim();
 			switch (state)
 			{
-			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:case SOPHIA_STATE_FIRING_UP_LEFT:case SOPHIA_STATE_FIRING_UP_RIGHT:
+			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:case SOPHIA_STATE_FIRING_UP_LEFT:case SOPHIA_STATE_FIRING_UP_RIGHT:case SOPHIA_STATE_DIE:
 				if (vy < 0)
 				{
 					ani = SOPHIA_ANI_UP_JUMP;
@@ -241,7 +241,7 @@ void Sophia::Render()
 			animation_set->at(SOPHIA_ANI_UP)->ResetAnim();
 			switch (state)
 			{
-			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:case SOPHIA_STATE_FIRING_LEFT:case SOPHIA_STATE_FIRING_RIGHT:
+			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT:case SOPHIA_STATE_FIRING_LEFT:case SOPHIA_STATE_FIRING_RIGHT:case SOPHIA_STATE_DIE:
 				if (vy < 0)
 				{
 					ani = SOPHIA_ANI_JUMP_UP;
@@ -331,7 +331,7 @@ void Sophia::Render()
 			animation_set->at(SOPHIA_ANI_DOWN)->ResetAnim();
 			switch (state)
 			{
-			case SOPHIA_STATE_IDLE_RIGHT: case SOPHIA_STATE_IDLE_LEFT: case SOPHIA_STATE_FIRING_UP_LEFT:case SOPHIA_STATE_FIRING_UP_RIGHT:
+			case SOPHIA_STATE_IDLE_RIGHT: case SOPHIA_STATE_IDLE_LEFT: case SOPHIA_STATE_FIRING_UP_LEFT:case SOPHIA_STATE_FIRING_UP_RIGHT:case SOPHIA_STATE_DIE:
 				ani = SOPHIA_ANI_UP;
 				if (animation_set->at(ani)->IsCompleted())
 				{
@@ -412,7 +412,7 @@ void Sophia::Render()
 			animation_set->at(SOPHIA_ANI_UP)->ResetAnim();
 			switch (state)
 			{
-			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT: case SOPHIA_STATE_FIRING_LEFT: case SOPHIA_STATE_FIRING_RIGHT:
+			case SOPHIA_STATE_IDLE_RIGHT:case SOPHIA_STATE_IDLE_LEFT: case SOPHIA_STATE_FIRING_LEFT: case SOPHIA_STATE_FIRING_RIGHT:case SOPHIA_STATE_DIE:
 				ani = SOPHIA_ANI_DOWN;
 				if (animation_set->at(ani)->IsCompleted())
 				{
@@ -533,7 +533,7 @@ void Sophia::SetState(int state)
 		break;
 	case SOPHIA_STATE_DIE:
 		vx = 0;
-		vy = 0;
+		//vy = 0;
 		Sound::getInstance()->stop("Hit");
 		break;
 	}

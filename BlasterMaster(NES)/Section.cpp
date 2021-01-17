@@ -318,7 +318,7 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		return;
 		break;
 	}
-	case OBJECT_TYPE_MAGMA:
+	case OBJECT_TYPE_MAGMA:case OBJECT_TYPE_ARROW:
 		obj = new CMagma(x, y);
 		break;
 	default:
