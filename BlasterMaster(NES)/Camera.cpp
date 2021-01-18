@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 
-#define SWITCH_SECTION_CAM_SPEED 0.2f
+#define SWITCH_SECTION_CAM_SPEED 0.15f
 #define CONST_DETAL_Y_BELOW		96.0f
 
 Camera::Camera(int width, int height)
