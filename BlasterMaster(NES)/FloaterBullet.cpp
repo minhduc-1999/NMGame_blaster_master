@@ -36,6 +36,7 @@ int FloaterBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (temp->GetTeam() != this->team)
 		{
 			SetState(FLOATER_BULLET_STATE_DESTROY);
+			isDestroyed = true;
 			return 0;
 		}
 	}
@@ -73,6 +74,7 @@ int FloaterBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (objTeam != this->team)
 			{
 				SetState(FLOATER_BULLET_STATE_DESTROY);
+				isDestroyed = true;
 				break;
 			}
 			if (e->obj->GetType() != 15)

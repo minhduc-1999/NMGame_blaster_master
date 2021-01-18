@@ -33,7 +33,7 @@ void CGate::Render()
 			int index = (i % row) * col + j % col; 
 			_tile.at(index)->Draw(x, y, -1);
 		}*/
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 Rect CGate::GetBound()

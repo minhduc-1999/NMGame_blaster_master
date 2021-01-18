@@ -2,10 +2,12 @@
 #include "CGate.h"
 #include "SceneGate.h"
 #include "JasonBullet.h"
+#include "Item.h"
 
 Jason::Jason(float x, float y) :MainPlayer(x, y)
 {
 	SetSize(JASON_WIDTH, JASON_HEIGHT);
+	SetHPMAX(16);
 	ny = 1;
 	lastShot = GetTickCount64();
 	canGoArea = false;
@@ -32,6 +34,17 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			isCollisionWithEnemy = true;
 		}
+
+		if (temp->GetType() == 26)
+		{
+			Item* itemHP = dynamic_cast<Item*>(temp);
+			if (!itemHP->GetIsDestroyed())
+			{
+				HPDown(-1);
+			}
+			itemHP->SetIsDestroyed();
+		}
+
 		switch (temp->GetType())
 		{
 		case 17:
@@ -72,7 +85,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			CanTouch = false;
 			TouchTime = GetTickCount64();
-			SetHP(HPDown(HP, 1));
+			HPDown(1);
 			Sound::getInstance()->play("Hit", false, 1);
 		}
 
