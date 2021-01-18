@@ -212,7 +212,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 			break;
 		case OBJECT_TYPE_INSECT:
 			obj = new Insect(x, y);
-			obj->SetState(INSECT_STATE_FLYDOWN_RIGHT);
+			obj->SetState(INSECT_STATE_ALIVE);
 			break;
 		case OBJECT_TYPE_JUMPER2:
 			obj = new Jumper2(x, y);

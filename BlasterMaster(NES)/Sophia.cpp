@@ -564,7 +564,7 @@ void Sophia::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_Z:
-		if (GetTickCount64() - lastShot >= 300)
+		if (GetTickCount64() - lastShot >= 200)
 		{
 			currentBullet = BULLET_NORMAL;
 			canShoot = true;
@@ -574,7 +574,7 @@ void Sophia::OnKeyDown(int KeyCode)
 			canShoot = false;
 		break;
 	case DIK_V:
-		if (GetTickCount64() - lastShot >= 300)
+		if (GetTickCount64() - lastShot >= 200)
 		{
 			currentBullet = BULLET_ROCKET;
 			canShoot = true;

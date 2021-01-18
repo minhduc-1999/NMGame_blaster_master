@@ -188,9 +188,6 @@
     <Filter Include="Object\DynamicObject\Bullet\MiniJasonBullet">
       <UniqueIdentifier>{dd4afb15-250c-40bb-95f6-9e304078e7d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\DynamicObject\Bullet\CannonBullet">
-      <UniqueIdentifier>{5be5ecea-56b5-4e97-8420-a4b619a57b7a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\DynamicObject\Bullet\EyeballBullet">
       <UniqueIdentifier>{e62d8586-eff9-4fc9-9baa-bcf227de7a87}</UniqueIdentifier>
     </Filter>
@@ -226,6 +223,9 @@
     </Filter>
     <Filter Include="Object\DynamicObject\Rock">
       <UniqueIdentifier>{63857a18-acf7-43d3-a914-e709dad54b21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\DynamicObject\Bullet\CannonBullet">
+      <UniqueIdentifier>{5be5ecea-56b5-4e97-8420-a4b619a57b7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
