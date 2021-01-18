@@ -63,7 +63,7 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (temp->GetType() == 26)
 		{
-			Item* itemHP = dynamic_cast<Item*>(temp);
+			CDynamicGameObject* itemHP = dynamic_cast<CDynamicGameObject*>(temp);
 			if (!itemHP->GetIsDestroyed())
 			{
 				HPDown(-1);

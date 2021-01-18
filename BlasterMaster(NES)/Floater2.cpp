@@ -14,6 +14,8 @@ int Floater2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
 		return -1;
+	if (isDestroyed)
+		return 0;
 	CDynamicGameObject::Update(dt);
 
 	vector<LPCOLLISIONEVENT> coEvents;
