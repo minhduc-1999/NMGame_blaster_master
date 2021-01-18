@@ -633,7 +633,13 @@ void CGame::SwitchScene(int scene_id, int section, D3DXVECTOR2 tlPos)
 	DebugOut("[INFO] Switching to scene %d\n", scene_id);
 
 	SaveData* data = scenes[current_scene]->GetSaveData();
-
+	if (scenes[current_scene]->GetType() == GAME_SCENES_TYPE_AREA || scenes[current_scene]->GetType() == GAME_SCENES_TYPE_OVW)
+	{
+		if (data != NULL)
+		{
+			data->jasonHP = ((CTestScene*)scenes[current_scene])->GetPlayer()->GetHP();
+		}
+	}
 	scenes[current_scene]->Unload();
 
 	CTextureManager::GetInstance()->Clear();

@@ -266,10 +266,9 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 					saveData->sophiaY = sophia->GetPosition().y;
 					saveData->sophiaSection = ((CTestScene*)scence)->GetCurrentSection();
 					saveData->sophiaHP = sophia->GetHP();
+					saveData->sophiaState = sophia->GetState();
 					DebugOut("[INFO] Save Data last section = %d, %f, %f\n", saveData->sophiaSection, saveData->sophiaX, saveData->sophiaY);
 				}
-				
-				
 
 				((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
 				((CTestScene*)scence)->addMiniJason();

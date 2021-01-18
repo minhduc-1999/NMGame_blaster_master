@@ -224,6 +224,9 @@
     <Filter Include="Object\DynamicObject\Item">
       <UniqueIdentifier>{eb6980e2-43b1-40c7-9a42-d4ade95f6d50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\Rock">
+      <UniqueIdentifier>{63857a18-acf7-43d3-a914-e709dad54b21}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -415,6 +418,9 @@
     <ClInclude Include="Item.h">
       <Filter>Object\DynamicObject\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Rock.h">
+      <Filter>Object\DynamicObject\Rock</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -602,6 +608,9 @@
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Object\DynamicObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Rock.cpp">
+      <Filter>Object\DynamicObject\Rock</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

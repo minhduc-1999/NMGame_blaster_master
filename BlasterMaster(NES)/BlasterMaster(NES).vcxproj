@@ -177,6 +177,7 @@
     <ClInclude Include="MiniJasonBullet.h" />
     <ClInclude Include="MoviePanel.h" />
     <ClInclude Include="Panel.h" />
+    <ClInclude Include="Rock.h" />
     <ClInclude Include="SceneGate.h" />
     <ClInclude Include="HPBar.h" />
     <ClInclude Include="Insect.h" />
@@ -249,6 +250,7 @@
     <ClCompile Include="MoviePanel.cpp" />
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="OvwSectionTransition.cpp" />
+    <ClCompile Include="Rock.cpp" />
     <ClCompile Include="SceneGate.cpp" />
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="SectionArea.cpp" />
