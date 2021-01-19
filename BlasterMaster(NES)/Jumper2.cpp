@@ -2,8 +2,11 @@
 Jumper2::Jumper2(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(18, 26);
-	vx = JUMPER2_WALKING_SPEED;
-	vy = JUMPER2_GRAVITY;
+	startTime = GetTickCount64();
+	SetState(JUMPER2_STATE_WALKING_RIGHT);
+	countJump = 0;
+	isUpdated = false;
+	isRendered = false;
 }
 bool Jumper2::IsJumping()
 {
@@ -14,13 +17,47 @@ int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
 		return -1;
+	if (isDestroyed)
+		return 0;
+
 	CDynamicGameObject::Update(dt);
+
+	vy += JUMPER2_GRAVITY;
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-	vy = JUMPER2_GRAVITY;
+
 	coEvents.clear();
+
 	CalcPotentialCollisions(coObjects, coEvents);
 	// No collision occured, proceed normally
+
+	startTime += dt;
+
+	if (startTime > 700 && canJump /*&& countJump < 4*/)
+	{
+		if (nx == 1)
+			SetState(JUMPER2_STATE_JUMPING_RIGHT);
+		else
+			SetState(JUMPER2_STATE_JUMPING_LEFT);
+		//startTime = 600;
+		//countJump++;
+		canJump = false;
+		startTime = 0;
+	}
+	/*else if (countJump == 4)
+	{
+		startTime = 0;
+		countJump = 0;
+	}*/
+	else
+	{
+		if (nx == 1)
+			SetState(JUMPER2_STATE_WALKING_RIGHT);
+		else
+			SetState(JUMPER2_STATE_WALKING_LEFT);
+	}
+
 	if (coEvents.size() == 0)
 	{
 		x += dx;
@@ -30,37 +67,63 @@ int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		float min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby);
-		if (nbx != 0)
-		{
-			x += min_tbx * dx + nbx * 0.4f;
-			if (GetNX() == 1)
-			{
-				SetState(JUMPER2_STATE_WALKING_LEFT);
-			}
-			else
-			{
-				SetState(JUMPER2_STATE_WALKING_RIGHT);
-			}
-		}
-		else
+		//if (nbx != 0)
+		//{
+		//	x += min_tbx * dx + nbx * 0.4f;
+		//	nx = -nx;
+		//	/*if (nx == -1)
+		//	{
+		//		SetState(JUMPER2_STATE_JUMPING_RIGHT);
+		//	}
+		//	else
+		//	{
+		//		SetState(JUMPER2_STATE_JUMPING_LEFT);
+		//	}*/
+		//}
+		//else
+		//	x += dx;
+		if (nbx == 0)
 			x += dx;
-
-		if (nby != 0)
+		if (nby == 0)
+			y += dy;
+		if (nby == -1)
 		{
 			y += min_tby * dy + nby * 0.4f;
-			for (UINT i = 0; i < coEvents.size(); i++)
-			{
-				if (coEvents[i]->ny < 0)
-				{
-					if (IsJumping())
-						vy = -JUMPER2_GRAVITY*5;
-				}
-			}
+			canJump = true;
+			vy = -JUMPER2_JUMPING_SPEED;
 		}
-		else
-			y += dy;
+		else if (nbx != 0 && nby != 0)
+		{
+			x += min_tbx * dx + nbx * 0.4f;
+			if (nbx == -1)
+				SetState(JUMPER2_STATE_WALKING_LEFT);
+			else
+				SetState(JUMPER2_STATE_WALKING_RIGHT);
 
-
+			vy = JUMPER2_GRAVITY;
+		}
+		else if (nbx != 0 && nby == 0)
+		{
+			x += min_tbx * dx + nbx * 0.4f;
+			if (nbx == -1)
+				SetState(JUMPER2_STATE_WALKING_LEFT);
+			else
+				SetState(JUMPER2_STATE_WALKING_RIGHT);
+		}
+		else if (nby != 0)
+		{
+			y += min_tby * dy + nby * 0.4f;
+			/*if (nby == -1)
+			{
+				canJump = true;
+				vy = -JUMPER2_JUMPING_SPEED;
+				ny = -ny;
+			}
+			else*/
+				vy = JUMPER2_GRAVITY;
+		}
+		/*else
+			y += dy;*/
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
@@ -68,51 +131,15 @@ int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			int coObjType = e->obj->GetType();
 			switch (coObjType)
 			{
-			case 17:	//brick and gate
+			case 17:
 				if (e->nx != 0)
 				{
-					if (GetNX() == 1)
-					{
-						SetState(JUMPER2_STATE_WALKING_LEFT);
-						break;
-					}
-					else
-					{
+					if (e->nx == 1)
 						SetState(JUMPER2_STATE_WALKING_RIGHT);
-						break;
-					}
+					else
+						SetState(JUMPER2_STATE_WALKING_LEFT);
+					break;
 				}
-				if (e->ny != 0)
-				{
-					for (UINT i = 0; i < coEvents.size(); i++)
-					{
-						if (coEvents[i]->ny < 0)
-						{
-							if (IsJumping()) {
-								jump--;
-								if (jump < 0)
-								{
-									vy = -vy;
-									vx = JUMPER2_WALKING_SPEED;
-								}
-							}
-						}
-					}
-				}
-				break;
-				//	if (e->ny != 0)
-				//	{
-				//		for (UINT i = 0; i < coEvents.size(); i++)
-				//		{
-				//			if (coEvents[i]->ny < 0)
-				//			{
-				//				if (IsJumping()) {
-				//						vy = -JUMPER2_GRAVITY;
-				//				}
-				//			}
-				//		}
-				//	}
-				//	break;
 			case 20: //enemy bullet
 				if (e->obj->GetTeam() == 0)
 				{
@@ -124,10 +151,10 @@ int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			};
 
 		}
-
-		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 		//TODO: Collision logic with dynamic object (bots)
 	}
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+
 	isUpdated = true;
 	isRendered = false;
 	return 0;
@@ -155,16 +182,6 @@ void Jumper2::Render()
 		}
 	}
 
-	switch (state)
-	{
-	case JUMPER2_STATE_WALKING_LEFT:
-		ani = JUMPER2_ANI_WALK;
-		break;
-	case JUMPER2_STATE_WALKING_RIGHT:
-		ani = JUMPER2_ANI_WALK;
-		break;
-	}
-
 	animation_set->at(ani)->Render(x, y, nx);
 	isRendered = true;
 	isUpdated = false;
@@ -177,16 +194,21 @@ void Jumper2::SetState(int state)
 	{
 	case JUMPER2_STATE_WALKING_RIGHT:
 		vx = JUMPER2_WALKING_SPEED;
-		vy = JUMPER2_GRAVITY;
 		nx = 1;
 		break;
 	case JUMPER2_STATE_WALKING_LEFT:
 		vx = -JUMPER2_WALKING_SPEED;
-		vy = JUMPER2_GRAVITY;
 		nx = -1;
 		break;
 	case JUMPER2_STATE_JUMPING_RIGHT:
+		vx = JUMPER2_WALKING_SPEED;
+		vy = -JUMPER2_JUMPING_SPEED;
+		nx = 1;
 		break;
+	case JUMPER2_STATE_JUMPING_LEFT:
+		vx = -JUMPER2_WALKING_SPEED;
+		vy = -JUMPER2_JUMPING_SPEED;
+		nx = -1;
 	case JUMPER2_STATE_DIE:
 		SetSize(0, 0);
 		vx = 0;

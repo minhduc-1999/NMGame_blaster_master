@@ -216,7 +216,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 			break;
 		case OBJECT_TYPE_JUMPER2:
 			obj = new Jumper2(x, y);
-			obj->SetState(JUMPER2_STATE_JUMPING_RIGHT);
+			obj->SetState(JUMPER2_STATE_WALKING_RIGHT);
 			break;
 		case OBJECT_TYPE_ORB:
 			obj = new Orb(x, y);

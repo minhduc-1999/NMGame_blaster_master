@@ -2,7 +2,7 @@
 #define _ORB_H
 #include "DynamicGameObject.h"
 
-#define ORB_RUNNING_SPEED		0.05f
+#define ORB_RUNNING_SPEED		0.08f
 
 #define ORB_STATE_IDLE			0
 #define ORB_STATE_ROLLING_LEFT	100

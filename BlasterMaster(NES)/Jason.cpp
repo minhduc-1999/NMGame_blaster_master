@@ -143,6 +143,12 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	}
 
+	if (HP <= 0)
+	{
+		Sound::getInstance()->play("JasonDed", true, 0);
+		SetState(JASON_STATE_DIE);
+	}
+
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	//DebugOut("[JASON]\tx: %f, y: %f\n", x, y);
@@ -218,6 +224,7 @@ void Jason::Render()
 		break;
 	case JASON_STATE_DIE:
 		ani = JASON_ANI_DIE;
+		Sound::getInstance()->stop("Hit");
 		break;
 	}
 	animation_set->at(ani)->Render(x, y, origin, alpha);
@@ -267,7 +274,7 @@ void Jason::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 
-	if (GetState() == -1) return; //die
+	if (state == JASON_STATE_DIE) return; //die
 	SetState(JASON_STATE_IDLE);
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
