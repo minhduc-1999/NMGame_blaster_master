@@ -2,12 +2,18 @@
 Insect::Insect(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(18,	18);
-	vy = INSECT_FLYING_SPEED;
+	vy = 0.03f;
+	vx = 0.03f;
+	nx = 1;
+	startY = y;
 }
 int Insect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
 		return -1;
+	if (isDestroyed)
+		return 0;
+
 	CDynamicGameObject::Update(dt);
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -16,18 +22,19 @@ int Insect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	CalcPotentialCollisions(coObjects, coEvents);
 
-	jump--;
-	if (jump < 0)
-	{
-		vy = -vy;
-		vx = INSECT_FLYING_SPEED * 5;
-		jump = INSECT_JUMPING_TIME;
-		vx = 0;
-		vy = INSECT_FLYING_SPEED;
-	}
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
+		if (y > startY + 20)
+		{
+			vx = nx * 0.03f;
+			vy = -0.1f;
+		}
+		else if (y < startY)
+		{
+			vx = nx * 0.03f;
+			vy = 0.03f;
+		}
 		x += dx;
 		y += dy;
 	}
@@ -60,20 +67,22 @@ int Insect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			case 15: case 17:	//brick and gate
 				if (e->nx != 0)
 				{
-					if (GetNX() == 1)
+					/*if (GetNX() == 1)
 					{
-						SetState(INSECT_STATE_FLYDOWN_RIGHT);
-
+						nx = ;
 					}
 					else
 					{
-						SetState(INSECT_STATE_FLYDOWN_LEFT);
-					}
+						nx = -1;
+					}*/
+					nx = -nx;
+					vx = -vx;
 				}
 				if (e->ny != 0)
 				{
-					vy = -INSECT_FLYING_SPEED * 10;
-					vx = INSECT_FLYING_SPEED * 5;
+					/*vy = -INSECT_FLYING_SPEED * 10;
+					vx = INSECT_FLYING_SPEED * 5;*/
+					vy = -vy;
 				}
 				break;
 			};
@@ -108,16 +117,6 @@ void Insect::Render()
 			return;
 		}
 	}
-
-	switch (state)
-	{
-	case INSECT_STATE_FLYDOWN_LEFT:
-		ani = INSECT_ANI_FLYING;
-		break;
-	case INSECT_STATE_FLYDOWN_RIGHT:
-		ani = INSECT_ANI_FLYING;
-		break;
-	}
 	
 	animation_set->at(ani)->Render(x, y, nx);
 	isRendered = true;
@@ -127,25 +126,11 @@ void Insect::Render()
 void Insect::SetState(int state)
 {
 	CDynamicGameObject::SetState(state);
-	switch (state)
+	if (state == INSECT_STATE_DIE)
 	{
-	case INSECT_STATE_FLYDOWN_RIGHT:
-		vx = 0;
-		vy = INSECT_FLYING_SPEED;
-		nx = 1;
-		break;
-	case INSECT_STATE_FLYDOWN_LEFT:
-		vx = 0;
-		vy = INSECT_FLYING_SPEED;
-		nx = -1;
-		break;
-	case INSECT_STATE_DIE:
 		SetSize(0, 0);
 		vx = 0;
 		vy = 0;
-		break;
-	default:
-		break;
 	}
 }
 

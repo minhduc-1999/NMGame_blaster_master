@@ -23,7 +23,7 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (state == SOPHIA_STATE_DIE)
 	{
-		CGame::GetInstance()->SwitchScene(4, 1, D3DXVECTOR2(-1, -1));
+		CGame::GetInstance()->Notify(0);
 		return 1;
 	}
 	CDynamicGameObject::Update(dt);
@@ -63,7 +63,7 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (temp->GetType() == 26)
 		{
-			Item* itemHP = dynamic_cast<Item*>(temp);
+			CDynamicGameObject* itemHP = dynamic_cast<CDynamicGameObject*>(temp);
 			if (!itemHP->GetIsDestroyed())
 			{
 				HPDown(-1);
@@ -564,7 +564,7 @@ void Sophia::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_Z:
-		if (GetTickCount64() - lastShot >= 300)
+		if (GetTickCount64() - lastShot >= 200)
 		{
 			currentBullet = BULLET_NORMAL;
 			canShoot = true;
@@ -574,7 +574,7 @@ void Sophia::OnKeyDown(int KeyCode)
 			canShoot = false;
 		break;
 	case DIK_V:
-		if (GetTickCount64() - lastShot >= 300)
+		if (GetTickCount64() - lastShot >= 200)
 		{
 			currentBullet = BULLET_ROCKET;
 			canShoot = true;

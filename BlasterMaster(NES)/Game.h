@@ -85,6 +85,8 @@ public:
 	int GetScreenWidth() { return screen_width; }
 	int GetScreenHeight() { return screen_height; }
 
+	void Notify(int mainLives);
+
 	static void SweptAABB(
 		float ml,			// move left 
 		float mt,			// move top

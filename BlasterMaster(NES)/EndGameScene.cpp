@@ -79,7 +79,7 @@ void EndGameScene::Load(D3DXVECTOR2 tlPos)
 		}
 	}
 	//Sound::getInstance()->play("lvl2", true, 0);
-	f.close(); 
+	f.close();
 
 	DebugOut("[INFO] End game scene has been loaded successfully\n");
 	panels[0] = new SlidePanel(128.0f, 111.0f, -0.05f, 0.0f, 512, 224, CAnimationManager::GetInstance()->Get(2));
@@ -106,7 +106,7 @@ int EndGameScene::Update(DWORD dt)
 }
 void EndGameScene::Render()
 {
- 	//endGameSets->at(0)->Render(127, 111, -1);
+	//endGameSets->at(0)->Render(127, 111, -1);
 	//CSpriteManager::GetInstance()->Get(6000)->Draw(132, 124, -1, 255);
 	/*for (int i = 65; i <= 90; i++)
 	{
@@ -122,19 +122,22 @@ void EndGameScene::Render()
 	//CAnimationManager::GetInstance()->Get(2)->Render(160, 95, -1);
 	if (current_period == panels.size())
 		return;
-
-	int n = 224 / 7 + 1;
-	for (int i = 0; i <= n; i++)
+	if (current_period == 2)
 	{
-		CSpriteManager::GetInstance()->Get(4001)->Draw(64, i * 7 + 3, -1, 255);
+		int n = 224 / 7 + 1;
+		for (int i = 0; i <= n; i++)
+		{
+			CSpriteManager::GetInstance()->Get(4001)->Draw(64, i * 7 + 3, -1, 255);
+		}
+		//render logo
+		CSpriteManager::GetInstance()->Get(4000)->Draw(64, 111, -1, 255);
 	}
-	//render logo
-	CSpriteManager::GetInstance()->Get(4000)->Draw(64, 111, -1, 255);
+
 
 	panels[current_period]->Render();
 
 	////rener column
-	
+
 
 	//descPanel->Render();
 }
@@ -142,6 +145,8 @@ void EndGameScene::Render()
 void EndGameScene::NextIntro()
 {
 	current_period++;
+	if (current_period == 2)
+		this->background = D3DCOLOR_XRGB(0, 0, 0);
 }
 
 //void EndGameScene::_ParseSection_ANIMATIONS(string line)

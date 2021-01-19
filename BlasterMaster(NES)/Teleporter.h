@@ -3,7 +3,7 @@
 #include "DynamicGameObject.h"
 
 #define TELEPORTER_TELE_RANGE		50
-#define TELEPORTER_DELAY_TIME		15
+#define TELEPORTER_DELAY_TIME		30
 #define TELEPORTER_SWAP				5
 
 #define TELEPORTER_STATE_GRAY		0
@@ -17,12 +17,15 @@
 
 class Teleporter : public CDynamicGameObject
 {
-public:
-	Teleporter(float x, float y);
+private:
+	DWORD startTime;
 	bool isTele = false;
 	int swap, delay, newx, newy;
+public:
+	Teleporter(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
+	vector<LPDYNAMICOBJECT> Fire(float xMain, float yMain);
 };
 #endif // !_TELE_H

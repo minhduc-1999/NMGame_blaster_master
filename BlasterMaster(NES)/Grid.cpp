@@ -51,7 +51,7 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 		if (temp->GetIsShooting())
 		{
 			vector<LPDYNAMICOBJECT> bullet;
-			if (temp->GetType() == 14 || temp->GetType() == 6 || temp->GetType() == 40)
+			if (temp->GetType() == 14 || temp->GetType() == 6 || temp->GetType() == 40 || temp->GetType() == 12)
 			{
 				bullet = temp->Fire(xMain, yMain);
 			}

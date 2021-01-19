@@ -76,15 +76,20 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		int objTeam = temp->GetTeam();
-		if (objTeam != this->team)
+		if (objTeam == 1)
 		{
-			if (objTeam == 1)
-			{
-				LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
-				dyn->SetIsDestroyed();
-			}
+			LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
+			dyn->SetIsDestroyed();
 			SetState(SOPHIA_BULLET_STATE_DESTROY);
 			return 0;
+		}
+		else if (objTeam == -1)
+		{
+			if (type == 0)
+			{
+				SetState(SOPHIA_BULLET_STATE_DESTROY);
+				return 0;
+			}
 		}
 	}
 	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
@@ -110,6 +115,7 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
 
 		// block 
+		
 		x += min_tx * dx + ntx * 0.4f;
 		y += min_ty * dy + nty * 0.4f;
 
@@ -118,17 +124,22 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int objTeam = e->obj->GetTeam();
-			if (objTeam != this->team)
+			if (objTeam == 1)
 			{
-				if (objTeam == 1)
-				{
-					LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
-					dyn->SetIsDestroyed();
-				}
+				LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
+				dyn->SetIsDestroyed();
 				SetState(SOPHIA_BULLET_STATE_DESTROY);
-				break;
+				return 0;
 			}
-			if (e->obj->GetType() != 15)
+			else if (objTeam == -1)
+			{
+				if (type == 0)
+				{
+					SetState(SOPHIA_BULLET_STATE_DESTROY);
+					break;
+				}
+			}
+			if (e->obj->GetType() != 15 || (e->obj->GetType() == 15 && type == 1))
 			{
 				if (e->nx != 0)
 				{
