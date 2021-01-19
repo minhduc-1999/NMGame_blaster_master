@@ -442,6 +442,9 @@
     <ClInclude Include="BrokableBrick.h">
       <Filter>Object\DynamicObject\BrokableBrick</Filter>
     </ClInclude>
+    <ClInclude Include="SectionBoss.h">
+      <Filter>FrameWork\Section</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -644,6 +647,9 @@
     </ClCompile>
     <ClCompile Include="CSpike.cpp">
       <Filter>Object\StaticObject\Spike</Filter>
+    </ClCompile>
+    <ClCompile Include="SectionBoss.cpp">
+      <Filter>FrameWork\Section</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

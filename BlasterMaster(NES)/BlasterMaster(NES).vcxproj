@@ -196,6 +196,7 @@
     <ClInclude Include="SaveData.h" />
     <ClInclude Include="Section.h" />
     <ClInclude Include="SectionArea.h" />
+    <ClInclude Include="SectionBoss.h" />
     <ClInclude Include="SectionOvw.h" />
     <ClInclude Include="SectionTransition.h" />
     <ClInclude Include="SelectPanel.h" />
@@ -265,6 +266,7 @@
     <ClCompile Include="SceneGate.cpp" />
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="SectionArea.cpp" />
+    <ClCompile Include="SectionBoss.cpp" />
     <ClCompile Include="SectionOvw.cpp" />
     <ClCompile Include="SectionTransition.cpp" />
     <ClCompile Include="SelectPanel.cpp" />

@@ -12,7 +12,8 @@
 #include "HPBar.h"
 #include "Sound.h"
 
-
+#define TEXTURE_BACKGROUND 40
+#define TEXTURE_FOREGROUND 50
 #define PLAYER_SOPHIA 0
 #define PLAYER_JASON  1
 

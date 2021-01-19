@@ -17,7 +17,11 @@ public:
 	vector<LPGAMEOBJECT>* GetcoObjectList();
 	void Render();
 	void Clear();
-
+	vector<LPDYNAMICOBJECT>* GetDynamicObj() {
+		vector<LPDYNAMICOBJECT>* temp = new vector<LPDYNAMICOBJECT>;
+		temp->insert(temp->end(), dynamicObjs.begin(), dynamicObjs.end());
+		return temp;
+	}
 	Sophia* GetSophia();
 };
 

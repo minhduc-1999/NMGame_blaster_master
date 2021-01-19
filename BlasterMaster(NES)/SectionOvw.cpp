@@ -17,8 +17,6 @@ void SectionOvw::Load(SaveData* data, D3DXVECTOR2 mainPos)
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	LPANIMATION_SET ani_set = animation_sets->Get(3);
 	mainPlayer->SetAnimationSet(ani_set);
-	mainPlayer->SetTeam(0);
-	mainPlayer->SetType(1);
 	if (data == NULL)
 	{
 		mainPlayer->SetState(JASON_STATE_IDLE);
@@ -29,7 +27,7 @@ void SectionOvw::Load(SaveData* data, D3DXVECTOR2 mainPos)
 	else
 	{
 		((MainPlayer*)mainPlayer)->SetLive(data->mainLives);
-		mainPlayer->SetHP(data->jasonHP);
+		mainPlayer->SetHP(16);
 	}
 	
 }

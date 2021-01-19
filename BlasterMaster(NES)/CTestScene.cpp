@@ -14,6 +14,7 @@
 #include "SectionArea.h"
 #include "SectionOvw.h"
 #include "Jason.h"
+#include "SectionBoss.h"
 
 using namespace std;
 
@@ -36,9 +37,6 @@ CTestScene::CTestScene(int id, string filePath, int type, D3DXVECTOR3 bg) :
 	Load scene resources from scene file (textures, sprites, animations and objects)
 	See scene1.txt, scene2.txt for detail format specification
 */
-
-#define TEXTURE_BACKGROUND 40
-#define TEXTURE_FOREGROUND 50
 
 void CTestScene::_ParseSection_TEXTURES(string line)
 {
@@ -133,7 +131,13 @@ void CTestScene::_ParseSection_SECTION(string line)
 	if (this->type == 1)
 		section = new SectionArea(id, path);
 	else if (this->type == 2)
-		section = new SectionOvw(id, path);
+	{
+		if (id == 33)
+			section = new SectionBoss(id, path);
+		else
+			section = new SectionOvw(id, path);
+	}
+
 	if (section != NULL)
 		sections[id] = section;
 }
@@ -199,7 +203,8 @@ void CTestScene::Render()
 	LPDIRECT3DTEXTURE9 texfg = CTextureManager::GetInstance()->Get(TEXTURE_FOREGROUND);
 	float bgX = cam.left + (cam.right - cam.left) / 2.0f;
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
-	CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
+	if (current_section != 33)
+		CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 	//Render object
 	if (!isSwitchingSection)
 	{
@@ -209,9 +214,12 @@ void CTestScene::Render()
 		if (mainPlayer != NULL)
 			mainPlayer->Render();
 	//render foreground
-	CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
-	//render hpbar
-	hpBar->Render();
+	if (current_section != 33)
+		CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
+	else
+
+		//render hpbar
+		hpBar->Render();
 }
 
 /*

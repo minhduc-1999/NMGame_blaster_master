@@ -7,6 +7,7 @@ Boss::Boss(float x, float y, int hand_ani_set_id, int arm_ani_set_id) :CDynamicG
 	startTime = GetTickCount64();
 	countBullet = 0;
 	SetType(40);
+	SetTeam(1);
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	LPANIMATION_SET ani_set = animation_sets->Get(hand_ani_set_id);
 	LPANIMATION_SET ani_set2 = animation_sets->Get(arm_ani_set_id);

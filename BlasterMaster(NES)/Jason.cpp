@@ -13,6 +13,7 @@ Jason::Jason(float x, float y) :MainPlayer(x, y)
 	canGoArea = false;
 	canShoot = true;
 	HP = 16;
+	SetType(3);
 }
 
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
