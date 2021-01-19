@@ -92,7 +92,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			CanTouch = false;
 			TouchTime = GetTickCount64();
 			HPDown(1);
-			Sound::getInstance()->play("Hit", false, 1);
+			Sound::getInstance()->play("JHit", false, 1);
 		}
 
 	}
@@ -192,6 +192,7 @@ void Jason::Render()
 		{
 			animation_set->at(JASON_ANI_DIE)->ResetAnim();
 			isDestroyed = true;
+			Sound::getInstance()->play("JasonDed", false, 1);
 			//CGame::GetInstance()->SwitchScene(3, 1);
 			return;
 		}
@@ -313,7 +314,8 @@ void Jason::OnKeyDown(int KeyCode)
 		if (GetTickCount64() - lastShot >= JASON_SHOOTING_DELAY)
 		{
 			canShoot = true;
-			lastShot = GetTickCount64();
+			Sound::getInstance()->play("JasonFire", false, 1);
+			lastShot = GetTickCount64();			
 		}
 
 		else

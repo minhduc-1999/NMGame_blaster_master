@@ -106,7 +106,7 @@ vector<LPDYNAMICOBJECT> Cannon::Fire()
 	{
 		CannonBullet* bulletR = new CannonBullet(x, y, 1, 1, 0);
 		CannonBullet* bulletL = new CannonBullet(x, y, 1, -1, 0);
-
+		Sound::getInstance()->play("Cannon", false, 1);
 		cannonBulls.push_back(bulletR);
 		cannonBulls.push_back(bulletL);
 	}
@@ -114,6 +114,7 @@ vector<LPDYNAMICOBJECT> Cannon::Fire()
 	{
 		CannonBullet* bulletU = new CannonBullet(x, y, 1, 0, -1);
 		CannonBullet* bulletD = new CannonBullet(x, y, 1, 0, 1);
+		Sound::getInstance()->play("Cannon", false, 1);
 
 		cannonBulls.push_back(bulletU);
 		cannonBulls.push_back(bulletD);

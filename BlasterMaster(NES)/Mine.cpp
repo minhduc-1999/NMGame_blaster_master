@@ -151,6 +151,7 @@ vector<LPDYNAMICOBJECT> Mine::Fire()
 	MineBullet* bullet4 = new MineBullet(x, y, 1);
 	bullet4->SetSpeed(0.04f, -0.17f);
 	mineBulls.push_back(bullet4);
+	Sound::getInstance()->play("Mine", false, 1);
 
 	isShooting = false;
 

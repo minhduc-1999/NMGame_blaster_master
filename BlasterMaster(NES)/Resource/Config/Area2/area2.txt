@@ -42,6 +42,10 @@ JasonFire	Resource\Sound\MiniJasonFire.wav
 JasonDed	Resource\Sound\JasonDed.wav
 lvl2	Resource\Sound\lvl2.wav
 Open	Resource\Sound\Open.wav
+Skull	Resource\Sound\Skull.wav
+Floater	Resource\Sound\Fly.wav
+Mine	Resource\Sound\Mine.wav
+Rocket	Resource\Sound\Rocket.wav
 [SPRITES]
 #=========TILE=============
 1	1	1	17	17	30

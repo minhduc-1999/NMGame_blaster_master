@@ -194,7 +194,7 @@ vector<LPDYNAMICOBJECT> Skull::Fire()
 	{
 		SkullBullet* bullet = new SkullBullet(x, y, 1);
 		skullBulls.push_back(bullet);
-
+		Sound::getInstance()->play("Skull", false, 1);
 		isShooting = false;
 		shooted = true;
 	}
