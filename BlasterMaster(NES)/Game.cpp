@@ -671,10 +671,15 @@ void CGame::Notify(int mainLives)
 
 	SaveData* data = scenes[current_scene]->GetSaveData();
 	data->mainLives = mainLives;
-	if (data->lastScene == -1)
+	if (mainLives != 3)
+	{
 		data->lastScene = current_scene;
-	if (data->lastSection == -1)
 		data->lastSection = ((CTestScene*)scenes[current_scene])->GetCurrentSection();
+	}
+	/*if (data->lastScene == -1)
+		
+	if (data->lastSection == -1)*/
+		
 
 	scenes[current_scene]->Unload();
 

@@ -2,6 +2,7 @@
 #include "StaticGameObject.h"
 #include "DynamicGameObject.h"
 #include "Sophia.h"
+
 class Grid
 {
 protected:
