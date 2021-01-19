@@ -41,7 +41,7 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 	{
 		LPDYNAMICOBJECT temp = dynamicObjs[i];
 		
-		if (temp->GetType() == 5 || temp->GetType() == 10 || temp->GetType() == 9)
+		if (temp->GetType() == 5 || temp->GetType() == 10 || temp->GetType() == 9 || temp->GetType() ==8)
 		{
 			temp->Update(xMain, yMain, dt, coObjects);
 		}

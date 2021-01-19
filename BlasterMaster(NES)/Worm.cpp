@@ -51,7 +51,6 @@ int Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			x -= 0.04f;
 			SetState(WORM_STATE_WALKING_LEFT);
-
 		}
 		else
 		{
@@ -79,7 +78,6 @@ int Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (nbx != 0)
 		{
-			Sound::getInstance()->play("Worm", false, 1);
 			x += min_tbx * dx + nbx * 0.4f;
 			if (isCollisionWithMagma)
 			{

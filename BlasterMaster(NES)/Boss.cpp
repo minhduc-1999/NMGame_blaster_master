@@ -259,6 +259,7 @@ void Boss::SetState(int state)
 vector<LPDYNAMICOBJECT> Boss::Fire(float xMain, float yMain)
 {
 	vector<LPDYNAMICOBJECT> bossBulls;
+	Sound::getInstance()->play("BossFire", false, 1);
 
 	if (countBullet <= 4)
 	{
@@ -267,10 +268,8 @@ vector<LPDYNAMICOBJECT> Boss::Fire(float xMain, float yMain)
 		float b = yMain - y;
 		bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 4, b / sqrt(pow(a, 2) + pow(b, 2)) / 4);
 		bossBulls.push_back(bullet);
-
 		isShooting = false;
 		countBullet++;
 	}
-
 	return bossBulls;
 }
