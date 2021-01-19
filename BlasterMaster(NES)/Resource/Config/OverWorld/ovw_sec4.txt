@@ -10,6 +10,7 @@
 #object type: 80 = gatescene, 81 = brokenable-brick
 [DYNAMIC_OBJECTS]
 #type	x	y	grid_id	ani_set_id
+12	900	1850	0	12
 [STATIC_OBJECTS]
 #type	x	y	grid_id	sprite_id1	...
 15	792	1816	0	110
