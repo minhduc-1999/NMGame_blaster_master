@@ -12,7 +12,8 @@ void Grid::AddStaticObj(LPSTATICOBJECT obj)
 
 void Grid::AddDynamicObj(LPDYNAMICOBJECT obj)
 {
-	dynamicObjs.push_back(obj);
+	if(find(dynamicObjs.begin(), dynamicObjs.end(), obj) == dynamicObjs.end())
+		dynamicObjs.push_back(obj);
 }
 
 Sophia* Grid::GetSophia()

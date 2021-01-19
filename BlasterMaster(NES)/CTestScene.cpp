@@ -192,7 +192,7 @@ int CTestScene::Update(DWORD dt)
 			CGame::GetInstance()->UpdateCamera(mainPos, mapPos, mapDimen);
 		}
 	}
-	
+
 	return 0;
 }
 
