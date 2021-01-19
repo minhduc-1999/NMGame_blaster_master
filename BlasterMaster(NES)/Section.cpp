@@ -79,6 +79,7 @@ void Section::AddMiniJason()
 	sophia->SetAnimationSet(ani_setSOPHIA);
 	sophia->SetTeam(0);
 	sophia->SetType(OBJECT_TYPE_SOPHIA);
+	sophia->SetIsActive(false);
 	vector<int> rs = GetBoundGrid(sophia->GetBound());
 	for (int i = 0; i < rs.size(); i++)
 	{
@@ -100,6 +101,7 @@ void Section::DeleteMiniJason()
 		Sophia* temp = grids[rs[i]]->GetSophia();
 		if (temp != NULL)
 		{
+			temp->SetIsActive(true);
 			mainPlayer = temp;
 		}
 	}

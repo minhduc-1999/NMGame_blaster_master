@@ -21,148 +21,151 @@ Sophia::Sophia(float x, float y) :MainPlayer(x, y)
 
 int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (isDestroyed)
+	if (isActive)
 	{
-		Sound::getInstance()->stop("lvl2");
-		CGame::GetInstance()->Notify(0);
-		return 1;
-	}
-	CDynamicGameObject::Update(dt);
-	/*if (vx != 0)
-	{
-		DWORD now = GetTickCount64();
-		if (now - lastFrameChange >= 45)
+		if (isDestroyed)
 		{
-			lastFrameChange = now;
-			if (currentWalkingColumn == 3)
-			{
-				currentWalkingColumn = 0;
-			}
-			else
-			{
-				currentWalkingColumn++;
-			}
-		}
-	}*/
-	if (!CanTouch && GetTickCount64() - TouchTime >= 500)
-	{
-		CanTouch = true;
-	}
-
-	//check now collision
-	vector< LPCOLLISIONEVENT> curCoEvents;
-	CalcNowCollisions(coObjects, curCoEvents);
-	isCollisionWithEnemy = false;
-	for (int i = 0; i < curCoEvents.size(); i++)
-	{
-		LPGAMEOBJECT temp = curCoEvents[i]->obj;
-		//DWORD now = GetTickCount64();
-		if (temp->GetTeam() != GetTeam())
-		{
-			isCollisionWithEnemy = true;
-		}
-
-		if (temp->GetType() == 26)
-		{
-			CDynamicGameObject* itemHP = dynamic_cast<CDynamicGameObject*>(temp);
-			if (!itemHP->GetIsDestroyed())
-			{
-				HPDown(-1);
-			}
-			itemHP->SetIsDestroyed();
-		}
-
-		switch (temp->GetType())
-		{
-		case 17:
-		{
-			CGate* gate = dynamic_cast<CGate*>(temp);
-			if (gate != 0)
-			{
-				if (this->nx == gate->GetDirectionX())
-				{
-					//if (abs(this->y - gate->GetDesTelePos().y) < 2)
-					//{
-					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
-						gate->GetDesTelePos());
-					return 0;
-					//}
-				}
-				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
-			}
-			break;
-		}
-		case 82:
-			CGame::GetInstance()->DisableKeyboard(true);
 			Sound::getInstance()->stop("lvl2");
-			CGame::GetInstance()->SwitchScene(4, 1, D3DXVECTOR2(-1, -1));
+			CGame::GetInstance()->Notify(0);
 			return 1;
-			break;
-		default:
-			break;
 		}
-	}
-	if (isCollisionWithEnemy)
-	{
-		if (CanTouch)
+		CDynamicGameObject::Update(dt);
+		/*if (vx != 0)
 		{
-			CanTouch = false;
-			TouchTime = GetTickCount64();
-			HPDown(1);
-			Sound::getInstance()->play("Hit", false, 1);
-		}
-		
-	}
-	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
-
-	vy += SOPHIA_GRAVITY;
-
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult;
-
-	coEvents.clear();
-	if (coObjects != NULL)
-		CalcPotentialCollisions(coObjects, coEvents);
-
-	// No collision occured, proceed normally
-	if (coEvents.size() == 0)
-	{
-		x += dx;
-		y += dy;
-	} 
-	else
-	{
-		float min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby;
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby);
-		if (nbx != 0)
-			x += min_tbx * dx + nbx * 0.4f;
-		else
-			x += dx;
-			//x += min_tx * dx + ntx * 0.4f;
-		if (nby != 0)
-		{
-			y += min_tby * dy + nby * 0.4f;
-			if (nby == -1)
+			DWORD now = GetTickCount64();
+			if (now - lastFrameChange >= 45)
 			{
-				SetIsJumping(false);
-				vy = 0;
+				lastFrameChange = now;
+				if (currentWalkingColumn == 3)
+				{
+					currentWalkingColumn = 0;
+				}
+				else
+				{
+					currentWalkingColumn++;
+				}
+			}
+		}*/
+		if (!CanTouch && GetTickCount64() - TouchTime >= 500)
+		{
+			CanTouch = true;
+		}
+
+		//check now collision
+		vector< LPCOLLISIONEVENT> curCoEvents;
+		CalcNowCollisions(coObjects, curCoEvents);
+		isCollisionWithEnemy = false;
+		for (int i = 0; i < curCoEvents.size(); i++)
+		{
+			LPGAMEOBJECT temp = curCoEvents[i]->obj;
+			//DWORD now = GetTickCount64();
+			if (temp->GetTeam() != GetTeam())
+			{
+				isCollisionWithEnemy = true;
+			}
+
+			if (temp->GetType() == 26)
+			{
+				CDynamicGameObject* itemHP = dynamic_cast<CDynamicGameObject*>(temp);
+				if (!itemHP->GetIsDestroyed())
+				{
+					HPDown(-1);
+				}
+				itemHP->SetIsDestroyed();
+			}
+
+			switch (temp->GetType())
+			{
+			case 17:
+			{
+				CGate* gate = dynamic_cast<CGate*>(temp);
+				if (gate != 0)
+				{
+					if (this->nx == gate->GetDirectionX())
+					{
+						//if (abs(this->y - gate->GetDesTelePos().y) < 2)
+						//{
+						CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
+							gate->GetDesTelePos());
+						return 0;
+						//}
+					}
+					//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
+				}
+				break;
+			}
+			case 82:
+				CGame::GetInstance()->DisableKeyboard(true);
+				Sound::getInstance()->stop("lvl2");
+				CGame::GetInstance()->SwitchScene(4, 1, D3DXVECTOR2(-1, -1));
+				return 1;
+				break;
+			default:
+				break;
+			}
+		}
+		if (isCollisionWithEnemy)
+		{
+			if (CanTouch)
+			{
+				CanTouch = false;
+				TouchTime = GetTickCount64();
+				HPDown(1);
+				Sound::getInstance()->play("Hit", false, 1);
+			}
+
+		}
+		for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
+
+		vy += SOPHIA_GRAVITY;
+
+		vector<LPCOLLISIONEVENT> coEvents;
+		vector<LPCOLLISIONEVENT> coEventsResult;
+
+		coEvents.clear();
+		if (coObjects != NULL)
+			CalcPotentialCollisions(coObjects, coEvents);
+
+		// No collision occured, proceed normally
+		if (coEvents.size() == 0)
+		{
+			x += dx;
+			y += dy;
+		}
+		else
+		{
+			float min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby;
+			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby);
+			if (nbx != 0)
+				x += min_tbx * dx + nbx * 0.4f;
+			else
+				x += dx;
+			//x += min_tx * dx + ntx * 0.4f;
+			if (nby != 0)
+			{
+				y += min_tby * dy + nby * 0.4f;
+				if (nby == -1)
+				{
+					SetIsJumping(false);
+					vy = 0;
+				}
+				else
+					vy = SOPHIA_GRAVITY;
+
 			}
 			else
-				vy = SOPHIA_GRAVITY;
-			
-		}
-		else
-			y += dy;
+				y += dy;
 			//y += min_ty * dy + nty * 0.4f;
+		}
+		if (HP <= 0)
+		{
+			Sound::getInstance()->play("SophiaDed", true, 0);
+			SetState(SOPHIA_STATE_DIE);
+		}
+		// clean up collision events
+		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+		//DebugOut("[SOPHIA]\t%f\t%f\n", x, y);
 	}
-	if (HP <= 0)
-	{
-		Sound::getInstance()->play("SophiaDed", true, 0);
-		SetState(SOPHIA_STATE_DIE);
-	}
-	// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	//DebugOut("[SOPHIA]\t%f\t%f\n", x, y);
 	return 0;
 }
 

@@ -58,11 +58,14 @@ class Sophia : public MainPlayer
 	int currentWalkingColumn;
 	int lastHeight;
 	int currentBullet;
+	bool isActive = true;
 public:
 	Sophia(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
+
+	void SetIsActive(bool bl) { isActive = bl; }
 
 	bool GetIsUp() { return isUp; };
 	void SetIsUp(bool _isUp) { isUp = _isUp; };
