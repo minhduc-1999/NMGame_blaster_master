@@ -1,6 +1,7 @@
 #include "Section.h"
 #include <fstream>
 #include "Brick.h"
+#include "EndingGate.h"
 #include "CMagma.h"
 #include "CSpike.h"
 #include "Sophia.h"
@@ -304,6 +305,10 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		return;
 		break;
 	}
+	case 82:
+		obj = new EndingGate(x, y);
+		obj->SetTeam(0);
+		break;
 	case OBJECT_TYPE_GATE:
 	{
 		int section = atoi(tokens[tokens.size() - 3].c_str());

@@ -433,6 +433,9 @@
     <ClInclude Include="CSpike.h">
       <Filter>Object\StaticObject\Spike</Filter>
     </ClInclude>
+    <ClInclude Include="EndingGate.h">
+      <Filter>Object\StaticObject\Gate</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -635,6 +638,9 @@
     </ClCompile>
     <ClCompile Include="CSpike.cpp">
       <Filter>Object\StaticObject\Spike</Filter>
+    </ClCompile>
+    <ClCompile Include="EndingGate.cpp">
+      <Filter>Object\StaticObject\Gate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

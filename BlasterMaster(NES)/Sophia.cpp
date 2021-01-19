@@ -92,6 +92,12 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			break;
 		}
+		case 82:
+			CGame::GetInstance()->DisableKeyboard(true);
+			Sound::getInstance()->stop("lvl2");
+			CGame::GetInstance()->SwitchScene(4, 1, D3DXVECTOR2(-1, -1));
+			return 1;
+			break;
 		default:
 			break;
 		}
