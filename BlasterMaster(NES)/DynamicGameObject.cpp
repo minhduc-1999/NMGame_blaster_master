@@ -258,6 +258,10 @@ void CDynamicGameObject::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vec
 			}
 
 		}
+		else if (GetType() == 2 && c->obj->GetType() == 18 && c->obj->GetPosition().y == 168 && c->ny == -1)
+		{
+			min_tby = c->t; nby = c->ny; min_iby = i;
+		}
 		else if (c->obj->GetType() == 17 && !(GetType() == 1 || GetType() == 2 || GetType() == 3))
 		{
 			if (c->t < min_tby && c->ny != 0) {

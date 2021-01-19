@@ -31,7 +31,7 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		CanTouch = true;
 	}
 	
-	if (yBeforeDrop > y)
+	if (yBeforeDrop > y || state == MINIJASON_STATE_CLIMB)
 	{
 		yBeforeDrop = y;
 	}
@@ -209,6 +209,27 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else
 			y += dy;
 
+		/*for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			int objType = e->obj->GetType();
+			if (objType == 18)
+			{
+				CLadder* ladder = dynamic_cast<CLadder*>(e->obj);
+				if (e->obj->GetPosition().y == 168 && e->ny == -1)
+				{
+					y += min_tby * dy + nby * 0.4f;
+					if (nx == 1)
+					{
+						SetState(MINIJASON_STATE_IDLE_RIGHT);
+					}
+					else
+					{
+						SetState(MINIJASON_STATE_IDLE_LEFT);
+					}
+				}
+			}
+		}*/
 	}
 	if (HP <= 0)
 	{
@@ -356,8 +377,12 @@ void MiniJason::SetState(int state)
 		y -= 15;
 		break;
 	case MINIJASON_STATE_CLIMB:
-		x = 1592.0;
-		vy = 0;
+		if (canClimb)
+		{
+			x = 1592.0;
+			vy = 0;
+
+		}
 		break;
 	case MINIJASON_STATE_DIE:
 		vx = 0;
@@ -473,7 +498,7 @@ void MiniJason::OnKeyDown(int KeyCode)
 	{
 	case DIK_Z:
 	{
-		if (GetTickCount64() - lastShot >= 300)
+		if (GetTickCount64() - lastShot >= 300 && state != MINIJASON_STATE_CLIMB)
 		{
 			canShoot = true;
 			Sound::getInstance()->play("JasonFire", false, 1);
