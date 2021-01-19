@@ -140,7 +140,7 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			CanTouch = false;
 			TouchTime = GetTickCount64();
 			HPDown(1);
-			Sound::getInstance()->play("Hit", false, 1);
+			Sound::getInstance()->play("JHit", false, 1);
 		}
 
 	}
@@ -243,7 +243,7 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	if (HP <= 0)
 	{
-		Sound::getInstance()->play("JasonDed", true, 0);
+		Sound::getInstance()->play("JasonDed", false, 1);
 		SetState(MINIJASON_STATE_DIE);
 	}
 
@@ -397,7 +397,7 @@ void MiniJason::SetState(int state)
 	case MINIJASON_STATE_DIE:
 		lives--;
 		vx = 0;
-		Sound::getInstance()->stop("Hit");
+		Sound::getInstance()->stop("JHit");
 		break;
 	}
 }

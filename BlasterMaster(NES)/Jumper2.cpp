@@ -8,12 +8,8 @@ Jumper2::Jumper2(float x, float y) :CDynamicGameObject(x, y)
 	isUpdated = false;
 	isRendered = false;
 }
-bool Jumper2::IsJumping()
-{
-	if (vy < 0) return false;
-	return true;
-}
-int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+
+int Jumper2::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
 		return -1;
@@ -23,7 +19,7 @@ int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CDynamicGameObject::Update(dt);
 
 	vy += JUMPER2_GRAVITY;
-
+	
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -33,30 +29,28 @@ int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// No collision occured, proceed normally
 
 	startTime += dt;
-
-	if (startTime > 700 && canJump /*&& countJump < 4*/)
-	{
-		if (nx == 1)
-			SetState(JUMPER2_STATE_JUMPING_RIGHT);
-		else
-			SetState(JUMPER2_STATE_JUMPING_LEFT);
-		//startTime = 600;
-		//countJump++;
-		canJump = false;
-		startTime = 0;
-	}
-	/*else if (countJump == 4)
-	{
-		startTime = 0;
-		countJump = 0;
-	}*/
+	if (nx == 1)
+		SetState(JUMPER2_STATE_WALKING_RIGHT);
 	else
+		SetState(JUMPER2_STATE_WALKING_LEFT);
+	if (startTime > 700 && canJump)
 	{
-		if (nx == 1)
-			SetState(JUMPER2_STATE_WALKING_RIGHT);
-		else
-			SetState(JUMPER2_STATE_WALKING_LEFT);
+			if (nx == 1)
+				SetState(JUMPER2_STATE_JUMPING_RIGHT);
+			else
+				SetState(JUMPER2_STATE_JUMPING_LEFT);
+			//startTime = 600;
+			//countJump++;
+			canJump = false;
+			startTime = 0;
 	}
+	//else
+	//{
+	//	if (nx == 1)
+	//		SetState(JUMPER2_STATE_WALKING_RIGHT);
+	//	else
+	//		SetState(JUMPER2_STATE_WALKING_LEFT);
+	//}
 
 	if (coEvents.size() == 0)
 	{
@@ -67,30 +61,28 @@ int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		float min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby);
-		//if (nbx != 0)
-		//{
-		//	x += min_tbx * dx + nbx * 0.4f;
-		//	nx = -nx;
-		//	/*if (nx == -1)
-		//	{
-		//		SetState(JUMPER2_STATE_JUMPING_RIGHT);
-		//	}
-		//	else
-		//	{
-		//		SetState(JUMPER2_STATE_JUMPING_LEFT);
-		//	}*/
-		//}
-		//else
-		//	x += dx;
 		if (nbx == 0)
 			x += dx;
 		if (nby == 0)
 			y += dy;
 		if (nby == -1)
 		{
+			if (abs(xMain - x) <= 100 && abs(yMain - y) <= 50)
+			{
+				canJump = true;
+				if (xMain - x < 0)
+					SetState(JUMPER2_STATE_JUMPING_LEFT);
+				else
+					SetState(JUMPER2_STATE_JUMPING_RIGHT);
+			}
+			else
+			{
+				if (nx == 1)
+					SetState(JUMPER2_STATE_WALKING_RIGHT);
+				else
+					SetState(JUMPER2_STATE_WALKING_LEFT);
+			}
 			y += min_tby * dy + nby * 0.4f;
-			canJump = true;
-			vy = -JUMPER2_JUMPING_SPEED;
 		}
 		else if (nbx != 0 && nby != 0)
 		{
@@ -99,8 +91,7 @@ int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				SetState(JUMPER2_STATE_WALKING_LEFT);
 			else
 				SetState(JUMPER2_STATE_WALKING_RIGHT);
-
-			vy = JUMPER2_GRAVITY;
+			vy += JUMPER2_GRAVITY;
 		}
 		else if (nbx != 0 && nby == 0)
 		{
@@ -113,14 +104,14 @@ int Jumper2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else if (nby != 0)
 		{
 			y += min_tby * dy + nby * 0.4f;
-			/*if (nby == -1)
+			if (nby == -1)
 			{
 				canJump = true;
 				vy = -JUMPER2_JUMPING_SPEED;
 				ny = -ny;
 			}
-			else*/
-				vy = JUMPER2_GRAVITY;
+			else
+				vy += JUMPER2_GRAVITY;
 		}
 		/*else
 			y += dy;*/
@@ -192,29 +183,35 @@ void Jumper2::SetState(int state)
 	CDynamicGameObject::SetState(state);
 	switch (state)
 	{
-	case JUMPER2_STATE_WALKING_RIGHT:
-		vx = JUMPER2_WALKING_SPEED;
-		nx = 1;
-		break;
-	case JUMPER2_STATE_WALKING_LEFT:
-		vx = -JUMPER2_WALKING_SPEED;
-		nx = -1;
-		break;
 	case JUMPER2_STATE_JUMPING_RIGHT:
-		vx = JUMPER2_WALKING_SPEED;
+		vx = JUMPER2_WALKING_SPEED*1,5;
 		vy = -JUMPER2_JUMPING_SPEED;
 		nx = 1;
 		break;
 	case JUMPER2_STATE_JUMPING_LEFT:
-		vx = -JUMPER2_WALKING_SPEED;
+		vx = -JUMPER2_WALKING_SPEED*1,5;
 		vy = -JUMPER2_JUMPING_SPEED;
 		nx = -1;
+		break;
+	case JUMPER2_STATE_WALKING_LEFT:
+		vx = -JUMPER2_WALKING_SPEED;
+		vy += JUMPER2_GRAVITY;
+		nx = -1;
+		break;
+	case JUMPER2_STATE_WALKING_RIGHT:
+		vx = JUMPER2_WALKING_SPEED;
+		vy += JUMPER2_GRAVITY;
+		nx = 1;
+		break;
 	case JUMPER2_STATE_DIE:
 		SetSize(0, 0);
 		vx = 0;
 		vy = 0;
 		break;
 	default:
+		vx = JUMPER2_WALKING_SPEED;
+		vy += JUMPER2_GRAVITY;
+		nx = 1;
 		break;
 	}
 }
