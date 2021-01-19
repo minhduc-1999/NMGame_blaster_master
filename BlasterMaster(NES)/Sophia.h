@@ -7,12 +7,12 @@
 #define SOPHIA_WIDTH 26
 #define SOPHIA_HEIGHT 18
 
-#define SOPHIA_HEIGHT_HIGH	0
-#define SOPHIA_HEIGHT_LOW	3
+#define SOPHIA_HEIGHT_HIGH		0
+#define SOPHIA_HEIGHT_LOW		1
 
-#define SOPHIA_RUN_SPEED						0.05f
+#define SOPHIA_RUN_SPEED						0.08f
 #define SOPHIA_JUMP_SPEED_Y						0.29f
-#define SOPHIA_GRAVITY							0.02f
+#define SOPHIA_GRAVITY							0.01f
 #define SOPHIA_MAX_HP					16
 
 //define STATE
@@ -45,13 +45,19 @@
 #define SOPHIA_ANI_TRANSFORM		11
 #define SOPHIA_ANI_DIE				12
 
+#define BULLET_NORMAL	0
+#define	BULLET_ROCKET	1
+#define BULLET_FOLLOW	2
+
 class Sophia : public MainPlayer
 {
 	int heightLevel = SOPHIA_HEIGHT_HIGH;
 	bool isUp;
 	DWORD lastFrameChange;
+	DWORD heightChange;
 	int currentWalkingColumn;
 	int lastHeight;
+	int currentBullet;
 public:
 	Sophia(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -65,8 +71,10 @@ public:
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
 
-	BaseBullet* Shoot();
+	vector<LPDYNAMICOBJECT> Shoot();
 	bool CanShoot() { return canShoot; }
+	int GetCurBullet() { return currentBullet; }
+	void SetCurBullet(int curBullet) { currentBullet = curBullet; }
 };
 
 #endif

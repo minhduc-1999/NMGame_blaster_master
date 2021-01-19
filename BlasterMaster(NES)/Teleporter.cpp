@@ -1,9 +1,11 @@
 #include "Teleporter.h"
+#include "EyeballBullet.h"
 #include <cmath>
 
 Teleporter::Teleporter(float x, float y) :CDynamicGameObject(x, y)
 {
 	SetSize(24, 32);
+	startTime = 0;
 }
 
 int Teleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -15,6 +17,15 @@ int Teleporter::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	coEvents.clear();
 
 	CalcPotentialCollisions(coObjects, coEvents);
+
+	startTime += dt;
+
+	if (startTime >= 1200)
+	{
+		isShooting = true;
+		startTime = 0;
+	}
+
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
@@ -146,4 +157,18 @@ void Teleporter::SetState(int state)
 		vy = 0;
 		break;
 	}
+}
+
+vector<LPDYNAMICOBJECT> Teleporter::Fire(float xMain, float yMain)
+{
+	vector<LPDYNAMICOBJECT> teleBulls;
+	EyeballBullet* bullet = new EyeballBullet(x, y, 1);
+	float a = xMain - x;
+	float b = yMain - y;
+	bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 3, b / sqrt(pow(a, 2) + pow(b, 2)) / 3);
+	teleBulls.push_back(bullet);
+
+	isShooting = false;
+
+	return teleBulls;
 }

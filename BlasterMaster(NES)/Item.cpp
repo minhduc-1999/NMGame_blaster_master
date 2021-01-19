@@ -1,4 +1,5 @@
 #include "Item.h"
+#include "Sophia.h"
 
 Item::Item(float x, float y) : CDynamicGameObject(x, y)
 {
@@ -14,14 +15,22 @@ Item::Item(float x, float y) : CDynamicGameObject(x, y)
 	isRendered = false;
 }
 
-int Item::Update(DWORD dt, vector<LPGAMEOBJECT> coObjects)
+int Item::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
 		return -1;
 
+	isUpdated = true;
+	isRendered = false;
 }
 
 void Item::Render()
 {
+	if (isRendered)
+	{
+		return;
+	}
 	animation_set->at(0)->Render(x, y, -1);
+	isRendered = true;
+	isUpdated = false;
 }

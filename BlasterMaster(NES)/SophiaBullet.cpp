@@ -1,27 +1,39 @@
 #include "SophiaBullet.h"
 
-SophiaBullet::SophiaBullet(float x, float y, int team, int nx, int ny) : BaseBullet(x, y, team, nx, ny)
+SophiaBullet::SophiaBullet(float x, float y, int team, int t, int nx, int ny) : BaseBullet(x, y, team, nx, ny)
 {
 	damage = SOPHIA_BULLET_DAMAGE;
-	SetAnimationSet(SOPHIA_BULLET_ANISET);
+	type = t;
+	if (type == 0)
+	{
+		SetAnimationSet(SOPHIA_BULLET_ANISET);
+		if (nx != 0)
+			SetSize(8, 26);
+		if (ny != 0)
+			SetSize(26, 8);
+	}
+	else if (type == 1)
+	{
+		SetAnimationSet(SOPHIA_BULLET_ROCKET_ANISET);
+		SetSize(19, 8);
+	}
+
 	if (nx != 0)
 	{
-		SetSize(26, 8);
 		if (nx == 1)
 		{
 			SetState(SOPHIA_BULLET_STATE_RIGHT);
-			SetPosition(x + 13, y - 5);
+			SetPosition(x + 5, y - 5);
 		}
 		else
 		{
 			SetState(SOPHIA_BULLET_STATE_LEFT);
-			SetPosition(x - 13, y - 5);
+			SetPosition(x - 5, y - 5);
 		}
 
 	}
 	if (ny != 0)
 	{
-		SetSize(8, 26);
 		SetState(SOPHIA_BULLET_STATE_UP);
 		if (nx == 1)
 		{
@@ -43,6 +55,12 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (state == SOPHIA_BULLET_STATE_DESTROY)
 		return 0;
 
+	if (GetTickCount64() - startFiringTime >= 200 && type == 1)
+	{
+		if (vy != 0)
+			vy = 0;
+	}
+
 	if (GetTickCount64() - startFiringTime >= 500)
 	{
 		SetState(SOPHIA_BULLET_STATE_DESTROY);
@@ -58,15 +76,21 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		int objTeam = temp->GetTeam();
-		if (objTeam != this->team)
+		if (objTeam == 1
+			&& !(temp->GetType() == 16 || temp->GetType() == 19))
 		{
-			if (objTeam == 1)
-			{
-				LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
-				dyn->SetIsDestroyed();
-			}
+			LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
+			dyn->SetIsDestroyed();
 			SetState(SOPHIA_BULLET_STATE_DESTROY);
 			return 0;
+		}
+		else if (objTeam == -1)
+		{
+			if (type == 0)
+			{
+				SetState(SOPHIA_BULLET_STATE_DESTROY);
+				return 0;
+			}
 		}
 	}
 	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
@@ -92,6 +116,7 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
 
 		// block 
+		
 		x += min_tx * dx + ntx * 0.4f;
 		y += min_ty * dy + nty * 0.4f;
 
@@ -100,17 +125,22 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int objTeam = e->obj->GetTeam();
-			if (objTeam != this->team)
+			if (objTeam == 1 && !(e->obj->GetType() == 16 || e->obj->GetType() == 19))
 			{
-				if (objTeam == 1)
-				{
-					LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
-					dyn->SetIsDestroyed();
-				}
+				LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
+				dyn->SetIsDestroyed();
 				SetState(SOPHIA_BULLET_STATE_DESTROY);
-				break;
+				return 0;
 			}
-			if (e->obj->GetType() != 15)
+			else if (objTeam == -1)
+			{
+				if (type == 0)
+				{
+					SetState(SOPHIA_BULLET_STATE_DESTROY);
+					break;
+				}
+			}
+			if (e->obj->GetType() != 15 || (e->obj->GetType() == 15 && type == 1))
 			{
 				if (e->nx != 0)
 				{
@@ -183,4 +213,10 @@ void SophiaBullet::SetState(int state)
 		vy = -SOPHIA_BULLET_SPEED;
 		break;
 	}
+}
+
+void SophiaBullet::SetSpeed(float spX, float spY)
+{
+	vx = spX;
+	vy = spY;
 }

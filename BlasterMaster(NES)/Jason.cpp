@@ -2,10 +2,12 @@
 #include "CGate.h"
 #include "SceneGate.h"
 #include "JasonBullet.h"
+#include "Item.h"
 
 Jason::Jason(float x, float y) :MainPlayer(x, y)
 {
 	SetSize(JASON_WIDTH, JASON_HEIGHT);
+	SetHPMAX(16);
 	ny = 1;
 	lastShot = GetTickCount64();
 	canGoArea = false;
@@ -15,6 +17,12 @@ Jason::Jason(float x, float y) :MainPlayer(x, y)
 
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isDestroyed)
+	{
+		Sound::getInstance()->stop("lvl2");
+		CGame::GetInstance()->Notify(0);
+		return 1;
+	}
 	CDynamicGameObject::Update(dt);
 	if (!CanTouch && GetTickCount64() - TouchTime >= 500)
 	{
@@ -32,6 +40,17 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			isCollisionWithEnemy = true;
 		}
+
+		if (temp->GetType() == 26)
+		{
+			CDynamicGameObject* itemHP = dynamic_cast<CDynamicGameObject*>(temp);
+			if (!itemHP->GetIsDestroyed())
+			{
+				HPDown(-1);
+			}
+			itemHP->SetIsDestroyed();
+		}
+
 		switch (temp->GetType())
 		{
 		case 17:
@@ -72,7 +91,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			CanTouch = false;
 			TouchTime = GetTickCount64();
-			SetHP(HPDown(HP, 1));
+			HPDown(1);
 			Sound::getInstance()->play("Hit", false, 1);
 		}
 
@@ -95,20 +114,27 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, ntx, nty;
+		float min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby;
 
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby);
 
 		// block 
-		x += min_tx * dx + ntx * 0.4f;
-		y += min_ty * dy + nty * 0.4f;
+		if (nbx != 0)
+			x += min_tbx * dx + nbx * 0.4f;
+		else
+			x += dx;
+		//x += min_tx * dx + ntx * 0.4f;
+		if (nby != 0)
+			y += min_tby * dy + nby * 0.4f;
+		else
+			y += dy;
 
 		//TODO: Collision logic with dynamic object (bots)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int objType = e->obj->GetType();
-			if (objType != 15)
+			/*if (objType != 15)
 			{
 				if (e->nx != 0)
 				{
@@ -118,7 +144,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					y += (1 - e->t) * dy - e->ny * 0.4f;
 				}
-			}
+			}*/
 		}
 
 	}
@@ -159,7 +185,7 @@ void Jason::Render()
 		else
 		{
 			animation_set->at(JASON_ANI_DIE)->ResetAnim();
-			SetState(JASON_STATE_IDLE);
+			isDestroyed = true;
 			//CGame::GetInstance()->SwitchScene(3, 1);
 			return;
 		}

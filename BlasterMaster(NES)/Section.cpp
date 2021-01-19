@@ -2,6 +2,7 @@
 #include <fstream>
 #include "Brick.h"
 #include "CMagma.h"
+#include "CSpike.h"
 #include "Sophia.h"
 #include "CGate.h"
 #include "Mine.h"
@@ -21,6 +22,7 @@
 #include "MiniJason.h"
 #include "CLadder.h"
 #include "SceneGate.h"
+#include "Rock.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -56,6 +58,7 @@ using namespace std;
 #define OBJECT_TYPE_MAGMA		19
 #define OBJECT_TYPE_BULLET		20
 #define OBJECT_TYPE_ITEM_HP		26
+#define OBJECT_TYPE_ROCK		60
 #pragma endregion
 
 void Section::AddMiniJason()
@@ -210,7 +213,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 			break;
 		case OBJECT_TYPE_INSECT:
 			obj = new Insect(x, y);
-			obj->SetState(INSECT_STATE_FLYDOWN_RIGHT);
+			obj->SetState(INSECT_STATE_ALIVE);
 			break;
 		case OBJECT_TYPE_JUMPER2:
 			obj = new Jumper2(x, y);
@@ -239,6 +242,9 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 		case OBJECT_TYPE_EYEBALL:
 			obj = new Eyeball(x, y);
 			obj->SetState(EYEBALL_STATE_ALIVE);
+			break;
+		case OBJECT_TYPE_ROCK:
+			obj = new Rock(x, y);
 			break;
 		default:
 			DebugOut("[ERROR] Invalid object type: %d\n", object_type);
@@ -319,7 +325,12 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		break;
 	}
 	case OBJECT_TYPE_MAGMA:
-		obj = new CMagma(x, y);
+		obj = new CMagma(x, y); 
+		obj->SetTeam(1);
+		break;
+	case OBJECT_TYPE_ARROW:
+		obj = new CSpike(x, y);
+		obj->SetTeam(1);
 		break;
 	default:
 		DebugOut("[ERROR] Invalid object type: %d\n", object_type);
@@ -424,7 +435,6 @@ void Section::Load()
 	}
 
 	f.close();
-
 	//CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	DebugOut("[INFO] Done loading SECTION resources %s\n", secFilePath);
 }

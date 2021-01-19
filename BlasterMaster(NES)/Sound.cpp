@@ -39,7 +39,7 @@ Sound::Sound(HWND hWnd)
 	{
 		//GAMELOG("Can not create primaryBuffer");
 	}
-	volume = 80.0f;
+	volume = 90.0f;
 	isMute = false;
 }
 
@@ -219,7 +219,11 @@ void Sound::stop(std::string name)
 		it = soundBufferMap.find(name);
 		if (it == soundBufferMap.end())
 			return;
-		else it->second->Stop();
+		else
+		{
+			it->second->Stop();
+			it->second->SetCurrentPosition(0);
+		}
 	}
 }
 

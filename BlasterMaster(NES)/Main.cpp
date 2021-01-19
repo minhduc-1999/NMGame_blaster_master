@@ -7,9 +7,7 @@
 #define SCREEN_WIDTH 271
 #define SCREEN_HEIGHT 262
 
-#define MAX_FRAME_RATE 60
-
-
+#define MAX_FRAME_RATE 120
 
 
 CGame* game;
@@ -76,7 +74,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 		CreateWindow(
 			WINDOW_CLASS_NAME,
 			WINDOW_TITLE,
-			WS_OVERLAPPEDWINDOW | WS_MAXIMIZE,//WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
+			WS_OVERLAPPEDWINDOW | WS_MAXIMIZE,/*WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,*/
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,
 			ScreenWidth,
@@ -204,6 +202,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//resourceManager->LoadResource();
 
 	game->Load("Resource/Config/Gameworld.txt");
+
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2.5, SCREEN_HEIGHT * 2.5, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 

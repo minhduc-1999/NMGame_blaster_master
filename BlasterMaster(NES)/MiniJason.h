@@ -7,12 +7,13 @@
 #define MINIJASON_HEIGHT		17
 #define MINIJASON_DOWN_WIDTH	17
 #define MINIJASON_DOWN_HEIGHT	10
+#define MINIJASON_HEIGHT_DIE	60
 
 #define MINIJASON_RUN_SPEED						0.04f
 #define MINIJASON_DOWN_RUN_SPEED				0.03f
 #define MINIJASON_CLIMB_SPEED_Y					0.03f
-#define MINIJASON_JUMP_SPEED_Y					0.29f
-#define MINIJASON_GRAVITY						0.02f
+#define MINIJASON_JUMP_SPEED_Y					0.21f
+#define MINIJASON_GRAVITY						0.01f
 
 //define STATE
 #define MINIJASON_STATE_IDLE_RIGHT		000
@@ -39,6 +40,7 @@ class MiniJason : public MainPlayer
 	bool isDown = false;
 	bool isCollisionWithSophia = false;
 	bool canClimb = false;
+	float yBeforeDrop;
 public:
 	MiniJason(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

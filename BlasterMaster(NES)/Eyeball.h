@@ -15,9 +15,9 @@ class Eyeball :
 {
 private:
 	DWORD startTime;
-public:
 	float startX;
 	float startY;
+public:
 	Eyeball(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();

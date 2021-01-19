@@ -156,6 +156,7 @@
     <ClInclude Include="CGate.h" />
     <ClInclude Include="CLadder.h" />
     <ClInclude Include="CMagma.h" />
+    <ClInclude Include="CSpike.h" />
     <ClInclude Include="CTestScene.h" />
     <ClInclude Include="DescPanel.h" />
     <ClInclude Include="Dome.h" />
@@ -176,7 +177,10 @@
     <ClInclude Include="MineBullet.h" />
     <ClInclude Include="MiniJasonBullet.h" />
     <ClInclude Include="MoviePanel.h" />
+    <ClInclude Include="NotifyScene.h" />
+    <ClInclude Include="NotifyPanel.h" />
     <ClInclude Include="Panel.h" />
+    <ClInclude Include="Rock.h" />
     <ClInclude Include="SceneGate.h" />
     <ClInclude Include="HPBar.h" />
     <ClInclude Include="Insect.h" />
@@ -192,6 +196,7 @@
     <ClInclude Include="SectionArea.h" />
     <ClInclude Include="SectionOvw.h" />
     <ClInclude Include="SectionTransition.h" />
+    <ClInclude Include="SelectPanel.h" />
     <ClInclude Include="SkullBullet.h" />
     <ClInclude Include="SlidePanel.h" />
     <ClInclude Include="Sophia.h" />
@@ -221,6 +226,7 @@
     <ClCompile Include="CGate.cpp" />
     <ClCompile Include="CLadder.cpp" />
     <ClCompile Include="CMagma.cpp" />
+    <ClCompile Include="CSpike.cpp" />
     <ClCompile Include="CTestScene.cpp" />
     <ClCompile Include="DescPanel.cpp" />
     <ClCompile Include="Dome.cpp" />
@@ -247,13 +253,17 @@
     <ClCompile Include="MiniJason.cpp" />
     <ClCompile Include="MiniJasonBullet.cpp" />
     <ClCompile Include="MoviePanel.cpp" />
+    <ClCompile Include="NotifyPanel.cpp" />
+    <ClCompile Include="NotifyScene.cpp" />
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="OvwSectionTransition.cpp" />
+    <ClCompile Include="Rock.cpp" />
     <ClCompile Include="SceneGate.cpp" />
     <ClCompile Include="Section.cpp" />
     <ClCompile Include="SectionArea.cpp" />
     <ClCompile Include="SectionOvw.cpp" />
     <ClCompile Include="SectionTransition.cpp" />
+    <ClCompile Include="SelectPanel.cpp" />
     <ClCompile Include="SkullBullet.cpp" />
     <ClCompile Include="SlidePanel.cpp" />
     <ClCompile Include="Sophia.cpp" />
@@ -313,6 +323,7 @@
     <Text Include="Resource\Config\Area2\area2_secO.txt" />
     <Text Include="Resource\Config\endgame\description.txt" />
     <Text Include="Resource\Config\endgame\endgame.txt" />
+    <Text Include="Resource\Config\endgame\notify.txt" />
     <Text Include="Resource\Config\Gameworld.txt" />
     <Text Include="Resource\Config\intro\intro.txt" />
     <Text Include="Resource\Config\OverWorld\overworld.txt" />
@@ -356,8 +367,11 @@
     <Media Include="Resource\Sound\Boss.wav" />
     <Media Include="Resource\Sound\Canon.wav" />
     <Media Include="Resource\Sound\Dome.wav" />
+    <Media Include="Resource\Sound\Ending.wav" />
     <Media Include="Resource\Sound\Fly.wav" />
     <Media Include="Resource\Sound\Hit.wav" />
+    <Media Include="Resource\Sound\Intro.wav" />
+    <Media Include="Resource\Sound\Intro2.wav" />
     <Media Include="Resource\Sound\JasonDed.wav" />
     <Media Include="Resource\Sound\JasonFire.wav" />
     <Media Include="Resource\Sound\JasonGunBoom.wav" />

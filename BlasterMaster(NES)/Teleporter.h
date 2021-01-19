@@ -17,12 +17,15 @@
 
 class Teleporter : public CDynamicGameObject
 {
-public:
-	Teleporter(float x, float y);
+private:
+	DWORD startTime;
 	bool isTele = false;
 	int swap, delay, newx, newy;
+public:
+	Teleporter(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
+	vector<LPDYNAMICOBJECT> Fire(float xMain, float yMain);
 };
 #endif // !_TELE_H

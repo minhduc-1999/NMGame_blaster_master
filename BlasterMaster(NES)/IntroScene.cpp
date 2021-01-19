@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include <fstream>
 #include "Textures.h"
+#include "Sound.h"
 
 IntroScene::IntroScene(int id, string filePath, int type, D3DXVECTOR3 bg) : CScene(id, filePath, type, bg)
 {
@@ -81,7 +82,6 @@ void IntroScene::Load(D3DXVECTOR2 tlPos)
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
 		}
 	}
-	//Sound::getInstance()->play("lvl2", true, 0);
 	f.close();
 
 	DebugOut("[INFO] Intro has been loaded successfully\n", sceneFilePath);
@@ -103,16 +103,30 @@ int IntroScene::Update(DWORD dt)
 			NextIntro();
 		break;
 	case 1:
+		Sound::getInstance()->play("Intro", true, 0);
 		if (introSets->at(current_intro)->IsCompleted())
 			NextIntro();
 		break;
 	case 2:
+		Sound::getInstance()->stop("Intro");
+		if (GetTickCount64() - start >= 3000)
+			NextIntro();	
+		break;
+	case 3:
+		Sound::getInstance()->play("Intro2", true, 0);
+		if (GetTickCount64() - start >= 2000)
+		{
+			Sound::getInstance()->play("Hit", false, 1);
+		}
 		if (GetTickCount64() - start >= 4000)
 			NextIntro();
 		break;
-	case 3:
+	case 4:
 		if (introSets->at(current_intro)->IsCompleted())
+		{
+			Sound::getInstance()->stop("Intro2");
 			CGame::GetInstance()->SwitchScene(2, 1, D3DXVECTOR2(-1, -1));
+		}
 	default:
 		break;
 	}
@@ -129,7 +143,7 @@ void IntroScene::Render()
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
 	switch (current_intro)
 	{
-	case 0:
+	case 0: case 2:
 		CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 		introSets->at(current_intro)->RenderWithColor(bgX + 2, bgY - 20, -1);
 		break;

@@ -7,7 +7,7 @@ class CDynamicGameObject :
 protected:
 	float dx, dy;
 	int nx, ny;
-	int state, HP;
+	int state, HP, HPMAX;
 	bool isUpdated, isRendered;
 	DWORD dt;
 	LPANIMATION_SET animation_set;
@@ -22,8 +22,9 @@ public:
 	int GetNY() { return ny; };
 
 	int GetHP() { return HP; };
-	void SetHP(int hp) { HP = hp; };
-	int HPDown(int hp, int dmg);
+	void SetHPMAX(int hp) { HP = hp; HPMAX = hp; };
+	void SetHP(int hp) { HP = hp; }
+	void HPDown(int dmg);
 	virtual void SetState(int state);
 	int GetState();
 

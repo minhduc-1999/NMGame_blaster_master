@@ -175,10 +175,13 @@ void CDynamicGameObject::CalcPotentialCollisions(
 	std::sort(coEvents.begin(), coEvents.end(), CCollisionEvent::compare);
 }
 
-int CDynamicGameObject::HPDown(int hp, int dmg)
+void CDynamicGameObject::HPDown(int dmg)
 {
-	hp=hp-dmg;
-	return hp;
+	HP -= dmg;
+	if (HP > HPMAX)
+	{
+		HP += dmg;
+	}
 }
 
 void CDynamicGameObject::FilterCollision(
@@ -238,7 +241,7 @@ void CDynamicGameObject::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vec
 	for (UINT i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
-		if (c->obj->GetType() == 15)
+		if (c->obj->GetType() == 15 || c->obj->GetType() == 60)
 		{
 			if (c->t < min_tby && c->ny != 0) {
 				min_tby = c->t; nby = c->ny; min_iby = i;
@@ -254,6 +257,15 @@ void CDynamicGameObject::FilterCollision(vector<LPCOLLISIONEVENT>& coEvents, vec
 				}
 			}
 
+		}
+		else if (c->obj->GetType() == 17 && !(GetType() == 1 || GetType() == 2 || GetType() == 3))
+		{
+			if (c->t < min_tby && c->ny != 0) {
+				min_tby = c->t; nby = c->ny; min_iby = i;
+			}
+			if (c->t < min_tbx && c->nx != 0) {
+				min_tbx = c->t; nbx = c->nx; min_ibx = i;
+			}
 		}
 		else
 		{

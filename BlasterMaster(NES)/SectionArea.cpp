@@ -6,36 +6,40 @@ void SectionArea::Load(SaveData* data, D3DXVECTOR2 mainPos)
 	Section::Load();
 	if (data != NULL)
 	{
+		CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 		if (data->sophiaSection == id)
 		{
-			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 			LPANIMATION_SET ani_set = animation_sets->Get(1);
 			LPDYNAMICOBJECT obj;
 			obj = new Sophia(data->sophiaX, data->sophiaY);
 			obj->SetAnimationSet(ani_set);
 			obj->SetTeam(0);
 			obj->SetType(1);
+			obj->SetState(data->sophiaState);
+			obj->SetHP(data->sophiaHP);
+
 			vector<int> gridPos = GetBoundGrid(obj->GetBound());
 			for (int i = 0; i < gridPos.size(); i++)
 			{
 				grids[gridPos[i]]->AddDynamicObj(obj);
 			}
-			if (mainPlayer == NULL)
-			{
-				LPANIMATION_SET ani_setMINIJASON = animation_sets->Get(2);
-				if(mainPos.x == -1 && mainPos.y == -1)
-					mainPlayer = new MiniJason(defaultPos.x, defaultPos.y);
-				else
-					mainPlayer = new MiniJason(mainPos.x, mainPos.y);
-				mainPlayer->SetTeam(0);
-				mainPlayer->SetType(2);
-				mainPlayer->SetState(MINIJASON_STATE_IDLE_LEFT);
-				mainPlayer->SetAnimationSet(ani_setMINIJASON);
-				DebugOut("[AREA-INFO] create minijason\n");
-				DebugOut("[AREA-INFO] Main Pos:\t%f\t%f\n", mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
-			}
-			DebugOut("[AREA-INFO] Loaded save data\n");
 		}
+		if (mainPlayer == NULL)
+		{
+			LPANIMATION_SET ani_setMINIJASON = animation_sets->Get(2);
+			if (mainPos.x == -1 && mainPos.y == -1)
+				mainPlayer = new MiniJason(defaultPos.x, defaultPos.y);
+			else
+				mainPlayer = new MiniJason(mainPos.x, mainPos.y);
+			mainPlayer->SetTeam(0);
+			mainPlayer->SetType(2);
+			mainPlayer->SetState(MINIJASON_STATE_IDLE_LEFT);
+			mainPlayer->SetAnimationSet(ani_setMINIJASON);
+			mainPlayer->SetHP(data->jasonHP);
+			DebugOut("[AREA-INFO] create minijason\n");
+			DebugOut("[AREA-INFO] Main Pos:\t%f\t%f\n", mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
+		}
+		DebugOut("[AREA-INFO] Loaded save data\n");
 	}
 	else
 	{

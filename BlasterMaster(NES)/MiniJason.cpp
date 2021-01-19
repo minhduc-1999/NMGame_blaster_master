@@ -5,23 +5,50 @@
 #include "CLadder.h"
 #include "SceneGate.h"
 #include "MiniJasonBullet.h"
+#include "Item.h"
 
 
 MiniJason::MiniJason(float x, float y) :MainPlayer(x, y)
 {
+	yBeforeDrop = y;
 	SetSize(MINIJASON_WIDTH, MINIJASON_HEIGHT);
 	SetType(2);
-	HP = 16;
+	SetHPMAX(16);
 }
 
 int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isDestroyed)
+	{
+		Sound::getInstance()->stop("lvl2");
+		CGame::GetInstance()->Notify(0);
+		return 1;
+	}
 	CDynamicGameObject::Update(dt);
 
 	if (!CanTouch && GetTickCount64() - TouchTime >= 500)
 	{
 		CanTouch = true;
 	}
+	
+	if (yBeforeDrop > y)
+	{
+		yBeforeDrop = y;
+	}
+	/*if (isJumping && vy >= 0)
+	{
+		if (yBeforeDrop > y)
+		{
+			yBeforeDrop = y;
+		}
+	}
+	else
+	{
+		if (yBeforeDrop > y)
+		{
+			yBeforeDrop = y;
+		}
+	}*/
 
 	vector< LPCOLLISIONEVENT> curCoEvents;
 	isCollisionWithSophia = false;
@@ -36,6 +63,17 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			isCollisionWithEnemy = true;
 		}
+
+		if (temp->GetType() == 26)
+		{
+			CDynamicGameObject* itemHP = dynamic_cast<CDynamicGameObject*>(temp);
+			if (!itemHP->GetIsDestroyed())
+			{
+				HPDown(-1);
+			}
+			itemHP->SetIsDestroyed();
+		}
+
 		switch (temp->GetType())
 		{
 		case 80:
@@ -91,7 +129,7 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			CanTouch = false;
 			TouchTime = GetTickCount64();
-			SetHP(HPDown(HP, 1));
+			HPDown(1);
 			Sound::getInstance()->play("Hit", false, 1);
 		}
 
@@ -142,17 +180,29 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (nby == -1)
 			{
 				SetIsJumping(false);
-				if (GetState() == MINIJASON_STATE_CLIMB)
+				if (y- yBeforeDrop>= MINIJASON_HEIGHT_DIE)
 				{
-					if (nx == 1)
+					HPDown(HPMAX);
+				}
+				else if (y - yBeforeDrop >= MINIJASON_HEIGHT_DIE - 16)
+				{
+					HPDown(HPMAX/4);
+				}
+				else
+				{
+					if (GetState() == MINIJASON_STATE_CLIMB)
 					{
-						SetState(MINIJASON_STATE_IDLE_RIGHT);
-					}
-					else
-					{
-						SetState(MINIJASON_STATE_IDLE_LEFT);
+						if (nx == 1)
+						{
+							SetState(MINIJASON_STATE_IDLE_RIGHT);
+						}
+						else
+						{
+							SetState(MINIJASON_STATE_IDLE_LEFT);
+						}
 					}
 				}
+				yBeforeDrop = y;
 			}
 
 		}
@@ -176,7 +226,7 @@ void MiniJason::Render()
 {
 	int ani = MINIJASON_ANI_IDLE;
 
-	if (GetState() == MINIJASON_STATE_DIE)
+	if (GetState() == MINIJASON_STATE_DIE && isJumping == false)
 	{
 		ani = MINIJASON_ANI_DIE;
 		if (!animation_set->at(MINIJASON_ANI_DIE)->IsCompleted())
@@ -187,7 +237,7 @@ void MiniJason::Render()
 		else
 		{
 			animation_set->at(MINIJASON_ANI_DIE)->ResetAnim();
-			SetState(MINIJASON_STATE_IDLE_RIGHT);
+			isDestroyed = true;
 			//CGame::GetInstance()->SwitchScene(3, 1);
 			return;
 		}
@@ -230,7 +280,7 @@ void MiniJason::Render()
 			{
 				switch (state)
 				{
-				case MINIJASON_STATE_IDLE_RIGHT: case MINIJASON_STATE_IDLE_LEFT:
+				case MINIJASON_STATE_IDLE_RIGHT: case MINIJASON_STATE_IDLE_LEFT:case MINIJASON_STATE_DIE:
 					ani = MINIJASON_ANI_DOWN_RUN;
 					animation_set->at(ani)->RenderFrame(0, x, y, nx, alpha);
 					return;
@@ -244,7 +294,7 @@ void MiniJason::Render()
 			{
 				switch (state)
 				{
-				case MINIJASON_STATE_IDLE_RIGHT:case MINIJASON_STATE_IDLE_LEFT:
+				case MINIJASON_STATE_IDLE_RIGHT:case MINIJASON_STATE_IDLE_LEFT:case MINIJASON_STATE_DIE:
 					ani = MINIJASON_ANI_IDLE;
 					animation_set->at(ani)->Render(x, y, nx, alpha);
 					break;
@@ -311,7 +361,6 @@ void MiniJason::SetState(int state)
 		break;
 	case MINIJASON_STATE_DIE:
 		vx = 0;
-		vy = 0;
 		Sound::getInstance()->stop("Hit");
 		break;
 	}
@@ -436,19 +485,23 @@ void MiniJason::OnKeyDown(int KeyCode)
 	}
 	break;
 	case DIK_X:
-		if (GetIsDown() == false)
+		if (GetState() != MINIJASON_STATE_CLIMB)
 		{
-			if (GetIsJumping() == false)
+			if (GetIsDown() == false)
 			{
-				SetIsJumping(true);
-				Sound::getInstance()->play("Jump", false, 1);
-				if (GetNX() == 1)
+				if (GetIsJumping() == false)
 				{
-					SetState(MINIJASON_STATE_JUMP_RIGHT);
-				}
-				else
-				{
-					SetState(MINIJASON_STATE_JUMP_LEFT);
+					SetIsJumping(true);
+					//yBeforeDrop = y;
+					Sound::getInstance()->play("Jump", false, 1);
+					if (GetNX() == 1)
+					{
+						SetState(MINIJASON_STATE_JUMP_RIGHT);
+					}
+					else
+					{
+						SetState(MINIJASON_STATE_JUMP_LEFT);
+					}
 				}
 			}
 		}

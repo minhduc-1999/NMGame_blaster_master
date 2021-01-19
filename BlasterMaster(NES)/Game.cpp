@@ -4,6 +4,7 @@
 #include "Textures.h"
 #include "IntroScene.h"
 #include "EndGameScene.h"
+#include "NotifyScene.h"
 
 CGame* CGame::__instance = NULL;
 HWND CGame::mHwnd = NULL;
@@ -440,6 +441,8 @@ void CGame::Update(DWORD dt)
 	scenes[current_scene]->Update(dt);
 }
 
+
+
 void CGame::SweptAABB(
 	float ml, float mt, float mr, float mb,
 	float dx, float dy,
@@ -585,6 +588,8 @@ void CGame::_ParseSection_SCENES(string line)
 		break;
 	case 4:
 		scene = new EndGameScene(id, path, type, D3DXVECTOR3(R, G, B));
+	case 5:
+		scene = new NotifyScene(id, path, type, D3DXVECTOR3(R, G, B));
 	default:
 		break;
 	}
@@ -633,7 +638,13 @@ void CGame::SwitchScene(int scene_id, int section, D3DXVECTOR2 tlPos)
 	DebugOut("[INFO] Switching to scene %d\n", scene_id);
 
 	SaveData* data = scenes[current_scene]->GetSaveData();
-
+	if (scenes[current_scene]->GetType() == GAME_SCENES_TYPE_AREA || scenes[current_scene]->GetType() == GAME_SCENES_TYPE_OVW)
+	{
+		if (data != NULL)
+		{
+			data->jasonHP = ((CTestScene*)scenes[current_scene])->GetPlayer()->GetHP();
+		}
+	}
 	scenes[current_scene]->Unload();
 
 	CTextureManager::GetInstance()->Clear();
@@ -652,7 +663,32 @@ void CGame::SwitchScene(int scene_id, int section, D3DXVECTOR2 tlPos)
 	SetKeyHandler(s->GetKeyEventHandler());
 	camera->SetPosition(D3DXVECTOR2(0, 0));
 }
+void CGame::Notify(int mainLives)
+{
+	DebugOut("[INFO] Notify %d\n");
 
+	SaveData* data = scenes[current_scene]->GetSaveData();
+	if (scenes[current_scene]->GetType() == GAME_SCENES_TYPE_AREA || scenes[current_scene]->GetType() == GAME_SCENES_TYPE_OVW)
+	{
+		if (data != NULL)
+		{
+			data->jasonHP = ((CTestScene*)scenes[current_scene])->GetPlayer()->GetHP();
+		}
+	}
+	scenes[current_scene]->Unload();
+
+	CTextureManager::GetInstance()->Clear();
+	CSpriteManager::GetInstance()->Clear();
+	CAnimationManager::GetInstance()->Clear();
+
+	current_scene = 5;
+	NotifyScene* s = (NotifyScene*)scenes[5];
+	s->SetSaveData(data);
+	s->SetNotify(mainLives);
+	s->Load(D3DXVECTOR2(0, 0));
+	SetKeyHandler(s->GetKeyEventHandler());
+	camera->SetPosition(D3DXVECTOR2(0, 0));
+}
 void CGame::SwitchSection(int section_id, D3DXVECTOR2 tlPos)
 {
 	scenes[current_scene]->SwitchSection(section_id, tlPos);

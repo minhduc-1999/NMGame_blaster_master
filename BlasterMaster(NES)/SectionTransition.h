@@ -2,7 +2,7 @@
 #include "Section.h"
 #include "SaveData.h"
 
-#define SWITCH_SECTION_SPEED 0.07f
+#define SWITCH_SECTION_SPEED 0.06f
 
 class SectionTransition
 {

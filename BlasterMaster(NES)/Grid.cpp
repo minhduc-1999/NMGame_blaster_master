@@ -3,6 +3,7 @@
 #include "Floater2.h"
 #include "Eyeball.h"
 #include "Item.h"
+#include "SophiaBullet.h"
 
 void Grid::AddStaticObj(LPSTATICOBJECT obj)
 {
@@ -50,7 +51,7 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 		if (temp->GetIsShooting())
 		{
 			vector<LPDYNAMICOBJECT> bullet;
-			if (temp->GetType() == 14 || temp->GetType() == 6 || temp->GetType() == 40)
+			if (temp->GetType() == 14 || temp->GetType() == 6 || temp->GetType() == 40 || temp->GetType() == 12)
 			{
 				bullet = temp->Fire(xMain, yMain);
 			}
@@ -67,7 +68,7 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 		if (temp->GetIsDestroyed())
 		{
 			
-			if (temp->GetType() != 20)
+			if (temp->GetType() != 20 && temp->GetType() != 26)
 			{
 				int spawnItem = rand() % 2;
 				if (spawnItem == 0)
@@ -159,4 +160,3 @@ void Grid::Clear()
 	staticObjs.clear();
 	dynamicObjs.clear();
 }
-
