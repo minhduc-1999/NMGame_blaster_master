@@ -11,6 +11,7 @@
 #define ORB_STATE_RUNNING_RIGHT 400
 #define ORB_STATE_DIE           500
 
+#define HUNTING_RANGE           40
 
 #define ORB_ANI_ROLL             0
 #define ORB_ANI_DIE             1
@@ -21,7 +22,7 @@ class Orb :
 public:
     Orb(float x, float y);
     void SetState(int state);
-    int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+    int Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
     void SetIsDestroyed() { SetState(ORB_STATE_DIE); }
 };

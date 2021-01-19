@@ -313,7 +313,15 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				currentPlayer->SetCurBullet(0);
 				if (currentPlayer->CanShoot())
 				{
-					vector<LPDYNAMICOBJECT> bullets = currentPlayer->Shoot();
+					vector<LPDYNAMICOBJECT> bullets;
+					if (((CTestScene*)scence)->getIsWinnedBoss())
+					{
+						bullets = currentPlayer->Shoot(0);
+					}
+					else
+					{
+						bullets = currentPlayer->Shoot(1);
+					}
 					for (int i = 0; i < bullets.size(); i++)
 						((CTestScene*)scence)->GetCurSection()->AddDynamicObject(bullets[i]);
 				}
@@ -334,7 +342,7 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				currentPlayer->SetCurBullet(1);
 				if (currentPlayer->CanShoot())
 				{
-					vector<LPDYNAMICOBJECT> bullets = currentPlayer->Shoot();
+					vector<LPDYNAMICOBJECT> bullets = currentPlayer->Shoot(1);
 					for (int i = 0; i < bullets.size(); i++)
 						((CTestScene*)scence)->GetCurSection()->AddDynamicObject(bullets[i]);
 				}

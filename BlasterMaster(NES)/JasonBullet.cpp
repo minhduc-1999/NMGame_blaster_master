@@ -58,7 +58,7 @@ int JasonBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		int objTeam = temp->GetTeam();
-		if (objTeam != this->team)
+		if (objTeam != this->team && temp->GetType() != 16)
 		{
 			if (objTeam == 1)
 			{
@@ -103,7 +103,7 @@ int JasonBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int objTeam = e->obj->GetTeam();
-			if (objTeam != this->team)
+			if (objTeam != this->team && e->obj->GetType() != 16)
 			{
 				if (objTeam == 1)
 				{

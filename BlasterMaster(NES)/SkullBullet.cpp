@@ -22,7 +22,6 @@ int SkullBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (GetTickCount64() - startFiringTime >= 1500)
 	{
 		SetState(SKULL_BULLET_STATE_DESTROY);
-		isDestroyed = true;
 		isRendered = false;
 		isUpdated = true;
 		return 0;
@@ -113,17 +112,27 @@ void SkullBullet::Render()
 	if (isRendered)
 		return;
 	int ani = SKULL_BULLET_ANI_FIRING;
-	switch (state)
+	if (state == SKULL_BULLET_STATE_DESTROY)
 	{
-	case SKULL_BULLET_STATE_DESTROY:
 		ani = SKULL_BULLET_ANI_DESTROY;
-	case SKULL_BULLET_STATE_FIRING: case SKULL_BULLET_STATE_ONGROUND:
-		break;
+		if (!animation_set->at(SKULL_BULLET_ANI_DESTROY)->IsCompleted())
+		{
+			animation_set->at(SKULL_BULLET_ANI_DESTROY)->Render(x, y, nx, 255);
+			isRendered = true;
+			isUpdated = false;
+			return;
+		}
+		else
+		{
+			animation_set->at(SKULL_BULLET_ANI_DESTROY)->ResetAnim();
+			isDestroyed = true;
+			isRendered = true;
+			isUpdated = false;
+			return;
+		}
 	}
 
 	animation_set->at(ani)->Render(x, y, 1);
-	if (state == SKULL_BULLET_STATE_DESTROY)
-		isDestroyed = true;
 
 	isUpdated = false;
 	isRendered = true;
@@ -136,7 +145,7 @@ void SkullBullet::SetState(int state)
 	{
 	case SKULL_BULLET_STATE_FIRING:
 		vx = 0.04f;
-		vy = 0.23f;
+		vy = 0.3f;
 		break;
 	case SKULL_BULLET_STATE_ONGROUND:
 		vx = 0.2f;

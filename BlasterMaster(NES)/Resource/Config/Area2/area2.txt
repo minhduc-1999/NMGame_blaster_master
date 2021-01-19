@@ -450,7 +450,8 @@ Open	Resource\Sound\Open.wav
 6000	600001	1000
 #======Enemy_Bullet_Die====
 9000	900001	75	900002	75	900003	75	900004	75
-
+#======brokable_brick======
+17	117	1000
 
 
 # id	ani1	ani2	ani3
@@ -495,3 +496,5 @@ Open	Resource\Sound\Open.wav
 50	5000	5001	5002	5003	5004	5005	5006	5007	5008
 #======rock======
 60	6000
+#======brokable_brick======
+117	17	9000

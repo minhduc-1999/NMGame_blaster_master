@@ -12,7 +12,27 @@ int Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (isUpdated)
 		return -1;
 	CDynamicGameObject::Update(dt);
+
 	vy += MINE_GRAVITY;
+
+	vector< LPCOLLISIONEVENT> curCoEvents;
+	CalcNowCollisions(coObjects, curCoEvents);
+	for (int i = 0; i < curCoEvents.size(); i++)
+	{
+		LPGAMEOBJECT temp = curCoEvents[i]->obj;
+		int objTeam = temp->GetTeam();
+		if (objTeam == 0)
+		{
+			SetState(MINE_BULLET_STATE_DESTROY);
+			//isDestroyed = true;
+			isShooting = true;
+			isUpdated = true;
+			isRendered = false;
+			return 0;
+		}
+	}
+	for (UINT i = 0; i < curCoEvents.size(); i++) delete curCoEvents[i];
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 

@@ -4,7 +4,7 @@
 #include "BaseBullet.h"
 
 
-#define SKULL_FLYING_SPEED			0.12f
+#define SKULL_FLYING_SPEED			0.2f
 
 #define SKULL_STATE_FLYING_LEFT		0
 #define SKULL_STATE_FLYING_RIGHT	1
@@ -27,7 +27,7 @@ private:
 	bool shooted;
 public:
 	Skull(float x, float y);
-	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	int Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
 	vector<LPDYNAMICOBJECT> Fire();

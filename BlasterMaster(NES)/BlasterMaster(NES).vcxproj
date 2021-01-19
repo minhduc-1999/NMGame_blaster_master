@@ -150,6 +150,7 @@
     <ClInclude Include="AreaSectionTransition.h" />
     <ClInclude Include="BossBullet.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="BrokableBrick.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cannon.h" />
     <ClInclude Include="CannonBullet.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="AreaSectionTransition.cpp" />
     <ClCompile Include="BossBullet.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="BrokableBrick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="CannonBullet.cpp" />

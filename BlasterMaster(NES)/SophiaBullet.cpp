@@ -4,18 +4,18 @@ SophiaBullet::SophiaBullet(float x, float y, int team, int t, int nx, int ny) : 
 {
 	damage = SOPHIA_BULLET_DAMAGE;
 	type = t;
-	if (type == 0)
+	if (type == 0 || type == 2)
 	{
 		SetAnimationSet(SOPHIA_BULLET_ANISET);
 		if (nx != 0)
-			SetSize(8, 26);
+			SetSize(2, 2);
 		if (ny != 0)
-			SetSize(26, 8);
+			SetSize(2, 2);
 	}
 	else if (type == 1)
 	{
 		SetAnimationSet(SOPHIA_BULLET_ROCKET_ANISET);
-		SetSize(19, 8);
+		SetSize(2, 2);
 	}
 
 	if (nx != 0)
@@ -76,17 +76,29 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		int objTeam = temp->GetTeam();
-		if (objTeam == 1
-			&& !(temp->GetType() == 16 || temp->GetType() == 19))
+		if (objTeam == 1 && !(temp->GetType() == 16 || temp->GetType() == 19))
 		{
-			LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
-			dyn->SetIsDestroyed();
-			SetState(SOPHIA_BULLET_STATE_DESTROY);
-			return 0;
+			if (temp->GetType() == 117)
+			{
+				if (type == 2)
+				{
+					LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
+					dyn->SetIsDestroyed();
+					SetState(SOPHIA_BULLET_STATE_DESTROY);
+					return 0;
+				}
+			}
+			else
+			{
+				LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
+				dyn->SetIsDestroyed();
+				SetState(SOPHIA_BULLET_STATE_DESTROY);
+				return 0;
+			}
 		}
 		else if (objTeam == -1)
 		{
-			if (type == 0)
+			if (type == 0 || type == 2)
 			{
 				SetState(SOPHIA_BULLET_STATE_DESTROY);
 				return 0;
@@ -127,14 +139,27 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			int objTeam = e->obj->GetTeam();
 			if (objTeam == 1 && !(e->obj->GetType() == 16 || e->obj->GetType() == 19))
 			{
-				LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
-				dyn->SetIsDestroyed();
-				SetState(SOPHIA_BULLET_STATE_DESTROY);
-				break;
+				if (e->obj->GetType() == 117)
+				{
+					if (type == 2)
+					{
+						LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
+						dyn->SetIsDestroyed();
+						SetState(SOPHIA_BULLET_STATE_DESTROY);
+						break;
+					}
+				}
+				else
+				{
+					LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
+					dyn->SetIsDestroyed();
+					SetState(SOPHIA_BULLET_STATE_DESTROY);
+					break;
+				}
 			}
 			else if (objTeam == -1)
 			{
-				if (type == 0)
+				if (type == 0 || type == 2)
 				{
 					SetState(SOPHIA_BULLET_STATE_DESTROY);
 					break;

@@ -6,7 +6,7 @@ Orb::Orb(float x, float y) :CDynamicGameObject(x, y)
 }
 
 
-int Orb::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Orb::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
 		return -1;
@@ -25,8 +25,16 @@ int Orb::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
+		if (abs(xMain - x) < HUNTING_RANGE || abs(yMain - y) < HUNTING_RANGE)
+		{
+			float a = xMain - x;
+			float b = yMain - y;
+			vx = a / sqrt(pow(a, 2) + pow(b, 2)) / 6;
+			vy = b / sqrt(pow(a, 2) + pow(b, 2)) / 6;
+		}
 		x += dx;
 		y += dy;
+		
 	}
 	else
 	{

@@ -5,7 +5,7 @@
 #include "BaseBullet.h"
 
 #define SOPHIA_WIDTH 26
-#define SOPHIA_HEIGHT 18
+#define SOPHIA_HEIGHT 16
 
 #define SOPHIA_HEIGHT_HIGH		0
 #define SOPHIA_HEIGHT_LOW		1
@@ -71,7 +71,7 @@ public:
 	void OnKeyDown(int KeyCode);
 	void OnKeyUp(int KeyCode);
 
-	vector<LPDYNAMICOBJECT> Shoot();
+	vector<LPDYNAMICOBJECT> Shoot(int bulletType);
 	bool CanShoot() { return canShoot; }
 	int GetCurBullet() { return currentBullet; }
 	void SetCurBullet(int curBullet) { currentBullet = curBullet; }
