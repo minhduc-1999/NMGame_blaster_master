@@ -20,7 +20,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (isDestroyed)
 	{
 		Sound::getInstance()->stop("lvl2");
-		CGame::GetInstance()->Notify(0);
+		CGame::GetInstance()->Notify(lives);
 		return 1;
 	}
 	CDynamicGameObject::Update(dt);

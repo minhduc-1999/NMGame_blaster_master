@@ -13,8 +13,12 @@ void NotifyScene::SetNotify(int mainLives)
 {
 	if (mainLives == 0)
 		current_panel = 3;
-	else
+	else {
 		current_panel = mainLives - 1;
+		if (current_panel < 0)
+			current_panel = 0;
+	}
+		
 }
 void NotifyScene::Load(D3DXVECTOR2 tlPos)
 {
@@ -83,7 +87,7 @@ int NotifyScene::Update(DWORD dt)
 	if (current_panel == panels.size() || current_panel == -1)
 		return 0;
 	if (panels[current_panel]->IsDone())
-		CGame::GetInstance()->SwitchScene(2, 1, D3DXVECTOR2(-1, -1));
+		CGame::GetInstance()->SwitchScene(saveData->lastScene, saveData->lastSection, D3DXVECTOR2(-1, -1));
 	panels[current_panel]->Update(dt);
 	//
 	return 1;

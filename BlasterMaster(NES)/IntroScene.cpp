@@ -10,6 +10,10 @@ IntroScene::IntroScene(int id, string filePath, int type, D3DXVECTOR3 bg) : CSce
 	current_intro = -1;
 	introSets = NULL;
 	start = GetTickCount64();
+	this->saveData = new SaveData();
+	saveData->mainLives = 3;
+	saveData->lastScene = SCENE_AREA;
+	saveData->lastSection = 1;
 }
 
 void IntroScene::_ParseSection_ANIMATIONS(string line)
@@ -125,7 +129,7 @@ int IntroScene::Update(DWORD dt)
 		if (introSets->at(current_intro)->IsCompleted())
 		{
 			Sound::getInstance()->stop("Intro2");
-			CGame::GetInstance()->SwitchScene(2, 1, D3DXVECTOR2(-1, -1));
+			CGame::GetInstance()->Notify(3);
 		}
 	default:
 		break;

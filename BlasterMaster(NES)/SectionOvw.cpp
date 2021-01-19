@@ -22,11 +22,13 @@ void SectionOvw::Load(SaveData* data, D3DXVECTOR2 mainPos)
 	if (data == NULL)
 	{
 		mainPlayer->SetState(JASON_STATE_IDLE);
+		DebugOut("[OVW LOAD] data null!\n");
 		DebugOut("[INFO] Jason Created!\n");
 		DebugOut("[OVW-INFO] Main Pos:\t%f\t%f\n", mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
 	}
 	else
 	{
+		((MainPlayer*)mainPlayer)->SetLive(data->mainLives);
 		mainPlayer->SetHP(data->jasonHP);
 	}
 	

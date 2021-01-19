@@ -85,7 +85,7 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	if (dir == -1)
 	{
 		D3DXVECTOR3 p(viewPortX, viewPortY, 0);
-		if (alpha ==254)
+		if (alpha == 254)
 		{
 			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 163, 26));
 		}
@@ -100,7 +100,7 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 		{
 			spriteHander->Draw(texture, &r, &pCenter, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 		}
-		
+
 	}
 	else
 	{
@@ -239,7 +239,7 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	r.right = right;
 	r.top = top;
 	r.bottom = bottom;
-	
+
 	if (dir == -1)
 	{
 		D3DXVECTOR3 p(viewPortX, viewPortY, 0);
@@ -270,8 +270,8 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 		//reset transform
 		D3DXMatrixScaling(&matScale, 1.0f, 1.0f, .0f);
 		spriteHander->SetTransform(&matScale);
-		
-		
+
+
 	}
 }
 
@@ -670,13 +670,12 @@ void CGame::Notify(int mainLives)
 	DebugOut("[INFO] Notify %d\n");
 
 	SaveData* data = scenes[current_scene]->GetSaveData();
-	if (scenes[current_scene]->GetType() == GAME_SCENES_TYPE_AREA || scenes[current_scene]->GetType() == GAME_SCENES_TYPE_OVW)
-	{
-		if (data != NULL)
-		{
-			data->jasonHP = ((CTestScene*)scenes[current_scene])->GetPlayer()->GetHP();
-		}
-	}
+	data->mainLives = mainLives;
+	if (data->lastScene == -1)
+		data->lastScene = current_scene;
+	if (data->lastSection == -1)
+		data->lastSection = ((CTestScene*)scenes[current_scene])->GetCurrentSection();
+
 	scenes[current_scene]->Unload();
 
 	CTextureManager::GetInstance()->Clear();

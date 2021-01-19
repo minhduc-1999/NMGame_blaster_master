@@ -8,6 +8,7 @@ protected:
 	int alpha;
 	bool isJumping;
 	bool canShoot;
+	int lives;
 public:
 	MainPlayer(float x, float y) : CDynamicGameObject(x, y) 
 	{
@@ -16,7 +17,10 @@ public:
 		canShoot = true;
 		isJumping = false;
 		lastShot = GetTickCount64();
+		lives = 3;
 	}
+	void SetLive(int l) { lives = l; }
+	int GetLive() { return lives; }
 	bool GetIsJumping() { return isJumping; };
 	void SetIsJumping(bool _isJumping) { isJumping = _isJumping; };
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) = 0;

@@ -16,6 +16,12 @@ using namespace std;
 #define SCENE_SECTION_SECTION	6
 #define SCENE_SECTION_SOUND	7
 
+#define SCENE_INTRO 1
+#define SCENE_AREA 2
+#define SCENE_OVW 3
+#define SCENE_ENDGAME 4
+#define SCENE_NOTIFY 5
+
 class CScene
 {
 protected:

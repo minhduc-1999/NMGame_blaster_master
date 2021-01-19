@@ -41,6 +41,6 @@ void SelectPanel::OnKeyDown(int KeyCode)
 	else if (KeyCode == DIK_RETURN)
 	{
 		if(current_select == 0)
-			CGame::GetInstance()->SwitchScene(2, 1, D3DXVECTOR2(-1, -1));
+			CGame::GetInstance()->Notify(3);
 	}
 }
