@@ -2,6 +2,7 @@
 #include <fstream>
 #include "Brick.h"
 #include "CMagma.h"
+#include "CSpike.h"
 #include "Sophia.h"
 #include "CGate.h"
 #include "Mine.h"
@@ -323,8 +324,13 @@ void Section::_ParseSection_STATIC_OBJECTS(string line)
 		return;
 		break;
 	}
-	case OBJECT_TYPE_MAGMA:case OBJECT_TYPE_ARROW:
-		obj = new CMagma(x, y);
+	case OBJECT_TYPE_MAGMA:
+		obj = new CMagma(x, y); 
+		obj->SetTeam(1);
+		break;
+	case OBJECT_TYPE_ARROW:
+		obj = new CSpike(x, y);
+		obj->SetTeam(1);
 		break;
 	default:
 		DebugOut("[ERROR] Invalid object type: %d\n", object_type);
@@ -429,7 +435,6 @@ void Section::Load()
 	}
 
 	f.close();
-
 	//CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	DebugOut("[INFO] Done loading SECTION resources %s\n", secFilePath);
 }

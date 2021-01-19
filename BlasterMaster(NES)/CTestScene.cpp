@@ -185,6 +185,7 @@ int CTestScene::Update(DWORD dt)
 			CGame::GetInstance()->UpdateCamera(mainPos, mapPos, mapDimen);
 		}
 	}
+	
 	return 0;
 }
 
@@ -196,7 +197,7 @@ void CTestScene::Render()
 	LPDIRECT3DTEXTURE9 texfg = CTextureManager::GetInstance()->Get(TEXTURE_FOREGROUND);
 	float bgX = cam.left + (cam.right - cam.left) / 2.0f;
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
-	CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
+	//CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 	//Render object
 	if (!isSwitchingSection)
 	{
@@ -206,7 +207,7 @@ void CTestScene::Render()
 		if (mainPlayer != NULL)
 			mainPlayer->Render();
 	//render foreground
-	CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
+	//CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 	//render hpbar
 	hpBar->Render();
 }
@@ -434,7 +435,7 @@ void CTestScene::Load(D3DXVECTOR2 tlPos)
 	}
 
 	DebugOut("[INFO] Loading section file : %s has been loaded successfully\n", sceneFilePath);
-
+	Sound::getInstance()->play("lvl2", true, 0);
 	//SwitchSection(current_section, D3DXVECTOR2(-1, -1));
 	SwitchSection(current_section, tlPos);
 	this->mainPlayer = sections[current_section]->GetPlayer();

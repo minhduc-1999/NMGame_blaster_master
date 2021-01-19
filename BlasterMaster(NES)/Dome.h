@@ -31,6 +31,7 @@ class Dome : public CDynamicGameObject
     Rect bottomRect;
     int RectType;
     bool dropped = false;
+    bool isCollision = false;
 public:
     Dome(float x, float y);
     int GetNY() { return ny; }

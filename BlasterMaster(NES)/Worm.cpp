@@ -7,6 +7,14 @@ Worm::Worm(float x, float y) :CDynamicGameObject(x, y)
 
 int Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isUpdated)
+	{
+		return -1;
+	}
+	if (isDestroyed)
+	{
+		return 0;
+	}
 	CDynamicGameObject::Update(dt);
 
 	//check now collision
@@ -117,11 +125,17 @@ int Worm::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	isUpdated = true;
+	isRendered = false;
 	return 0;
 }
 
 void Worm::Render()
 {
+	if (isRendered)
+	{
+		return;
+	}
 	int ani = WORM_ANI_WALKING;
 
 	if (GetState() == WORM_STATE_DIE)
@@ -139,17 +153,10 @@ void Worm::Render()
 			return;
 		}
 	}
-	
-	switch (state)
-	{
-	case WORM_STATE_WALKING_LEFT: case WORM_STATE_WALKING_RIGHT:
-		ani = WORM_ANI_WALKING;
-		break;
-	case WORM_STATE_DIE:
-		break;
-	}
 
 	animation_set->at(ani)->Render(x, y, nx);
+	isRendered = true;
+	isUpdated = false;
 }
 
 void Worm::SetState(int state)

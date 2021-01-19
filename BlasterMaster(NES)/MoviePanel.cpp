@@ -28,7 +28,7 @@ void MoviePanel::Render()
 }
 bool MoviePanel::IsDone()
 {
-	if (done && GetTickCount64() - timeDone > 4000)
+	if (done && GetTickCount64() - timeDone > 21000)
 		return true;
 	return false;
 }

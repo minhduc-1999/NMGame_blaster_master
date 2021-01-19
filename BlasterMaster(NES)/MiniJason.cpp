@@ -18,6 +18,12 @@ MiniJason::MiniJason(float x, float y) :MainPlayer(x, y)
 
 int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isDestroyed)
+	{
+		Sound::getInstance()->stop("lvl2");
+		CGame::GetInstance()->Notify(0);
+		return 1;
+	}
 	CDynamicGameObject::Update(dt);
 
 	if (!CanTouch && GetTickCount64() - TouchTime >= 500)
@@ -231,7 +237,7 @@ void MiniJason::Render()
 		else
 		{
 			animation_set->at(MINIJASON_ANI_DIE)->ResetAnim();
-			SetState(MINIJASON_STATE_IDLE_RIGHT);
+			isDestroyed = true;
 			//CGame::GetInstance()->SwitchScene(3, 1);
 			return;
 		}

@@ -8,19 +8,35 @@ Dome::Dome(float x, float y) :CDynamicGameObject(x, y)
 
 int Dome::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isUpdated)
+	{
+		return -1;
+	}
+	if (isDestroyed)
+	{
+		return 0;
+	}
 	CDynamicGameObject::Update(dt);
 
 	if (!dropped)
 	{
 		if (abs(xMain - x) <= 40 && abs(yMain - y) <= 200)
 		{
+			if (xMain <= x)
+			{
+				nx = 1;
+			}
+			else
+			{
+				nx = -1;
+			}
 			SetState(DOME_STATE_DROP_DOWN);
 		}
 	}
 
 	SetBottomRect(RectType);
 
-	bool isCollision = false;
+	isCollision = false;
 	if (coObjects != NULL)
 	{
 		for (UINT i = 0; i < coObjects->size(); i++)
@@ -84,70 +100,55 @@ int Dome::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObj
 		}
 		else
 		{
-			float min_tx, min_ty, ntx, nty;
-			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty);
+			float min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby;
+			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, ntx, nty, min_tbx, min_tby, nbx, nby);
 
-			x += min_tx * dx + ntx * 0.4f;
-			y += min_ty * dy + nty * 0.4f;
-
-			for (UINT i = 0; i < coEventsResult.size(); i++)
+			if (nbx != 0)
 			{
-				LPCOLLISIONEVENT e = coEventsResult[i];
-				int coObjType = e->obj->GetType();
-				if (coObjType != 15 && coObjType != 17)
+				x += min_tbx * dx + nbx * 0.4f;
+				if (ny == -1)
 				{
-					if (e->nx != 0)
-					{
-						x += (1 - e->t) * dx - e->nx * 0.4f;
-					}
-					else
-					{
-						y += (1 - e->t) * dy - e->ny * 0.4f;
-					}
+					SetState(DOME_STATE_WALKING_DOWN);
 				}
-				switch (coObjType)
+				else
 				{
-				case 15: case 17:	//brick and gate
-					if (e->nx != 0)
-					{
-						if (ny == -1)
-						{
-							SetState(DOME_STATE_WALKING_DOWN);
-						}
-						else
-						{
-							SetState(DOME_STATE_WALKING_UP);
-						}
-					}
-					if (e->ny != 0)
-					{
-						if (nx == 1)
-						{
-							SetState(DOME_STATE_WALKING_LEFT);
-						}
-						else
-						{
-							SetState(DOME_STATE_WALKING_RIGHT);
-						}
-					}
-					break;
-				default:
-					break;
-				};
-
+					SetState(DOME_STATE_WALKING_UP);
+				}
 			}
+			else
+				x += dx;
+			//x += min_tx * dx + ntx * 0.4f;
+			if (nby != 0)
+			{
+				y += min_tby * dy + nby * 0.4f;
+				if (nx == 1)
+				{
+					SetState(DOME_STATE_WALKING_LEFT);
+				}
+				else
+				{
+					SetState(DOME_STATE_WALKING_RIGHT);
+				}
+			}
+			else
+				y += dy;
 		}
 
 		// clean up collision events
 		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	}
-
+	isUpdated = true;
+	isRendered = false;
 	// clean up collision events
 	return 0;
 }
 
 void Dome::Render()
 {
+	if (isRendered)
+	{
+		return;
+	}
 	int ani = DOME_ANI_WALKING_LEFT_RIGHT_UP;
 
 	if (GetState() == DOME_STATE_DIE)
@@ -156,12 +157,16 @@ void Dome::Render()
 		if (!animation_set->at(DOME_ANI_DIE)->IsCompleted())
 		{
 			animation_set->at(DOME_ANI_DIE)->Render(x, y, nx, 255);
+			isRendered = true;
+			isUpdated = false;
 			return;
 		}
 		else
 		{
 			animation_set->at(DOME_ANI_DIE)->ResetAnim();
 			isDestroyed = true;
+			isRendered = true;
+			isUpdated = false;
 			return;
 		}
 	}
@@ -178,6 +183,8 @@ void Dome::Render()
 			ani = DOME_ANI_WALKING_LEFT_RIGHT_DOWN;
 		}
 		animation_set->at(ani)->Render(x, y, nx);
+		isRendered = true;
+		isUpdated = false;
 		return;
 		break;
 	case DOME_STATE_WALKING_UP:case DOME_STATE_WALKING_DOWN:
@@ -190,11 +197,15 @@ void Dome::Render()
 			ani = DOME_ANI_WALKING_UP_DOWN_RIGHT;
 		}
 		animation_set->at(ani)->Render(x, y, -1);
+		isRendered = true;
+		isUpdated = false;
 		return;
 		break;
 	case DOME_STATE_DROP_DOWN:
 		ani = DOME_ANI_WALKING_LEFT_RIGHT_DOWN;
 		animation_set->at(ani)->Render(x, y, nx);
+		isRendered = true;
+		isUpdated = false;
 		return;
 		break;
 	}
@@ -203,6 +214,7 @@ void Dome::Render()
 void Dome::SetBottomRect(int rectPos)
 {
 	bottomRect = GetBound();
+	dropped = false;
 	switch (rectPos)
 	{
 	case RECT_LEFT:
@@ -221,6 +233,7 @@ void Dome::SetBottomRect(int rectPos)
 		bottomRect.bottom -= 5;
 		break;
 	case RECT_BOTTOM:
+		dropped = true;
 		RectType = RECT_BOTTOM;
 		
 		bottomRect.top += 5;
@@ -294,7 +307,6 @@ void Dome::SetState(int state)
 		vx = 0;
 		vy = DOME_GRAVITY;
 		ny = 1;
-		nx = 1;
 		break;
 	case DOME_STATE_GO_UP:
 		dropped = false;

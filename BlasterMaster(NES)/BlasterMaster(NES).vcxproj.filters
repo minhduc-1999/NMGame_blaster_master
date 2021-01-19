@@ -421,6 +421,18 @@
     <ClInclude Include="Rock.h">
       <Filter>Object\DynamicObject\Rock</Filter>
     </ClInclude>
+    <ClInclude Include="NotifyScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="NotifyPanel.h">
+      <Filter>Object\EndGameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectPanel.h">
+      <Filter>Object\EndGameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CSpike.h">
+      <Filter>Object\StaticObject\Spike</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -611,6 +623,18 @@
     </ClCompile>
     <ClCompile Include="Rock.cpp">
       <Filter>Object\DynamicObject\Rock</Filter>
+    </ClCompile>
+    <ClCompile Include="NotifyScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="NotifyPanel.cpp">
+      <Filter>Object\EndGameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectPanel.cpp">
+      <Filter>Object\EndGameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpike.cpp">
+      <Filter>Object\StaticObject\Spike</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -841,6 +865,9 @@
     <Text Include="Resource\Config\endgame\description.txt">
       <Filter>Resources\Config\endgame</Filter>
     </Text>
+    <Text Include="Resource\Config\endgame\notify.txt">
+      <Filter>Resources\Config\endgame</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sound\lvl2.wav">
@@ -901,6 +928,15 @@
       <Filter>Resources\Sound</Filter>
     </Media>
     <Media Include="Resource\Sound\Worm.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Intro.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Ending.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Intro2.wav">
       <Filter>Resources\Sound</Filter>
     </Media>
   </ItemGroup>

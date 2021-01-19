@@ -1,9 +1,10 @@
 #id	file_path	transparent_color_r g b
 [TEXTURES]
-0	Resource/endgame/endgame.png	255	0	255
+0	Resource/endgame/endgame_full.png	255	0	255
 #sound
 # id	path
 [SOUNDS]
+Ending	Resource\Sound\Ending.wav
 [DESCRIPTION]
 Resource/Config/endgame/description.txt
 [SPRITES]
@@ -33,6 +34,16 @@ Resource/Config/endgame/description.txt
 5000	115	316	187	372	0
 #======mountain========
 6000	35	238	59	262	0
+#======left0  101x16 ==========
+7000	876	248	977	264	0
+#======left1  101x16==========
+7001	874	287	975	303	0
+#======left2  101x16==========
+7002	873	330	974	346	0
+#====== continue 139x16==========
+8000	868	380	1007	396	0
+#=======end 51x15=======
+8001	868	433	919	448	0
 #======================character======================
 65	118	238	126	246	0
 66	127	238	135	246	0

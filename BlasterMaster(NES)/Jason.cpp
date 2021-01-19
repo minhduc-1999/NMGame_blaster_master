@@ -17,6 +17,12 @@ Jason::Jason(float x, float y) :MainPlayer(x, y)
 
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isDestroyed)
+	{
+		Sound::getInstance()->stop("lvl2");
+		CGame::GetInstance()->Notify(0);
+		return 1;
+	}
 	CDynamicGameObject::Update(dt);
 	if (!CanTouch && GetTickCount64() - TouchTime >= 500)
 	{
@@ -185,7 +191,7 @@ void Jason::Render()
 		else
 		{
 			animation_set->at(JASON_ANI_DIE)->ResetAnim();
-			SetState(JASON_STATE_IDLE);
+			isDestroyed = true;
 			//CGame::GetInstance()->SwitchScene(3, 1);
 			return;
 		}
