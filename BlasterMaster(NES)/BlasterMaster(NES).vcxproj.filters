@@ -436,6 +436,9 @@
     <ClInclude Include="CSpike.h">
       <Filter>Object\StaticObject\Spike</Filter>
     </ClInclude>
+    <ClInclude Include="EndingGate.h">
+      <Filter>Object\StaticObject\Gate</Filter>
+    </ClInclude>
     <ClInclude Include="BrokableBrick.h">
       <Filter>Object\DynamicObject\BrokableBrick</Filter>
     </ClInclude>
@@ -641,9 +644,6 @@
     </ClCompile>
     <ClCompile Include="CSpike.cpp">
       <Filter>Object\StaticObject\Spike</Filter>
-    </ClCompile>
-    <ClCompile Include="BrokableBrick.cpp">
-      <Filter>Object\DynamicObject\BrokableBrick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

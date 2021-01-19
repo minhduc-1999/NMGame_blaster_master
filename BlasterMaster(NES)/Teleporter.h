@@ -3,7 +3,7 @@
 #include "DynamicGameObject.h"
 
 #define TELEPORTER_TELE_RANGE		50
-#define TELEPORTER_DELAY_TIME		30
+#define TELEPORTER_DELAY_TIME		5
 #define TELEPORTER_SWAP				5
 
 #define TELEPORTER_STATE_GRAY		0

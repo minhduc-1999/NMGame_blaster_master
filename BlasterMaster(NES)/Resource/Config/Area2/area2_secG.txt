@@ -9,9 +9,14 @@
 #object type: 14 = eyeball, 15 = brick, 16 = spike, 17 = Gate, 18 = ladder, 19 = magma
 #object type: 80 = gatescene, 81 = brokenable-brick
 [DEFAULT]
-2115	655
+2135	655
 [DYNAMIC_OBJECTS]
 #type	x	y	grid_id	ani_set_id
+11	2180	710	0	11
+11	2300	710	0	11
+11	2390	710	0	11
+6	2230	630	1	6
+6	2340	630	2	6
 [STATIC_OBJECTS]
 #type	x	y	grid_id	sprite_id1	...
 15	2088	568	0	61

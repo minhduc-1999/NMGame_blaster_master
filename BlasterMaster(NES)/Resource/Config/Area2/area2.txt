@@ -31,6 +31,8 @@
 #sound
 # id	path
 [SOUNDS]
+Dome	Resource\Sound\Dome.wav
+Worm	Resource\Sound\Worm.wav
 SophiaFire	Resource\Sound\SophiaFire.wav
 Jump	Resource\Sound\Jump.wav
 Hit	Resource\Sound\Hit.wav

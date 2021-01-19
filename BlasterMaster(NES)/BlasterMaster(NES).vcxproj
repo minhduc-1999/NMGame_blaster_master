@@ -163,6 +163,7 @@
     <ClInclude Include="Dome.h" />
     <ClInclude Include="DynamicGameObject.h" />
     <ClInclude Include="EndGameScene.h" />
+    <ClInclude Include="EndingGate.h" />
     <ClInclude Include="Eyeball.h" />
     <ClInclude Include="EyeballBullet.h" />
     <ClInclude Include="Floater2.h" />
@@ -234,6 +235,7 @@
     <ClCompile Include="Dome.cpp" />
     <ClCompile Include="DynamicGameObject.cpp" />
     <ClCompile Include="EndGameScene.cpp" />
+    <ClCompile Include="EndingGate.cpp" />
     <ClCompile Include="Eyeball.cpp" />
     <ClCompile Include="EyeballBullet.cpp" />
     <ClCompile Include="Floater2.cpp" />
