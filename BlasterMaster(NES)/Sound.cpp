@@ -219,7 +219,11 @@ void Sound::stop(std::string name)
 		it = soundBufferMap.find(name);
 		if (it == soundBufferMap.end())
 			return;
-		else it->second->Stop();
+		else
+		{
+			it->second->Stop();
+			it->second->SetCurrentPosition(0);
+		}
 	}
 }
 

@@ -21,8 +21,9 @@ Sophia::Sophia(float x, float y) :MainPlayer(x, y)
 
 int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (state == SOPHIA_STATE_DIE)
+	if (isDestroyed)
 	{
+		Sound::getInstance()->stop("lvl2");
 		CGame::GetInstance()->Notify(0);
 		return 1;
 	}
@@ -203,7 +204,8 @@ void Sophia::Render()
 		{
 			
 			animation_set->at(SOPHIA_ANI_DIE)->ResetAnim();
-			SetState(SOPHIA_STATE_IDLE_RIGHT);
+			//CGame::GetInstance()->Notify(0);
+			isDestroyed = true;
 			//CGame::GetInstance()->SwitchScene(2, 1);
 			return;
 		}

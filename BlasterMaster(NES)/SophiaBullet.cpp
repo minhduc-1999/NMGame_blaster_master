@@ -76,7 +76,8 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		LPGAMEOBJECT temp = curCoEvents[i]->obj;
 		int objTeam = temp->GetTeam();
-		if (objTeam == 1)
+		if (objTeam == 1
+			&& !(temp->GetType() == 16 || temp->GetType() == 19))
 		{
 			LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
 			dyn->SetIsDestroyed();
@@ -124,7 +125,7 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			int objTeam = e->obj->GetTeam();
-			if (objTeam == 1)
+			if (objTeam == 1 && !(e->obj->GetType() == 16 || e->obj->GetType() == 19))
 			{
 				LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
 				dyn->SetIsDestroyed();

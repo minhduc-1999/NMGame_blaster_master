@@ -430,6 +430,9 @@
     <ClInclude Include="SelectPanel.h">
       <Filter>Object\EndGameObject</Filter>
     </ClInclude>
+    <ClInclude Include="CSpike.h">
+      <Filter>Object\StaticObject\Spike</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -620,7 +623,8 @@
     </ClCompile>
     <ClCompile Include="Rock.cpp">
       <Filter>Object\DynamicObject\Rock</Filter>
-    </ClCompile>    <ClCompile Include="NotifyScene.cpp">
+    </ClCompile>
+    <ClCompile Include="NotifyScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="NotifyPanel.cpp">
@@ -628,6 +632,9 @@
     </ClCompile>
     <ClCompile Include="SelectPanel.cpp">
       <Filter>Object\EndGameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpike.cpp">
+      <Filter>Object\StaticObject\Spike</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
