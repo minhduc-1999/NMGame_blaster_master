@@ -82,7 +82,7 @@ void EndGameScene::Load(D3DXVECTOR2 tlPos)
 	f.close();
 
 	DebugOut("[INFO] End game scene has been loaded successfully\n");
-	panels[0] = new SlidePanel(128.0f, 111.0f, -0.05f, 0.0f, 512, 224, CAnimationManager::GetInstance()->Get(2));
+	panels[0] = new SlidePanel(128.0f, 111.0f, 0.0f, 0.0f, 512, 224, CAnimationManager::GetInstance()->Get(2));
 	panels[1] = new MoviePanel(256.0f, 111.0f, -0.03f, 0.0f, 512, 224, CSpriteManager::GetInstance()->Get(1000));
 	
 }
@@ -92,6 +92,7 @@ void EndGameScene::Unload()
 }
 int EndGameScene::Update(DWORD dt)
 {
+	//DebugOut("[end game update]\n");
 	if (current_period == panels.size())
 		return 0;
 	if (panels[current_period]->IsDone())
@@ -101,25 +102,12 @@ int EndGameScene::Update(DWORD dt)
 		return 0;
 	}
 	panels[current_period]->Update(dt);
-	DebugOut("[current = %d]\n", current_period);
-	return 1;
+	//DebugOut("[current = %d]\n", current_period);
+	return 0;
 }
 void EndGameScene::Render()
 {
-	//endGameSets->at(0)->Render(127, 111, -1);
-	//CSpriteManager::GetInstance()->Get(6000)->Draw(132, 124, -1, 255);
-	/*for (int i = 65; i <= 90; i++)
-	{
-		CSpriteManager::GetInstance()->Get(i)->Draw(8 * (i - 60) + 2, 50, -1, 255);
-	}
-	for (int i = 48; i <= 57; i++)
-	{
-		CSpriteManager::GetInstance()->Get(i)->Draw(8 * (i - 48) + 2, 60, -1, 255);
-	}*/
-	/*CSpriteManager::GetInstance()->Get(45)->Draw(0, 70, -1, 255);
-	CSpriteManager::GetInstance()->Get(46)->Draw(10, 70, -1, 255);
-	CSpriteManager::GetInstance()->Get(33)->Draw(20, 70, -1, 255);*/
-	//CAnimationManager::GetInstance()->Get(2)->Render(160, 95, -1);
+	//DebugOut("[end game render]\n");
 	if (current_period == panels.size())
 		return;
 	if (current_period == 2)
@@ -132,13 +120,9 @@ void EndGameScene::Render()
 		//render logo
 		CSpriteManager::GetInstance()->Get(4000)->Draw(64, 111, -1, 255);
 	}
-
-
 	panels[current_period]->Render();
 
 	////rener column
-
-
 	//descPanel->Render();
 }
 
@@ -148,8 +132,3 @@ void EndGameScene::NextIntro()
 	if (current_period == 2)
 		this->background = D3DCOLOR_XRGB(0, 0, 0);
 }
-
-//void EndGameScene::_ParseSection_ANIMATIONS(string line)
-//{
-//
-//}
