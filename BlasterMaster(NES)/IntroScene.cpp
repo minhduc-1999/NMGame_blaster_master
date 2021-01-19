@@ -158,10 +158,12 @@ void IntroScene::Render()
 }
 void IntroScene::NextIntro()
 {
+	if (current_intro == introSets->size() - 1)
+	{
+		return;
+	}
 	current_intro++;
 	start = GetTickCount64();
-	if (current_intro >= introSets->size())
-		CGame::GetInstance()->SwitchScene(2, 1, D3DXVECTOR2(-1, -1));
 }
 void IntroSceneKeyHandler::OnKeyDown(int KeyCode)
 {

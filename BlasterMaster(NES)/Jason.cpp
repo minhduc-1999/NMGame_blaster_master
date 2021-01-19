@@ -14,16 +14,22 @@ Jason::Jason(float x, float y) :MainPlayer(x, y)
 	canShoot = true;
 	HP = 16;
 	SetType(3);
+	WinnedBoss = false;
 }
 
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (isDestroyed)
+	if (state == JASON_STATE_DIE)
 	{
-		Sound::getInstance()->stop("lvl2");
-		CGame::GetInstance()->Notify(lives);
-		return 1;
+		if (isDestroyed)
+		{
+			Sound::getInstance()->stop("lvl2");
+			CGame::GetInstance()->Notify(lives);
+			return 1;
+		}
+		return 0;
 	}
+	
 	CDynamicGameObject::Update(dt);
 	if (!CanTouch && GetTickCount64() - TouchTime >= 500)
 	{
@@ -158,7 +164,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	//DebugOut("[JASON]\tx: %f, y: %f\n", x, y);
+
 	return 0;
 }
 

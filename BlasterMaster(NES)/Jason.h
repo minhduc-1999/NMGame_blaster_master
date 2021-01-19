@@ -27,10 +27,13 @@
 #define JASON_UNSTOPABLE	2000
 class Jason : public MainPlayer
 {
+	bool WinnedBoss;
 	bool canGoArea;
 public:
 	bool CanShoot() { return canShoot; }
 	Jason(float x, float y);
+	bool GetIsWinnedBoss() { return WinnedBoss; }
+	void SetIsWinnedBoss(bool bl) { WinnedBoss = bl; }
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);

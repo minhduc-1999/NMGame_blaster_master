@@ -12,7 +12,12 @@ NotifyScene::NotifyScene(int id, string filePath, int type, D3DXVECTOR3 bg) : CS
 void NotifyScene::SetNotify(int mainLives)
 {
 	if (mainLives == 0)
+	{
 		current_panel = 3;
+		saveData->lastScene = SCENE_AREA;
+		saveData->lastSection = 1;
+	}
+		
 	else {
 		current_panel = mainLives - 1;
 		if (current_panel < 0)

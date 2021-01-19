@@ -4,6 +4,7 @@
 #include "Eyeball.h"
 #include "Item.h"
 #include "SophiaBullet.h"
+#include <set>
 
 void Grid::AddStaticObj(LPSTATICOBJECT obj)
 {
@@ -130,26 +131,10 @@ void Grid::Render()
 	{
 		dynamicObjs[i]->Render();
 	}
-	/*for (int i = 0; i < bulletObjs.size(); i++)
-	{
-		bulletObjs[i]->Render();
-	}*/
 }
 
 void Grid::Clear()
 {
-	/*vector<LPSTATICOBJECT>::iterator temp = staticObjs.begin();
-	while (temp != staticObjs.end())
-	{
-		delete* temp;
-		temp = staticObjs.erase(staticObjs.begin());
-	}
-	vector<LPDYNAMICOBJECT>::iterator temp2 = dynamicObjs.begin();
-	while (temp2 != dynamicObjs.end())
-	{
-		delete* temp2;
-		temp2 = dynamicObjs.erase(dynamicObjs.begin());
-	}*/
 	for (int i = 0; i < staticObjs.size(); i++)
 	{
 		delete staticObjs[i];
