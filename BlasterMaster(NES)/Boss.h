@@ -21,11 +21,13 @@ class Boss : public CDynamicGameObject
     DWORD detroyTime;
     DWORD startTime;
     int countBullet;
+    int BossHP = 10;
 public:
     Boss(float x, float y, int hand_ani_set_id, int arm_ani_set_id);
     void SetState(int state);
     int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     void Render();
+    void SetIsDestroyed();
     vector<LPDYNAMICOBJECT> Fire(float xMain, float yMain);
     vector<LPDYNAMICOBJECT> CreateHands();
 };

@@ -169,6 +169,10 @@ int Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	handRight3->Update(dt, coObjects, GetPosition(), temp2);
 	handRight4->Update(dt, coObjects, GetPosition(), temp2);
 
+	if (BossHP <= 0)
+	{
+		SetState(BOSS_STATE_DIE);
+	}
 
 	isUpdated = true;
 	isRendered = false;
@@ -207,6 +211,11 @@ void Boss::Render()
 
 	isRendered = true;
 	isUpdated = false;
+}
+
+void Boss::SetIsDestroyed()
+{
+	BossHP--;
 }
 
 vector<LPDYNAMICOBJECT> Boss::CreateHands()
