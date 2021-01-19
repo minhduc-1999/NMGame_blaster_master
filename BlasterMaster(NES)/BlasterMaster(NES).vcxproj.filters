@@ -903,5 +903,14 @@
     <Media Include="Resource\Sound\Worm.wav">
       <Filter>Resources\Sound</Filter>
     </Media>
+    <Media Include="Resource\Sound\Intro.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Ending.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Intro2.wav">
+      <Filter>Resources\Sound</Filter>
+    </Media>
   </ItemGroup>
 </Project>

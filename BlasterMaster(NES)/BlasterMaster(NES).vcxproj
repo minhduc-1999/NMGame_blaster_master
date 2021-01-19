@@ -358,8 +358,11 @@
     <Media Include="Resource\Sound\Boss.wav" />
     <Media Include="Resource\Sound\Canon.wav" />
     <Media Include="Resource\Sound\Dome.wav" />
+    <Media Include="Resource\Sound\Ending.wav" />
     <Media Include="Resource\Sound\Fly.wav" />
     <Media Include="Resource\Sound\Hit.wav" />
+    <Media Include="Resource\Sound\Intro.wav" />
+    <Media Include="Resource\Sound\Intro2.wav" />
     <Media Include="Resource\Sound\JasonDed.wav" />
     <Media Include="Resource\Sound\JasonFire.wav" />
     <Media Include="Resource\Sound\JasonGunBoom.wav" />

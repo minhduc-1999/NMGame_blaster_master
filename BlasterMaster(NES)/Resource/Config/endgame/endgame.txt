@@ -4,6 +4,7 @@
 #sound
 # id	path
 [SOUNDS]
+Ending	Resource\Sound\Ending.wav
 [DESCRIPTION]
 Resource/Config/endgame/description.txt
 [SPRITES]

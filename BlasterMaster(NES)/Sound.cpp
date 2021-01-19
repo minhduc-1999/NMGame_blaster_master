@@ -39,7 +39,7 @@ Sound::Sound(HWND hWnd)
 	{
 		//GAMELOG("Can not create primaryBuffer");
 	}
-	volume = 80.0f;
+	volume = 90.0f;
 	isMute = false;
 }
 

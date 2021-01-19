@@ -14,6 +14,14 @@ int Dome::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObj
 	{
 		if (abs(xMain - x) <= 40 && abs(yMain - y) <= 200)
 		{
+			if (xMain <= x)
+			{
+				nx = 1;
+			}
+			else
+			{
+				nx = -1;
+			}
 			SetState(DOME_STATE_DROP_DOWN);
 		}
 	}
@@ -203,6 +211,7 @@ void Dome::Render()
 void Dome::SetBottomRect(int rectPos)
 {
 	bottomRect = GetBound();
+	dropped = false;
 	switch (rectPos)
 	{
 	case RECT_LEFT:
@@ -221,6 +230,7 @@ void Dome::SetBottomRect(int rectPos)
 		bottomRect.bottom -= 5;
 		break;
 	case RECT_BOTTOM:
+		dropped = true;
 		RectType = RECT_BOTTOM;
 		
 		bottomRect.top += 5;
@@ -294,7 +304,6 @@ void Dome::SetState(int state)
 		vx = 0;
 		vy = DOME_GRAVITY;
 		ny = 1;
-		nx = 1;
 		break;
 	case DOME_STATE_GO_UP:
 		dropped = false;

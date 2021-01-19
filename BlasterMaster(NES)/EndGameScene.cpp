@@ -4,6 +4,7 @@
 #include "DescPanel.h"
 #include "SlidePanel.h"
 #include "MoviePanel.h"
+#include "Sound.h"
 
 EndGameScene::EndGameScene(int id, string filePath, int type, D3DXVECTOR3 bg) : CScene(id, filePath, type, bg)
 {
@@ -82,7 +83,7 @@ void EndGameScene::Load(D3DXVECTOR2 tlPos)
 
 	DebugOut("[INFO] End game scene has been loaded successfully\n");
 	panels[0] = new SlidePanel(128.0f, 111.0f, -0.05f, 0.0f, 512, 224, CAnimationManager::GetInstance()->Get(2));
-	panels[1] = new MoviePanel(256.0f, 111.0f, -0.05f, 0.0f, 512, 224, CSpriteManager::GetInstance()->Get(1000));
+	panels[1] = new MoviePanel(256.0f, 111.0f, -0.03f, 0.0f, 512, 224, CSpriteManager::GetInstance()->Get(1000));
 	
 }
 void EndGameScene::Unload()
@@ -95,11 +96,12 @@ int EndGameScene::Update(DWORD dt)
 		return 0;
 	if (panels[current_period]->IsDone())
 	{
+		Sound::getInstance()->play("Ending", true, 0);
 		NextIntro();
 		return 0;
 	}
 	panels[current_period]->Update(dt);
-	//
+	DebugOut("[current = %d]\n", current_period);
 	return 1;
 }
 void EndGameScene::Render()

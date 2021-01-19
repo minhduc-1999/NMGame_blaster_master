@@ -429,7 +429,6 @@ void Section::Load()
 	}
 
 	f.close();
-
 	//CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	DebugOut("[INFO] Done loading SECTION resources %s\n", secFilePath);
 }

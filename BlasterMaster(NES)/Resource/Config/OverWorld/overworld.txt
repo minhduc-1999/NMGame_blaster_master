@@ -50,7 +50,7 @@
 #sound
 # id	path
 [SOUNDS]
-SophiaFire	Resource\Sound\SophiaFire.wav
+Boss	Resource\Sound\Boss.wav
 Jump	Resource\Sound\Jump.wav
 Hit	Resource\Sound\Hit.wav
 SophiaDed	Resource\Sound\SophiaDed.wav
