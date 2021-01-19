@@ -588,8 +588,10 @@ void CGame::_ParseSection_SCENES(string line)
 		break;
 	case 4:
 		scene = new EndGameScene(id, path, type, D3DXVECTOR3(R, G, B));
+		break;
 	case 5:
 		scene = new NotifyScene(id, path, type, D3DXVECTOR3(R, G, B));
+		break;
 	default:
 		break;
 	}

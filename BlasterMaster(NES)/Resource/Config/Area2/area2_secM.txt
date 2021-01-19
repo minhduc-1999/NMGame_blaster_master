@@ -8,8 +8,14 @@
 #object type: 7 = insect, 8 = jumper2, 9 = orb, 10 = skull, 11 = mine, 12 = teleporter, 13 = cannon
 #object type: 14 = eyeball, 15 = brick, 16 = spike, 17 = Gate, 18 = ladder, 19 = magma
 #object type: 80 = gatescene, 81 = brokenable-brick
+[DEFAULT]
+681	1681
 [DYNAMIC_OBJECTS]
 #type	x	y	grid_id	ani_set_id
+6	605	1140	0	6
+6	646	1300	0	6
+6	646	1435	0	6
+6	646	1544	0	6
 [STATIC_OBJECTS]
 #type	x	y	grid_id	sprite_id1	...
 15	552	1080	0	61
