@@ -28,7 +28,7 @@ protected:
 	unordered_map<int, LPSECTION> sections;
 	int current_section;
 	bool isSwitchingSection;
-	bool winnedBoss = true;
+	bool winnedBoss;
 public:
 	CTestScene(int id, string filePath, int type, D3DXVECTOR3 bg);
 

@@ -47,8 +47,11 @@ int MiniJasonBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			if (objTeam == 1)
 			{
-				LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
-				dyn->SetIsDestroyed();
+				if (temp->GetType() != 117)
+				{
+					LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(temp);
+					dyn->SetIsDestroyed();
+				}
 				SetState(MINIJASON_BULLET_STATE_DESTROY);
 			}
 			else if (objTeam == -1)
@@ -96,8 +99,11 @@ int MiniJasonBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (objTeam == 1)
 				{
-					LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
-					dyn->SetIsDestroyed();
+					if (e->obj->GetType() != 117)
+					{
+						LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
+						dyn->SetIsDestroyed();
+					}
 					SetState(MINIJASON_BULLET_STATE_DESTROY);
 				}
 				else if (objTeam == -1)

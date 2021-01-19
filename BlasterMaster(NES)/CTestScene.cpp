@@ -28,6 +28,7 @@ CTestScene::CTestScene(int id, string filePath, int type, D3DXVECTOR3 bg) :
 	current_section = -1;
 	mainPlayer = NULL;
 	hpBar = NULL;
+	winnedBoss = false;
 }
 
 /*
