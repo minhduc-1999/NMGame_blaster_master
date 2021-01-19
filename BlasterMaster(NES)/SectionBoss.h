@@ -7,6 +7,7 @@ private:
 	int period;
 public:
 	int GetPeriod() { return period; }
+	void SetPeriod(int _period) { period = _period; }
 	virtual int Update(DWORD dt);
 	virtual void Render();
 	void Load(SaveData* data, D3DXVECTOR2 mainPos);

@@ -1,3 +1,5 @@
+#ifndef _HAND_H
+#define _HAND_H
 #include "DynamicGameObject.h"
 
 #define HAND_WIDTH		            18
@@ -37,3 +39,5 @@ public:
     void Render();
     int GetNextPointIndex() { return nextPointIndex; }
 };
+
+#endif

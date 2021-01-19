@@ -18,7 +18,7 @@ Hand::Hand(float x, float y, int _index, bool _isLeftHand) :CDynamicGameObject(x
 		handPosition = D3DXVECTOR2(x + 20, y);
 		currentPointIndex = 3;
 		nextPointIndex = 2;
-		lastTime = GetTickCount() + 500;
+		lastTime = GetTickCount() /*+ 500*/;
 	}
 	currentPosition = handPosition;
 	index = _index;

@@ -1,5 +1,6 @@
 #include "Boss.h"
 #include "BossBullet.h"
+#include "SectionBoss.h"
 
 Boss::Boss(float x, float y, int hand_ani_set_id, int arm_ani_set_id) :CDynamicGameObject(x, y)
 {
@@ -232,7 +233,7 @@ vector<LPDYNAMICOBJECT> Boss::CreateHands()
 	hands.push_back(handLeft2);
 	hands.push_back(handLeft3);
 	hands.push_back(handLeft4);
-
+	
 	hands.push_back(handRight5);
 	hands.push_back(handLeft5);
 	return hands;

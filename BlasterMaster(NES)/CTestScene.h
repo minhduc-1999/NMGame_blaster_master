@@ -40,6 +40,7 @@ public:
 	virtual void SwitchSection(int section_id, D3DXVECTOR2 telePos);
 	void	SetHPBarState(int state) { this->hpBar->SetState(state); }
 	virtual bool getIsWinnedBoss() { return winnedBoss; }
+	void SetIsWinnedBoss(bool bl) { winnedBoss = bl; if (bl) Sound::getInstance()->play("lvl2", true, 0);}
 
 	void SetCurrentSection(int cur) { current_section = cur; }
 	int GetCurrentSection() { return current_section; }
