@@ -51,9 +51,11 @@
 # id	path
 [SOUNDS]
 Boss	Resource\Sound\Boss.wav
-Jump	Resource\Sound\Jump.wav
-Hit	Resource\Sound\Hit.wav
-SophiaDed	Resource\Sound\SophiaDed.wav
+JHit	Resource\Sound\JasonHit.wav
+JasonFire	Resource\Sound\MiniJasonFire.wav
+JasonDed	Resource\Sound\JasonDed.wav
+Cannon	Resource\Sound\Cannon.wav
+Tele	Resource\Sound\Tele.wav
 lvl2	Resource\Sound\lvl2.wav
 # id	left	top	right	bottom	texture_id
 [SPRITES]

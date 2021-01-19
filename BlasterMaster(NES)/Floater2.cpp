@@ -185,6 +185,7 @@ vector<LPDYNAMICOBJECT> Floater2::Fire(float xMain, float yMain)
 		float b = yMain - y;
 		bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 3, b / sqrt(pow(a, 2) + pow(b, 2) / 3) / 5);
 		floaterBulls.push_back(bullet);
+		Sound::getInstance()->play("Floater", false, 1);
 		isShooting = false;
 		shooted = true;
 	}

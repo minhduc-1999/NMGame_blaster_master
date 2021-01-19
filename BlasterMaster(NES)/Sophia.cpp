@@ -570,6 +570,7 @@ void Sophia::OnKeyDown(int KeyCode)
 		{
 			currentBullet = BULLET_NORMAL;
 			canShoot = true;
+			Sound::getInstance()->play("SophiaFire", false, 1);
 			lastShot = GetTickCount64();
 		}
 		else
@@ -580,6 +581,7 @@ void Sophia::OnKeyDown(int KeyCode)
 		{
 			currentBullet = BULLET_ROCKET;
 			canShoot = true;
+			Sound::getInstance()->play("Rocket", false, 1);
 			lastShot = GetTickCount64();
 		}
 		else

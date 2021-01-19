@@ -137,7 +137,7 @@ vector<LPDYNAMICOBJECT> Eyeball::Fire(float xMain, float yMain)
 	float b = yMain - y;
 	bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 3, b / sqrt(pow(a, 2) + pow(b, 2)) / 3);
 	eyeballBulls.push_back(bullet);
-
+	Sound::getInstance()->play("Cannon", false, 1);
 	isShooting = false;
 	
 	return eyeballBulls;
