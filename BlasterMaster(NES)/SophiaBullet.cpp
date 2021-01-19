@@ -130,7 +130,7 @@ int SophiaBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				LPDYNAMICOBJECT dyn = dynamic_cast<LPDYNAMICOBJECT>(e->obj);
 				dyn->SetIsDestroyed();
 				SetState(SOPHIA_BULLET_STATE_DESTROY);
-				return 0;
+				break;
 			}
 			else if (objTeam == -1)
 			{
