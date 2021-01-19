@@ -62,6 +62,11 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (temp->GetTeam() != GetTeam())
 			{
 				isCollisionWithEnemy = true;
+				if (temp->GetType() == 11)
+				{
+					CDynamicGameObject* mine = dynamic_cast<CDynamicGameObject*>(temp);
+					mine->SetIsDestroyed();
+				}
 			}
 
 			if (temp->GetType() == 26)
@@ -579,6 +584,7 @@ void Sophia::OnKeyDown(int KeyCode)
 		{
 			currentBullet = BULLET_NORMAL;
 			canShoot = true;
+			Sound::getInstance()->play("SophiaFire", false, 1);
 			lastShot = GetTickCount64();
 		}
 		else
@@ -589,6 +595,7 @@ void Sophia::OnKeyDown(int KeyCode)
 		{
 			currentBullet = BULLET_ROCKET;
 			canShoot = true;
+			Sound::getInstance()->play("Rocket", false, 1);
 			lastShot = GetTickCount64();
 		}
 		else
@@ -623,7 +630,7 @@ void Sophia::OnKeyUp(int KeyCode)
 	}
 }
 
-vector<LPDYNAMICOBJECT> Sophia::Shoot()
+vector<LPDYNAMICOBJECT> Sophia::Shoot(int bulletType)
 {
 	vector<LPDYNAMICOBJECT> bullets;
 	if (canShoot)
@@ -635,22 +642,30 @@ vector<LPDYNAMICOBJECT> Sophia::Shoot()
 		}
 		else
 		{
-			if (currentBullet == BULLET_NORMAL)
+			if (bulletType == 1)
 			{
-				SophiaBullet* bullet = new SophiaBullet(x, y, 0, 0, nx);
-				bullets.push_back(bullet);
+				if (currentBullet == BULLET_NORMAL)
+				{
+					SophiaBullet* bullet = new SophiaBullet(x, y, 0, 0, nx);
+					bullets.push_back(bullet);
+				}
+				else if (currentBullet == BULLET_ROCKET)
+				{
+					SophiaBullet* bullet1 = new SophiaBullet(x, y, 0, 1, nx);
+					bullet1->SetSpeed(nx * 0.5f, -0.2f);
+					bullets.push_back(bullet1);
+					SophiaBullet* bullet2 = new SophiaBullet(x, y, 0, 1, nx);
+					bullet2->SetSpeed(nx * 0.5f, 0);
+					bullets.push_back(bullet2);
+					SophiaBullet* bullet3 = new SophiaBullet(x, y, 0, 1, nx);
+					bullet3->SetSpeed(nx * 0.5f, 0.2f);
+					bullets.push_back(bullet3);
+				}
 			}
-			else if (currentBullet == BULLET_ROCKET)
+			else if (bulletType == 0)
 			{
-				SophiaBullet* bullet1 = new SophiaBullet(x, y, 0, 1, nx);
-				bullet1->SetSpeed(nx * 0.5f, -0.2f);
-				bullets.push_back(bullet1);
-				SophiaBullet* bullet2 = new SophiaBullet(x, y, 0, 1, nx);
-				bullet2->SetSpeed(nx * 0.5f, 0);
-				bullets.push_back(bullet2);
-				SophiaBullet* bullet3 = new SophiaBullet(x, y, 0, 1, nx);
-				bullet3->SetSpeed(nx * 0.5f, 0.2f);
-				bullets.push_back(bullet3);
+				SophiaBullet* bullet = new SophiaBullet(x, y, 0, 2, nx);
+				bullets.push_back(bullet);
 			}
 		}
 	}

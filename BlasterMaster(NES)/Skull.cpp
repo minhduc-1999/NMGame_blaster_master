@@ -14,10 +14,13 @@ Skull::Skull(float x, float y) :CDynamicGameObject(x, y)
 }
 
 
-int Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+int Skull::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isUpdated)
 		return -1;
+	if (isDestroyed)
+		return 0;
+
 	CDynamicGameObject::Update(dt);
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -54,7 +57,7 @@ int Skull::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
-		if (startX - x > 100)
+		if (x < xMain)
 		{
 			vx = 0;
 			vy = -SKULL_FLYING_SPEED;
@@ -191,7 +194,7 @@ vector<LPDYNAMICOBJECT> Skull::Fire()
 	{
 		SkullBullet* bullet = new SkullBullet(x, y, 1);
 		skullBulls.push_back(bullet);
-
+		Sound::getInstance()->play("Skull", false, 1);
 		isShooting = false;
 		shooted = true;
 	}

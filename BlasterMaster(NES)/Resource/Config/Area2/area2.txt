@@ -42,6 +42,10 @@ JasonFire	Resource\Sound\MiniJasonFire.wav
 JasonDed	Resource\Sound\JasonDed.wav
 lvl2	Resource\Sound\lvl2.wav
 Open	Resource\Sound\Open.wav
+Skull	Resource\Sound\Skull.wav
+Floater	Resource\Sound\Fly.wav
+Mine	Resource\Sound\Mine.wav
+Rocket	Resource\Sound\Rocket.wav
 [SPRITES]
 #=========TILE=============
 1	1	1	17	17	30
@@ -303,10 +307,9 @@ Open	Resource\Sound\Open.wav
 80003	67	499	84	525	0
 #======orb============
 #rolling
-90001	118	387	136	403	0
-90002	98	387	116	403	0
-90003	78	387	96	403	0
-90004	58	387	76	403	0
+90001	118	387	136	405	0
+90002	98	387	116	405	0
+90003	78	387	96	405	0
 #========skull========
 # flying
 100001	42	530	60	551	0
@@ -416,7 +419,7 @@ Open	Resource\Sound\Open.wav
 #=========Jumper2=========
 800	80001	200	80002	200	80003	200
 #=========orb=============
-900	90001	40	90002	40	90003	40	90004	40
+900	90001	100	90002	100	90003	100
 #=========skull===========
 1000	100001	200
 1001	100101	200
@@ -453,7 +456,8 @@ Open	Resource\Sound\Open.wav
 6000	600001	1000
 #======Enemy_Bullet_Die====
 9000	900001	75	900002	75	900003	75	900004	75
-
+#======brokable_brick======
+17	117	1000
 
 
 # id	ani1	ani2	ani3
@@ -498,3 +502,5 @@ Open	Resource\Sound\Open.wav
 50	5000	5001	5002	5003	5004	5005	5006	5007	5008
 #======rock======
 60	6000
+#======brokable_brick======
+117	17	9000

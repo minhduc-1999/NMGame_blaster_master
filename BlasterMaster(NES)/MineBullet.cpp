@@ -55,7 +55,7 @@ int MineBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (startY - y >= 20 && !isFalling)
 	{
-		vy = -vy;
+		vy = -vy * 2;
 		isFalling = true;
 	}
 	x += dx;
@@ -101,7 +101,7 @@ int MineBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	DebugOut("[JASON-Bullet]\tx: %f, y: %f\n", x, y);
+
 	isUpdated = true;
 	isRendered = false;
 

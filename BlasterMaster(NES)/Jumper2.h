@@ -2,7 +2,8 @@
 #include "DynamicGameObject.h"
 
 #define JUMPER2_WALKING_SPEED		0.05f
-#define JUMPER2_GRAVITY             0.2f
+#define JUMPER2_JUMPING_SPEED       0.3f
+#define JUMPER2_GRAVITY             0.03f
 #define JUMPER2_STATE_IDLE			0
 #define JUMPER2_STATE_WALKING_RIGHT	100
 #define JUMPER2_STATE_WALKING_LEFT	200
@@ -16,12 +17,15 @@
 class Jumper2 :
     public CDynamicGameObject
 {
+private:
+    DWORD startTime;
+    int countJump;
+    bool canJump;
 public:
     Jumper2(float x, float y);
     void SetState(int state);
     int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     bool IsJumping();
-    int jump;
     void Render();
     void SetIsDestroyed() { SetState(JUMPER2_STATE_DIE); }
 };

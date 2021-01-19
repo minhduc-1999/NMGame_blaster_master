@@ -227,6 +227,9 @@
     <Filter Include="Object\DynamicObject\Bullet\CannonBullet">
       <UniqueIdentifier>{5be5ecea-56b5-4e97-8420-a4b619a57b7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\DynamicObject\BrokableBrick">
+      <UniqueIdentifier>{6c0c6305-c10f-4f6b-a11c-f2fa56bc0f2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KeyEventHandler.h">
@@ -436,6 +439,9 @@
     <ClInclude Include="EndingGate.h">
       <Filter>Object\StaticObject\Gate</Filter>
     </ClInclude>
+    <ClInclude Include="BrokableBrick.h">
+      <Filter>Object\DynamicObject\BrokableBrick</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -638,9 +644,6 @@
     </ClCompile>
     <ClCompile Include="CSpike.cpp">
       <Filter>Object\StaticObject\Spike</Filter>
-    </ClCompile>
-    <ClCompile Include="EndingGate.cpp">
-      <Filter>Object\StaticObject\Gate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

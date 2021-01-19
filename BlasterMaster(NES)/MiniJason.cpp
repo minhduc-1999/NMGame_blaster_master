@@ -62,6 +62,11 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (temp->GetTeam() != this->team)
 		{
 			isCollisionWithEnemy = true;
+			if (temp->GetType() == 11)
+			{
+				CDynamicGameObject* mine = dynamic_cast<CDynamicGameObject*>(temp);
+				mine->SetIsDestroyed();
+			}
 		}
 
 		if (temp->GetType() == 26)

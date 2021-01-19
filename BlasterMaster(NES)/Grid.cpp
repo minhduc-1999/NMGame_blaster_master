@@ -39,7 +39,7 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 	{
 		LPDYNAMICOBJECT temp = dynamicObjs[i];
 		
-		if (temp->GetType() == 5)
+		if (temp->GetType() == 5 || temp->GetType() == 10 || temp->GetType() == 9)
 		{
 			temp->Update(xMain, yMain, dt, coObjects);
 		}
@@ -68,7 +68,7 @@ vector<LPDYNAMICOBJECT>* Grid::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects,
 		if (temp->GetIsDestroyed())
 		{
 			
-			if (temp->GetType() != 20 && temp->GetType() != 26)
+			if (temp->GetType() != 20 && temp->GetType() != 26 && temp->GetType() != 117)
 			{
 				int spawnItem = rand() % 2;
 				if (spawnItem == 0)

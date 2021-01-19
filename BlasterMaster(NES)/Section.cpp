@@ -24,6 +24,7 @@
 #include "CLadder.h"
 #include "SceneGate.h"
 #include "Rock.h"
+#include "BrokableBrick.h"
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -60,6 +61,7 @@ using namespace std;
 #define OBJECT_TYPE_BULLET		20
 #define OBJECT_TYPE_ITEM_HP		26
 #define OBJECT_TYPE_ROCK		60
+#define OBJECT_TYPE_BROKABLE_BRICK	117
 #pragma endregion
 
 void Section::AddMiniJason()
@@ -220,7 +222,7 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 			break;
 		case OBJECT_TYPE_JUMPER2:
 			obj = new Jumper2(x, y);
-			obj->SetState(JUMPER2_STATE_JUMPING_RIGHT);
+			obj->SetState(JUMPER2_STATE_WALKING_RIGHT);
 			break;
 		case OBJECT_TYPE_ORB:
 			obj = new Orb(x, y);
@@ -248,6 +250,9 @@ void Section::_ParseSection_DYNAMIC_OBJECTS(string line)
 			break;
 		case OBJECT_TYPE_ROCK:
 			obj = new Rock(x, y);
+			break;
+		case OBJECT_TYPE_BROKABLE_BRICK:
+			obj = new BrokableBrick(x, y);
 			break;
 		default:
 			DebugOut("[ERROR] Invalid object type: %d\n", object_type);
