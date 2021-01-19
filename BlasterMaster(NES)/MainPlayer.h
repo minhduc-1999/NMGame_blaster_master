@@ -18,6 +18,7 @@ public:
 		isJumping = false;
 		lastShot = GetTickCount64();
 		lives = 3;
+		SetTeam(0);
 	}
 	void SetLive(int l) { lives = l; }
 	int GetLive() { return lives; }

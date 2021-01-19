@@ -29,6 +29,7 @@ CTestScene::CTestScene(int id, string filePath, int type, D3DXVECTOR3 bg) :
 	mainPlayer = NULL;
 	hpBar = NULL;
 	winnedBoss = false;
+	playerType = PLAYER_SOPHIA;
 }
 
 /*
@@ -264,7 +265,15 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				saveData->sophiaY = sophia->GetPosition().y;
 				saveData->sophiaSection = ((CTestScene*)scence)->GetCurrentSection();
 				saveData->sophiaHP = sophia->GetHP();
-				saveData->sophiaState = sophia->GetState();
+				if (sophia->GetNX() == 1)
+				{
+					saveData->sophiaState = SOPHIA_STATE_IDLE_RIGHT;
+				}
+				else
+				{
+					saveData->sophiaState = SOPHIA_STATE_IDLE_LEFT;
+				}
+
 				DebugOut("[INFO] Save Data last section = %d, %f, %f\n", saveData->sophiaSection, saveData->sophiaX, saveData->sophiaY);
 
 				((CTestScene*)scence)->GetPlayer()->OnKeyDown(DIK_C);
@@ -445,6 +454,10 @@ void CTestScene::Load(D3DXVECTOR2 tlPos)
 	SwitchSection(current_section, tlPos);
 	this->mainPlayer = sections[current_section]->GetPlayer();
 	hpBar = new HPBar();
+	if (saveData->sophiaSection == -1)
+		playerType = PLAYER_SOPHIA;
+	else
+		playerType = PLAYER_JASON;
 }
 
 

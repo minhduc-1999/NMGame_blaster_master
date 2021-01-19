@@ -33,8 +33,6 @@ void SectionArea::Load(SaveData* data, D3DXVECTOR2 mainPos)
 					mainPlayer = new MiniJason(defaultPos.x, defaultPos.y);
 				else
 					mainPlayer = new MiniJason(mainPos.x, mainPos.y);
-				mainPlayer->SetTeam(0);
-				mainPlayer->SetType(2);
 				mainPlayer->SetState(MINIJASON_STATE_IDLE_LEFT);
 				mainPlayer->SetAnimationSet(ani_setMINIJASON);
 				mainPlayer->SetHP(data->jasonHP);
@@ -60,8 +58,6 @@ void SectionArea::Load(SaveData* data, D3DXVECTOR2 mainPos)
 			else
 				mainPlayer = new Sophia(mainPos.x, mainPos.y);
 			mainPlayer->SetAnimationSet(ani_set);
-			mainPlayer->SetTeam(0);
-			mainPlayer->SetType(1);
 			mainPlayer->SetState(SOPHIA_STATE_IDLE_RIGHT);
 			((MainPlayer*)mainPlayer)->SetLive(data->mainLives);
 			DebugOut("[AREA-INFO] sophia created!\n");

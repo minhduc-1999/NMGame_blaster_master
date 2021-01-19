@@ -62,7 +62,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 						gate->GetDesTelePos());
-					return 0;
+					return 1;
 				}
 				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
 			}
@@ -271,6 +271,7 @@ void Jason::SetState(int state)
 		ny = 1;
 		break;
 	case JASON_STATE_DIE:
+		lives--;
 		vx = 0;
 		vy = 0;
 		break;

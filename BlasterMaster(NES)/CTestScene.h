@@ -22,7 +22,7 @@ protected:
 	CDynamicGameObject* mainPlayer;
 	Sophia* sophia;	// A play scene has to have player, right?
 	MiniJason* miniJason;
-	int playerType = PLAYER_SOPHIA;
+	int playerType;
 	LPSECTRANSITION transition;
 	HPBar* hpBar;
 	unordered_map<int, LPSECTION> sections;

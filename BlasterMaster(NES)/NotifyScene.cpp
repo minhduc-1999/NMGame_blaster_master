@@ -87,7 +87,15 @@ int NotifyScene::Update(DWORD dt)
 	if (current_panel == panels.size() || current_panel == -1)
 		return 0;
 	if (panels[current_panel]->IsDone())
+	{
+		saveData->sophiaX = -1;
+		saveData->sophiaY = -1;
+		saveData->sophiaSection = -1;
+		saveData->sophiaHP = -1;
+		saveData->sophiaState = -1;
 		CGame::GetInstance()->SwitchScene(saveData->lastScene, saveData->lastSection, D3DXVECTOR2(-1, -1));
+	}
+		
 	panels[current_panel]->Update(dt);
 	//
 	return 1;

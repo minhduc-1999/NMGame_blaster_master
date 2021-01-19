@@ -107,7 +107,7 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					//{
 					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
 						gate->GetDesTelePos());
-					return 0;
+					return 1;
 					//}					
 				}
 				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
@@ -390,6 +390,7 @@ void MiniJason::SetState(int state)
 		}
 		break;
 	case MINIJASON_STATE_DIE:
+		lives--;
 		vx = 0;
 		Sound::getInstance()->stop("Hit");
 		break;
