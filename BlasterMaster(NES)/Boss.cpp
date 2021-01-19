@@ -95,11 +95,13 @@ int Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		isShooting = true;
 		startTime = 600;
+		Sound::getInstance()->play("BossFire", false, 1);
 	}
 	else if (countBullet == 4)
 	{
 		startTime = 0;
 		countBullet = 0;
+		Sound::getInstance()->stop("BossFire");
 	}
 
 	// No collision occured, proceed normally
@@ -259,7 +261,6 @@ void Boss::SetState(int state)
 vector<LPDYNAMICOBJECT> Boss::Fire(float xMain, float yMain)
 {
 	vector<LPDYNAMICOBJECT> bossBulls;
-	Sound::getInstance()->play("BossFire", false, 1);
 
 	if (countBullet <= 4)
 	{
