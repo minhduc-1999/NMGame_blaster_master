@@ -22,6 +22,7 @@ int SkullBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (GetTickCount64() - startFiringTime >= 1500)
 	{
 		SetState(SKULL_BULLET_STATE_DESTROY);
+		isDestroyed = true;
 		isRendered = false;
 		isUpdated = true;
 		return 0;

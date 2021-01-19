@@ -25,7 +25,7 @@ int Eyeball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CalcPotentialCollisions(coObjects, coEvents);
 	startTime += dt;
 
-	if (startTime > 800)
+	if (startTime > 1200)
 	{
 		isShooting = true;
 		startTime = 0;

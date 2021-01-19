@@ -651,6 +651,10 @@
     <ClCompile Include="SectionBoss.cpp">
       <Filter>FrameWork\Section</Filter>
     </ClCompile>
+    <ClCompile Include="EndingGate.cpp" />
+    <ClCompile Include="BrokableBrick.cpp">
+      <Filter>Object\DynamicObject\BrokableBrick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="BlasterMaster.ico">
