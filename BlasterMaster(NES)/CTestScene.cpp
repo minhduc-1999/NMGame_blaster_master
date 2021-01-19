@@ -191,7 +191,7 @@ int CTestScene::Update(DWORD dt)
 			CGame::GetInstance()->UpdateCamera(mainPos, mapPos, mapDimen);
 		}
 	}
-	
+
 	return 0;
 }
 
@@ -216,10 +216,9 @@ void CTestScene::Render()
 	//render foreground
 	if (current_section != 33)
 		CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
-	else
 
-		//render hpbar
-		hpBar->Render();
+	//render hpbar
+	hpBar->Render();
 }
 
 /*
