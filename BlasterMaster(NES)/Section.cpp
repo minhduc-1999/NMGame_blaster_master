@@ -25,6 +25,7 @@
 #include "SceneGate.h"
 #include "Rock.h"
 #include "BrokableBrick.h"
+#include <set>
 using namespace std;
 
 #pragma region SECTION CONFIG
@@ -76,6 +77,7 @@ void Section::AddMiniJason()
 	{
 		mainPlayer->SetState(SOPHIA_STATE_IDLE_LEFT);
 	}
+	((Sophia*)mainPlayer)->SetIsActive(false);
 	vector<int> rs = GetBoundGrid(mainPlayer->GetBound());
 	for (int i = 0; i < rs.size(); i++)
 	{
@@ -447,7 +449,8 @@ void Section::Load()
 
 int Section::Update(DWORD dt)
 {
-	vector<LPGAMEOBJECT> coObjs;
+	set<LPGAMEOBJECT> coObjs;
+	vector<LPGAMEOBJECT> lastcoObj;
 	Rect camPos = CGame::GetInstance()->GetCamBound();
 	vector<int> camBoundGrid = GetBoundGrid(camPos);
 	for (int i = 0; i < camBoundGrid.size(); i++)
@@ -455,15 +458,22 @@ int Section::Update(DWORD dt)
 		if (grids.find(camBoundGrid[i]) != grids.end())
 		{
 			vector<LPGAMEOBJECT>* temp = grids.at(camBoundGrid[i])->GetcoObjectList();
-			coObjs.insert(coObjs.end(), temp->begin(), temp->end());
+			for (auto it = temp->begin(); it != temp->end(); it++)
+			{
+				coObjs.insert(*it);
+			}
+			temp->clear();
+			delete temp;
 		}
 	}
+	lastcoObj.assign(coObjs.begin(), coObjs.end());
+	coObjs.clear();
 	vector<LPDYNAMICOBJECT>* changeGridObjs;
 	for (int i = 0; i < camBoundGrid.size(); i++)
 	{
 		if (grids.find(camBoundGrid[i]) != grids.end())
 		{
-			changeGridObjs = grids.at(camBoundGrid[i])->Update(dt, &coObjs, mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
+			changeGridObjs = grids.at(camBoundGrid[i])->Update(dt, &lastcoObj, mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
 			for (int j = 0; j < changeGridObjs->size(); j++)
 			{
 				LPDYNAMICOBJECT obj = changeGridObjs->at(j);
@@ -478,7 +488,7 @@ int Section::Update(DWORD dt)
 			delete changeGridObjs;
 		}
 	}
-	return mainPlayer->Update(dt, &coObjs);
+	return mainPlayer->Update(dt, &lastcoObj);
 }
 
 void Section::Render()
@@ -506,12 +516,27 @@ void Section::Unload()
 		delete temp->second;
 		temp = grids.erase(grids.begin());
 	}*/
+	set<LPDYNAMICOBJECT> allDyObjs;
+
 	for (int i = 0; i < grids.size(); i++)
 	{
-		LPGRID temp = grids[i];
-		temp->Clear();
+		vector<LPDYNAMICOBJECT>* temp = grids[i]->GetDynamicObj();
+		for (auto it = temp->begin(); it != temp->end(); it++)
+		{
+			allDyObjs.insert(*it);
+		}
+		temp->clear();
 		delete temp;
+		
+		LPGRID gr = grids[i];
+		gr->Clear();
+		delete gr;
 	}
+	for (auto it = allDyObjs.begin(); it != allDyObjs.end(); it++)
+	{
+		delete *it;
+	}
+	allDyObjs.clear();
 	grids.clear();
 }
 

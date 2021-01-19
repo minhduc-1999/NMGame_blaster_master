@@ -19,12 +19,17 @@ Jason::Jason(float x, float y) :MainPlayer(x, y)
 
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (isDestroyed)
+	if (state == JASON_STATE_DIE)
 	{
-		Sound::getInstance()->stop("lvl2");
-		CGame::GetInstance()->Notify(lives);
-		return 1;
+		if (isDestroyed)
+		{
+			Sound::getInstance()->stop("lvl2");
+			CGame::GetInstance()->Notify(lives);
+			return 1;
+		}
+		return 0;
 	}
+	
 	CDynamicGameObject::Update(dt);
 	if (!CanTouch && GetTickCount64() - TouchTime >= 500)
 	{

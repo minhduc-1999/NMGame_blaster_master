@@ -234,16 +234,24 @@ void CTestScene::Unload()
 	}
 	sections.clear();
 	if (mainPlayer != NULL)
+	{
 		delete mainPlayer;
+		mainPlayer = NULL;
+	}
 	if (sophia != NULL)
 		delete sophia;
 	if (miniJason != NULL)
 		delete miniJason;
 	if (transition != NULL)
+	{
 		delete transition;
+		transition = NULL;
+	}
 	if (hpBar != NULL)
+	{
 		delete hpBar;
-
+		hpBar = NULL;
+	}
 }
 
 void CTestScene::SwitchSection(int section_id, D3DXVECTOR2 telePos)

@@ -23,11 +23,17 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isActive)
 	{
-		if (isDestroyed)
+		if (state == SOPHIA_STATE_DIE)
 		{
-			Sound::getInstance()->stop("lvl2");
-			CGame::GetInstance()->Notify(lives);
-			return 1;
+			if (isDestroyed)
+			{
+				Sound::getInstance()->stop("lvl2");
+				CGame::GetInstance()->Notify(lives);
+				return 1;
+			}
+			isUpdated = true;
+			isRendered = false;
+			return 0;
 		}
 		CDynamicGameObject::Update(dt);
 		/*if (vx != 0)
@@ -169,8 +175,10 @@ int Sophia::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		// clean up collision events
 		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-		//DebugOut("[SOPHIA]\t%f\t%f\n", x, y);
+		DebugOut("[SOPHIA]\t%d\n", lives);
 	}
+	isUpdated = true;
+	isRendered = false;
 	return 0;
 }
 
@@ -202,7 +210,7 @@ void Sophia::Render()
 			{
 				heightLevel++;
 			}
-			
+
 		}
 	}
 	int ani = -1;
@@ -216,7 +224,7 @@ void Sophia::Render()
 		}
 		else
 		{
-			
+
 			animation_set->at(SOPHIA_ANI_DIE)->ResetAnim();
 			//CGame::GetInstance()->Notify(0);
 			isDestroyed = true;
@@ -405,7 +413,7 @@ void Sophia::Render()
 				}
 				else
 				{
-					animation_set->at(ani)->Render(x, y-8, nx, alpha);
+					animation_set->at(ani)->Render(x, y - 8, nx, alpha);
 				}
 				return;
 				break;
