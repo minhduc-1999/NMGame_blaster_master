@@ -23,9 +23,12 @@ int Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		int objTeam = temp->GetTeam();
 		if (objTeam == 0)
 		{
+			if (temp->GetType() == 20)
+			{
+				isShooting = true;
+			}
 			SetState(MINE_BULLET_STATE_DESTROY);
-			//isDestroyed = true;
-			isShooting = true;
+			isDestroyed = true;
 			isUpdated = true;
 			isRendered = false;
 			return 0;
@@ -75,7 +78,7 @@ int Mine::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 			case 1: case 2:
 				SetState(MINE_STATE_DIE);
-				isShooting = true;
+				isDestroyed = true;
 				break;
 			default:
 				break;
@@ -152,7 +155,6 @@ vector<LPDYNAMICOBJECT> Mine::Fire()
 	bullet4->SetSpeed(0.04f, -0.17f);
 	mineBulls.push_back(bullet4);
 	Sound::getInstance()->play("Mine", false, 1);
-
 	isShooting = false;
 
 	return mineBulls;

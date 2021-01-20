@@ -18,5 +18,5 @@ public:
 	virtual void Render();
 	virtual void SetState(int state);
 	vector<LPDYNAMICOBJECT> Fire();
-	void SetIsDestroyed() { SetState(MINE_STATE_DIE); isShooting = true; }
+	void SetIsDestroyed() { SetState(MINE_STATE_DIE); }
 };
