@@ -164,7 +164,8 @@ int CTestScene::Update(DWORD dt)
 		{
 			if (current_section == 33)
 			{
-				saveData->isWin = ((Jason*)mainPlayer)->GetWinnedBoss();
+				if (mainPlayer != NULL)
+					saveData->isWin = ((Jason*)mainPlayer)->GetWinnedBoss();
 			}
 			return result;
 		}
@@ -222,7 +223,7 @@ void CTestScene::Render()
 	if (current_section != 33)
 		CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 
-		//render hpbar
+	//render hpbar
 	hpBar->Render();
 }
 
