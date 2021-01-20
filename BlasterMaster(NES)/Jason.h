@@ -27,7 +27,6 @@
 #define JASON_UNSTOPABLE	2000
 class Jason : public MainPlayer
 {
-	bool WinnedBoss;
 	bool canGoArea;
 	bool playingWithBoss;
 public:
