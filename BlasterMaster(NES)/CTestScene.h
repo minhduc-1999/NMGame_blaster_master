@@ -29,7 +29,6 @@ protected:
 	unordered_map<int, LPSECTION> sections;
 	int current_section;
 	bool isSwitchingSection;
-	bool winnedBoss;
 public:
 	CTestScene(int id, string filePath, int type, D3DXVECTOR3 bg);
 
@@ -38,9 +37,7 @@ public:
 	virtual void Render();
 	virtual void Unload();
 	virtual void SwitchSection(int section_id, D3DXVECTOR2 telePos);
-	void	SetHPBarState(int state) { this->hpBar->SetState(state); }
-	virtual bool getIsWinnedBoss() { return winnedBoss; }
-	void SetIsWinnedBoss(bool bl) { winnedBoss = bl; if (bl) Sound::getInstance()->play("lvl2", true, 0);}
+	void SetHPBarState(int state) { this->hpBar->SetState(state); }
 
 	void SetCurrentSection(int cur) { current_section = cur; }
 	int GetCurrentSection() { return current_section; }

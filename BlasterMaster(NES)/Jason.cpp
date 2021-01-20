@@ -14,7 +14,7 @@ Jason::Jason(float x, float y) :MainPlayer(x, y)
 	canShoot = true;
 	HP = 16;
 	SetType(3);
-	WinnedBoss = false;
+	playingWithBoss = false;
 }
 
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -60,18 +60,28 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		switch (temp->GetType())
 		{
+		case 117:
+			DebugOut("akdasldkas\n");
+			break;
 		case 17:
 		{
-			CGate* gate = dynamic_cast<CGate*>(temp);
-			if (gate != 0)
+			if (!playingWithBoss)
 			{
-				if (this->nx == gate->GetDirectionX() || this->ny == gate->GetDirectionY())
+				CGate* gate = dynamic_cast<CGate*>(temp);
+				if (gate != 0)
 				{
-					CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
-						gate->GetDesTelePos());
-					return 1;
+					if (this->nx == gate->GetDirectionX() || this->ny == gate->GetDirectionY())
+					{
+						CGame::GetInstance()->SwitchSection(gate->GetNextSectionID(),
+							gate->GetDesTelePos());
+						return 1;
+					}
+					//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
 				}
-				//DebugOut("[Last update normal player pos]\tx: %f, y: %f\n", x, y);
+			}
+			else 
+			{
+
 			}
 			break;
 		}
@@ -135,24 +145,6 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			y += min_tby * dy + nby * 0.4f;
 		else
 			y += dy;
-
-		//TODO: Collision logic with dynamic object (bots)
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-			int objType = e->obj->GetType();
-			/*if (objType != 15)
-			{
-				if (e->nx != 0)
-				{
-					x += (1 - e->t) * dx - e->nx * 0.4f;
-				}
-				else
-				{
-					y += (1 - e->t) * dy - e->ny * 0.4f;
-				}
-			}*/
-		}
 
 	}
 
