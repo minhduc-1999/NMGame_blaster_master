@@ -10,7 +10,7 @@ Hand::Hand(float x, float y, int _index, bool _isLeftHand) :CDynamicGameObject(x
 		handPosition = D3DXVECTOR2(x - 20, y);
 		currentPointIndex = 0;
 		nextPointIndex = 1;
-		lastTime = GetTickCount();
+		lastTime = GetTickCount64();
 	}
 	else
 	{
@@ -18,7 +18,7 @@ Hand::Hand(float x, float y, int _index, bool _isLeftHand) :CDynamicGameObject(x
 		handPosition = D3DXVECTOR2(x + 20, y);
 		currentPointIndex = 3;
 		nextPointIndex = 2;
-		lastTime = GetTickCount() /*+ 500*/;
+		lastTime = GetTickCount64() /*+ 500*/;
 	}
 	currentPosition = handPosition;
 	index = _index;
@@ -39,14 +39,18 @@ Hand::Hand(float x, float y, int _index, bool _isLeftHand) :CDynamicGameObject(x
 
 int Hand::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, D3DXVECTOR2 _bossPosition, int _nextPointIndex)
 {
+	if (isUpdated)
+	{
+		return -1;
+	}
+		
 	if (state == HAND_STATE_DIE)
 	{
 		isUpdated = true;
 		isRendered = false;
 		return 0;
 	}
-	if (isUpdated)
-		return -1;
+	
 	
 
 	x += (_bossPosition.x - bossPosition.x);
@@ -131,9 +135,9 @@ int Hand::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects, D3DXVECTOR2 _bossPos
 		vy = 0;
 		handPosition = nextPosition;
 		SetPosition(nextPosition.x, nextPosition.y);
-		if (GetTickCount() - lastTime >= 3000)
+		if (GetTickCount64() - lastTime >= 3000)
 		{
-			lastTime = GetTickCount();
+			lastTime = GetTickCount64();
 			currentPointIndex = nextPointIndex;
 			if (index == 5)
 			{

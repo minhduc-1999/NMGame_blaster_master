@@ -678,7 +678,6 @@ void CGame::Notify(int mainLives)
 	data->mainLives = mainLives;
 	if (mainLives != 3)
 	{
-
 		data->lastScene = current_scene;
 		if (((CTestScene*)scenes[current_scene])->GetCurrentSection() == 33)
 			data->lastSection = 27;

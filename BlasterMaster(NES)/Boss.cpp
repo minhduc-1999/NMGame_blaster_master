@@ -12,11 +12,11 @@ Boss::Boss(float x, float y, int hand_ani_set_id, int arm_ani_set_id) :CDynamicG
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 	LPANIMATION_SET ani_set = animation_sets->Get(hand_ani_set_id);
 	LPANIMATION_SET ani_set2 = animation_sets->Get(arm_ani_set_id);
-	handLeft5 = new Hand(x, y, 5,true);
+	handLeft5 = new Hand(x, y, 5, true);
 	handLeft4 = new Hand(x, y, 4, true);
 	handLeft3 = new Hand(x, y, 3, true);
-	handLeft2 = new Hand(x, y, 2,true);
-	handLeft1 = new Hand(x, y, 1,true);
+	handLeft2 = new Hand(x, y, 2, true);
+	handLeft1 = new Hand(x, y, 1, true);
 	handLeft5->SetAnimationSet(ani_set);
 	handLeft1->SetAnimationSet(ani_set2);
 	handLeft2->SetAnimationSet(ani_set2);
@@ -51,6 +51,8 @@ Boss::Boss(float x, float y, int hand_ani_set_id, int arm_ani_set_id) :CDynamicG
 
 int Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (isUpdated)
+		return -1;
 	if (state == BOSS_STATE_DIE)
 	{
 		isUpdated = true;
@@ -58,7 +60,8 @@ int Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vector<LPDYNAMICOBJECT> hands = CreateHands();
 		for (int i = 0; i < hands.size(); i++)
 		{
-			hands[i]->SetState(HAND_STATE_DIE);
+			if (hands[i]->GetState() != HAND_STATE_DIE)
+				hands[i]->SetState(HAND_STATE_DIE);
 		}
 
 		handLeft5->Update(dt, coObjects, GetPosition(), 0);
@@ -78,8 +81,7 @@ int Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return 0;
 	}
 
-	if (isUpdated)
-		return -1;
+
 	CDynamicGameObject::Update(dt);
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -91,10 +93,10 @@ int Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	startTime += dt;
 
-	if (startTime > 700 && countBullet < 4)
+	if (startTime > 1200 && countBullet < 4)
 	{
 		isShooting = true;
-		startTime = 600;
+		startTime = 1000;
 		Sound::getInstance()->play("BossFire", false, 1);
 	}
 	else if (countBullet == 4)
@@ -138,7 +140,7 @@ int Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			switch (objType)
 			{
 			case 15: case 17:
-				if (e->nx != 0) 
+				if (e->nx != 0)
 				{
 					vx = -vx;
 					nx = -nx;
@@ -184,13 +186,13 @@ int Boss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 
 void Boss::Render()
-{	
+{
 	if (isRendered)
 		return;
 	int ani = BOSS_ANI_FLYING;
 	if (state == BOSS_STATE_DIE)
 	{
-		animation_set->at(ani)->RenderFrame(0,x, y, nx, 253);
+		animation_set->at(ani)->RenderFrame(0, x, y, nx, 253);
 		if (GetTickCount64() - detroyTime >= 5000)
 		{
 			isDestroyed = true;
@@ -225,17 +227,17 @@ void Boss::SetIsDestroyed()
 vector<LPDYNAMICOBJECT> Boss::CreateHands()
 {
 	vector<LPDYNAMICOBJECT> hands;
-	
+
 	hands.push_back(handRight1);
 	hands.push_back(handRight2);
 	hands.push_back(handRight3);
 	hands.push_back(handRight4);
-	
+
 	hands.push_back(handLeft1);
 	hands.push_back(handLeft2);
 	hands.push_back(handLeft3);
 	hands.push_back(handLeft4);
-	
+
 	hands.push_back(handRight5);
 	hands.push_back(handLeft5);
 	return hands;
@@ -267,7 +269,7 @@ vector<LPDYNAMICOBJECT> Boss::Fire(float xMain, float yMain)
 		BossBullet* bullet = new BossBullet(x, y, 1);
 		float a = xMain - x;
 		float b = yMain - y;
-		bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 4, b / sqrt(pow(a, 2) + pow(b, 2)) / 4);
+		bullet->SetSpeed(a / sqrt(pow(a, 2) + pow(b, 2)) / 16, b / sqrt(pow(a, 2) + pow(b, 2)) / 16);
 		bossBulls.push_back(bullet);
 		isShooting = false;
 		countBullet++;
