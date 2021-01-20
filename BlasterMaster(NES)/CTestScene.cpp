@@ -209,8 +209,8 @@ void CTestScene::Render()
 	LPDIRECT3DTEXTURE9 texfg = CTextureManager::GetInstance()->Get(TEXTURE_FOREGROUND);
 	float bgX = cam.left + (cam.right - cam.left) / 2.0f;
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
-	if (current_section != 33)
-		CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
+	/*if (current_section != 33)
+		CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);*/
 	//Render object
 	if (!isSwitchingSection)
 	{
@@ -220,8 +220,8 @@ void CTestScene::Render()
 		if (mainPlayer != NULL)
 			mainPlayer->Render();
 	//render foreground
-	if (current_section != 33)
-		CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
+	/*if (current_section != 33)
+		CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);*/
 
 	//render hpbar
 	hpBar->Render();
@@ -376,6 +376,10 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				//((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
 			}
 		}
+		if (KeyCode == DIK_H)
+		{
+			((CTestScene*)scence)->GetPlayer()->SetHP(16);
+		}
 	}
 	else if (scence->GetType() == 2)
 	{
@@ -386,7 +390,10 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 			if (currentPlayer->CanShoot())
 				((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
 		}
-
+		if (KeyCode == DIK_H)
+		{
+			((CTestScene*)scence)->GetPlayer()->SetHP(16);
+		}
 	}
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->OnKeyDown(KeyCode);

@@ -22,11 +22,11 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		if (isDestroyed)
 		{
+			lives--;
 			Sound::getInstance()->stop("lvl2");
 			CGame::GetInstance()->Notify(lives);
 			return 1;
 		}
-		return 0;
 	}
 	
 	CDynamicGameObject::Update(dt);
@@ -250,6 +250,7 @@ int MiniJason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	//DebugOut("[MINIJASON]\tx: %f, y: %f\n", x, y);
+	DebugOut("[Mini win] %s\n", WinnedBoss ? "True" : "False");
 	return 0;
  }
 
@@ -395,7 +396,6 @@ void MiniJason::SetState(int state)
 		}
 		break;
 	case MINIJASON_STATE_DIE:
-		lives--;
 		vx = 0;
 		Sound::getInstance()->stop("JHit");
 		break;
