@@ -29,8 +29,8 @@ int Orb::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObje
 		{
 			float a = xMain - x;
 			float b = yMain - y;
-			vx = a / sqrt(pow(a, 2) + pow(b, 2)) / 6;
-			vy = b / sqrt(pow(a, 2) + pow(b, 2)) / 6;
+			vx = a / sqrt(pow(a, 2) + pow(b, 2)) / 16;
+			vy = b / sqrt(pow(a, 2) + pow(b, 2)) / 16;
 		}
 		x += dx;
 		y += dy;

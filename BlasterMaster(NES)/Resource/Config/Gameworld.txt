@@ -8,4 +8,4 @@
 5	Resource/Config/endgame/notify.txt	5	0	0	0
 #token	scenes	section
 [SETTINGS]
-start	4	1
+start	1	1
