@@ -417,11 +417,15 @@ CGame::~CGame()
 
 void CGame::Render()
 {
-	if (d3ddev->BeginScene())
+	if (d3ddev == NULL)
+		return;
+	D3DCOLOR bg = scenes[current_scene]->GetBackground();
+	d3ddev->Clear(0, NULL, D3DCLEAR_TARGET, bg, 1.0f, 0);
+	if (d3ddev->BeginScene() == D3D_OK)
 	{
 		// Clear back buffer with a color
-		D3DCOLOR bg = scenes[current_scene]->GetBackground();
-		d3ddev->ColorFill(backbuffer, NULL, bg);
+		/*D3DCOLOR bg = scenes[current_scene]->GetBackground();
+		d3ddev->ColorFill(backbuffer, NULL, bg);*/
 
 		spriteHander->Begin(D3DXSPRITE_ALPHABLEND);
 
