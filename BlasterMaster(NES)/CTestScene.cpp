@@ -376,6 +376,10 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				//((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
 			}
 		}
+		if (KeyCode == DIK_H)
+		{
+			((CTestScene*)scence)->GetPlayer()->SetHP(16);
+		}
 	}
 	else if (scence->GetType() == 2)
 	{
@@ -386,7 +390,10 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 			if (currentPlayer->CanShoot())
 				((CTestScene*)scence)->GetCurSection()->AddDynamicObject(currentPlayer->Shoot());
 		}
-
+		if (KeyCode == DIK_H)
+		{
+			((CTestScene*)scence)->GetPlayer()->SetHP(16);
+		}
 	}
 	CDynamicGameObject* currentPlayer = ((CTestScene*)scence)->GetPlayer();
 	currentPlayer->OnKeyDown(KeyCode);

@@ -23,6 +23,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		if (isDestroyed)
 		{
+			lives--;
 			Sound::getInstance()->stop("lvl2");
 			CGame::GetInstance()->Notify(lives);
 			return 1;
@@ -156,7 +157,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-
+	DebugOut("[JASON win] %s\n", WinnedBoss ? "True" : "False");
 	return 0;
 }
 
@@ -269,7 +270,6 @@ void Jason::SetState(int state)
 		ny = 1;
 		break;
 	case JASON_STATE_DIE:
-		lives--;
 		vx = 0;
 		vy = 0;
 		break;
@@ -308,6 +308,9 @@ void Jason::OnKeyDown(int KeyCode)
 {
 	switch (KeyCode)
 	{
+	case DIK_W:
+		this->WinnedBoss = true;
+		break;
 	case DIK_Z:
 	{
 		if (GetTickCount64() - lastShot >= JASON_SHOOTING_DELAY)

@@ -100,6 +100,7 @@ void Section::DeleteMiniJason()
 		if (temp != NULL)
 		{
 			temp->SetIsActive(true);
+			temp->SetWinnedBoss(((MainPlayer*)mainPlayer)->GetWinnedBoss());
 			mainPlayer = temp;
 		}
 	}
