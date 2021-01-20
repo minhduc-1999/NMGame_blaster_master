@@ -157,7 +157,7 @@ int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (HP <= 0)
 	{
-		Sound::getInstance()->play("JasonDed", true, 0);
+		Sound::getInstance()->play("JasonDed", false, 1);
 		SetState(JASON_STATE_DIE);
 	}
 
@@ -198,7 +198,6 @@ void Jason::Render()
 		{
 			animation_set->at(JASON_ANI_DIE)->ResetAnim();
 			isDestroyed = true;
-			Sound::getInstance()->play("JasonDed", false, 1);
 			//CGame::GetInstance()->SwitchScene(3, 1);
 			return;
 		}

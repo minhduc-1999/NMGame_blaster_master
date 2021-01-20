@@ -1,7 +1,7 @@
 #pragma once
 #include "DynamicGameObject.h"
 
-#define JUMPER2_WALKING_SPEED		0.05f
+#define JUMPER2_WALKING_SPEED		0.1f
 #define JUMPER2_JUMPING_SPEED       0.3f
 #define JUMPER2_GRAVITY             0.03f
 #define JUMPER2_STATE_IDLE			0
@@ -24,7 +24,7 @@ private:
 public:
     Jumper2(float x, float y);
     void SetState(int state);
-    int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+    int Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObjects);
     bool IsJumping();
     void Render();
     void SetIsDestroyed() { SetState(JUMPER2_STATE_DIE); }

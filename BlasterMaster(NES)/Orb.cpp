@@ -75,6 +75,10 @@ int Orb::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coObje
 						SetState(ORB_STATE_ROLLING_RIGHT);
 					}
 				}
+				if (e->ny != 0)
+				{
+					vy = -vy;
+				}
 				break;
 			};
 

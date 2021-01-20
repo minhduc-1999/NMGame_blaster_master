@@ -57,6 +57,7 @@ JasonDed	Resource\Sound\JasonDed.wav
 Cannon	Resource\Sound\Cannon.wav
 Tele	Resource\Sound\Tele.wav
 lvl2	Resource\Sound\lvl2.wav
+BossFire	Resource\Sound\BossFire.wav
 # id	left	top	right	bottom	texture_id
 [SPRITES]
 #=========TILE=============

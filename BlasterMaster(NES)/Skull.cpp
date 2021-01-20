@@ -31,7 +31,7 @@ int Skull::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coOb
 
 	startTime += dt;
 
-	if (startTime > 600)
+	if (startTime > 1000)
 	{
 		isShooting = true;
 		if (nx == -1)
@@ -47,7 +47,7 @@ int Skull::Update(float xMain, float yMain, DWORD dt, vector<LPGAMEOBJECT>* coOb
 			SetState(SKULL_STATE_FLYING_RIGHT);
 	}
 
-	if (startTime > 700)
+	if (startTime > 1100)
 	{
 		startTime = 0;
 		shooted = false;
