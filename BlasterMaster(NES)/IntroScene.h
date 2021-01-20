@@ -22,6 +22,7 @@ public:
 
 class IntroSceneKeyHandler : public CScenceKeyHandler
 {
+	DWORD delayTime = 0;
 public:
 	virtual void KeyState(BYTE* states) {};
 	virtual void OnKeyDown(int KeyCode);

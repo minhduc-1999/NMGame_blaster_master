@@ -12,8 +12,8 @@ IntroScene::IntroScene(int id, string filePath, int type, D3DXVECTOR3 bg) : CSce
 	start = GetTickCount64();
 	this->saveData = new SaveData();
 	saveData->mainLives = 3;
-	saveData->lastScene = SCENE_AREA;
-	saveData->lastSection = 1;
+	saveData->lastScene = SCENE_OVW; //SCENE_AREA;
+	saveData->lastSection = 27;
 }
 
 void IntroScene::_ParseSection_ANIMATIONS(string line)
@@ -167,8 +167,9 @@ void IntroScene::NextIntro()
 }
 void IntroSceneKeyHandler::OnKeyDown(int KeyCode)
 {
-	if (KeyCode == DIK_RETURN)
+	if (KeyCode == DIK_RETURN && (GetTickCount64() - delayTime > 500))
 	{
+		delayTime = GetTickCount64();
 		((IntroScene*)scence)->NextIntro();
 	}
 }

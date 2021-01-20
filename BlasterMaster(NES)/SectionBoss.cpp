@@ -4,6 +4,7 @@
 #include "BossBullet.h"
 #include "Hand.h"
 #include "Boss.h"
+#include "BrokableBrick.h"
 void SectionBoss::Load(SaveData* data, D3DXVECTOR2 mainPos)
 {
 	Section::Load();
@@ -15,8 +16,10 @@ void SectionBoss::Load(SaveData* data, D3DXVECTOR2 mainPos)
 	startTime = GetTickCount64();
 	if (mainPlayer != NULL)
 	{
+		mainPlayer->SetPosition(mainPlayer->GetPosition().x, mainPlayer->GetPosition().y - 5);
 		//D3DXVECTOR2 pos = mainPlayer->GetPosition();
 		//DebugOut("[Pos player trans before load]\tx: %f, y: %f\n", pos.x, pos.y);
+		((Jason*)mainPlayer)->SetPlayingWithBoss(true);
 		DebugOut("[ERROR] main object was created before in ovw!\n");
 		return;
 	}
@@ -30,6 +33,7 @@ int SectionBoss::Update(DWORD dt)
 		{
 			period = 2;
 			((Jason*)mainPlayer)->SetWinnedBoss(true);
+			((Jason*)mainPlayer)->SetPlayingWithBoss(false);
 			Sound::getInstance()->play("lvl2", true, 0);
 		}
 	}
@@ -39,10 +43,22 @@ int SectionBoss::Update(DWORD dt)
 		{
 			period = 1;
 			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-			LPANIMATION_SET ani_set = animation_sets->Get(40);
+			LPANIMATION_SET ani_setBoss = animation_sets->Get(40);
+			/*LPANIMATION_SET ani_setBrick = animation_sets->Get(117);
+			LPDYNAMICOBJECT brokableBrick1 = new BrokableBrick(888, 727);
+			brokableBrick1->SetTeam(1);
+			brokableBrick1->SetType(117);
+			brokableBrick1->SetAnimationSet(ani_setBrick);
+			BrokableBrick* brokableBrick2 = new BrokableBrick(904, 727);
+			brokableBrick2->SetTeam(1);
+			brokableBrick2->SetType(117);
+			brokableBrick2->SetAnimationSet(ani_setBrick);
+			grids[0]->AddDynamicObj(brokableBrick1);
+			grids[0]->AddDynamicObj(brokableBrick2);*/
+			
 			Boss* boss = new Boss(895, 615, 41, 42);
 			_boss = boss;
-			boss->SetAnimationSet(ani_set);
+			boss->SetAnimationSet(ani_setBoss);
 			boss->SetState(BOSS_STATE_FLYING);
 			grids[0]->AddDynamicObj(boss);
 			vector<LPDYNAMICOBJECT> hands;

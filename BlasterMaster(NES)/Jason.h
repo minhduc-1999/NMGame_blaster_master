@@ -29,11 +29,13 @@ class Jason : public MainPlayer
 {
 	bool WinnedBoss;
 	bool canGoArea;
+	bool playingWithBoss;
 public:
 	bool CanShoot() { return canShoot; }
 	Jason(float x, float y);
 	int Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
+	void SetPlayingWithBoss(bool bl) { playingWithBoss = bl; }
 	void SetState(int state);
 	Rect GetBound();
 	void KeyState(BYTE* states);
