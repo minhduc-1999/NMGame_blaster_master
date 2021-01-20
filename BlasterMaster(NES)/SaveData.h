@@ -4,6 +4,7 @@ class SaveData
 public:
 	float sophiaHP, sophiaX, sophiaY, jasonHP;
 	int sophiaSection, sophiaState;
+    bool isWin;
     int mainLives, lastScene, lastSection;
     SaveData operator=(const SaveData& s) {
         SaveData newS;
@@ -16,6 +17,7 @@ public:
         newS.mainLives = s.mainLives;
         newS.lastScene = s.lastScene;
         newS.lastSection = s.lastSection;
+        newS.isWin = s.isWin;
         return newS;
     }
     SaveData() {
@@ -28,5 +30,6 @@ public:
         this->mainLives = 3;
         this->lastScene = -1;
         this->lastSection = -1;
+        this->isWin = false;
     }
 };

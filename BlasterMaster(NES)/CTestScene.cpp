@@ -161,7 +161,13 @@ int CTestScene::Update(DWORD dt)
 		//CGame::GetInstance()->ProcessKeyboard();
 		int result = sections[current_section]->Update(dt);
 		if (result == 1)
+		{
+			if (current_section == 33)
+			{
+				saveData->isWin = ((Jason*)mainPlayer)->GetWinnedBoss();
+			}
 			return result;
+		}
 		//update camera
 		D3DXVECTOR2 mainPos = mainPlayer->GetPosition();
 		D3DXVECTOR2 mapPos = sections[current_section]->GetSectionMapPos();
