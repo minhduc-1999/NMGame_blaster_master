@@ -9,6 +9,7 @@ protected:
 	bool isJumping;
 	bool canShoot;
 	int lives;
+	bool WinnedBoss;
 public:
 	MainPlayer(float x, float y) : CDynamicGameObject(x, y) 
 	{
@@ -19,7 +20,10 @@ public:
 		lastShot = GetTickCount64();
 		lives = 3;
 		SetTeam(0);
+		WinnedBoss = false;
 	}
+	bool GetWinnedBoss() { return WinnedBoss; }
+	void SetWinnedBoss(bool bl) { WinnedBoss = bl; }
 	void SetLive(int l) { lives = l; }
 	int GetLive() { return lives; }
 	bool GetIsJumping() { return isJumping; };

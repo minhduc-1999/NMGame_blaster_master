@@ -7,7 +7,7 @@
 void SectionBoss::Load(SaveData* data, D3DXVECTOR2 mainPos)
 {
 	Section::Load();
-	if (!((Jason*)mainPlayer)->GetIsWinnedBoss())
+	if (!((Jason*)mainPlayer)->GetWinnedBoss())
 	{
 		Sound::getInstance()->stop("lvl2");
 		Sound::getInstance()->play("Boss", false, 1);
@@ -29,7 +29,8 @@ int SectionBoss::Update(DWORD dt)
 		if (_boss->GetIsDestroyed())
 		{
 			period = 2;
-			((Jason*)mainPlayer)->SetIsWinnedBoss(true);
+			((Jason*)mainPlayer)->SetWinnedBoss(true);
+			Sound::getInstance()->play("lvl2", true, 0);
 		}
 	}
 	if (period == 0)

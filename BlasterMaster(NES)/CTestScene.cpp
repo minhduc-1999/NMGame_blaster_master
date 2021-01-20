@@ -29,7 +29,6 @@ CTestScene::CTestScene(int id, string filePath, int type, D3DXVECTOR3 bg) :
 	current_section = -1;
 	mainPlayer = NULL;
 	hpBar = NULL;
-	winnedBoss = false;
 	playerType = PLAYER_SOPHIA;
 }
 
@@ -157,7 +156,6 @@ void CTestScene::_ParseSection_SOUND(string line)
 //Update render
 int CTestScene::Update(DWORD dt)
 {
-	SetIsWinnedBoss(((Jason*)mainPlayer)->GetIsWinnedBoss());
 	if (isSwitchingSection == false)
 	{
 		//CGame::GetInstance()->ProcessKeyboard();
@@ -204,7 +202,7 @@ void CTestScene::Render()
 	LPDIRECT3DTEXTURE9 texfg = CTextureManager::GetInstance()->Get(TEXTURE_FOREGROUND);
 	float bgX = cam.left + (cam.right - cam.left) / 2.0f;
 	float bgY = cam.top + (cam.bottom - cam.top) / 2.0f;
-	if (current_section != 33 || winnedBoss == true)
+	if (current_section != 33)
 		CGame::GetInstance()->Draw(bgX, bgY, texbg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 	//Render object
 	if (!isSwitchingSection)
@@ -215,7 +213,7 @@ void CTestScene::Render()
 		if (mainPlayer != NULL)
 			mainPlayer->Render();
 	//render foreground
-	if (current_section != 33 || winnedBoss == true)
+	if (current_section != 33)
 		CGame::GetInstance()->Draw(bgX, bgY, texfg, cam.left, cam.top, cam.right, cam.bottom, -1, 255);
 
 		//render hpbar
@@ -336,7 +334,7 @@ void CTestSceneKeyHandler::OnKeyDown(int KeyCode)
 				if (currentPlayer->CanShoot())
 				{
 					vector<LPDYNAMICOBJECT> bullets;
-					if (((CTestScene*)scence)->getIsWinnedBoss())
+					if (/*((CTestScene*)scence)->getIsWinnedBoss()*/currentPlayer->GetWinnedBoss())
 					{
 						bullets = currentPlayer->Shoot(0);
 					}

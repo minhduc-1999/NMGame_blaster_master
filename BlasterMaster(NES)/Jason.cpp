@@ -14,7 +14,6 @@ Jason::Jason(float x, float y) :MainPlayer(x, y)
 	canShoot = true;
 	HP = 16;
 	SetType(3);
-	WinnedBoss = false;
 }
 
 int Jason::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
