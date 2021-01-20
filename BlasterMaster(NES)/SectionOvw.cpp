@@ -28,6 +28,7 @@ void SectionOvw::Load(SaveData* data, D3DXVECTOR2 mainPos)
 	{
 		((MainPlayer*)mainPlayer)->SetLive(data->mainLives);
 		mainPlayer->SetHP(16);
+		((Jason*)mainPlayer)->SetWinnedBoss(data->isWin);
 	}
 	
 }

@@ -648,6 +648,7 @@ void CGame::SwitchScene(int scene_id, int section, D3DXVECTOR2 tlPos)
 	{
 		if (data != NULL)
 		{
+			data->isWin = ((MainPlayer*)((CTestScene*)scenes[current_scene])->GetPlayer())->GetWinnedBoss();
 			data->jasonHP = ((CTestScene*)scenes[current_scene])->GetPlayer()->GetHP();
 		}
 	}
@@ -677,13 +678,17 @@ void CGame::Notify(int mainLives)
 	data->mainLives = mainLives;
 	if (mainLives != 3)
 	{
+
 		data->lastScene = current_scene;
-		data->lastSection = ((CTestScene*)scenes[current_scene])->GetCurrentSection();
+		if (((CTestScene*)scenes[current_scene])->GetCurrentSection() == 33)
+			data->lastSection = 27;
+		else
+			data->lastSection = ((CTestScene*)scenes[current_scene])->GetCurrentSection();
 	}
 	/*if (data->lastScene == -1)
-		
+
 	if (data->lastSection == -1)*/
-		
+
 
 	scenes[current_scene]->Unload();
 
