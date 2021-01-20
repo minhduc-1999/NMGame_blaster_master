@@ -13,7 +13,7 @@ IntroScene::IntroScene(int id, string filePath, int type, D3DXVECTOR3 bg) : CSce
 	this->saveData = new SaveData();
 	saveData->mainLives = 3;
 	saveData->lastScene = SCENE_AREA;
-	saveData->lastSection = 1;
+	saveData->lastSection = 10;
 }
 
 void IntroScene::_ParseSection_ANIMATIONS(string line)

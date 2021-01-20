@@ -64,6 +64,7 @@ void SectionArea::Load(SaveData* data, D3DXVECTOR2 mainPos)
 			DebugOut("[AREA-INFO] Main Pos:\t%f\t%f\n", mainPlayer->GetPosition().x, mainPlayer->GetPosition().y);
 		}
 		((MainPlayer*)mainPlayer)->SetWinnedBoss(data->isWin);
+		DebugOut("[SAVE data] \t%d\t%d\t%f\t%f", data->sophiaHP, data->sophiaSection, data->sophiaX, data->sophiaY);
 	}
 	else
 	{
